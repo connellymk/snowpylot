@@ -16,11 +16,18 @@
 
     ```
 
+2. Install necessary libraries
 
- 2. Install Python
- 3. Install Pandas
- 4. Install NumPy
- 5. Install Matplotlib
- 6. Install Seaborn
- 7. Install Scikit-learn
+```
+choco install python
+pip install pandas
+pip install numpy
+pip install matplotlib
+pip install seaborn
+pip install scikit-learn
+```
 
+Resources:
+https://snowpilot.org/
+https://github.com/SnowpitData/AvscienceServer
+https://github.com/abkfenris/snowpit/tree/master/snowpit
