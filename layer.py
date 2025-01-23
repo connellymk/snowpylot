@@ -8,23 +8,41 @@ class Layer(object):
         self.depthTop=depthTop
         self.thickness=thickness
         self.grainFormPrimary=grainFormPrimary
-        self.grainFormPrimaryClass = self.setGrainClass(grainFormPrimary)
-        self.grainFormPrimarySubClass=self.setGrainSubClass(grainFormPrimary)
+        self.grainFormPrimary_grainClass = self.set_grainClass(self.grainFormPrimary)
+        self.grainFormPrimary_grainSubClass=self.set_grainSubClass(self.grainFormPrimary)
         self.grainFormSecondary=grainFormSecondary
         self.hardness=hardness
+        self.hardness_val=self.set_hardness_val(self.hardness)
         self.wetness=wetness
 
 
     def __str__(self):
-        return f"Layer: {self.depthTop}, {self.thickness}, {self.grainFormPrimary}, {self.grainFormSecondary}, {self.hardness}, {self.wetness}"
+        return f"Layer: {self.depthTop}, {self.thickness}, {self.grainFormPrimary}, {self.grainFormPrimary_grainClass}, {self.grainFormPrimary_grainSubClass}, {self.grainFormSecondary}, {self.hardness}, {self.wetness}"
     
+
     # Setter Functions
-    def setGrainClass(self,grainFormPrimary):
-        return grainFormPrimary[:2]
+    def set_grainClass(self,grainForm):
+        if grainForm is not None:
+            return grainForm[:2]
+        else:
+            return None
     
-    def setGrainSubClass(self,grainFormPrimary):
-        if len(grainFormPrimary) > 2:
-            return grainFormPrimary[-2:]
+    def set_grainSubClass(self,grainForm):
+        if grainForm is not None and len(grainForm) > 2:
+            return grainForm
+        else:
+            return None
+    
+    def set_hardness_val(self,hardness):
+        if hardness is not None:
+            hardness_dict = {
+                'F-':1,'F':2,'F+':3,
+                '4F-':2,'4F':2,'4F+':2,
+                '1F-':3,'1F':3,'1F+':3,
+                'P-':4,'P':4,'P+':4,
+                'K-':5,'K':5,'K+':5,
+                'I-':6,'I':6,'I+':6}
+            return hardness_dict[hardness]
         else:
             return None
 
@@ -47,10 +65,13 @@ class Layer(object):
     def get_wetness(self):
         return self.wetness
     
-    def get_grainFormPrimaryClass(self):
-        return self.grainFormPrimaryClass
+    def get_grainFormPrimary_grainClass(self):
+        return self.grainFormPrimary_grainClass
     
-    def get_grainFormPrimarySubClass(self):
-        return self.grainFormPrimarySubClass
+    def get_grainFormPrimary_grainSubClass(self):
+        return self.grainFormPrimary_grainSubClass
+    
+    def get_hardness_val(self):
+        return self.hardness_val
     
 
