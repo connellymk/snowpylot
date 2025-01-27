@@ -13,6 +13,9 @@ class LocationInfo(object):
         self.country=None
         self.region=None
 
+    def __str__(self):
+        return f"LocationInfo(elevation={self.elevation}, aspect={self.aspect}, slopeAngle={self.slopeAngle}, latitude={self.latitude}, longitude={self.longitude}, country={self.country}, region={self.region})"
+
 
     #Setters
     def set_elevation(self, elevation):
