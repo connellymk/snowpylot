@@ -8,23 +8,24 @@ class LocationInfo(object):
         self.elevation=None
         self.aspect=None
         self.slopeAngle=None
+        self.coords=None
         self.latitude=None
         self.longitude=None
         self.country=None
         self.region=None
 
     def __str__(self):
-        return f"""
-    LocationInfo:
-        elevation={self.elevation} 
-        aspect={self.aspect} 
-        slopeAngle={self.slopeAngle} 
-        latitude={self.latitude} 
-        longitude={self.longitude} 
-        country={self.country} 
-        region={self.region}
-        """
 
+        location_str = "LocationInfo: "
+        location_str += f"\n elevation={self.elevation} "
+        location_str += f"\n aspect={self.aspect} "
+        location_str += f"\n slopeAngle={self.slopeAngle} "
+        location_str += f"\n coords={self.coords} "
+        location_str += f"\n latitude={self.latitude} "
+        location_str += f"\n longitude={self.longitude} "
+        location_str += f"\n country={self.country} "
+        location_str += f"\n region={self.region} "
+        return location_str
 
 
     #Setters
@@ -36,6 +37,9 @@ class LocationInfo(object):
 
     def set_slopeAngle(self, slopeAngle):
         self.slopeAngle = slopeAngle
+
+    def set_coords(self, coords):
+        self.coords = coords
 
     def set_latitude(self, latitude):
         self.latitude = latitude
@@ -59,6 +63,9 @@ class LocationInfo(object):
     
     def get_slopeAngle(self):
         return self.slopeAngle
+    
+    def get_coords(self):
+        return self.coords
     
     def get_latitude(self):
         return self.latitude

@@ -58,11 +58,13 @@ class SnowPilot_obs(object):
 
         location.set_slopeAngle(slopeAngle)
 
-        # latitude / longitude
+        # Coords / latitude / longitude
         latLong_list = root.getElementsByTagName('caaml:pointLocation')
         lat_long=latLong_list[0].childNodes[1].childNodes[1].firstChild.nodeValue
+        coords=lat_long
         lat_long=lat_long.split(' ')
 
+        location.set_coords(coords)
         location.set_latitude(lat_long[0])
         location.set_longitude(lat_long[1])
 
