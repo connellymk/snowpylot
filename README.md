@@ -46,3 +46,15 @@ Project Objectives:
 2. Use Jupyter Notebooks to analyze the data and answer research questions
 3. Summarize and present results at the Western Snow Conference in May 2025
 
+
+
+To do
+1. Add tests to check if updating library (Explore Pytest)
+2. Add tests to make sure parsing matches caaml file
+3. Test process
+   Load file
+   parse file
+   check if parsing matches expected output
+4. Set up smaller tests
+   ex. "test get_longitude"
+
