@@ -49,6 +49,7 @@ Project Objectives:
 
 
 To do
+*Testing*
 1. Add tests to check if updating library (Explore Pytest)
 2. Add tests to make sure parsing matches caaml file
 3. Test process
@@ -57,4 +58,9 @@ To do
    check if parsing matches expected output
 4. Set up smaller tests
    ex. "test get_longitude"
+
+*Structure*
+1. Make snowPilotObs class a shell
+2. Make separate caaml-parser class
+* Input: caaml file, version. return: snowpit object
 
