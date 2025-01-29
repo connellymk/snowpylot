@@ -64,3 +64,6 @@ To do
 2. Make separate caaml-parser class
 * Input: caaml file, version. return: snowpit object
 
+*Create Package*
+https://www.freecodecamp.org/news/build-your-first-python-package/
+
