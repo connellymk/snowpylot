@@ -1,4 +1,4 @@
-class LocationInfo(object):
+class Location(object):
 
     """ 
     LocationInfo class for representing a the reported location of a snowPilot observation  
