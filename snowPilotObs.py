@@ -1,5 +1,5 @@
 from xml.dom import minidom
-from locationInfo import LocationInfo
+from location import LocationInfo
 from user import User
 
 class SnowPilot_obs(object):

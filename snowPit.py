@@ -1,3 +1,8 @@
+from location import Location
+from snowProfile import SnowProfile
+from user import User
+from stabilityTests import StabilityTests
+
 class SnowPit(object):
 
     """ 
@@ -8,11 +13,10 @@ class SnowPit(object):
         self.pitId = None 
         self.date = None 
         self.dateTime = None 
-        self.user = None 
-        self.location = None 
-        self.snowProfile = None 
-        self.extColumnTest=None 
-        self.propSawTest=None
+        self.user = User()  
+        self.location = Location()   
+        self.snowProfile = SnowProfile() 
+        self.stabilityTests = StabilityTests()
         self.caamlVersion=None
 
     def __str__(self):
