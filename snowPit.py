@@ -13,8 +13,8 @@ class SnowPit(object):
         self.pitId = None 
         self.date = None 
         self.dateTime = None 
-        self.user = User()  
-        self.location = Location()   
+        self.user = User() # Can be dictionary?  
+        self.location = Location() # Can be dictionary?   
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
         self.caamlVersion=None
@@ -27,14 +27,13 @@ class SnowPit(object):
         snowPit_str += f"\n user: {self.user} "
         snowPit_str += f"\n location: {self.location} "
         snowPit_str += f"\n snowProfile: {self.snowProfile} "
-        snowPit_str += f"\n extColumnTest: {self.extColumnTest} "
-        snowPit_str += f"\n propSawTest: {self.propSawTest} "
+        snowPit_str += f"\n stabilityTests: {self.stabilityTests} "
         snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
         return snowPit_str
 
 
     # Setters
-    def set_pitId(self, pitId):
+    #def set_pitId(self, pitId):
         self.pitId = pitId
 
     def set_date(self, date):
@@ -65,8 +64,8 @@ class SnowPit(object):
         self.caamlVersion = caamlVersion    
 
     # Getters
-    def get_pitId(self):
-        return self.pitId 
+    #def get_pitId(self):
+        #return self.pitId 
     
     def get_date(self):
         return self.date
