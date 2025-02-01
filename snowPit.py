@@ -9,15 +9,18 @@ class SnowPit(object):
     SnowPit class for representing a single snow pit  observation from a SnowPilot caaml.xml file
     """
 
+    ## Update to use dictionaries for all single instance variables
+
     def __init__(self):
         self.pitId = None 
         self.date = None 
         self.dateTime = None 
-        self.user = User() # Can be dictionary?  
-        self.location = Location() # Can be dictionary?   
+        self.user = {'Organization': None, 'Affiliation': None, 'Role': None, 'Name': None, 'UserID': None}   
+        self.location = {'Latitude': None, 'Longitude': None, 'Elevation': None, 'Aspect': None, 'Slope': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
         self.caamlVersion=None
+
 
     def __str__(self):
         snowPit_str = "SnowPit: "

@@ -5,5 +5,6 @@ class SnowProfile(object):
     """
 
     def __init__(self):
-        self.snowProfile = None
+        self.hS = None
+        
 
