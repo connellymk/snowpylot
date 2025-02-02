@@ -2,9 +2,9 @@ import xml.etree.ElementTree as ET
 from snowPit import SnowPit
 
 def caaml_parser(file_path):
-    """
-    Parses a SnowPilot caaml.xml file and returns a SnowPit object
-    """
+    '''
+    The function receives a path to a SnowPilot caaml.xml file and returns a populated SnowPit object
+    '''
 
     pit=SnowPit() # create a new SnowPit object
  
@@ -40,9 +40,24 @@ def caaml_parser(file_path):
 
     # Location Information
 
+    latLong_tag = gml_tag + 'pos'
+    try:
+        coords = next(root.iter(latLong_tag), None).text
+        lat_long=coords.split(' ')
+    except AttributeError:
+        coords = None
+
+    pit.location['Latitude'] = float(lat_long[0])
+    pit.location['Longitude'] = float(lat_long[1])
+
+
+
+
     # Snow Profile Information
 
+
     # Stability Tests
+
 
     return pit
 

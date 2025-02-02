@@ -6,7 +6,7 @@ from stabilityTests import StabilityTests
 class SnowPit(object):
 
     """ 
-    SnowPit class for representing a single snow pit  observation from a SnowPilot caaml.xml file
+    SnowPit class for representing a single snow pit  observation
     """
 
     ## Update to use dictionaries for all single instance variables

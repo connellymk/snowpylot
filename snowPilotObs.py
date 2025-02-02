@@ -65,8 +65,9 @@ class SnowPilot_obs(object):
         lat_long=lat_long.split(' ')
 
         location.set_coords(coords)
-        location.set_latitude(lat_long[0])
-        location.set_longitude(lat_long[1])
+        location.set_latitude(float(lat_long[0]))
+        location.set_longitude(float(lat_long[1]))
+
 
         # country
         country_list = root.getElementsByTagName('caaml:country')
