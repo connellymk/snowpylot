@@ -1,6 +1,4 @@
-from location import Location
 from snowProfile import SnowProfile
-from user import User
 from stabilityTests import StabilityTests
 
 class SnowPit(object):
@@ -9,18 +7,27 @@ class SnowPit(object):
     SnowPit class for representing a single snow pit  observation
     """
 
-    ## Update to use dictionaries for all single instance variables
-
     def __init__(self):
         self.caamlVersion=None
         self.pitId = None 
         self.date = None 
-        self.user = {'Organization': None, 'Affiliation': None, 'Role': None, 'Name': None, 'UserID': None}   
-        self.location = {'Latitude': None, 'Longitude': None, 'Elevation': None, 'Aspect': None, 'Slope': None} 
+        self.user = {
+            'Organization': None, 
+            'Affiliation': None, 
+            'Role': None, 
+            'Name': None, 
+            'UserID': None}   
+        self.location = {
+            'Latitude': None, 
+            'Longitude': None, 
+            'Elevation': None, 
+            'Aspect': None, 
+            'SlopeAngle': None, 
+            'Country': None, 
+            'Region': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
         
-
 
     def __str__(self):
         snowPit_str = "SnowPit: "
