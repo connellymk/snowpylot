@@ -32,39 +32,36 @@ def caaml_parser(file_path):
         dt = next(root.iter(dateTime_tag), None).text
     except AttributeError:
         dt = None
-
     date = dt.split('T')[0] if dt is not None else None
     pit.set_date(date)
 
     # User Information
 
-    # Location Information
-    latLong_tag = gml_tag + 'pos'
+    ## Location Information
+    #Latitude and Longitude
     try:
-        coords = next(root.iter(latLong_tag), None).text
+        coords = next(root.iter(gml_tag + 'pos'), None).text
         lat_long=coords.split(' ')
     except AttributeError:
         coords = None
     pit.location['Latitude'] = float(lat_long[0])
     pit.location['Longitude'] = float(lat_long[1])
 
-    # Reference code from Ron
+    # Elevation, Aspect, and SlopeAngle: Reference code from Ron
     locations_params_tags = [common_tag + 'ElevationPosition', 
                                 common_tag + 'AspectPosition', 
                                 common_tag + 'SlopeAnglePosition']
-
     name_front_trim = len(common_tag)
     name_back_trim = -len('Position')
-
     position_params = [t for t in root.iter() if t.tag in locations_params_tags]
     for tp in position_params:
         pit.location[tp.tag[name_front_trim: name_back_trim]] = [tp.find(common_tag + 'position').text, tp.get('uom')]
 
-
-
+    # Country and Region
+    pit.location['Country'] = next(root.iter(common_tag + 'country'), None).text
+    pit.location['Region'] = next(root.iter(common_tag + 'region'), None).text
 
     # Snow Profile Information
-
 
     # Stability Tests
 
@@ -74,6 +71,6 @@ def caaml_parser(file_path):
 
 ## Test
 
-#file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-#pit1 = caaml_parser(file_path)
-#print(pit1)
+file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
+pit1 = caaml_parser(file_path)
+print(pit1)
