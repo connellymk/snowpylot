@@ -12,38 +12,40 @@ class SnowPit(object):
     ## Update to use dictionaries for all single instance variables
 
     def __init__(self):
+        self.caamlVersion=None
         self.pitId = None 
         self.date = None 
-        self.dateTime = None 
         self.user = {'Organization': None, 'Affiliation': None, 'Role': None, 'Name': None, 'UserID': None}   
         self.location = {'Latitude': None, 'Longitude': None, 'Elevation': None, 'Aspect': None, 'Slope': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
-        self.caamlVersion=None
+        
 
 
     def __str__(self):
         snowPit_str = "SnowPit: "
+        snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
         snowPit_str += f"\n pitId: {self.pitId} "
         snowPit_str += f"\n date: {self.date} "
-        snowPit_str += f"\n dateTime: {self.dateTime} "
         snowPit_str += f"\n user: {self.user} "
         snowPit_str += f"\n location: {self.location} "
         snowPit_str += f"\n snowProfile: {self.snowProfile} "
         snowPit_str += f"\n stabilityTests: {self.stabilityTests} "
-        snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
+        
         return snowPit_str
 
 
     # Setters
-    #def set_pitId(self, pitId):
+    
+    def set_caamlVersion(self, caamlVersion):
+        self.caamlVersion = caamlVersion
+
+    def set_pitId(self, pitId):
         self.pitId = pitId
+
 
     def set_date(self, date):
         self.date = date
-
-    def set_dateTime(self, dateTime):
-        self.dateTime = dateTime
 
     def set_user(self, user):
         self.user = user
@@ -63,18 +65,15 @@ class SnowPit(object):
     def set_propSawTest(self, propSawTest):
         self.propSawTest = propSawTest  
 
-    def set_caamlVersion(self, caamlVersion):
-        self.caamlVersion = caamlVersion    
-
     # Getters
-    #def get_pitId(self):
-        #return self.pitId 
+    def get_caamlVersion(self):
+        return self.caamlVersion
+
+    def get_pitId(self):
+        return self.pitId 
     
     def get_date(self):
         return self.date
-    
-    def get_dateTime(self):
-        return self.dateTime
     
     def get_user(self):
         return self.user
@@ -94,7 +93,6 @@ class SnowPit(object):
     def get_propSawTest(self):
         return self.propSawTest
     
-    def get_caamlVersion(self):
-        return self.caamlVersion
+
 
 

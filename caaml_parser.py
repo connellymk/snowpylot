@@ -1,47 +1,40 @@
 import xml.etree.ElementTree as ET
-
 from snowPit import SnowPit
 
-
 def caaml_parser(file_path):
- 
-    common_tag = '{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}'
-    root = ET.parse(file_path).getroot()
-
-    POS_LAT_LONG = '{http://www.opengis.net/gml}pos'
-    locations_params_tags = [common_tag + 'ElevationPosition', 
-                                 common_tag + 'AspectPosition', 
-                                 common_tag + 'SlopeAnglePosition']
-    name_front_trim = len(common_tag)
-    name_back_trim = -len('Position')
-
-    location = {}
-
-    root = ET.parse(file_path).getroot()
-
-    try: 
-        loc = next(root.iter(POS_LAT_LONG), None).text
-        location['lat'], location['long'] = map(float, loc.split(' '))
-    except AttributeError:
-        location = None
-        return # No lat, lon loation for this pit
-    
-    position_params = [t for t in root.iter() if t.tag in locations_params_tags]
-    print(position_params)
-    for tp in position_params:
-        print(tp.tag[name_front_trim: name_back_trim])
-        location[tp.tag[name_front_trim: name_back_trim]] = tp.find(common_tag + 'position').text
-    
-
-    
-    #print(location)
+    """
+    Parses a SnowPilot caaml.xml file and returns a SnowPit object
+    """
 
     pit=SnowPit() # create a new SnowPit object
+ 
+    # Parse file and add info to SnowPit object
+    common_tag = '{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}' # Update to ready from xml file
+    gml_tag = '{http://www.opengis.net/gml}'
+    root = ET.parse(file_path).getroot()
 
-    ## Parse into SnowPit object
+    # caamlVersion
+    pit.set_caamlVersion(common_tag)
 
-    
-    # pitID, date, dateTime
+    # pitID
+    pitID_tag = common_tag + 'locRef'
+    gml_id_tag = gml_tag + 'id'
+    try:
+        pitID_str = next(root.iter(pitID_tag), None).attrib[gml_id_tag]
+        pitID = pitID_str.split('-')[-1]
+    except AttributeError:
+        pitID = None
+    pit.set_pitId(pitID)
+
+    # date
+    dateTime_tag = common_tag + 'timePosition'
+    try:
+        dt = next(root.iter(dateTime_tag), None).text
+    except AttributeError:
+        dt = None
+
+    date = dt.split('T')[0] if dt is not None else None
+    pit.set_date(date)
 
     # User Information
 
@@ -50,9 +43,6 @@ def caaml_parser(file_path):
     # Snow Profile Information
 
     # Stability Tests
-
-
-    
 
     return pit
 
