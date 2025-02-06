@@ -19,16 +19,47 @@ class StabilityTests(object):
         self.conductedTests.append(test)
 
 
-class extColumnTest(object):
-    def __init__(self):
-        self.extColumnTest = None
+class ExtColumnTest(object):
 
-class comprTest(object):
-    def __init__(self):
-        self.comprTest = None
+    """
+    ExtColumnTest class for representing results of ExtColumnTest stability test
+    """
 
-class propSawTest(object):
     def __init__(self):
-        self.propSawTest = None
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.testScore = None
+
+
+
+class ComprTest(object):
+
+    """
+    ComprTest class for representing results of a Compression Test stability test
+    """
+
+    def __init__(self):
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.testScore = None
+        self.fractureChar = None
+
+
+class PropSawTest(object):
+
+    """
+    PropSawTest class for representing results of a Propogation Saw Test
+    """
+
+    def __init__(self):
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.fractureProp = None
+        self.cutLength = None
+
+        self.columnLength = None
 
 
