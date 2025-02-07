@@ -14,13 +14,16 @@ class StabilityTests:
 
 
     def __str__(self):
-        stabilityTests_str = "StabilityTests: "
-        for test in self.conductedTests:
-            stabilityTests_str += f"\n {test}"
-        return stabilityTests_str
+        for test in self.ECT:
+            print(test)
+        for test in self.CT:
+            print(test)
+        for test in self.PST:
+            print(test)
 
     def add_test(self, test):
         self.conductedTests.append(test)
+
 
     def add_ECT(self, ect):
         self.ECT.append(ect)
@@ -44,8 +47,14 @@ class ExtColumnTest:
         self.testScore = None
 
     def __str__(self):
-        return f"ExtColumnTest: {self.failure}, {self.depthTop}, {self.comment}, {self.testScore}"
+        ect_str = "ExtColumnTest: "
+        ect_str += f"\n failure: {self.failure}"
+        ect_str += f"\n depthTop: {self.depthTop}"
+        ect_str += f"\n comment: {self.comment}"
+        ect_str += f"\n testScore: {self.testScore}"
+        return ect_str
     
+
     def set_failure(self, failure):
         self.failure = failure
 
@@ -72,7 +81,13 @@ class ComprTest:
         self.fractureChar = None
 
     def __str__(self):
-        return f"ComprTest: {self.failure}, {self.depthTop}, {self.comment}, {self.testScore}, {self.fractureChar}"
+        ct_str = "ComprTest: "
+        ct_str += f"\n failure: {self.failure}"
+        ct_str += f"\n depthTop: {self.depthTop}"
+        ct_str += f"\n comment: {self.comment}"
+        ct_str += f"\n testScore: {self.testScore}"
+        ct_str += f"\n fractureChar: {self.fractureChar}"
+        return ct_str
 
     def set_failure(self, failure):
         self.failure = failure
@@ -105,7 +120,14 @@ class PropSawTest:
         self.columnLength = None
 
     def __str__(self):
-        return f"PropSawTest: {self.failure}, {self.depthTop}, {self.comment}, {self.fractureProp}, {self.cutLength}, {self.columnLength}"
+        ps_str = "PropSawTest: "
+        ps_str += f"\n failure: {self.failure}"
+        ps_str += f"\n depthTop: {self.depthTop}"
+        ps_str += f"\n comment: {self.comment}"
+        ps_str += f"\n fractureProp: {self.fractureProp}"
+        ps_str += f"\n cutLength: {self.cutLength}"
+        ps_str += f"\n columnLength: {self.columnLength}"
+        return ps_str
 
     def set_failure(self, failure):
         self.failure = failure
