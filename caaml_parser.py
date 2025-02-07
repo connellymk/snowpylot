@@ -118,12 +118,13 @@ def caaml_parser(file_path):
 ## Test
 
 
-file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-pit1 = caaml_parser(file_path)
-print("pit1")
-print(pit1)
+#file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
+#pit1 = caaml_parser(file_path)
+#print("pit1")
+#print(pit1)
 
-file_path2 = "snowpits_200_MT/snowpits-66408-caaml.xml"
-pit2 = caaml_parser(file_path2)
-print("pit2")
-print(pit2)
+
+#file_path2 = "snowpits_200_MT/snowpits-66408-caaml.xml"
+#pit2 = caaml_parser(file_path2)
+#print("pit2")
+#print(pit2)

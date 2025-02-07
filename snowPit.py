@@ -34,15 +34,15 @@ class SnowPit(object):
         snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
         snowPit_str += f"\n pitId: {self.pitId} "
         snowPit_str += f"\n Date: {self.date} "
-        snowPit_str += f"\n User: {self.user} "
-        snowPit_str += f"\n Location: {self.location} "
+        snowPit_str += f"\n User:"
+        for key, value in self.user.items():
+            snowPit_str += f"\n    {key}: {value}"
+        snowPit_str += f"\n Location:"
+        for key, value in self.location.items():
+            snowPit_str += f"\n    {key}: {value}"
         snowPit_str += f"\n Snow Profile: {self.snowProfile} "
         snowPit_str += f"\n Stability Tests: {self.stabilityTests} "
-        
-
-
         return snowPit_str
-
 
     # Setters
     
