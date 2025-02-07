@@ -64,18 +64,42 @@ def caaml_parser(file_path):
     pit.location['Region'] = next(root.iter(common_tag + 'region'), None).text
 
     ## Snow Profile Information
-    snowProfile = SnowProfile()
 
-    # Snow Profile Measurements
+    # Measurement Direction
     try:
         measurementDirection = next(root.iter(common_tag + 'SnowProfileMeasurements'), None).get('dir')
     except AttributeError:
         measurementDirection = None
-    snowProfile.set_measurementDirection(measurementDirection)
+    pit.snowProfile.set_measurementDirection(measurementDirection)
+
+    # Profile Depth
+    try:
+        profileDepth = next(root.iter(common_tag + 'profileDepth'), None).text
+        profileDepth_units = next(root.iter(common_tag + 'profileDepth'), None).get('uom')
+        profileDepth = [float(profileDepth), profileDepth_units]
+    except AttributeError:
+        profileDepth = None
+    pit.snowProfile.set_profileDepth(profileDepth)
+
+    # hS
+    try:
+        hS_val = next(root.iter(common_tag + 'height'), None).text
+        hS_units = next(root.iter(common_tag + 'height'), None).get('uom')
+        hS = [float(hS_val), hS_units]
+    except AttributeError:
+        hS = None
+    pit.snowProfile.set_hS(hS)
+
+
+    # Surface Conditions
+
+    # Layers
+
+    # Temperature Profile
+
 
 
     # Stability Tests
-    stbTests = StabilityTests()
     test_results = next(root.iter(common_tag + 'stbTests'))
 
     for test in test_results.iter(common_tag + 'ExtColumnTest'): # All ECTs
@@ -88,7 +112,7 @@ def caaml_parser(file_path):
             elif prop.tag.endswith('testScore'):
                 ect.set_testScore(prop.text)
 
-        stbTests.add_ECT(ect)
+        pit.stabilityTests.add_ECT(ect)
 
     for test in test_results.iter(common_tag + 'ComprTest'): # All CTs
         ct = ComprTest()
@@ -102,10 +126,11 @@ def caaml_parser(file_path):
             elif prop.tag.endswith('fractureChar'):
                 ct.set_fractureChar(prop.text)
 
-        stbTests.add_CT(ct)
+        pit.stabilityTests.add_CT(ct)
 
     for test in test_results.iter(common_tag + 'PropSawTest'): # All PSTs
         ps = PropSawTest()
+
         for prop in test[0].iter(): 
             if prop.tag.endswith('depthTop'):
                 depthTop = float(prop.text)
@@ -118,9 +143,7 @@ def caaml_parser(file_path):
             elif prop.tag.endswith('columnLength'):
                 ps.set_columnLength(prop.text)
 
-        stbTests.add_PST(ps)
-
-    pit.set_stabilityTests(stbTests)
+        pit.stabilityTests.add_PST(ps)
 
     return pit
 

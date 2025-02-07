@@ -39,25 +39,6 @@ class SnowProfile(object):
     def set_surfCond(self, surfCond):
         self.surfCond = surfCond
 
-    # Getters
-    def get_measurementDirection(self):
-        return self.measurementDirection
-
-    def get_profileDepth(self):
-        return self.profileDepth
-    
-    def get_hS(self):
-        return self.hS
-
-    def get_surfCond(self):
-        return self.surfCond
-        
-
-
-
-
-
-
 class SurfaceCondition(object):
 
 
@@ -88,17 +69,6 @@ class SurfaceCondition(object):
     def set_penetrationSki(self, penetrationSki):
         self.penetrationSki = penetrationSki
 
-    # Getters
-    def get_windLoading(self):
-        return self.windLoading
-    
-    def get_penetrationFoot(self):
-        return self.penetrationFoot
-
-    def get_penetrationSki(self):
-        return self.penetrationSki
-        
-        
 
 
 class Layer(object):
@@ -148,25 +118,6 @@ class Layer(object):
     def set_layerOfConcern(self, layerOfConcern):
         self.layerOfConcern = layerOfConcern
 
-    # Getters
-    def get_depthTop(self):
-        return self.depthTop
-    
-    def get_thickness(self):
-        return self.thickness
-
-    def get_grainFormPrimary(self):
-        return self.grainFormPrimary
-    
-    def get_hardness(self):
-        return self.hardness
-
-    def get_wetness(self):
-        return self.wetness
-
-    def get_layerOfConcern(self):
-        return self.layerOfConcern
-
 
 
 class TempMeasurement(object):
@@ -193,13 +144,4 @@ class TempMeasurement(object):
     def set_snowTemp(self, snowTemp):
         self.snowTemp = snowTemp
 
-    # Getters
-    def get_depth(self):
-        return self.depth
-
-    def get_snowTemp(self):
-        return self.snowTemp
-        
-        
-        
-        
+    

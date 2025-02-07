@@ -78,34 +78,3 @@ class SnowPit(object):
     def set_propSawTest(self, propSawTest):
         self.propSawTest = propSawTest  
 
-    # Getters
-    def get_caamlVersion(self):
-        return self.caamlVersion
-
-    def get_pitId(self):
-        return self.pitId 
-    
-    def get_date(self):
-        return self.date
-    
-    def get_user(self):
-        return self.user
-    
-    def get_location(self):
-        return self.location
-    
-    def get_snowProfile(self):
-        return self.snowProfile
-    
-    def get_extColumnTest(self):
-        return self.extColumnTest
-    
-    def get_comprTest(self):
-        return self.comprTest
-    
-    def get_propSawTest(self):
-        return self.propSawTest
-    
-
-
-

@@ -14,13 +14,14 @@ class StabilityTests:
 
     def __str__(self):
         stbTests_str = ""
-        for test in self.ECT:
-            stbTests_str += f"\n {test}"
-        for test in self.CT:
-            stbTests_str += f"\n {test}"
-        for test in self.PST:
-            stbTests_str += f"\n {test}"
+        for i, test in enumerate(self.ECT):
+            stbTests_str += f"\n {i+1}. {test}"
+        for i, test in enumerate(self.CT):
+            stbTests_str += f"\n {i+1}. {test}"
+        for i, test in enumerate(self.PST):
+            stbTests_str += f"\n {i+1}. {test}"
         return stbTests_str
+
 
     def add_ECT(self, ect):
         self.ECT.append(ect)
@@ -50,9 +51,7 @@ class ExtColumnTest:
         ect_str += f"\n    comment: {self.comment}"
         ect_str += f"\n    testScore: {self.testScore}"
         return ect_str
-
-
-    
+  
 
     def set_failure(self, failure):
         self.failure = failure
