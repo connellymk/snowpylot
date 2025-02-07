@@ -33,12 +33,14 @@ class SnowPit(object):
         snowPit_str = "SnowPit: "
         snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
         snowPit_str += f"\n pitId: {self.pitId} "
-        snowPit_str += f"\n date: {self.date} "
-        snowPit_str += f"\n user: {self.user} "
-        snowPit_str += f"\n location: {self.location} "
-        snowPit_str += f"\n snowProfile: {self.snowProfile} "
-        snowPit_str += f"\n stabilityTests: {self.stabilityTests} "
+        snowPit_str += f"\n Date: {self.date} "
+        snowPit_str += f"\n User: {self.user} "
+        snowPit_str += f"\n Location: {self.location} "
+        snowPit_str += f"\n Snow Profile: {self.snowProfile} "
+        snowPit_str += f"\n Stability Tests: {self.stabilityTests} "
         
+
+
         return snowPit_str
 
 
@@ -60,8 +62,12 @@ class SnowPit(object):
     def set_location(self, location):
         self.location = location
 
+    def set_stabilityTests(self, stabilityTests):
+        self.stabilityTests = stabilityTests
+
     def set_snowProfile(self, snowProfile):
         self.snowProfile = snowProfile
+
 
     def set_extColumnTest(self, extColumnTest):
         self.extColumnTest = extColumnTest

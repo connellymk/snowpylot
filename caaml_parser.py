@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from snowPit import SnowPit
+from stabilityTests import StabilityTests, ExtColumnTest, ComprTest, PropSawTest
 
 def caaml_parser(file_path):
     '''
@@ -64,13 +65,65 @@ def caaml_parser(file_path):
     # Snow Profile Information
 
     # Stability Tests
+    stbTests = StabilityTests()
+    test_results = next(root.iter(common_tag + 'stbTests'))
 
+    for test in test_results.iter(common_tag + 'ExtColumnTest'): # All ECTs
+        ect = ExtColumnTest()
+        for prop in test[0].iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                ect.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('testScore'):
+                ect.set_testScore(prop.text)
+
+        stbTests.add_ECT(ect)
+
+    for test in test_results.iter(common_tag + 'ComprTest'): # All CTs
+        ct = ComprTest()
+        for prop in test[0].iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                ct.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('testScore'):
+                ct.set_testScore(prop.text)
+            elif prop.tag.endswith('fractureChar'):
+                ct.set_fractureChar(prop.text)
+
+        stbTests.add_CT(ct)
+
+    for test in test_results.iter(common_tag + 'PropSawTest'): # All PSTs
+        ps = PropSawTest()
+        for prop in test[0].iter(): 
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                ps.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('fractureProp'):
+                ps.set_fractureProp(prop.text)
+            elif prop.tag.endswith('cutLength'):
+                ps.set_cutLength(prop.text)
+            elif prop.tag.endswith('columnLength'):
+                ps.set_columnLength(prop.text)
+
+        stbTests.add_PST(ps)
+
+    pit.set_stabilityTests(stbTests)
 
     return pit
 
 
 ## Test
 
-#file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-#pit1 = caaml_parser(file_path)
-#print(pit1)
+
+file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
+pit1 = caaml_parser(file_path)
+print("pit1")
+print(pit1)
+
+file_path2 = "snowpits_200_MT/snowpits-66408-caaml.xml"
+pit2 = caaml_parser(file_path2)
+print("pit2")
+print(pit2)
