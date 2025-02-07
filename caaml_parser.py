@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from snowPit import SnowPit
 from stabilityTests import StabilityTests, ExtColumnTest, ComprTest, PropSawTest
-from snowProfile import SnowProfile, Layer, TempMeasurement
+from snowProfile import SnowProfile, SurfaceCondition, Layer, TempMeasurement
 
 def caaml_parser(file_path):
     '''
@@ -90,8 +90,18 @@ def caaml_parser(file_path):
         hS = None
     pit.snowProfile.set_hS(hS)
 
+    ## Surface Conditions
+    # Boot Penetration
+    try:
+        penFoot_val = next(root.iter(common_tag + 'penetrationFoot'), None).text
+        penFoot_units = next(root.iter(common_tag + 'penetrationFoot'), None).get('uom')
+        penFoot = [float(penFoot_val), penFoot_units]
+    except AttributeError:
+        penFoot = None
+    pit.snowProfile.set_penetrationFoot(penFoot)
 
-    # Surface Conditions
+
+    # Ski Penetration
 
     # Layers
 
