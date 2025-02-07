@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 from snowPit import SnowPit
 from stabilityTests import StabilityTests, ExtColumnTest, ComprTest, PropSawTest
+from snowProfile import SnowProfile, Layer, TempMeasurement
 
 def caaml_parser(file_path):
     '''
@@ -62,7 +63,16 @@ def caaml_parser(file_path):
     pit.location['Country'] = next(root.iter(common_tag + 'country'), None).text
     pit.location['Region'] = next(root.iter(common_tag + 'region'), None).text
 
-    # Snow Profile Information
+    ## Snow Profile Information
+    snowProfile = SnowProfile()
+
+    # Snow Profile Measurements
+    try:
+        measurementDirection = next(root.iter(common_tag + 'SnowProfileMeasurements'), None).get('dir')
+    except AttributeError:
+        measurementDirection = None
+    snowProfile.set_measurementDirection(measurementDirection)
+
 
     # Stability Tests
     stbTests = StabilityTests()
@@ -118,10 +128,10 @@ def caaml_parser(file_path):
 ## Test
 
 
-#file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-#pit1 = caaml_parser(file_path)
-#print("pit1")
-#print(pit1)
+file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
+pit1 = caaml_parser(file_path)
+print("pit1")
+print(pit1)
 
 
 #file_path2 = "snowpits_200_MT/snowpits-66408-caaml.xml"
