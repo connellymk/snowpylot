@@ -20,6 +20,7 @@ class StabilityTests:
             print(test)
         for test in self.PST:
             print(test)
+        return ""
 
     def add_test(self, test):
         self.conductedTests.append(test)
