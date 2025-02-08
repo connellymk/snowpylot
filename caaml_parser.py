@@ -91,6 +91,9 @@ def caaml_parser(file_path):
     pit.snowProfile.set_hS(hS)
 
     ## Surface Conditions
+
+    # Wind Loading
+
     # Boot Penetration
     try:
         penFoot_val = next(root.iter(common_tag + 'penetrationFoot'), None).text
@@ -98,11 +101,17 @@ def caaml_parser(file_path):
         penFoot = [float(penFoot_val), penFoot_units]
     except AttributeError:
         penFoot = None
-    pit.snowProfile.set_penetrationFoot(penFoot)
-
+    pit.snowProfile.surfCond.set_penetrationFoot(penFoot)
 
     # Ski Penetration
-
+    try:
+        penSki_val = next(root.iter(common_tag + 'penetrationSki'), None).text
+        penSki_units = next(root.iter(common_tag + 'penetrationSki'), None).get('uom')
+        penSki = [float(penSki_val), penSki_units]
+    except AttributeError:
+        penSki = None
+    pit.snowProfile.surfCond.set_penetrationSki(penSki)
+    
     # Layers
 
     # Temperature Profile
