@@ -42,12 +42,15 @@ def caaml_parser(file_path):
     ## Location Information
     #Latitude and Longitude
     try:
-        coords = next(root.iter(gml_tag + 'pos'), None).text
-        lat_long=coords.split(' ')
+        lat_long = next(root.iter(gml_tag + 'pos'), None).text
+        lat_long=lat_long.split(' ')
     except AttributeError:
-        coords = None
-    pit.location['Latitude'] = float(lat_long[0])
-    pit.location['Longitude'] = float(lat_long[1])
+        lat_long = None
+
+
+    if lat_long is not None:
+        pit.location['Latitude'] = float(lat_long[0])
+        pit.location['Longitude'] = float(lat_long[1])
 
     # Elevation, Aspect, and SlopeAngle: Reference code from Ron
     locations_params_tags = [common_tag + 'ElevationPosition', 
@@ -197,13 +200,13 @@ def caaml_parser(file_path):
     return pit
 
 
+
 ## Test
+#file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
+#pit1 = caaml_parser(file_path)
+#print("pit1")
+#print(pit1)
 
-
-file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-pit1 = caaml_parser(file_path)
-print("pit1")
-print(pit1)
 
 
 #file_path2 = "snowpits_200_MT/snowpits-66408-caaml.xml"
