@@ -9,7 +9,7 @@ class SnowPit(object):
 
     def __init__(self):
         self.caamlVersion=None
-        self.pitId = None 
+        self.pitID = None 
         self.date = None 
         self.user = {
             'Organization': None, 
@@ -32,7 +32,7 @@ class SnowPit(object):
     def __str__(self):
         snowPit_str = "SnowPit: "
         snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
-        snowPit_str += f"\n pitId: {self.pitId} "
+        snowPit_str += f"\n pitID: {self.pitId} "
         snowPit_str += f"\n Date: {self.date} "
         snowPit_str += f"\n User:"
         for key, value in self.user.items():

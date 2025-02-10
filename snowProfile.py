@@ -5,12 +5,15 @@ class SnowProfile(object):
     """
 
     def __init__(self):
+        # Parsed properties
         self.measurementDirection = None
         self.profileDepth = None
         self.hS = None
         self.surfCond=SurfaceCondition()
         self.layers=[]
         self.tempProfile=[]
+        # Computed properties
+        self.layers_of_concern = []
 
     def __str__(self):
         snowProfile_str = ""
@@ -24,8 +27,10 @@ class SnowProfile(object):
         snowProfile_str += f"\n    tempProfile:"
         for i, temp in enumerate(self.tempProfile):
             snowProfile_str += f"\n    temp {i+1}: {temp}"
+        snowProfile_str += f"\n    layers_of_concern: {self.layers_of_concern}"
         return snowProfile_str
     
+
 
     def set_measurementDirection(self, measurementDirection):
         self.measurementDirection = measurementDirection
@@ -41,6 +46,9 @@ class SnowProfile(object):
 
     def add_layer(self, layer):
         self.layers.append(layer)
+        if layer.layerOfConcern == True:
+            self.layers_of_concern.append(layer)
+
 
 
 class SurfaceCondition(object):
