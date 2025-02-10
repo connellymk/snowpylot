@@ -18,12 +18,12 @@ class SnowProfile(object):
         snowProfile_str += f"\n    profileDepth: {self.profileDepth}"
         snowProfile_str += f"\n    hS: {self.hS}"
         snowProfile_str += f"\n    surfCond: {self.surfCond}"
-        snowProfile_str += f"\n    layers:"
+        snowProfile_str += f"\n    Layers:"
         for i, layer in enumerate(self.layers):
-            snowProfile_str += f"\n\t layer {i+1}: {layer}"
+            snowProfile_str += f"\n    Layer {i+1}: {layer}"
         snowProfile_str += f"\n    tempProfile:"
         for i, temp in enumerate(self.tempProfile):
-            snowProfile_str += f"\n\t temp {i+1}: {temp}"
+            snowProfile_str += f"\n    temp {i+1}: {temp}"
         return snowProfile_str
     
 
@@ -39,8 +39,11 @@ class SnowProfile(object):
     def set_surfCond(self, surfCond):
         self.surfCond = surfCond
 
-class SurfaceCondition(object):
+    def add_layer(self, layer):
+        self.layers.append(layer)
 
+
+class SurfaceCondition(object):
 
     """
     SurfCond class for representing the surface condition of a snow profile from a SnowPilot caaml.xml file
@@ -90,15 +93,16 @@ class Layer(object):
 
     def __str__(self):
         layer_str = ""
-        layer_str += f"\n    depthTop: {self.depthTop}"
-        layer_str += f"\n    thickness: {self.thickness}"
-        layer_str += f"\n    grainFormPrimary: {self.grainFormPrimary}"
-        layer_str += f"\n    hardness: {self.hardness}"
-        layer_str += f"\n    wetness: {self.wetness}"
-        layer_str += f"\n    layerOfConcern: {self.layerOfConcern}"
-        layer_str += f"\n    grainFormPrimary_Class: {self.grainFormPrimary_Class}"
+        layer_str += f"\n\t depthTop: {self.depthTop}"
+        layer_str += f"\n\t thickness: {self.thickness}"
+        layer_str += f"\n\t grainFormPrimary: {self.grainFormPrimary}"
+        layer_str += f"\n\t hardness: {self.hardness}"
+        layer_str += f"\n\t wetness: {self.wetness}"
+        layer_str += f"\n\t layerOfConcern: {self.layerOfConcern}"
+        layer_str += f"\n\t grainFormPrimary_Class: {self.grainFormPrimary_Class}"
         return layer_str
     
+
     # Setters
     def set_depthTop(self, depthTop):
         self.depthTop = depthTop
@@ -108,6 +112,7 @@ class Layer(object):
 
     def set_grainFormPrimary(self, grainFormPrimary):
         self.grainFormPrimary = grainFormPrimary
+        self.grainFormPrimary_Class = self.set_grainForm_Class(grainFormPrimary)
 
     def set_hardness(self, hardness):
         self.hardness = hardness
@@ -117,6 +122,13 @@ class Layer(object):
 
     def set_layerOfConcern(self, layerOfConcern):
         self.layerOfConcern = layerOfConcern
+
+    def set_grainForm_Class(self, grainForm):
+        if len(grainForm) > 2:
+            return grainForm[:2]
+        else:
+            return grainForm
+
 
 
 

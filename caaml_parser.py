@@ -113,6 +113,36 @@ def caaml_parser(file_path):
     pit.snowProfile.surfCond.set_penetrationSki(penSki)
     
     # Layers
+    layers = root.iter(common_tag + 'Layer')
+    for layer in layers:
+        layer_obj = Layer()
+        for prop in layer.iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop_val = prop.text
+                depthTop_units = prop.get('uom')
+                depthTop=[depthTop_val,depthTop_units]
+                layer_obj.set_depthTop(depthTop)
+            if prop.tag.endswith('thickness'):
+                thickness_val = prop.text
+                thickness_units = prop.get('uom')
+                thickness=[thickness_val,thickness_units]
+                layer_obj   .set_thickness(thickness)
+            if prop.tag.endswith('grainFormPrimary'):
+                grainFormPrimary = prop.text
+                layer_obj.set_grainFormPrimary(grainFormPrimary)
+            if prop.tag.endswith('hardness'):
+                hardness = prop.text
+                layer_obj.set_hardness(hardness)
+            if prop.tag.endswith('wetness'):
+                wetness = prop.text
+                layer_obj.set_wetness(wetness)
+            if prop.tag.endswith('layerOfConcern'):
+                layerOfConcern = prop.text
+                layer_obj.set_layerOfConcern(layerOfConcern)
+        pit.snowProfile.add_layer(layer_obj)
+
+
+
 
     # Temperature Profile
 
