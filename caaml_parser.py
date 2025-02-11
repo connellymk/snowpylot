@@ -202,10 +202,10 @@ def caaml_parser(file_path):
 
 
 ## Test
-#file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-#pit1 = caaml_parser(file_path)
-#print("pit1")
-#print(pit1)
+file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
+pit1 = caaml_parser(file_path)
+print("pit1")
+print(pit1)
 
 
 
