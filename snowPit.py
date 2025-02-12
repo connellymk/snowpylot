@@ -12,11 +12,13 @@ class SnowPit(object):
         self.pitID = None 
         self.date = None 
         self.user = {
-            'Organization': None, 
-            'Affiliation': None, 
-            'Role': None, 
-            'Name': None, 
-            'UserID': None}   
+            'Name': None,
+            'Email': None,
+            'LastName': None,
+            'FirstName': None,
+            'Professional': None,
+            'Affiliation': None
+            }   
         self.location = {
             'Latitude': None, 
             'Longitude': None, 
