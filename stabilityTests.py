@@ -9,6 +9,7 @@ class StabilityTests:
     def __init__(self):
         self.ECT = []
         self.CT = []
+        self.RBT = []
         self.PST = []
 
 
@@ -18,6 +19,8 @@ class StabilityTests:
             stbTests_str += f"\n    ExtColumnTest {i+1}: {test}"
         for i, test in enumerate(self.CT):
             stbTests_str += f"\n    CompressionTest {i+1}: {test}"
+        for i, test in enumerate(self.RBT):
+            stbTests_str += f"\n    RutschblockTest {i+1}: {test}"
         for i, test in enumerate(self.PST):
             stbTests_str += f"\n    PropSawTest {i+1}: {test}"
         return stbTests_str
@@ -28,6 +31,9 @@ class StabilityTests:
 
     def add_CT(self, ct):
         self.CT.append(ct)
+
+    def add_RBT(self, rbt):
+        self.RBT.append(rbt)
 
     def add_PST(self, pst):
         self.PST.append(pst)
@@ -103,6 +109,49 @@ class ComprTest:
 
     def set_fractureChar(self, fractureChar):
         self.fractureChar = fractureChar
+
+class RutschblockTest:
+
+    """
+    RutschblockTest class for representing results of a Rutschblock Test
+    """
+
+    def __init__(self):
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.testScore = None
+        self.fractureChar = None
+        self.releaseType = None
+
+    def __str__(self):
+        rbt_str = ""
+        rbt_str += f"\n\t failure: {self.failure}"
+        rbt_str += f"\n\t depthTop: {self.depthTop}"
+        rbt_str += f"\n\t comment: {self.comment}"
+        rbt_str += f"\n\t testScore: {self.testScore}"
+        rbt_str += f"\n\t fractureChar: {self.fractureChar}"
+        rbt_str += f"\n\t releaseType: {self.releaseType}"
+        return rbt_str
+    
+    def set_failure(self, failure):
+        self.failure = failure
+
+    def set_depthTop(self, depthTop):
+        self.depthTop = depthTop
+
+    def set_comment(self, comment):
+        self.comment = comment
+
+    def set_testScore(self, testScore):
+        self.testScore = testScore
+
+    def set_fractureChar(self, fractureChar):
+        self.fractureChar = fractureChar
+
+    def set_releaseType(self, releaseType):
+        self.releaseType = releaseType
+
 
 
 class PropSawTest:

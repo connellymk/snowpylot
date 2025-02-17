@@ -13,7 +13,7 @@ class SnowProfile(object):
         self.layers=[]
         self.tempProfile=[]
         # Computed properties
-        self.layers_of_concern = []
+        self.layer_of_concern = None
 
     def __str__(self):
         snowProfile_str = ""
@@ -27,7 +27,7 @@ class SnowProfile(object):
         snowProfile_str += f"\n    tempProfile:"
         for i, temp in enumerate(self.tempProfile):
             snowProfile_str += f"\n    temp {i+1}: {temp}"
-        snowProfile_str += f"\n    layers_of_concern: {self.layers_of_concern}"
+        snowProfile_str += f"\n    layer_of_concern: {self.layer_of_concern}"
         return snowProfile_str
     
 
