@@ -7,10 +7,13 @@ class StabilityTests:
     """
 
     def __init__(self):
-        self.ECT = []
-        self.CT = []
-        self.RBT = []
-        self.PST = []
+        self.ECT = [] # ExtColumn Test
+        self.CT = [] # Compression Test
+        self.RBT = [] # Rutschblock Test
+        self.PST = [] # Propogation Saw Test
+        self.SBT = [] # StuffBlockTest
+        self.SST = [] # Shovel Shear Test
+        self.DTT = [] # Deep Tap Test
 
 
     def __str__(self):
@@ -23,6 +26,12 @@ class StabilityTests:
             stbTests_str += f"\n    RutschblockTest {i+1}: {test}"
         for i, test in enumerate(self.PST):
             stbTests_str += f"\n    PropSawTest {i+1}: {test}"
+        for i, test in enumerate(self.SBT):
+            stbTests_str += f"\n    StuffBlockTest {i+1}: {test}"
+        for i, test in enumerate(self.SST):
+            stbTests_str += f"\n    ShovelShearTest {i+1}: {test}"
+        for i, test in enumerate(self.DTT):
+            stbTests_str += f"\n    DeepTapTest {i+1}: {test}"
         return stbTests_str
     
 
@@ -37,6 +46,15 @@ class StabilityTests:
 
     def add_PST(self, pst):
         self.PST.append(pst)
+
+    def add_SBT(self, sbt):
+        self.SBT.append(sbt)
+
+    def add_SST(self, sst):
+        self.SST.append(sst)
+
+    def add_DTT(self, dtt):
+        self.DTT.append(dtt)
 
 class ExtColumnTest:
 
@@ -83,7 +101,7 @@ class ComprTest:
         self.depthTop = None
         self.comment = None
         self.testScore = None
-        self.fractureChar = None
+        self.shearQuality = None
 
     def __str__(self):
         ct_str = ""
@@ -91,7 +109,7 @@ class ComprTest:
         ct_str += f"\n\t depthTop: {self.depthTop}"
         ct_str += f"\n\t comment: {self.comment}"
         ct_str += f"\n\t testScore: {self.testScore}"
-        ct_str += f"\n\t fractureChar: {self.fractureChar}"
+        ct_str += f"\n\t shearQuality: {self.shearQuality}"
         return ct_str
 
 
@@ -107,8 +125,8 @@ class ComprTest:
     def set_testScore(self, testScore):
         self.testScore = testScore
 
-    def set_fractureChar(self, fractureChar):
-        self.fractureChar = fractureChar
+    def set_shearQuality(self, shearQuality):
+        self.shearQuality = shearQuality
 
 class RutschblockTest:
 
@@ -121,7 +139,7 @@ class RutschblockTest:
         self.depthTop = None
         self.comment = None
         self.testScore = None
-        self.fractureChar = None
+        self.shearQuality = None
         self.releaseType = None
 
     def __str__(self):
@@ -130,7 +148,7 @@ class RutschblockTest:
         rbt_str += f"\n\t depthTop: {self.depthTop}"
         rbt_str += f"\n\t comment: {self.comment}"
         rbt_str += f"\n\t testScore: {self.testScore}"
-        rbt_str += f"\n\t fractureChar: {self.fractureChar}"
+        rbt_str += f"\n\t shearQuality: {self.shearQuality}"
         rbt_str += f"\n\t releaseType: {self.releaseType}"
         return rbt_str
     
@@ -146,13 +164,11 @@ class RutschblockTest:
     def set_testScore(self, testScore):
         self.testScore = testScore
 
-    def set_fractureChar(self, fractureChar):
-        self.fractureChar = fractureChar
+    def set_shearQuality(self, shearQuality):
+        self.shearQuality = shearQuality
 
     def set_releaseType(self, releaseType):
         self.releaseType = releaseType
-
-
 
 class PropSawTest:
 
@@ -198,5 +214,105 @@ class PropSawTest:
     def set_columnLength(self, columnLength):
         self.columnLength = columnLength
 
+class StuffBlockTest:
 
+    """
+    StuffBlockTest class for representing results of a Stuff Block Test
+    """
 
+    def __init__(self):
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.testScore = None
+        self.shearQuality = None
+
+    def __str__(self):
+        sb_str = ""
+        sb_str += f"\n\t failure: {self.failure}"   
+        sb_str += f"\n\t depthTop: {self.depthTop}"
+        sb_str += f"\n\t comment: {self.comment}"
+        sb_str += f"\n\t testScore: {self.testScore}"
+        sb_str += f"\n\t shearQuality: {self.shearQuality}"
+        return sb_str
+        
+    def set_failure(self, failure):
+        self.failure = failure
+
+    def set_depthTop(self, depthTop):
+        self.depthTop = depthTop
+
+    def set_comment(self, comment): 
+        self.comment = comment
+
+    def set_testScore(self, testScore):
+        self.testScore = testScore
+
+    def set_shearQuality(self, shearQuality):
+        self.shearQuality = shearQuality
+
+class ShovelShearTest:
+
+    """
+    ShovelShearTest class for representing results of a Shovel Shear Test
+    """
+
+    def __init__(self):
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.testScore = None
+
+    def __str__(self):
+        ss_str = ""
+        ss_str += f"\n\t failure: {self.failure}"
+        ss_str += f"\n\t depthTop: {self.depthTop}"
+        ss_str += f"\n\t comment: {self.comment}"
+        ss_str += f"\n\t testScore: {self.testScore}"
+        return ss_str
+        
+    def set_failure(self, failure):
+        self.failure = failure
+
+    def set_depthTop(self, depthTop):
+        self.depthTop = depthTop
+
+    def set_comment(self, comment):
+        self.comment = comment
+
+    def set_testScore(self, testScore):
+        self.testScore = testScore
+
+class DeepTapTest:
+
+    """
+    DeepTapTest class for representing results of a Deep Tap Test
+    """
+
+    def __init__(self):
+        self.failure = None
+        self.depthTop = None
+        self.comment = None
+        self.testScore = None
+        self.shearQuality = None
+
+    def __str__(self):
+        dtt_str = ""
+        dtt_str += f"\n\t failure: {self.failure}"
+        dtt_str += f"\n\t depthTop: {self.depthTop}"
+        dtt_str += f"\n\t comment: {self.comment}"
+        dtt_str += f"\n\t testScore: {self.testScore}"
+        dtt_str += f"\n\t shearQuality: {self.shearQuality}"
+        return dtt_str
+    
+    def set_failure(self, failure):
+        self.failure = failure
+
+    def set_depthTop(self, depthTop):
+        self.depthTop = depthTop
+
+    def set_comment(self, comment):
+        self.comment = comment
+
+    def set_testScore(self, testScore):
+        self.testScore = testScore
