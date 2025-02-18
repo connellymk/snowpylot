@@ -191,7 +191,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_CT(ct)
 
-    for test in test_results.iter(common_tag + 'RutschblockTest'): # All RBTs  #### confirm correct tag
+    for test in test_results.iter(common_tag + 'RBlockTest'): # All RBTs  #### confirm correct tag
         rbt = RutschblockTest()
         for prop in test[0].iter():
             if prop.tag.endswith('depthTop'):
