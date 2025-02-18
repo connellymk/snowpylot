@@ -63,32 +63,25 @@ class ExtColumnTest:
     """
 
     def __init__(self):
-        self.failure = None
         self.depthTop = None
-        self.comment = None
         self.testScore = None
+        self.comment = None
 
     def __str__(self):
         ect_str = ""
-        ect_str += f"\n\t failure: {self.failure}"
         ect_str += f"\n\t depthTop: {self.depthTop}"
-        ect_str += f"\n\t comment: {self.comment}"
         ect_str += f"\n\t testScore: {self.testScore}"
+        ect_str += f"\n\t comment: {self.comment}"
         return ect_str
-
-  
-
-    def set_failure(self, failure):
-        self.failure = failure
 
     def set_depthTop(self, depthTop):
         self.depthTop = depthTop
 
-    def set_comment(self, comment):
-        self.comment = comment
-
     def set_testScore(self, testScore):
         self.testScore = testScore
+
+    def set_comment(self, comment):
+        self.comment = comment   
 
 class ComprTest:
 
@@ -97,36 +90,30 @@ class ComprTest:
     """
 
     def __init__(self):
-        self.failure = None
         self.depthTop = None
-        self.comment = None
         self.testScore = None
         self.shearQuality = None
+        self.comment = None
 
     def __str__(self):
         ct_str = ""
-        ct_str += f"\n\t failure: {self.failure}"
         ct_str += f"\n\t depthTop: {self.depthTop}"
-        ct_str += f"\n\t comment: {self.comment}"
         ct_str += f"\n\t testScore: {self.testScore}"
         ct_str += f"\n\t shearQuality: {self.shearQuality}"
+        ct_str += f"\n\t comment: {self.comment}"
         return ct_str
-
-
-    def set_failure(self, failure):
-        self.failure = failure
 
     def set_depthTop(self, depthTop):
         self.depthTop = depthTop
-
-    def set_comment(self, comment):
-        self.comment = comment
 
     def set_testScore(self, testScore):
         self.testScore = testScore
 
     def set_shearQuality(self, shearQuality):
         self.shearQuality = shearQuality
+        
+    def set_comment(self, comment):
+        self.comment = comment
 
 class RutschblockTest:
 

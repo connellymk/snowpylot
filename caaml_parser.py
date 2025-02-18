@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 from snowPit import SnowPit
-from stabilityTests import StabilityTests, ExtColumnTest, ComprTest, PropSawTest
+from stabilityTests import *
 from snowProfile import SnowProfile, SurfaceCondition, Layer, TempMeasurement
 
 def caaml_parser(file_path):
@@ -163,6 +163,8 @@ def caaml_parser(file_path):
                 ect.set_depthTop([depthTop, depthTop_units])
             elif prop.tag.endswith('testScore'):
                 ect.set_testScore(prop.text)
+            elif prop.tag.endswith('comment'):
+                ect.set_comment(prop.text)
 
         pit.stabilityTests.add_ECT(ect)
 
@@ -175,10 +177,29 @@ def caaml_parser(file_path):
                 ct.set_depthTop([depthTop, depthTop_units])
             elif prop.tag.endswith('testScore'):
                 ct.set_testScore(prop.text)
-            elif prop.tag.endswith('fractureChar'):
-                ct.set_fractureChar(prop.text)
+            elif prop.tag.endswith('fractureCharacter'):
+                ct.set_shearQuality(prop.text)
+            elif prop.tag.endswith('comment'):
+                ct.set_comment(prop.text)
+
 
         pit.stabilityTests.add_CT(ct)
+
+    for test in test_results.iter(common_tag + 'RutschblockTest'): # All RBTs
+        rbt = RutschblockTest()
+        for prop in test[0].iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                rbt.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('testScore'):
+                rbt.set_testScore(prop.text)
+            elif prop.tag.endswith('fractureCharacter'):
+                rbt.set_shearQuality(prop.text)
+
+
+                
+
 
     for test in test_results.iter(common_tag + 'PropSawTest'): # All PSTs
         ps = PropSawTest()
@@ -196,6 +217,8 @@ def caaml_parser(file_path):
                 ps.set_columnLength(prop.text)
 
         pit.stabilityTests.add_PST(ps)
+
+
 
     return pit
 
