@@ -33,7 +33,7 @@ class SnowPit(object):
     def __str__(self):
         snowPit_str = "SnowPit: "
         snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
-        snowPit_str += f"\n pitID: {self.pitId} "
+        snowPit_str += f"\n pitID: {self.pitID} "
         snowPit_str += f"\n Date: {self.date} "
         snowPit_str += f"\n User:"
         for key, value in self.user.items():
@@ -50,8 +50,8 @@ class SnowPit(object):
     def set_caamlVersion(self, caamlVersion):
         self.caamlVersion = caamlVersion
 
-    def set_pitId(self, pitId):
-        self.pitId = pitId
+    def set_pitID(self, pitID):
+        self.pitID = pitID
 
 
     def set_date(self, date):

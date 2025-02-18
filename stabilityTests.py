@@ -63,15 +63,22 @@ class ExtColumnTest:
     """
 
     def __init__(self):
+        # Parsed Properties
         self.depthTop = None
         self.testScore = None
         self.comment = None
+        #Computed Properties
+        self.propogation = None
+        self.numTaps = None
+
 
     def __str__(self):
         ect_str = ""
         ect_str += f"\n\t depthTop: {self.depthTop}"
         ect_str += f"\n\t testScore: {self.testScore}"
         ect_str += f"\n\t comment: {self.comment}"
+        ect_str += f"\n\t propogation: {self.propogation}"
+        ect_str += f"\n\t numTaps: {self.numTaps}"
         return ect_str
 
     def set_depthTop(self, depthTop):
@@ -80,8 +87,23 @@ class ExtColumnTest:
     def set_testScore(self, testScore):
         self.testScore = testScore
 
+        propChar = testScore[3]
+        if propChar == 'P':
+            self.propogation = True
+        else:
+            self.propogation = False
+
+        numTaps = testScore[4:]
+        self.numTaps = numTaps
+
     def set_comment(self, comment):
         self.comment = comment   
+
+    def set_propogation(self, propogation):
+        self.propogation = propogation
+
+    def set_numTaps(self, numTaps):
+        self.numTaps = numTaps
 
 class ComprTest:
 

@@ -26,7 +26,7 @@ def caaml_parser(file_path):
         pitID = pitID_str.split('-')[-1]
     except AttributeError:
         pitID = None
-    pit.set_pitId(pitID)
+    pit.set_pitID(pitID)
 
     # date
     dateTime_tag = common_tag + 'timePosition'
