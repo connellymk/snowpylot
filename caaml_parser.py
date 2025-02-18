@@ -185,7 +185,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_CT(ct)
 
-    for test in test_results.iter(common_tag + 'RutschblockTest'): # All RBTs
+    for test in test_results.iter(common_tag + 'RutschblockTest'): # All RBTs  #### confirm correct tag
         rbt = RutschblockTest()
         for prop in test[0].iter():
             if prop.tag.endswith('depthTop'):
@@ -196,10 +196,12 @@ def caaml_parser(file_path):
                 rbt.set_testScore(prop.text)
             elif prop.tag.endswith('fractureCharacter'):
                 rbt.set_shearQuality(prop.text)
+            elif prop.tag.endswith('releaseType'):
+                rbt.set_releaseType(prop.text)
+            elif prop.tag.endswith('comment'):
+                rbt.set_comment(prop.text)
 
-
-                
-
+        pit.stabilityTests.add_RBT(rbt)
 
     for test in test_results.iter(common_tag + 'PropSawTest'): # All PSTs
         ps = PropSawTest()
@@ -218,6 +220,51 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_PST(ps)
 
+    for test in test_results.iter(common_tag + 'StuffBlockTest'): # All SBTs
+        sb = StuffBlockTest()
+        for prop in test[0].iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                sb.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('testScore'):
+                sb.set_testScore(prop.text)
+            elif prop.tag.endswith('fractureCharacter'):
+                sb.set_shearQuality(prop.text)
+            elif prop.tag.endswith('comment'):
+                sb.set_comment(prop.text)
+
+        pit.stabilityTests.add_SBT(sb)
+
+    for test in test_results.iter(common_tag + 'ShovelShearTest'): # All SSTs
+        ss = ShovelShearTest()
+        for prop in test[0].iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                ss.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('testScore'):
+                ss.set_testScore(prop.text)
+            elif prop.tag.endswith('comment'):
+                ss.set_comment(prop.text)
+
+        pit.stabilityTests.add_SST(ss)
+
+    for test in test_results.iter(common_tag + 'DeepTapTest'): # All DTTs
+        dt = DeepTapTest()
+        for prop in test[0].iter():
+            if prop.tag.endswith('depthTop'):
+                depthTop = float(prop.text)
+                depthTop_units = prop.get('uom')
+                dt.set_depthTop([depthTop, depthTop_units])
+            elif prop.tag.endswith('testScore'):
+                dt.set_testScore(prop.text)
+            elif prop.tag.endswith('fractureCharacter'):
+                dt.set_shearQuality(prop.text)
+            elif prop.tag.endswith('comment'):
+                dt.set_comment(prop.text)
+
+        pit.stabilityTests.add_DTT(dt)
 
 
     return pit
