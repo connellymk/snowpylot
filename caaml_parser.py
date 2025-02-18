@@ -63,8 +63,14 @@ def caaml_parser(file_path):
         pit.location[tp.tag[name_front_trim: name_back_trim]] = [tp.find(common_tag + 'position').text, tp.get('uom')]
 
     # Country and Region
-    pit.location['Country'] = next(root.iter(common_tag + 'country'), None).text
-    pit.location['Region'] = next(root.iter(common_tag + 'region'), None).text
+    try:
+        pit.location['Country'] = next(root.iter(common_tag + 'country'), None).text
+    except AttributeError:
+        pit.location['Country'] = None
+    try:
+        pit.location['Region'] = next(root.iter(common_tag + 'region'), None).text
+    except AttributeError:
+        pit.location['Region'] = None
 
     ## Snow Profile Information
 
