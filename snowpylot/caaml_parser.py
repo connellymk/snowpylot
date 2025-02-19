@@ -1,8 +1,8 @@
 import xml.etree.ElementTree as ET
-from .layer import Layer
-from .snowPit import SnowPit
-from .stabilityTests import *
-from .snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
+from snowpylot.layer import Layer
+from snowpylot.snowPit import SnowPit
+from snowpylot.stabilityTests import *
+from snowpylot.snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
 
 def caaml_parser(file_path):
     '''
@@ -279,10 +279,10 @@ def caaml_parser(file_path):
 
 
 ## Test
-file_path = "snowpits_200_MT/snowpits-66387-caaml.xml"
-pit1 = caaml_parser(file_path)
-print("pit1")
-print(pit1)
+#file_path = "snowpits/snowpits_200_MT/snowpits-66387-caaml.xml"
+#pit1 = caaml_parser(file_path)
+#print("pit1")
+#print(pit1)
 
 
 
