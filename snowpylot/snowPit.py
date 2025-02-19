@@ -1,5 +1,5 @@
-from snowProfile import SnowProfile
-from stabilityTests import StabilityTests
+from .snowProfile import SnowProfile
+from .stabilityTests import StabilityTests
 
 class SnowPit(object):
 

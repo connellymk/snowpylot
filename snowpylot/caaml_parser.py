@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
-from snowPit import SnowPit
-from stabilityTests import *
-from snowProfile import SnowProfile, SurfaceCondition, Layer, TempMeasurement
+from .layer import Layer
+from .snowPit import SnowPit
+from .stabilityTests import *
+from .snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
 
 def caaml_parser(file_path):
     '''

@@ -1,5 +1,5 @@
-from .snowPit import SnowPit
-from .snowProfile import SnowProfile, Layer, SurfaceCondition, TempMeasurement
+from .layer import Layer
+from .snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
 from .stabilityTests import (
     StabilityTests,
     ExtColumnTest,
@@ -10,15 +10,16 @@ from .stabilityTests import (
     ShovelShearTest,
     DeepTapTest
 )
+from .snowPit import SnowPit
 from .caaml_parser import caaml_parser
 
 __version__ = '0.1.0'
 
 __all__ = [
+    'Layer',
     'SnowPit',
     'SnowProfile',
-    'Layer',
-    'SurfaceCondition', 
+    'SurfaceCondition',
     'TempMeasurement',
     'StabilityTests',
     'ExtColumnTest',
