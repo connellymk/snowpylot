@@ -5,6 +5,7 @@ class WumphData:
     """
 
     def __init__(self):
+        self.isWumphData = False
         self.wumphCracking = None
         self.wumphNoCracking = None
         self.crackingNoWhumpf = None
@@ -15,13 +16,15 @@ class WumphData:
 
     def __str__(self):
         wumph_str = ""
-        wumph_str += f"\n\t wumphCracking: {self.wumphCracking}"
-        wumph_str += f"\n\t wumphNoCracking: {self.wumphNoCracking}"
-        wumph_str += f"\n\t crackingNoWhumpf: {self.crackingNoWhumpf}"
-        wumph_str += f"\n\t whumpfNearPit: {self.whumpfNearPit}"
-        wumph_str += f"\n\t whumpfDepthWeakLayer: {self.whumpfDepthWeakLayer}"
-        wumph_str += f"\n\t whumpfTriggeredRemoteAva: {self.whumpfTriggeredRemoteAva}"
-        wumph_str += f"\n\t whumpfSize: {self.whumpfSize}"
+        wumph_str += f"\n\t isWumphData: {self.isWumphData}"
+        if(self.isWumphData):
+            wumph_str += f"\n\t wumphCracking: {self.wumphCracking}"
+            wumph_str += f"\n\t wumphNoCracking: {self.wumphNoCracking}"
+            wumph_str += f"\n\t crackingNoWhumpf: {self.crackingNoWhumpf}"
+            wumph_str += f"\n\t whumpfNearPit: {self.whumpfNearPit}"
+            wumph_str += f"\n\t whumpfDepthWeakLayer: {self.whumpfDepthWeakLayer}"
+            wumph_str += f"\n\t whumpfTriggeredRemoteAva: {self.whumpfTriggeredRemoteAva}"
+            wumph_str += f"\n\t whumpfSize: {self.whumpfSize}"
         return wumph_str
     
     def set_wumphCracking(self, wumphCracking):

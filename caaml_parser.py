@@ -272,8 +272,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_DTT(dt)
 
-    # Wumph Data
-    whumpfData = None
+    # Custom Data (Whumpf Data and Wind Loading)
     try:
         customData = root.iter(common_tag+'customData')
     except AttributeError:
@@ -282,13 +281,13 @@ def caaml_parser(file_path):
     for prop in customData:
         for sub_prop in prop:
             if(sub_prop.tag.endswith('whumpfData')):
+                pit.wumphData.isWumphData = True
                 whumpfData = sub_prop
 
             if(sub_prop.tag.endswith('windLoading')):
-                windLoading = sub_prop.text
+                pit.snowProfile.surfCond.windLoading = sub_prop.text
 
-    if(whumpfData != None):
-        pit.wumphData = WumphData()
+    if(pit.wumphData.isWumphData):
         for prop in whumpfData:
             if(prop.tag.endswith('whumpfCracking')):
                 pit.wumphData.set_wumphCracking(prop.text)
@@ -312,14 +311,12 @@ def caaml_parser(file_path):
 
 
 ## Test
-file_path = "snowpits/snowpits_200_MT/snowpits-66387-caaml.xml"
-pit1 = caaml_parser(file_path)
-print("pit1")
-print(pit1)
+#file_path = "snowpits/snowpits_200_MT/snowpits-66387-caaml.xml"
+#pit1 = caaml_parser(file_path)
+#print("pit1")
+#print(pit1)
 
-
-
-file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
-pit2 = caaml_parser(file_path2)
-print("pit2")
-print(pit2)
+#file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
+#pit2 = caaml_parser(file_path2)
+#print("pit2")
+#print(pit2)

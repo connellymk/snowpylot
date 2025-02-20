@@ -1,6 +1,6 @@
 from snowProfile import SnowProfile
 from stabilityTests import StabilityTests
-#from whumpfData import WumphData
+from whumpfData import WumphData
 
 class SnowPit(object):
 
@@ -29,7 +29,7 @@ class SnowPit(object):
             'Region': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
-        self.wumphData = None
+        self.wumphData = WumphData()
         
 
     def __str__(self):
