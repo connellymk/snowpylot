@@ -3,6 +3,7 @@ from layer import Layer
 from snowPit import SnowPit
 from stabilityTests import *
 from snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
+from whumpfData import WumphData
 
 def caaml_parser(file_path):
     '''
@@ -101,8 +102,6 @@ def caaml_parser(file_path):
     pit.snowProfile.set_hS(hS)
 
     ## Surface Conditions
-
-    # Wind Loading
 
     # Boot Penetration
     try:
@@ -273,20 +272,54 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_DTT(dt)
 
+    # Wumph Data
+    whumpfData = None
+    try:
+        customData = root.iter(common_tag+'customData')
+    except AttributeError:
+        customData = None
+
+    for prop in customData:
+        for sub_prop in prop:
+            if(sub_prop.tag.endswith('whumpfData')):
+                whumpfData = sub_prop
+
+            if(sub_prop.tag.endswith('windLoading')):
+                windLoading = sub_prop.text
+
+    if(whumpfData != None):
+        pit.wumphData = WumphData()
+        for prop in whumpfData:
+            if(prop.tag.endswith('whumpfCracking')):
+                pit.wumphData.set_wumphCracking(prop.text)
+            if(prop.tag.endswith('whumpfNoCracking')):
+                pit.wumphData.set_wumphNoCracking(prop.text)
+            if(prop.tag.endswith('crackingNoWhumpf')):
+                pit.wumphData.set_crackingNoWhumpf(prop.text)
+            if(prop.tag.endswith('whumpfNearPit')):
+                pit.wumphData.set_whumpfNearPit(prop.text)
+            if(prop.tag.endswith('whumpfDepthWeakLayer')):
+                pit.wumphData.set_whumpfDepthWeakLayer(prop.text)
+            if(prop.tag.endswith('whumpfTriggeredRemoteAva')):
+                pit.wumphData.set_whumpfTriggeredRemoteAva(prop.text)
+            if(prop.tag.endswith('whumpfSize')):
+                pit.wumphData.set_whumpfSize(prop.text)
+
+
 
     return pit
 
 
 
 ## Test
-#file_path = "snowpits/snowpits_200_MT/snowpits-66387-caaml.xml"
-#pit1 = caaml_parser(file_path)
-#print("pit1")
-#print(pit1)
+file_path = "snowpits/snowpits_200_MT/snowpits-66387-caaml.xml"
+pit1 = caaml_parser(file_path)
+print("pit1")
+print(pit1)
 
 
 
-#file_path2 = "snowpits_200_MT/snowpits-66408-caaml.xml"
-#pit2 = caaml_parser(file_path2)
-#print("pit2")
-#print(pit2)
+file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
+pit2 = caaml_parser(file_path2)
+print("pit2")
+print(pit2)

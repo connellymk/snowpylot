@@ -1,5 +1,6 @@
 from snowProfile import SnowProfile
 from stabilityTests import StabilityTests
+#from whumpfData import WumphData
 
 class SnowPit(object):
 
@@ -28,6 +29,7 @@ class SnowPit(object):
             'Region': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
+        self.wumphData = None
         
 
     def __str__(self):
@@ -43,6 +45,7 @@ class SnowPit(object):
             snowPit_str += f"\n    {key}: {value}"
         snowPit_str += f"\n Snow Profile: {self.snowProfile} "
         snowPit_str += f"\n Stability Tests: {self.stabilityTests} "
+        snowPit_str += f"\n Wumph Data: {self.wumphData} "
         return snowPit_str
 
     # Setters
@@ -63,19 +66,13 @@ class SnowPit(object):
     def set_location(self, location):
         self.location = location
 
-    def set_stabilityTests(self, stabilityTests):
-        self.stabilityTests = stabilityTests
 
     def set_snowProfile(self, snowProfile):
         self.snowProfile = snowProfile
 
+        
+    def set_stabilityTests(self, stabilityTests):
+        self.stabilityTests = stabilityTests
 
-    def set_extColumnTest(self, extColumnTest):
-        self.extColumnTest = extColumnTest
-
-    def set_comprTest(self, comprTest):
-        self.comprTest = comprTest
-
-    def set_propSawTest(self, propSawTest):
-        self.propSawTest = propSawTest  
-
+    def set_wumphData(self, wumphData):
+        self.wumphData = wumphData

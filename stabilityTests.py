@@ -308,3 +308,4 @@ class DeepTapTest:
 
     def set_comment(self, comment):
         self.comment = comment
+
