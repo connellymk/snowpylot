@@ -1,4 +1,4 @@
-from snowpylot.layer import Layer
+from layer import Layer
 
 class SnowProfile(object):
 

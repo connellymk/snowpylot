@@ -1,5 +1,5 @@
-from snowpylot.snowProfile import SnowProfile
-from snowpylot.stabilityTests import StabilityTests
+from snowProfile import SnowProfile
+from stabilityTests import StabilityTests
 
 class SnowPit(object):
 
