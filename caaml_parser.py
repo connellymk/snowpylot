@@ -347,7 +347,7 @@ def caaml_parser(file_path):
 #print("pit1")
 #print(pit1)
 
-file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
-pit2 = caaml_parser(file_path2)
-print("pit2")
-print(pit2)
+#file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
+#pit2 = caaml_parser(file_path2)
+#print("pit2")
+#print(pit2)
