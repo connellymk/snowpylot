@@ -10,8 +10,8 @@ class Layer(object):
         self.thickness=None
         self.hardness1=None
         self.hardness2=None
-        self.grainTypePrimary=Grain()
-        self.grainTypeSecondary=Grain()
+        self.grainFormPrimary=Grain()
+        self.grainFormSecondary=Grain()
         self.density=None
         self.wetness=None
         self.layerOfConcern=None
@@ -21,8 +21,8 @@ class Layer(object):
         layer_str = ""
         layer_str += f"\n\t depthTop: {self.depthTop}"
         layer_str += f"\n\t thickness: {self.thickness}"
-        layer_str += f"\n\t grainTypePrimary: {self.grainTypePrimary}"
-        layer_str += f"\n\t grainTypeSecondary: {self.grainTypeSecondary}"
+        layer_str += f"\n\t grainFormPrimary: {self.grainFormPrimary}"
+        layer_str += f"\n\t grainFormSecondary: {self.grainFormSecondary}"
         layer_str += f"\n\t density: {self.density}"
         layer_str += f"\n\t wetness: {self.wetness}"
         layer_str += f"\n\t layerOfConcern: {self.layerOfConcern}"
@@ -36,12 +36,6 @@ class Layer(object):
 
     def set_thickness(self, thickness):
         self.thickness = thickness
-
-    def set_grainTypePrimary(self, grainTypePrimary):
-        self.grainTypePrimary = grainTypePrimary
-
-    def set_grainTypeSecondary(self, grainTypeSecondary):
-        self.grainTypeSecondary = grainTypeSecondary
 
     def set_hardness1(self, hardness1):
         self.hardness1 = hardness1
@@ -64,29 +58,34 @@ class Grain(object):
 
     def __init__(self):
         # Parsed properties
-        self.grainType = None
+        self.grainForm = None
         self.grainSizeAvg = None
         self.grainSizeMax = None
         # Computed properties
-        self.basicGrainClass = None
-        self.subGrainClass = None
-        
+        self.basicGrainClass_code = None
+        self.basicGrainClass_name = None
+        self.subGrainClass_code = None
+        self.subGrainClass_name = None
 
     def __str__(self):
         grain_str = ""
-        grain_str += f"\n\t grainType: {self.grainType}"
-        grain_str += f"\n\t grainSizeAvg: {self.grainSizeAvg}"
-        grain_str += f"\n\t grainSizeMax: {self.grainSizeMax}"
+        grain_str += f"\n\t\t grainForm: {self.grainForm}"
+        grain_str += f"\n\t\t grainSizeAvg: {self.grainSizeAvg}"
+        grain_str += f"\n\t\t grainSizeMax: {self.grainSizeMax}"
+        grain_str += f"\n\t\t basicGrainClass_code: {self.basicGrainClass_code}"
+        grain_str += f"\n\t\t basicGrainClass_name: {self.basicGrainClass_name}"
+        grain_str += f"\n\t\t subGrainClass_code: {self.subGrainClass_code}"
+        grain_str += f"\n\t\t subGrainClass_name: {self.subGrainClass_name}"
         return grain_str
     
     # Setters
-    def set_grainType(self, grainType):
-        self.grainType = grainType
-        if len(grainType) > 2:
-            self.basicGrainClass = grainType[:2]
-            self.subGrainClass = grainType
+    def set_grainForm(self, grainForm):
+        self.grainForm = grainForm
+        if len(grainForm) > 2:
+            self.basicGrainClass_code = grainForm[:2]
+            self.subGrainClass_code = grainForm[2:]
         else:
-            self.basicGrainClass = grainType
+            self.basicGrainClass_code = grainForm
 
     def set_grainSizeAvg(self, grainSizeAvg):
         self.grainSizeAvg = grainSizeAvg
