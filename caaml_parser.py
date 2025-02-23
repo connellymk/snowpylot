@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from layer import Layer
+from layer import Layer, Grain
 from snowPit import SnowPit
 from stabilityTests import *
 from snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
@@ -122,8 +122,11 @@ def caaml_parser(file_path):
     pit.snowProfile.surfCond.set_penetrationSki(penSki)
     
     # Layers
-    layers = root.iter(common_tag + 'Layer')
+    stratProfile=next(root.iter(common_tag + 'stratProfile'),None)
+    layers = list(stratProfile)
+
     for layer in layers:
+
         layer_obj = Layer()
         for prop in layer.iter():
             if prop.tag.endswith('depthTop'):
@@ -136,18 +139,46 @@ def caaml_parser(file_path):
                 thickness_units = prop.get('uom')
                 thickness=[thickness_val,thickness_units]
                 layer_obj   .set_thickness(thickness)
-            if prop.tag.endswith('grainFormPrimary'):
-                grainFormPrimary = prop.text
-                layer_obj.set_grainFormPrimary(grainFormPrimary)
-            if prop.tag.endswith('hardness'):
+            if prop.tag.endswith('hardness'): 
                 hardness = prop.text
                 layer_obj.set_hardness(hardness)
+            if prop.tag.endswith('hardnessTop'):
+                hardnessTop = prop.text
+                layer_obj.set_hardnessTop(hardnessTop)
+            if prop.tag.endswith('hardnessBottom'):
+                hardnessBottom = prop.text
+                layer_obj.set_hardnessBottom(hardnessBottom)
+            if prop.tag.endswith('grainFormPrimary'):
+                grainFormPrimary = prop.text
+                layer_obj.grainFormPrimary.set_grainForm(grainFormPrimary)
+            if prop.tag.endswith('grainSize'):
+                grainSize_units = prop.get('uom')
+                for sub_prop in prop:
+                    for sub_sub_prop in sub_prop:
+                        if sub_sub_prop.tag.endswith('avg'):
+                            grainSizeAvg = sub_sub_prop.text
+                            grainSizeAvg = [float(grainSizeAvg), grainSize_units]
+                            layer_obj.grainFormPrimary.set_grainSizeAvg(grainSizeAvg)
+                        if sub_sub_prop.tag.endswith('max'):
+                            grainSizeMax = sub_sub_prop.text
+                            grainSizeMax = [float(grainSizeMax), grainSize_units]
+                            layer_obj.grainFormPrimary.set_grainSizeMax(grainSizeMax)
+            if prop.tag.endswith('grainFormSecondary'):
+                layer_obj.grainFormSecondary = Grain()
+                grainFormSecondary = prop.text
+                layer_obj.grainFormSecondary.set_grainForm(grainFormSecondary)
+            if prop.tag.endswith('density'):
+                density = prop.text
+                density_units = prop.get('uom')
+                density = [float(density), density_units]
+                layer_obj.set_density(density)
             if prop.tag.endswith('wetness'):
                 wetness = prop.text
                 layer_obj.set_wetness(wetness)
             if prop.tag.endswith('layerOfConcern'):
                 layerOfConcern = prop.text
-                layer_obj.set_layerOfConcern(layerOfConcern)
+                layer_obj.set_layerOfConcern(layerOfConcern) 
+
         pit.snowProfile.add_layer(layer_obj)
 
 
@@ -316,7 +347,7 @@ def caaml_parser(file_path):
 #print("pit1")
 #print(pit1)
 
-#file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
-#pit2 = caaml_parser(file_path2)
-#print("pit2")
-#print(pit2)
+file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
+pit2 = caaml_parser(file_path2)
+print("pit2")
+print(pit2)

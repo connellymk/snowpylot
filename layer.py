@@ -8,19 +8,23 @@ class Layer(object):
         # Parsed properties
         self.depthTop=None
         self.thickness=None
-        self.hardness1=None
-        self.hardness2=None
+        self.hardness=None
+        self.hardnessTop=None
+        self.hardnessBottom=None
         self.grainFormPrimary=Grain()
-        self.grainFormSecondary=Grain()
+        self.grainFormSecondary=None
         self.density=None
         self.wetness=None
-        self.layerOfConcern=None
+        self.layerOfConcern=False
         self.comments=None
 
     def __str__(self):
         layer_str = ""
         layer_str += f"\n\t depthTop: {self.depthTop}"
         layer_str += f"\n\t thickness: {self.thickness}"
+        layer_str += f"\n\t hardness: {self.hardness}"
+        layer_str += f"\n\t hardnessTop: {self.hardnessTop}"
+        layer_str += f"\n\t hardnessBottom: {self.hardnessBottom}"
         layer_str += f"\n\t grainFormPrimary: {self.grainFormPrimary}"
         layer_str += f"\n\t grainFormSecondary: {self.grainFormSecondary}"
         layer_str += f"\n\t density: {self.density}"
@@ -37,11 +41,14 @@ class Layer(object):
     def set_thickness(self, thickness):
         self.thickness = thickness
 
-    def set_hardness1(self, hardness1):
-        self.hardness1 = hardness1
+    def set_hardness(self, hardness):
+        self.hardness = hardness
 
-    def set_hardness2(self, hardness2):
-        self.hardness2 = hardness2
+    def set_hardnessTop(self, hardnessTop):
+        self.hardnessTop = hardnessTop
+
+    def set_hardnessBottom(self, hardnessBottom):
+        self.hardnessBottom = hardnessBottom
 
     def set_wetness(self, wetness):
         self.wetness = wetness
@@ -80,13 +87,66 @@ class Grain(object):
     
     # Setters
     def set_grainForm(self, grainForm):
+
+        basicGrainClassDict = {
+            'PP': 'Precipitation particles',
+            'DF': 'Decomposing and fragmented precipitation particles',
+            'RG': 'Rounded grains',
+            'FC': 'Faceted crystals',
+            'DH': 'Depth hoar',
+            'SH': 'Surface hoar',
+            'MF': 'Melt forms',
+            'IF': 'Ice formations',
+            'MM': 'Machine made Snow'
+        }
+        subGrainClassDict = {
+            'PPgp': 'Graupel',
+            'PPco': 'Columns',
+            'PPpl': 'Plates',
+            'PPnd': 'Needles',
+            'PPsd': 'Stellars, Dendrites',
+            'PPir': 'Irregular crystals',
+            'PPip': 'Ice pellets',
+            'PPrm': 'Rime',
+            'DFdc': 'Partly decomposed precipitation particles',
+            'DFbk': 'Wind-broken precipitation particles',
+            'RGsr': 'Small rounded particles',
+            'RGlr': 'Large rounded particles',
+            'RGwp': 'Wind packed',
+            'RGxf': 'Faceted rounded particles',
+            'FCso': 'Solid faceted particles',
+            'FCsf': 'Near surface faceted particles',
+            'FCxr': 'Rounding faceted particles',
+            'DHcp': 'Hollow cups',
+            'DHpr': 'Hollow prisms',
+            'DHch': 'Chains of depth hoar',
+            'DHla': 'Large striated crystals',
+            'DHxr': 'Rounding depth hoar',
+            'SHsu': 'Surface hoar crystals',
+            'SHcv': 'Cavity or crevasse hoar',
+            'SHxr': 'Rounding surface hoar',
+            'MFcl': 'Clustered rounded grains',
+            'MFpc': 'Rounded polycrystals',
+            'MFsl': 'Slush',
+            'MFcr': 'Melt-freeze crust',
+            'IFil': 'Ice layer',
+            'IFic': 'Ice column',
+            'IFbi': 'Basal ice',
+            'IFrc': 'Rain crust',
+            'IFsc': 'Sun crust',
+            'MMrp': 'Round polycrystalline particles',
+            'MMci': 'Crushed ice particles'
+        }
+
         self.grainForm = grainForm
         if len(grainForm) > 2:
             self.basicGrainClass_code = grainForm[:2]
-            self.subGrainClass_code = grainForm[2:]
+            self.subGrainClass_code = grainForm
+            self.basicGrainClass_name = basicGrainClassDict[self.basicGrainClass_code]
+            self.subGrainClass_name = subGrainClassDict[self.subGrainClass_code]
         else:
             self.basicGrainClass_code = grainForm
-
+            self.basicGrainClass_name = basicGrainClassDict[self.basicGrainClass_code]
     def set_grainSizeAvg(self, grainSizeAvg):
         self.grainSizeAvg = grainSizeAvg
 
