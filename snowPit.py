@@ -26,7 +26,8 @@ class SnowPit(object):
             'Aspect': None, 
             'SlopeAngle': None, 
             'Country': None, 
-            'Region': None} 
+            'Region': None,
+            'pitNearAvalanche': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
         self.wumphData = None

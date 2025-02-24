@@ -15,6 +15,7 @@ def caaml_parser(file_path):
     # Parse file and add info to SnowPit object
     common_tag = '{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}' # Update to ready from xml file
     gml_tag = '{http://www.opengis.net/gml}'
+    snowpilot_tag = '{http://www.snowpilot.org/Schemas/caaml}'
     root = ET.parse(file_path).getroot()
 
     # caamlVersion
@@ -96,6 +97,15 @@ def caaml_parser(file_path):
         pit.location['Region'] = next(root.iter(common_tag + 'region'), None).text
     except AttributeError:
         pit.location['Region'] = None
+
+    # pitNearAvalanche
+    try:
+        pitNearAvalanche_TF = next(root.iter(snowpilot_tag + 'pitNearAvalanche'), None).text
+        pitNearAvalanche_loc = next(root.iter(snowpilot_tag + 'pitNearAvalanche'), None).get('location')
+        pit.location['pitNearAvalanche'] = [pitNearAvalanche_TF, pitNearAvalanche_loc]
+    except AttributeError:
+        pit.location['pitNearAvalanche'] = None
+
 
     ## Snow Profile Information
 
@@ -450,8 +460,8 @@ def caaml_parser(file_path):
 #print("pit2")
 #print(pit2)
 
-#file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
-#pit3 = caaml_parser(file_path3)
-#print("pit3")
-#print(pit3)
+file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
+pit3 = caaml_parser(file_path3)
+print("pit3")
+print(pit3)
 
