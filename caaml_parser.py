@@ -179,24 +179,26 @@ def caaml_parser(file_path):
                 hardnessBottom = prop.text
                 layer_obj.set_hardnessBottom(hardnessBottom)
             if prop.tag.endswith('grainFormPrimary'):
+                layer_obj.grainFormPrimary = Grain()
                 grainFormPrimary = prop.text
                 layer_obj.grainFormPrimary.set_grainForm(grainFormPrimary)
             if prop.tag.endswith('grainSize'):
                 grainSize_units = prop.get('uom')
-                for sub_prop in prop:
-                    for sub_sub_prop in sub_prop:
-                        if sub_sub_prop.tag.endswith('avg'):
-                            grainSizeAvg = sub_sub_prop.text
-                            grainSizeAvg = [float(grainSizeAvg), grainSize_units]
-                            layer_obj.grainFormPrimary.set_grainSizeAvg(grainSizeAvg)
-                        if sub_sub_prop.tag.endswith('avgMax'):
-                            grainSizeMax = sub_sub_prop.text
-                            grainSizeMax = [float(grainSizeMax), grainSize_units]
-                            layer_obj.grainFormPrimary.set_grainSizeMax(grainSizeMax)
+                try:
+                    grainSizeAvg = next(prop.iter(common_tag + 'avg'), None).text
+                    layer_obj.grainFormPrimary.set_grainSizeAvg([float(grainSizeAvg), grainSize_units])
+                except AttributeError:
+                    grainSizeAvg = None
+                try:
+                    grainSizeMax = next(prop.iter(common_tag + 'avgMax'), None).text
+                    layer_obj.grainFormPrimary.set_grainSizeMax([float(grainSizeMax), grainSize_units])
+                except AttributeError:
+                    grainSizeMax = None
             if prop.tag.endswith('grainFormSecondary'):
                 layer_obj.grainFormSecondary = Grain()
                 grainFormSecondary = prop.text
-                layer_obj.grainFormSecondary.set_grainForm(grainFormSecondary)
+                if layer_obj.grainFormSecondary is not None:
+                    layer_obj.grainFormSecondary.set_grainForm(grainFormSecondary)
             if prop.tag.endswith('density'):
                 density = prop.text
                 density_units = prop.get('uom')
@@ -210,8 +212,6 @@ def caaml_parser(file_path):
                 layer_obj.set_layerOfConcern(layerOfConcern) 
 
         pit.snowProfile.add_layer(layer_obj)
-
-
 
 
     # Temperature Profile
@@ -422,13 +422,13 @@ def caaml_parser(file_path):
 #print("pit1")
 #print(pit1)
 
-#file_path2 = "snowpits/wumph_pits/snowpits-25670-caaml.xml"
+#file_path2 = "snowpits/wumph_pits/snowpits-26875-caaml.xml"
 #pit2 = caaml_parser(file_path2)
 #print("pit2")
 #print(pit2)
 
-file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
-pit3 = caaml_parser(file_path3)
-print("pit3")
-print(pit3)
+#file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
+#pit3 = caaml_parser(file_path3)
+#print("pit3")
+#print(pit3)
 

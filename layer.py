@@ -11,7 +11,7 @@ class Layer(object):
         self.hardness=None
         self.hardnessTop=None
         self.hardnessBottom=None
-        self.grainFormPrimary=Grain()
+        self.grainFormPrimary=None
         self.grainFormSecondary=None
         self.density=None
         self.wetness=None
