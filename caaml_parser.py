@@ -242,6 +242,23 @@ def caaml_parser(file_path):
         densityProfile = None
 
     if densityProfile is not None:
+        for obs in densityProfile.iter(common_tag + 'Layer'):
+            obs_obj = DensityObs()
+            for prop in obs.iter():
+                if prop.tag.endswith('depthTop'):
+                    depthTop_val = prop.text
+                    depthTop_units = prop.get('uom')
+                    obs_obj.set_depthTop([depthTop_val, depthTop_units])
+                elif prop.tag.endswith('thickness'):
+                    thickness_val = prop.text
+                    thickness_units = prop.get('uom')
+                    obs_obj.set_thickness([thickness_val, thickness_units])
+                elif prop.tag.endswith('density'):
+                    density_val = prop.text
+                    density_units = prop.get('uom')
+                    obs_obj.set_density([density_val, density_units])
+
+            pit.snowProfile.add_densityObs(obs_obj)
 
 
 

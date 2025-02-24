@@ -12,10 +12,10 @@ class SnowProfile(object):
         self.profileDepth = None
         self.weatherConditions = None
         self.hS = None
-        self.surfCond=None
+        self.surfCond= None
         self.layers=[]
-        self.tempProfile=[]
-        self.densityProfile=[]
+        self.tempProfile=None
+        self.densityProfile=None
         # Computed properties
         self.layer_of_concern = None
 
@@ -58,9 +58,13 @@ class SnowProfile(object):
             self.layer_of_concern = layer
 
     def add_tempObs(self, tempObs):
+        if self.tempProfile is None:
+            self.tempProfile = []
         self.tempProfile.append(tempObs)
 
     def add_densityObs(self, densityObs):
+        if self.densityProfile is None:
+            self.densityProfile = []
         self.densityProfile.append(densityObs)
 
 class WeatherConditions(object):
