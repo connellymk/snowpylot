@@ -147,8 +147,8 @@ class TempObs(object):
 
     def __str__(self):
         tempMeasurement_str = ""
-        tempMeasurement_str += f"\n    depth: {self.depth}"
-        tempMeasurement_str += f"\n    snowTemp: {self.snowTemp}"
+        tempMeasurement_str += f"\n\t depth: {self.depth}"
+        tempMeasurement_str += f"\n\t snowTemp: {self.snowTemp}"
         return tempMeasurement_str
     
     # Setters
@@ -171,9 +171,9 @@ class DensityObs(object):
 
     def __str__(self):
         densityObs_str = ""
-        densityObs_str += f"\n    depthTop: {self.depthTop}"
-        densityObs_str += f"\n    thickness: {self.thickness}"
-        densityObs_str += f"\n    density: {self.density}"
+        densityObs_str += f"\n\t depthTop: {self.depthTop}"
+        densityObs_str += f"\n\t thickness: {self.thickness}"
+        densityObs_str += f"\n\t density: {self.density}"
         return densityObs_str
     
     # Setters
