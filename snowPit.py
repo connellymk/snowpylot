@@ -29,7 +29,7 @@ class SnowPit(object):
             'Region': None} 
         self.snowProfile = SnowProfile() 
         self.stabilityTests = StabilityTests()
-        self.wumphData = WumphData()
+        self.wumphData = None
         
 
     def __str__(self):

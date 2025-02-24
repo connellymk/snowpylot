@@ -10,6 +10,7 @@ class SnowProfile(object):
         # Parsed properties
         self.measurementDirection = None
         self.profileDepth = None
+        self.weatherConditions = None
         self.hS = None
         self.surfCond=SurfaceCondition()
         self.layers=[]
@@ -21,6 +22,7 @@ class SnowProfile(object):
         snowProfile_str = ""
         snowProfile_str += f"\n    measurementDirection: {self.measurementDirection}"
         snowProfile_str += f"\n    profileDepth: {self.profileDepth}"
+        snowProfile_str += f"\n    weatherConditions: {self.weatherConditions}"
         snowProfile_str += f"\n    hS: {self.hS}"
         snowProfile_str += f"\n    surfCond: {self.surfCond}"
         snowProfile_str += f"\n    Layers:"
@@ -51,7 +53,43 @@ class SnowProfile(object):
         if layer.layerOfConcern == True:
             self.layer_of_concern = layer
 
+class WeatherConditions(object):
 
+    """
+    WeatherConditions class for representing the weather conditions of a snow profile from a SnowPilot caaml.xml file
+    """
+
+    def __init__(self):
+        self.skyCond = None
+        self.precipTI = None
+        self.airTempPres = None
+        self.windSpeed = None
+        self.windDir = None
+
+    def __str__(self):
+        weatherConditions_str = ""
+        weatherConditions_str += f"\n\t skyCond: {self.skyCond}"
+        weatherConditions_str += f"\n\t precipTI: {self.precipTI}"
+        weatherConditions_str += f"\n\t airTempPres: {self.airTempPres}"
+        weatherConditions_str += f"\n\t windSpeed: {self.windSpeed}"
+        weatherConditions_str += f"\n\t windDir: {self.windDir}"
+        return weatherConditions_str
+    
+    # Setters
+    def set_skyCond(self, skyCond):
+        self.skyCond = skyCond
+
+    def set_precipTI(self, precipTI):
+        self.precipTI = precipTI
+
+    def set_airTempPres(self, airTempPres):
+        self.airTempPres = airTempPres
+
+    def set_windSpeed(self, windSpeed):
+        self.windSpeed = windSpeed
+
+    def set_windDir(self, windDir):
+        self.windDir = windDir
 
 class SurfaceCondition(object):
 

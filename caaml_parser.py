@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 from layer import Layer, Grain
 from snowPit import SnowPit
 from stabilityTests import *
-from snowProfile import SnowProfile, SurfaceCondition, TempMeasurement
+from snowProfile import SnowProfile, SurfaceCondition, TempMeasurement, WeatherConditions
 from whumpfData import WumphData
 
 def caaml_parser(file_path):
@@ -91,6 +91,30 @@ def caaml_parser(file_path):
     except AttributeError:
         profileDepth = None
     pit.snowProfile.set_profileDepth(profileDepth)
+
+    # Weather Conditions
+    try:
+        weatherConditions = next(root.iter(common_tag + 'weatherCond'), None)
+    except AttributeError:
+        weatherConditions = None
+
+    if weatherConditions is not None:
+        pit.snowProfile.weatherConditions = WeatherConditions()
+        for prop in weatherConditions.iter():
+            if prop.tag.endswith('skyCond'):
+                pit.snowProfile.weatherConditions.set_skyCond(prop.text)
+            if prop.tag.endswith('precipTI'):
+                pit.snowProfile.weatherConditions.set_precipTI(prop.text)
+            if prop.tag.endswith('airTempPres'):
+                temp_val = prop.text
+                temp_units = prop.get('uom')
+                temp = [float(temp_val), temp_units]
+                pit.snowProfile.weatherConditions.set_airTempPres(temp)
+            if prop.tag.endswith('windSpd'):
+                pit.snowProfile.weatherConditions.set_windSpeed(prop.text)
+            if prop.tag.endswith('position'):
+                pit.snowProfile.weatherConditions.set_windDir(prop.text)
+
 
     # hS
     try:
@@ -312,13 +336,13 @@ def caaml_parser(file_path):
     for prop in customData:
         for sub_prop in prop:
             if(sub_prop.tag.endswith('whumpfData')):
-                pit.wumphData.isWumphData = True
+                pit.wumphData = WumphData()
                 whumpfData = sub_prop
 
             if(sub_prop.tag.endswith('windLoading')):
                 pit.snowProfile.surfCond.windLoading = sub_prop.text
 
-    if(pit.wumphData.isWumphData):
+    if(pit.wumphData is not None):
         for prop in whumpfData:
             if(prop.tag.endswith('whumpfCracking')):
                 pit.wumphData.set_wumphCracking(prop.text)
@@ -351,3 +375,9 @@ def caaml_parser(file_path):
 #pit2 = caaml_parser(file_path2)
 #print("pit2")
 #print(pit2)
+
+file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
+pit3 = caaml_parser(file_path3)
+print("pit3")
+print(pit3)
+
