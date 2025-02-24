@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 from layer import Layer, Grain
 from snowPit import SnowPit
 from stabilityTests import *
-from snowProfile import SnowProfile, SurfaceCondition, TempMeasurement, WeatherConditions
+from snowProfile import SnowProfile, SurfaceCondition, WeatherConditions, TempObs, DensityObs
 from whumpfData import WumphData
 
 def caaml_parser(file_path):
@@ -189,7 +189,7 @@ def caaml_parser(file_path):
                             grainSizeAvg = sub_sub_prop.text
                             grainSizeAvg = [float(grainSizeAvg), grainSize_units]
                             layer_obj.grainFormPrimary.set_grainSizeAvg(grainSizeAvg)
-                        if sub_sub_prop.tag.endswith('max'):
+                        if sub_sub_prop.tag.endswith('avgMax'):
                             grainSizeMax = sub_sub_prop.text
                             grainSizeMax = [float(grainSizeMax), grainSize_units]
                             layer_obj.grainFormPrimary.set_grainSizeMax(grainSizeMax)
@@ -215,6 +215,34 @@ def caaml_parser(file_path):
 
 
     # Temperature Profile
+    try:
+        tempProfile = next(root.iter(common_tag + 'tempProfile'), None)
+    except AttributeError:
+        tempProfile = None
+
+    if tempProfile is not None:
+        for obs in tempProfile.iter(common_tag + 'Obs'):
+            obs_obj = TempObs()
+            for prop in obs.iter():
+                if prop.tag.endswith('depth'):
+                    depth_val = prop.text
+                    depth_units = prop.get('uom')
+                    obs_obj.set_depth([depth_val, depth_units])
+                elif prop.tag.endswith('snowTemp'):
+                    temp_val = prop.text
+                    temp_units = prop.get('uom')
+                    obs_obj.set_snowTemp([temp_val, temp_units])
+
+            pit.snowProfile.add_tempObs(obs_obj)
+
+    # Density Profile
+    try:
+        densityProfile = next(root.iter(common_tag + 'densityProfile'), None)
+    except AttributeError:
+        densityProfile = None
+
+    if densityProfile is not None:
+
 
 
 

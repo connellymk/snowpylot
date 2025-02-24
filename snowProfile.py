@@ -15,6 +15,7 @@ class SnowProfile(object):
         self.surfCond=None
         self.layers=[]
         self.tempProfile=[]
+        self.densityProfile=[]
         # Computed properties
         self.layer_of_concern = None
 
@@ -31,6 +32,9 @@ class SnowProfile(object):
         snowProfile_str += f"\n    tempProfile:"
         for i, temp in enumerate(self.tempProfile):
             snowProfile_str += f"\n    temp {i+1}: {temp}"
+        snowProfile_str += f"\n    densityProfile:"
+        for i, density in enumerate(self.densityProfile):
+            snowProfile_str += f"\n    density {i+1}: {density}"
         snowProfile_str += f"\n    layer_of_concern: {self.layer_of_concern}"
         return snowProfile_str
     
@@ -52,6 +56,12 @@ class SnowProfile(object):
         self.layers.append(layer)
         if layer.layerOfConcern == True:
             self.layer_of_concern = layer
+
+    def add_tempObs(self, tempObs):
+        self.tempProfile.append(tempObs)
+
+    def add_densityObs(self, densityObs):
+        self.densityProfile.append(densityObs)
 
 class WeatherConditions(object):
 
@@ -120,8 +130,7 @@ class SurfaceCondition(object):
     def set_penetrationSki(self, penetrationSki):
         self.penetrationSki = penetrationSki
 
-
-class TempMeasurement(object):
+class TempObs(object):
 
     """
     TempMeasurement class for representing a temperature measurement from a SnowPilot caaml.xml file
@@ -145,4 +154,31 @@ class TempMeasurement(object):
     def set_snowTemp(self, snowTemp):
         self.snowTemp = snowTemp
 
+class DensityObs(object):
+
+    """
+    DensityObs class for representing a density measurement from a SnowPilot caaml.xml file
+    """
     
+    def __init__(self):
+        self.depthTop = None
+        self.thickness = None
+        self.density = None
+
+    def __str__(self):
+        densityObs_str = ""
+        densityObs_str += f"\n    depthTop: {self.depthTop}"
+        densityObs_str += f"\n    thickness: {self.thickness}"
+        densityObs_str += f"\n    density: {self.density}"
+        return densityObs_str
+    
+    # Setters
+    def set_depthTop(self, depthTop):
+        self.depthTop = depthTop
+
+    def set_thickness(self, thickness):
+        self.thickness = thickness
+
+    def set_density(self, density):
+        self.density = density
+
