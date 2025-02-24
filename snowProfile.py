@@ -27,14 +27,17 @@ class SnowProfile(object):
         snowProfile_str += f"\n    hS: {self.hS}"
         snowProfile_str += f"\n    surfCond: {self.surfCond}"
         snowProfile_str += f"\n    Layers:"
-        for i, layer in enumerate(self.layers):
-            snowProfile_str += f"\n    Layer {i+1}: {layer}"
+        if self.layers is not None:
+            for i, layer in enumerate(self.layers):
+                snowProfile_str += f"\n    Layer {i+1}: {layer}"
         snowProfile_str += f"\n    tempProfile:"
-        for i, temp in enumerate(self.tempProfile):
-            snowProfile_str += f"\n    temp {i+1}: {temp}"
+        if self.tempProfile is not None:
+            for i, temp in enumerate(self.tempProfile):
+                snowProfile_str += f"\n    temp {i+1}: {temp}"
         snowProfile_str += f"\n    densityProfile:"
-        for i, density in enumerate(self.densityProfile):
-            snowProfile_str += f"\n    density {i+1}: {density}"
+        if self.densityProfile is not None:
+            for i, density in enumerate(self.densityProfile):
+                snowProfile_str += f"\n    density {i+1}: {density}"
         snowProfile_str += f"\n    layer_of_concern: {self.layer_of_concern}"
         return snowProfile_str
     
