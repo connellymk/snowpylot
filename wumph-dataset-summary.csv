@@ -1,0 +1,307 @@
+PitID,Operation Name,SnowPilot Username,num Layers,num Layers wPrimary Grain Form,num Layers wPrimary Grain Size,tempMeasurements,densityMeasurements,ECT_qty,CT_qty,PST_qty,RBT_qty,whumpfCracking,whumpfNoCracking,crackingNoWhumpf,whumpfNearPit,whumpfDepthWeakLayer,whumpfTriggeredRemoteAva,whumpfSize
+25670,Colorado Avalanche Information Center,Ron.Simenhois,6,6,6,0,0,1,0,0,0,true,false,false,true,true,false,
+25671,Colorado Avalanche Information Center,Ron.Simenhois,4,4,4,0,0,1,0,0,0,true,false,false,true,true,false,
+25672,Colorado Avalanche Information Center,Ron.Simenhois,5,5,4,0,0,1,0,0,0,true,true,false,true,false,false,
+25680,Colorado Avalanche Information Center,Jason Konigsberg,2,2,2,0,0,1,0,0,0,true,false,false,true,true,false,
+25683,Colorado Avalanche Information Center,Jason Konigsberg,4,4,4,0,0,0,0,0,0,true,false,false,true,true,false,
+25772,Colorado Avalanche Information Center,Ron.Simenhois,5,5,5,0,0,1,0,0,0,false,true,false,true,false,false,
+25965,Colorado Avalanche Information Center,Jason Konigsberg,6,6,6,0,0,1,0,0,0,true,false,false,true,true,false,
+25968,Colorado Avalanche Information Center,Jason Konigsberg,4,4,4,6,0,1,0,0,0,true,false,false,true,true,false,
+26581,Colorado Avalanche Information Center,Barney,8,8,2,0,0,1,1,0,0,true,false,false,true,false,false,terrain-feature
+26584,Colorado Avalanche Information Center,hodgettsr,5,5,4,0,0,1,1,1,0,false,false,true,false,false,false,numerous
+26617,,Andy Bond,6,6,2,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+26629,Colorado Avalanche Information Center,Powderguide,8,8,7,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+26637,Flathead Avalanche Center,bilbrey01,7,7,3,0,0,2,2,0,0,true,false,false,false,true,false,terrain-feature
+26651,Eastern Sierra Avalanche Center,joshf,4,4,3,7,0,1,0,0,0,false,false,true,true,true,false,terrain-feature
+26672,Colorado Avalanche Information Center,Ron.Simenhois,6,6,6,0,0,2,0,0,0,false,true,false,true,false,false,
+26678,Colorado Avalanche Information Center,Jason Konigsberg,6,6,1,0,0,2,0,0,0,true,false,false,true,true,false,terrain-feature
+26709,Flathead Avalanche Center,bilbrey01,5,5,1,0,0,2,0,0,0,true,false,false,true,false,false,slope-wide
+26739,Colorado Avalanche Information Center,ann.mellick,9,8,0,0,0,1,1,0,0,true,false,false,true,false,false,terrain-feature
+26757,,Andy Bond,4,4,1,0,0,1,0,0,0,false,true,false,true,false,false,
+26760,Colorado Avalanche Information Center,BML,7,7,7,0,0,2,0,0,0,false,true,false,true,false,false,terrain-feature
+26778,Colorado Avalanche Information Center,floyd.michael,5,5,5,0,0,4,0,0,0,false,true,false,true,false,false,localized
+26845,Colorado Avalanche Information Center,floyd.michael,8,8,7,0,0,0,0,0,0,false,true,false,true,false,false,localized
+26847,Colorado Avalanche Information Center,Barney,7,3,2,0,0,2,0,0,0,true,false,false,true,false,false,terrain-feature
+26848,Eastern Sierra Avalanche Center,joshf,4,4,1,0,0,3,2,0,0,true,false,false,false,true,false,terrain-feature
+26875,Colorado Avalanche Information Center,Ron.Simenhois,9,8,8,0,0,1,0,0,0,false,true,false,true,false,false,
+26905,Utah Avalanche Center,Drew Hardesty,4,4,0,0,0,1,0,0,0,true,false,false,true,true,true,numerous
+27032,Colorado Avalanche Information Center,tupya,4,4,3,0,0,2,0,0,0,true,false,false,true,true,false,localized
+27044,Utah Avalanche Center,Drew Hardesty,9,9,2,0,0,1,0,0,0,true,false,false,true,true,false,localized
+27050,Gallatin National Forest Avalanche Center,dchabot,5,5,3,0,0,1,0,0,0,false,false,false,true,true,true,terrain-feature
+27052,Gallatin National Forest Avalanche Center,dchabot,4,4,2,0,0,1,0,0,0,false,false,false,true,true,true,terrain-feature
+27090,Colorado Avalanche Information Center,hodgettsr,4,4,4,0,0,1,0,1,0,true,false,false,true,true,false,terrain-feature
+27129,Colorado Avalanche Information Center,Powderguide,4,4,3,0,0,1,0,0,0,true,false,false,false,true,false,terrain-feature
+27135,Colorado Avalanche Information Center,floyd.michael,6,6,3,0,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+27139,Gallatin National Forest Avalanche Center,davidzinn,10,10,4,0,0,2,0,0,0,false,true,false,true,false,false,localized
+27180,,Andy Bond,11,11,6,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+27184,Eastern Sierra Avalanche Center,joshf,4,4,4,6,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+27192,Colorado Avalanche Information Center,floyd.michael,5,5,5,0,0,1,0,0,0,false,true,false,true,false,false,localized
+27211,Flathead Avalanche Center,bilbrey01,7,7,4,0,0,3,1,0,0,false,false,true,false,true,false,terrain-feature
+27269,,Andy Bond,5,5,3,0,0,1,0,0,0,true,false,false,false,true,false,terrain-feature
+27285,Gallatin National Forest Avalanche Center,Zachkeskinen,6,6,4,0,0,2,0,0,0,false,true,false,true,false,false,slope-wide
+27294,Flathead Avalanche Center,bilbrey01,5,5,4,0,0,3,0,0,0,false,false,true,true,false,false,localized
+27357,Eastern Sierra Avalanche Center,Steve Mace,4,4,4,0,0,1,0,0,0,false,true,false,true,false,false,localized
+27375,Colorado Avalanche Information Center,krohrig,6,6,4,0,0,1,0,0,0,true,false,false,true,true,false,localized
+27385,Colorado Avalanche Information Center,Jason Konigsberg,4,4,3,0,0,1,0,0,0,true,false,false,false,false,true,slope-wide
+27411,Utah Avalanche Center,Drew Hardesty,4,4,0,0,0,1,0,0,0,true,false,false,true,true,false,localized
+27455,Eastern Sierra Avalanche Center,Steve Mace,5,5,4,0,0,2,0,1,0,true,false,false,true,true,false,terrain-feature
+27503,Colorado Avalanche Information Center,zarter,7,6,6,0,0,2,0,0,0,true,false,false,true,false,false,terrain-feature
+27513,Tahoe National Forest Sierra Avalanche Center,aanderson,6,6,5,0,0,1,0,0,0,true,false,false,false,true,true,slope-wide
+27572,Colorado Avalanche Information Center,tupya,4,4,0,0,0,2,0,0,0,true,false,false,true,true,false,terrain-feature
+27577,Colorado Avalanche Information Center,floyd.michael,10,10,1,0,0,1,0,0,0,false,true,false,true,false,false,
+27579,Sawtooth Avalanche Center,scott.savage,10,10,1,0,0,2,0,1,0,true,false,false,true,true,false,localized
+27613,Gallatin National Forest Avalanche Center,dchabot,5,5,3,0,0,1,0,0,0,true,false,false,true,true,false,localized
+27617,JHMR Alpine Guides,banderson,11,10,7,0,0,2,0,0,0,false,false,false,true,true,true,terrain-feature
+27637,Colorado Avalanche Information Center,Ron.Simenhois,11,11,11,0,0,1,0,0,0,false,true,false,true,false,false,
+27640,Colorado Avalanche Information Center,Ron.Simenhois,6,6,6,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+27645,Colorado Avalanche Information Center,Ron.Simenhois,5,4,4,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+27664,Flathead Avalanche Center,bilbrey01,6,6,3,0,0,1,2,0,0,false,true,false,true,false,false,slope-wide
+27679,Colorado Avalanche Information Center,hodgettsr,4,4,0,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+27738,Colorado Avalanche Information Center,floyd.michael,6,6,0,0,0,1,0,0,0,false,true,false,true,false,false,localized
+27757,Sawtooth Avalanche Center,bVandenBos,5,3,0,0,0,1,0,2,0,true,false,false,true,true,false,terrain-feature
+27805,Eastern Sierra Avalanche Center,Steve Mace,4,4,4,8,0,2,0,2,0,true,false,false,true,true,false,slope-wide
+27814,Flathead Avalanche Center,bilbrey01,7,7,4,0,0,3,0,0,0,false,true,false,true,false,false,localized
+27899,Sawtooth Avalanche Center,bVandenBos,5,5,0,0,0,2,0,4,0,true,false,false,true,true,false,slope-wide
+27900,Sawtooth Avalanche Center,bVandenBos,5,5,0,0,0,2,0,4,0,true,false,false,true,true,false,terrain-feature
+27976,Colorado Avalanche Information Center,Ben H Pritchett,5,5,1,0,0,0,0,1,0,true,false,false,true,true,false,slope-wide
+27990,,Andy Bond,9,9,5,0,0,1,0,1,0,false,true,false,true,false,false,terrain-feature
+28006,Colorado Avalanche Information Center,Jason Konigsberg,6,6,6,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+28010,Colorado Avalanche Information Center,Jason Konigsberg,6,6,5,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+28012,Colorado Avalanche Information Center,Jason Konigsberg,7,7,7,0,0,1,0,1,0,false,true,false,true,false,false,terrain-feature
+28017,Gallatin National Forest Avalanche Center,amarienthal,7,7,4,0,0,2,0,0,0,true,false,false,true,false,false,terrain-feature
+28048,Sawtooth Avalanche Center,bVandenBos,6,6,0,0,0,2,0,4,0,true,false,false,true,true,false,terrain-feature
+28099,Gallatin National Forest Avalanche Center,davidzinn,6,6,3,0,0,2,0,0,0,true,false,false,true,false,false,localized
+28115,Sawtooth Avalanche Center,bVandenBos,6,6,0,0,0,2,0,4,0,true,false,false,true,true,false,terrain-feature
+28192,American Avalanche Institute,dsharaf,11,11,11,0,0,2,0,1,0,true,false,false,true,true,false,terrain-feature
+28193,American Avalanche Institute,dsharaf,6,6,5,0,0,2,0,0,0,true,false,false,true,true,false,terrain-feature
+28238,Colorado Avalanche Information Center,Ron.Simenhois,5,5,5,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+28244,Colorado Avalanche Information Center,Ron.Simenhois,7,7,7,0,0,1,0,0,0,true,false,false,true,true,true,slope-wide
+28270,Colorado Avalanche Information Center,Jason Konigsberg,7,7,6,0,0,1,0,0,0,true,false,false,false,true,false,slope-wide
+28411,Washington State DOT,mattprimomo,10,10,9,0,0,0,2,0,0,false,true,false,false,true,false,terrain-feature
+28526,Colorado Avalanche Information Center,Bo_Torrey,6,0,0,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+28554,Colorado Avalanche Information Center,BML,8,8,7,0,0,2,0,0,0,true,false,false,true,true,false,terrain-feature
+28636,,Steve Gately,10,10,4,0,0,1,0,0,0,false,true,false,true,false,false,localized
+28658,,Steve Gately,10,10,4,0,0,1,0,0,0,false,true,false,true,false,false,
+28724,Gallatin National Forest Avalanche Center,Zachkeskinen,6,6,4,0,0,4,0,0,0,true,false,false,true,false,false,
+28933,Flathead Avalanche Center,bilbrey01,5,5,4,0,0,1,1,0,0,true,false,false,true,true,false,localized
+29050,Sawtooth Avalanche Center,bVandenBos,6,6,1,0,0,2,0,4,0,true,false,false,true,true,false,slope-wide
+29281,Colorado Avalanche Information Center,Barney,6,6,4,0,0,1,2,0,0,true,false,false,false,false,false,localized
+29282,Flathead Avalanche Center,bilbrey01,6,6,3,0,0,2,2,0,0,false,true,false,true,false,false,localized
+29339,Colorado Avalanche Information Center,floyd.michael,5,5,2,0,0,0,3,0,0,false,true,false,true,false,false,localized
+29403,Colorado Avalanche Information Center,zarter,10,10,10,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+29453,Colorado Avalanche Information Center,Ron.Simenhois,5,5,5,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+29456,Colorado Avalanche Information Center,hodgettsr,6,6,0,0,0,1,0,0,0,false,false,false,true,false,false,localized
+29487,Colorado Avalanche Information Center,Jason Konigsberg,5,5,4,0,0,1,0,1,0,true,false,false,true,true,false,terrain-feature
+29491,Sawtooth Avalanche Center,bVandenBos,7,7,1,0,0,2,0,4,0,true,false,false,true,true,false,localized
+29492,Sawtooth Avalanche Center,bVandenBos,9,9,0,0,0,2,0,4,0,true,false,false,true,true,false,localized
+29590,Gallatin National Forest Avalanche Center,Zachkeskinen,7,7,5,0,0,3,0,0,0,true,false,false,false,false,false,localized
+29672,Colorado Avalanche Information Center,Ben H Pritchett,8,7,2,0,0,1,0,0,0,true,false,false,true,true,false,slope-wide
+29714,Colorado Avalanche Information Center,Ron.Simenhois,10,10,8,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+29761,Flathead Avalanche Center,bilbrey01,7,7,2,0,0,1,0,0,0,false,true,false,true,false,false,
+29796,,Andy Bond,6,6,4,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+29833,Gallatin National Forest Avalanche Center,dchabot,8,6,3,0,0,1,0,0,0,false,true,false,true,false,false,localized
+29912,,ryanahuetter,6,6,6,0,0,1,1,1,0,false,false,false,true,false,false,terrain-feature
+29963,Colorado Avalanche Information Center,tupya,4,4,3,0,0,1,0,1,0,true,false,false,true,true,false,terrain-feature
+30022,Colorado Avalanche Information Center,Powderguide,7,7,6,0,0,1,0,0,0,false,false,false,false,true,false,slope-wide
+30112,Washington State DOT,mattprimomo,6,5,1,0,0,1,2,0,0,true,false,false,true,true,false,terrain-feature
+30235,,Steve Gately,10,10,7,0,0,2,0,0,0,true,false,false,true,false,false,terrain-feature
+30412,Gallatin National Forest Avalanche Center,Zachkeskinen,8,6,2,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+30842,Colorado Avalanche Information Center,Jason Konigsberg,5,5,4,0,0,1,0,0,0,false,true,false,true,true,false,slope-wide
+30843,Colorado Avalanche Information Center,Jason Konigsberg,8,8,4,0,0,1,0,0,0,false,true,false,true,true,false,
+30927,Colorado Avalanche Information Center,Powderguide,6,6,6,0,0,0,2,0,0,false,true,false,false,true,false,terrain-feature
+31060,Colorado Avalanche Information Center,Powderguide,9,9,6,0,0,2,0,0,0,false,true,false,true,true,false,
+31062,Colorado Avalanche Information Center,Powderguide,6,6,5,0,0,1,0,0,0,false,false,false,false,true,false,
+31273,Chugach National Forest Avalanche Center,andrewschauer,9,9,1,0,0,2,0,0,0,false,true,false,true,true,false,terrain-feature
+31902,Colorado Avalanche Information Center,floyd.michael,7,7,7,0,0,2,0,0,0,false,true,false,true,false,false,localized
+32088,Colorado Avalanche Information Center,spencer_logan,5,5,2,0,0,2,0,0,0,false,true,false,true,false,false,
+32543,Eastern Sierra Avalanche Center,Steve Mace,5,5,4,0,0,2,2,0,0,false,true,true,false,true,false,localized
+32930,Gallatin National Forest Avalanche Center,amarienthal,7,7,4,0,0,3,1,1,0,true,false,false,true,true,false,terrain-feature
+34847,Colorado Avalanche Information Center,Jason Konigsberg,3,3,2,0,0,2,0,0,0,true,false,false,true,false,false,terrain-feature
+34854,Colorado Avalanche Information Center,Ron.Simenhois,4,4,4,0,0,1,0,0,0,true,false,false,false,false,false,
+34855,Colorado Avalanche Information Center,Ron.Simenhois,6,6,6,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+34856,Colorado Avalanche Information Center,Ron.Simenhois,4,4,4,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+35069,David Hamre Associates LLC,dsharaf,7,7,7,0,0,2,0,1,0,false,false,true,false,true,false,localized
+35435,Colorado Avalanche Information Center,zarter,7,7,4,0,0,2,0,0,0,false,true,false,true,false,false,
+35504,Colorado Avalanche Information Center,Ben H Pritchett,4,4,3,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+35516,Colorado Avalanche Information Center,JYanko,7,7,7,0,0,0,0,0,0,true,false,false,true,true,false,terrain-feature
+35671,Colorado Avalanche Information Center,zarter,6,6,4,0,0,1,0,0,0,false,true,false,true,false,false,localized
+35675,Colorado Avalanche Information Center,dylan.craaybeek,6,6,6,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+35715,Colorado Avalanche Information Center,Colin,3,3,1,0,0,1,0,0,0,false,true,false,true,false,false,localized
+35738,Flathead Avalanche Center,bilbrey01,3,3,1,0,0,1,1,0,0,true,false,false,true,true,false,terrain-feature
+35739,Colorado Avalanche Information Center,Ron.Simenhois,5,5,4,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+35805,Colorado Avalanche Information Center,Jason Konigsberg,4,4,3,0,0,0,0,0,0,true,false,false,true,true,false,terrain-feature
+35807,Colorado Avalanche Information Center,Jason Konigsberg,5,5,4,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+35815,Eastern Sierra Avalanche Center,joshf,10,10,8,15,0,1,0,1,0,true,false,false,true,true,false,terrain-feature
+35817,Utah Avalanche Center,tobyweed,5,4,1,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+35920,Colorado Avalanche Information Center,primmerj,5,5,5,0,0,1,0,0,0,false,true,false,true,false,false,
+36015,,Bo_Torrey,9,9,2,0,0,1,0,0,0,true,false,false,false,false,true,slope-wide
+36026,Colorado Avalanche Information Center,Ben H Pritchett,2,1,1,0,0,1,0,0,0,true,false,false,true,true,false,slope-wide
+36159,,Bo_Torrey,10,9,3,0,0,1,0,1,0,true,false,false,true,false,false,terrain-feature
+36224,Colorado Avalanche Information Center,BML,6,6,3,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+36233,Monarch Mountain,austindivesta,3,3,3,0,0,1,1,0,0,true,false,false,true,true,false,localized
+36354,Utah Avalanche Center,bkobernik,3,3,0,0,0,0,0,0,0,true,false,false,true,false,false,slope-wide
+36368,Colorado Avalanche Information Center,Ron.Simenhois,4,4,4,0,3,1,0,0,0,true,false,false,true,false,true,
+36532,Eastern Sierra Avalanche Center,Steve Mace,6,6,6,0,0,1,1,0,0,false,false,true,false,false,false,localized
+36535,Colorado Avalanche Information Center,dylan.craaybeek,5,5,5,0,0,2,0,0,0,false,true,false,true,false,false,localized
+36536,Colorado Avalanche Information Center,primmerj,7,7,7,0,0,1,0,0,0,true,false,false,false,false,false,
+36570,Colorado Avalanche Information Center,dylan.craaybeek,7,7,7,0,0,0,0,0,0,true,false,false,false,false,false,slope-wide
+36586,,Andy Bond,5,5,5,0,0,1,1,0,0,true,false,false,false,false,false,slope-wide
+36652,Crested Butte Avalanche Center,ZGuy,6,6,4,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+36659,Colorado Avalanche Information Center,dylan.craaybeek,5,2,0,0,0,0,0,0,0,true,false,false,false,true,false,terrain-feature
+36660,Colorado Avalanche Information Center,dylan.craaybeek,7,7,7,0,0,1,0,0,0,true,false,false,false,true,true,slope-wide
+36677,Chugach National Forest Avalanche Center,andrewschauer,14,14,2,0,0,1,0,0,0,false,true,false,false,true,false,
+36767,Monarch Mountain,austindivesta,3,2,2,0,0,1,0,0,0,false,true,false,true,true,false,terrain-feature
+36768,Monarch Mountain,austindivesta,3,3,3,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+36771,Monarch Mountain,austindivesta,3,3,3,0,0,1,0,0,0,true,false,false,true,true,false,
+36779,Colorado Avalanche Information Center,Ron.Simenhois,3,3,3,0,0,1,0,0,0,true,false,false,false,true,true,slope-wide
+36782,Colorado Avalanche Information Center,Ron.Simenhois,3,3,3,0,3,1,0,0,0,true,false,false,true,true,true,slope-wide
+36783,Colorado Avalanche Information Center,Ron.Simenhois,6,6,6,0,0,1,0,0,0,true,false,false,true,true,false,slope-wide
+36831,Eastern Sierra Avalanche Center,Steve Mace,8,8,8,0,0,2,2,0,0,false,false,true,false,false,false,numerous
+36847,Colorado Avalanche Information Center,Ben H Pritchett,6,6,5,0,0,1,0,0,0,false,true,false,true,false,false,
+37030,Colorado Avalanche Information Center,Jason Konigsberg,8,8,5,0,0,2,0,0,0,true,false,false,true,true,false,slope-wide
+37078,Monarch Mountain,austindivesta,3,3,3,0,0,1,0,0,0,true,false,false,true,true,false,localized
+37079,Monarch Mountain,austindivesta,3,3,3,0,0,1,0,1,0,true,false,true,true,false,false,terrain-feature
+37080,Monarch Mountain,austindivesta,5,5,5,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+37332,Colorado Avalanche Information Center,Jason Konigsberg,4,4,1,0,0,2,0,0,0,false,false,true,false,false,false,slope-wide
+39320,Utah Avalanche Center,tobyweed,8,8,0,9,0,1,0,0,0,false,false,true,true,true,false,
+39679,Washington State DOT,mattprimomo,6,6,3,3,0,1,1,1,0,false,true,true,false,true,false,terrain-feature
+40712,Colorado Avalanche Information Center,JYanko,2,2,2,0,0,1,3,0,0,true,true,false,false,false,true,terrain-feature
+40968,Utah Avalanche Center,tobyweed,7,7,2,8,0,2,0,0,0,false,false,true,false,false,false,localized
+41029,Colorado Avalanche Information Center,JYanko,5,5,5,0,0,3,3,0,0,false,true,false,true,false,false,terrain-feature
+41101,Colorado Avalanche Information Center,JYanko,4,4,4,0,0,2,3,0,0,true,false,false,false,true,false,localized
+41156,Flathead Avalanche Center,bilbrey01,7,7,5,0,0,1,0,0,0,true,false,false,false,false,false,
+41260,Colorado Avalanche Information Center,BML,3,3,2,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+41375,Colorado Avalanche Information Center,dylan.craaybeek,10,10,10,0,0,2,0,1,0,true,false,false,false,true,false,slope-wide
+41459,Utah Avalanche Center,tobyweed,12,8,1,13,0,2,0,0,0,true,true,false,false,false,false,terrain-feature
+41525,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+41564,Crested Butte Avalanche Center,ZGuy,4,4,1,0,0,0,0,0,0,false,true,false,true,false,false,terrain-feature
+41590,Colorado Avalanche Information Center,dylan.craaybeek,6,6,6,0,0,2,0,1,0,true,false,false,true,true,false,slope-wide
+41604,Colorado Avalanche Information Center,dylan.craaybeek,9,9,5,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+41825,Colorado Avalanche Information Center,zarter,12,12,11,0,0,2,0,0,0,false,false,true,true,false,false,terrain-feature
+41890,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,0,0,0,0,0,true,false,false,false,true,false,slope-wide
+42066,,Bo_Torrey,10,10,8,0,0,1,1,0,0,false,true,false,true,false,false,terrain-feature
+42072,,Bo_Torrey,10,10,8,0,0,1,1,0,0,false,true,false,true,false,false,
+42251,Washington State DOT,mattprimomo,5,5,1,0,0,1,2,2,0,false,false,true,false,true,false,localized
+44403,Flathead Avalanche Center,bilbrey01,4,4,2,0,0,1,2,0,0,false,true,false,true,false,false,localized
+44434,Flathead Avalanche Center,bilbrey01,4,4,3,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+44592,Monarch Mountain,austindivesta,6,6,6,0,0,2,0,0,0,false,true,false,true,false,false,localized
+45026,Colorado Avalanche Information Center,Ron.Simenhois,6,6,6,0,0,1,0,0,0,false,false,true,true,true,false,terrain-feature
+45076,Bridger-Teton Avalanche Center,gantonioli,5,5,0,0,0,3,0,0,0,true,false,false,true,false,false,slope-wide
+45097,Gallatin National Forest Avalanche Center,ahaddad,5,5,3,0,0,1,0,0,0,true,false,false,true,false,false,localized
+45098,Gallatin National Forest Avalanche Center,ahaddad,6,6,4,0,0,2,0,0,0,true,false,false,true,false,false,slope-wide
+45150,,Bo_Torrey,6,3,1,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+45257,Tahoe National Forest Sierra Avalanche Center,bschwartz,5,5,4,0,0,2,0,0,0,true,false,false,true,true,false,slope-wide
+45273,Colorado Avalanche Information Center,dylan.craaybeek,4,4,4,0,0,2,0,0,0,true,false,false,true,true,true,slope-wide
+45324,Flathead Avalanche Center,bilbrey01,6,6,4,0,0,0,3,0,0,false,false,true,true,true,false,terrain-feature
+45336,Utah Avalanche Center,tobyweed,6,6,2,0,0,0,0,0,0,false,true,false,false,true,false,terrain-feature
+45397,Tahoe National Forest Sierra Avalanche Center,bschwartz,6,6,6,0,0,2,0,0,0,false,true,false,true,false,false,localized
+45429,Colorado Avalanche Information Center,BML,6,6,6,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+45445,Tahoe National Forest Sierra Avalanche Center,sreynaud,9,9,7,0,0,2,0,0,0,false,true,false,true,false,false,localized
+45446,Crested Butte Avalanche Center,ZGuy,6,6,2,0,0,0,0,0,0,true,false,false,true,true,true,terrain-feature
+45541,Flathead Avalanche Center,bilbrey01,5,5,3,0,0,1,1,0,0,false,true,false,true,false,false,slope-wide
+45542,Flathead Avalanche Center,bilbrey01,7,7,4,0,0,2,0,0,0,false,true,false,true,false,false,
+45614,Eastern Sierra Avalanche Center,Steve Mace,3,3,3,0,0,1,1,0,0,true,false,false,true,true,false,slope-wide
+45622,Colorado Avalanche Information Center,dylan.craaybeek,7,7,6,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+45758,Utah Avalanche Center,tobyweed,5,5,2,9,0,2,0,0,0,false,true,false,true,false,false,localized
+45771,Bridger-Teton Avalanche Center,gantonioli,6,6,0,0,0,2,0,0,0,false,true,false,true,false,false,numerous
+45778,Flathead Avalanche Center,bilbrey01,7,7,4,0,0,1,1,0,0,true,false,false,true,true,false,slope-wide
+45879,Utah Avalanche Center,tobyweed,6,6,1,5,0,2,0,0,0,true,true,false,false,false,false,localized
+45928,Colorado Avalanche Information Center,dylan.craaybeek,6,6,5,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+45932,Colorado Avalanche Information Center,BML,3,3,3,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+46044,Gallatin National Forest Avalanche Center,ianhoyer,4,4,1,0,0,1,0,0,0,false,true,false,true,false,false,localized
+46082,Utah Avalanche Center,bkobernik,3,3,0,0,0,0,0,0,0,false,true,false,true,false,false,slope-wide
+46145,Flathead Avalanche Center,blase,4,4,1,0,0,1,1,0,0,false,true,false,true,false,false,numerous
+46234,Utah Avalanche Center,tobyweed,7,6,1,6,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+46240,Flathead Avalanche Center,bilbrey01,7,7,3,0,0,1,1,0,0,true,false,false,true,false,false,localized
+46367,Utah Avalanche Center,tobyweed,5,5,2,7,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+46416,Colorado Avalanche Information Center,dylan.craaybeek,6,6,5,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+46848,Colorado Avalanche Information Center,Ron.Simenhois,4,4,4,0,0,1,0,0,0,true,false,false,true,false,false,terrain-feature
+46863,Utah Avalanche Center,tobyweed,7,7,1,6,0,1,0,0,0,true,true,false,true,true,false,terrain-feature
+46991,Gallatin National Forest Avalanche Center,ianhoyer,7,7,4,0,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+47259,Colorado Avalanche Information Center,Ron.Simenhois,5,5,4,0,0,1,0,0,0,true,false,false,true,true,false,slope-wide
+47458,Colorado Avalanche Information Center,Ben H Pritchett,8,8,3,0,0,2,0,0,0,true,false,false,true,true,false,slope-wide
+47860,Colorado Avalanche Information Center,zarter,8,8,8,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+48222,National Avalanche Center,kbirkeland,7,7,7,0,0,2,0,0,0,true,false,false,true,true,false,localized
+48415,Gallatin National Forest Avalanche Center,amarienthal,6,6,3,0,0,3,0,3,0,true,false,false,true,true,false,terrain-feature
+49065,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,0,1,0,1,0,true,false,false,true,false,false,terrain-feature
+49700,Bridger-Teton Avalanche Center,gantonioli,4,4,0,0,0,0,0,0,0,true,false,false,false,false,true,slope-wide
+50768,Colorado Avalanche Information Center,Ron.Simenhois,5,5,5,0,0,1,0,0,0,true,false,false,true,false,false,slope-wide
+51508,Bridger-Teton Avalanche Center,gantonioli,6,6,1,0,0,3,0,0,0,true,false,false,false,false,false,
+52433,Colorado Avalanche Information Center,Ben H Pritchett,9,9,1,0,0,1,0,0,0,false,true,false,true,false,false,localized
+52533,Park City Powder Cats,Bo_Torrey,6,4,1,0,0,2,0,0,0,false,true,false,true,false,false,localized
+53229,Colorado Avalanche Information Center,zarter,10,10,7,0,0,3,0,0,0,false,false,true,false,false,false,terrain-feature
+53542,Sierra Mountain Guides,ryanahuetter,6,6,3,0,0,1,1,0,0,false,true,false,true,false,false,terrain-feature
+53625,Colorado Avalanche Information Center,Ben H Pritchett,7,7,2,0,0,2,0,0,0,true,false,false,true,true,false,terrain-feature
+54135,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,0,2,0,0,0,false,false,false,false,true,true,slope-wide
+55751,Flathead Avalanche Center,bilbrey01,6,6,6,0,0,1,1,0,0,true,false,false,true,true,false,terrain-feature
+55827,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,0,2,0,0,0,true,false,false,true,true,false,terrain-feature
+55874,,extremealpine,3,3,3,2,0,1,2,1,0,false,false,true,true,false,false,localized
+55885,Utah Avalanche Center,tobyweed,4,4,1,6,0,1,0,0,0,true,false,false,false,true,false,localized
+55897,Flathead Avalanche Center,bilbrey01,3,3,2,0,0,1,1,0,0,false,false,true,false,false,false,localized
+56017,Bridger-Teton Avalanche Center,gantonioli,5,5,0,0,0,2,0,1,0,false,false,true,false,false,false,terrain-feature
+56076,Colorado Avalanche Information Center,dylan.craaybeek,7,7,7,0,0,1,0,1,0,false,true,false,true,false,false,terrain-feature
+56153,Colorado Avalanche Information Center,zarter,5,5,5,0,0,1,0,0,0,true,false,false,true,true,false,slope-wide
+56412,Gallatin National Forest Avalanche Center,ianhoyer,7,7,2,0,0,2,0,0,0,false,true,false,true,false,false,terrain-feature
+56416,Ski Patrol,CBPSP,6,6,6,9,0,1,4,0,0,true,false,false,true,true,false,slope-wide
+56501,Ski Patrol,CBPSP,5,5,5,9,0,1,3,1,0,true,false,false,true,true,false,
+56621,Jackson Hole Ski Patrol,BobbyGWyo,8,8,1,0,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+56798,Colorado Avalanche Information Center,dylan.craaybeek,9,9,9,0,0,0,0,0,0,true,false,false,true,false,false,slope-wide
+56953,Gallatin National Forest Avalanche Center,amarienthal,11,11,5,0,0,2,0,1,0,false,true,false,true,false,false,slope-wide
+57051,Tahoe National Forest Sierra Avalanche Center,bschwartz,5,5,5,0,0,2,0,0,0,true,false,false,false,false,false,slope-wide
+57224,Eastern Sierra Avalanche Center,Steve Mace,9,9,7,10,0,1,1,1,0,true,false,false,false,false,false,terrain-feature
+57468,Utah Avalanche Center,tobyweed,4,4,2,0,0,1,0,0,0,true,true,false,false,false,false,terrain-feature
+57536,Crested Butte Avalanche Center,ZGuy,9,9,4,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+58081,Flathead Avalanche Center,bilbrey01,7,7,0,0,0,3,0,0,0,false,false,true,false,false,false,localized
+58105,Tahoe National Forest Sierra Avalanche Center,bschwartz,8,8,7,0,0,1,1,1,0,false,true,false,true,true,false,localized
+58286,Utah Avalanche Center,tobyweed,9,7,2,12,0,2,0,0,0,false,true,false,true,false,false,localized
+58574,Utah Avalanche Center,tobyweed,6,6,3,9,0,2,0,0,0,true,true,false,true,true,false,terrain-feature
+58595,Flathead Avalanche Center,bilbrey01,7,7,6,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+58597,Flathead Avalanche Center,bilbrey01,8,8,5,0,0,2,0,0,0,true,false,false,true,true,false,
+58638,Gallatin National Forest Avalanche Center,amarienthal,6,6,4,0,0,1,0,0,0,true,false,false,false,false,true,slope-wide
+58761,Flathead Avalanche Center,bilbrey01,9,9,7,0,0,2,0,0,0,true,false,false,false,true,true,terrain-feature
+58803,Utah Avalanche Center,tobyweed,7,7,2,12,0,1,2,0,0,false,true,false,true,false,false,terrain-feature
+58811,,dsharaf,5,5,4,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+58836,Tahoe National Forest Sierra Avalanche Center,aanderson,8,8,7,0,0,3,0,1,1,true,false,false,true,true,false,localized
+59112,Gallatin National Forest Avalanche Center,ianhoyer,9,8,2,0,0,1,0,0,0,true,false,false,false,true,false,terrain-feature
+59130,Colorado Avalanche Information Center,austindivesta,3,3,3,0,0,1,0,1,0,true,false,false,true,true,false,slope-wide
+59273,Utah Avalanche Center,tobyweed,6,3,0,0,0,2,0,0,0,false,true,false,true,false,false,slope-wide
+59350,,Andy Bond,5,5,4,0,0,1,1,1,0,false,false,false,true,false,false,terrain-feature
+59472,Utah Avalanche Center,tobyweed,8,8,2,8,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+59600,Colorado Avalanche Information Center,dylan.craaybeek,10,10,10,0,6,2,0,1,0,false,true,false,true,false,false,slope-wide
+59809,Bridger-Teton Avalanche Center,gantonioli,7,7,0,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+60405,American Avalanche Institute,dsharaf,4,4,1,0,0,1,0,1,0,true,false,false,true,true,false,localized
+60970,Gallatin National Forest Avalanche Center,davidzinn,4,4,2,0,0,2,0,0,0,true,false,false,false,true,false,terrain-feature
+61037,Gallatin National Forest Avalanche Center,ianhoyer,6,6,2,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+61059,Bridger-Teton Avalanche Center,gantonioli,9,9,2,0,0,1,0,1,0,false,false,true,false,false,false,localized
+61210,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,6,4,0,2,0,true,false,false,false,false,false,slope-wide
+61442,Chugach National Forest Avalanche Center,andrewschauer,6,6,1,0,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+61953,Crested Butte Avalanche Center,ZGuy,9,9,8,0,0,1,0,0,0,false,true,false,true,false,false,localized
+62143,Colorado Avalanche Information Center,dylan.craaybeek,12,7,1,0,0,1,0,0,0,false,true,false,true,true,false,localized
+62846,Colorado Avalanche Information Center,dylan.craaybeek,8,8,8,0,0,3,0,1,0,true,false,false,false,true,false,slope-wide
+63379,,hahamarshall,4,4,0,0,0,1,0,0,0,true,false,false,false,false,false,slope-wide
+66310,Chugach National Forest Avalanche Center,andrewschauer,7,6,0,0,0,2,0,0,0,false,true,false,false,true,false,localized
+66503,Bridger-Teton Avalanche Center,gantonioli,5,5,2,0,0,3,0,0,0,true,false,false,false,false,false,localized
+66851,Eastern Sierra Avalanche Center,brooke.maushund,6,6,6,0,0,1,1,0,0,false,true,false,true,false,false,terrain-feature
+67074,Colorado Avalanche Information Center,Ben H Pritchett,7,7,6,0,0,1,0,0,0,true,false,false,true,true,false,localized
+67075,Colorado Avalanche Information Center,Ben H Pritchett,4,4,4,0,0,1,0,0,0,true,false,false,true,true,false,slope-wide
+67526,Colorado Avalanche Information Center,Ben H Pritchett,6,6,3,0,0,1,0,0,0,true,false,false,false,false,false,terrain-feature
+67759,Utah Avalanche Center,tobyweed,5,5,2,7,0,1,0,0,0,true,false,false,false,true,false,terrain-feature
+67992,Utah Avalanche Center,tobyweed,6,6,1,9,0,3,0,0,0,false,true,false,true,false,false,terrain-feature
+68084,Utah Avalanche Center,tobyweed,8,8,2,8,0,2,0,0,0,false,true,false,true,false,false,slope-wide
+68248,Colorado Avalanche Information Center,dylan.craaybeek,4,4,4,0,4,5,0,2,0,true,false,false,true,true,false,slope-wide
+68325,Utah Avalanche Center,tobyweed,7,7,1,9,0,1,0,0,0,true,true,false,true,true,false,terrain-feature
+68386,Park City Powder Cats,Bo_Torrey,6,6,4,0,0,2,0,0,0,false,true,false,true,false,false,terrain-feature
+68666,Colorado Avalanche Information Center,dylan.craaybeek,7,7,7,0,5,3,0,1,0,true,false,false,true,true,true,numerous
+68728,Gallatin National Forest Avalanche Center,ianhoyer,13,8,3,0,0,1,0,0,0,false,true,false,true,false,false,slope-wide
+68738,Colorado Avalanche Information Center,dylan.craaybeek,5,5,5,0,4,1,0,1,0,true,false,false,false,true,true,slope-wide
+68746,Colorado Avalanche Information Center,ahaddad,11,11,5,0,0,1,1,0,0,true,false,false,true,true,false,terrain-feature
+68836,Gallatin National Forest Avalanche Center,ianhoyer,5,3,1,0,0,1,0,0,0,false,true,false,true,false,false,terrain-feature
+69053,Colorado Avalanche Information Center,Ben H Pritchett,3,3,3,0,0,1,0,0,0,false,false,true,true,true,false,localized
+69054,Colorado Avalanche Information Center,Ben H Pritchett,4,4,3,0,0,1,0,0,0,true,false,false,true,true,false,terrain-feature
+69397,Colorado Avalanche Information Center,dylan.craaybeek,5,5,5,0,0,2,0,2,0,true,false,false,true,true,false,terrain-feature
+69400,Colorado Avalanche Information Center,dylan.craaybeek,6,3,0,0,0,2,0,2,0,true,false,false,true,true,false,localized
+69403,Colorado Avalanche Information Center,dylan.craaybeek,4,3,1,0,0,1,0,0,0,true,false,false,false,true,false,numerous
+71246,Colorado Avalanche Information Center,austindivesta,8,8,0,0,0,1,0,0,0,false,true,false,true,true,false,
+71923,Colorado Avalanche Information Center,dylan.craaybeek,5,5,4,0,0,4,0,0,0,true,false,false,true,true,false,terrain-feature
+72292,,Andy Bond,5,5,4,0,0,1,1,0,0,true,false,false,true,true,false,terrain-feature
+72324,Colorado Avalanche Information Center,dylan.craaybeek,5,5,3,0,0,3,0,0,0,true,false,false,true,true,false,slope-wide
