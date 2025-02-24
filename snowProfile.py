@@ -12,7 +12,7 @@ class SnowProfile(object):
         self.profileDepth = None
         self.weatherConditions = None
         self.hS = None
-        self.surfCond=SurfaceCondition()
+        self.surfCond=None
         self.layers=[]
         self.tempProfile=[]
         # Computed properties

@@ -115,7 +115,6 @@ def caaml_parser(file_path):
             if prop.tag.endswith('position'):
                 pit.snowProfile.weatherConditions.set_windDir(prop.text)
 
-
     # hS
     try:
         hS_val = next(root.iter(common_tag + 'height'), None).text
@@ -126,6 +125,13 @@ def caaml_parser(file_path):
     pit.snowProfile.set_hS(hS)
 
     ## Surface Conditions
+    try:
+        surfaceConditions = next(root.iter(common_tag + 'surfCond'), None)
+    except AttributeError:
+        surfaceConditions = None
+
+    if surfaceConditions is not None:
+        pit.snowProfile.surfCond = SurfaceCondition()
 
     # Boot Penetration
     try:
