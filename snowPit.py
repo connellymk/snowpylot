@@ -15,9 +15,9 @@ class SnowPit(object):
         self.user = {
             'OperationID': None,
             'OperationName': None,
-            'Professional': None,
+            'Professional': False,
             'ContactPersonID': None,
-            'ContactPersonName': None,
+            'Username': None,
             }   
         self.location = {
             'Latitude': None, 

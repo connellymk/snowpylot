@@ -40,8 +40,31 @@ def caaml_parser(file_path):
     pit.set_date(date)
 
     # User Information
+    try:
+        srcRef = next(root.iter(common_tag + 'srcRef'),None)
+    except AttributeError:
+        srcRef = None
 
+    if srcRef is not None:
+        for prop in srcRef.iter():
+            if prop.tag.endswith('Person'):
+                Person = prop
+                pit.user['ContactPersonID'] = prop.attrib.get(gml_tag + 'id')
+                for subProp in Person.iter():
+                    if subProp.tag.endswith('name'):
+                        pit.user['Username'] = subProp.text
+            elif prop.tag.endswith('Operation'):
+                Operation = prop
+                pit.user['Professional'] = True
+                pit.user['OperationID'] = prop.attrib.get(gml_tag + 'id')
+                name = []
+                for subProp in Operation.iter():
+                    if subProp.tag.endswith('name'):
+                        name.append(subProp.text)
+                if len(name) > 0:
+                    pit.user['OperationName'] = name[0]
     ## Location Information
+
     #Latitude and Longitude
     try:
         lat_long = next(root.iter(gml_tag + 'pos'), None).text
