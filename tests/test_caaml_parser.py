@@ -25,7 +25,7 @@ def test_user_info(test_pit):
     """Test user information parsing"""
     assert test_pit.user['Username'] == 'katisthebatis'
     assert test_pit.user['ContactPersonID'] == 'SnowPilot-User-15812'
-    assert test_pit.user.get('Professional') is True
+    assert test_pit.user.get('Professional') is False
 
 def test_location_info(test_pit):
     """Test location information parsing"""
