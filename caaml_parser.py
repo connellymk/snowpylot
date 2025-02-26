@@ -460,8 +460,8 @@ def caaml_parser(file_path):
 #print("pit2")
 #print(pit2)
 
-file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
-pit3 = caaml_parser(file_path3)
-print("pit3")
-print(pit3)
+#file_path3 = "snowpits/mkc_TESTPIT-23-Feb.caaml"
+#pit3 = caaml_parser(file_path3)
+#print("pit3")
+#print(pit3)
 
