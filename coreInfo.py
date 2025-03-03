@@ -137,7 +137,7 @@ class Location(object):
 
     def set_pitNearAvalanche(self, pitNearAvalanche):
         self.pitNearAvalanche = pitNearAvalanche
-    
+
     def set_pitNearAvalancheLocation(self, pitNearAvalancheLocation):
         self.pitNearAvalancheLocation = pitNearAvalancheLocation
 

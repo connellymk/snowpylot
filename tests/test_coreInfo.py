@@ -30,7 +30,7 @@ def test_basic_core_info(test_pit):
     assert core_info.pitName == "snowpylot-test"
     assert core_info.date == "2025-02-26"
     assert core_info.comment == "Core Info Comment"
-    #assert core_info.caamlVersion == "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"
+    # assert core_info.caamlVersion == "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"
 
 
 def test_user_info(test_pit):
@@ -56,9 +56,10 @@ def test_location_info(test_pit):
     assert location.pitNearAvalanche is True
     assert location.pitNearAvalancheLocation == "crown"
 
-
-#def test_weather_conditions(test_pit):
+    # def test_weather_conditions(test_pit):
     """Test weather conditions"""
+
+
 #    weather = test_pit.coreInfo.weatherConditions
 #    assert weather.skyCond == "SCT"
 #    assert weather.precipTI == "Nil"
@@ -115,9 +116,9 @@ def test_string_representation(test_pit):
     assert "Latitude: 45.828056" in location_str
     assert "Longitude: -110.932875" in location_str
 
-    #weather_str = str(core_info.weatherConditions)
-    #assert "skyCond: SCT" in weather_str
-    #assert "windDir: SW" in weather_str
+    # weather_str = str(core_info.weatherConditions)
+    # assert "skyCond: SCT" in weather_str
+    # assert "windDir: SW" in weather_str
 
 
 if __name__ == "__main__":

@@ -146,4 +146,22 @@ def caaml_parser(file_path):
 
     # windDir
 
+    ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
+
+    # layers
+
+    # tempProfile
+
+    # densityProfile
+
+    # surfCond
+
+    ### Stability Tests (testResults)
+
+    # testResults
+
+    ### Wumph Data (wumphData)
+
+    # wumphData
+
     return pit
