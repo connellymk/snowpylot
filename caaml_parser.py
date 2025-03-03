@@ -1,14 +1,8 @@
 import xml.etree.ElementTree as ET
-from layer import Layer, Grain
+from layer import *
 from snowPit import SnowPit
 from stabilityTests import *
-from snowProfile import (
-    SnowProfile,
-    SurfaceCondition,
-    WeatherConditions,
-    TempObs,
-    DensityObs,
-)
+from snowProfile import *
 from whumpfData import WumphData
 
 
@@ -20,106 +14,117 @@ def caaml_parser(file_path):
     pit = SnowPit()  # create a new SnowPit object
 
     # Parse file and add info to SnowPit object
-    common_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to ready from xml file
+    common_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
     root = ET.parse(file_path).getroot()
 
+    ### Core Info (pitID, pitName, date, user, location, weather, core comments, caamlVersion)
+    
+    # pitID
+    try:
+        pitID_str = next(root.iter(common_tag + "locRef"), None).attrib[gml_tag + "id"]
+        pitID = pitID_str.split("-")[-1]
+        pit.coreInfo.set_pitID(pitID)
+    except AttributeError:
+        pitID = None
+
+    # snowPitName
+    locRef = next(root.iter(common_tag + "locRef"), None)
+
+    for prop in locRef.iter(common_tag + "name"):
+        pitName = prop.text
+        pit.coreInfo.set_pitName(pitName)
+
+    # date
+    for prop in root.iter(common_tag + "timePosition"):
+        date = prop.text.split("T")[0] if prop.text is not None else None
+        pit.coreInfo.set_date(date)
+
+    # Comment
+    metaData = next(root.iter(common_tag + "metaData"), None)
+
+    for prop in metaData.iter(common_tag + "comment"):
+        comment = prop.text
+        pit.coreInfo.set_comment(comment)
+    
     # caamlVersion
     pit.set_caamlVersion(common_tag)
 
-    # pitID
-    pitID_tag = common_tag + "locRef"
-    gml_id_tag = gml_tag + "id"
-    try:
-        pitID_str = next(root.iter(pitID_tag), None).attrib[gml_id_tag]
-        pitID = pitID_str.split("-")[-1]
-    except AttributeError:
-        pitID = None
-    pit.set_pitID(pitID)
 
-    # date
-    dateTime_tag = common_tag + "timePosition"
-    try:
-        dt = next(root.iter(dateTime_tag), None).text
-    except AttributeError:
-        dt = None
-    date = dt.split("T")[0] if dt is not None else None
-    pit.set_date(date)
+    ## User (OperationID, OperationName, Professional, ContactPersonID, Username)
+    srcRef = next(root.iter(common_tag + "srcRef"), None)
 
-    # User Information
-    try:
-        srcRef = next(root.iter(common_tag + "srcRef"), None)
-    except AttributeError:
-        srcRef = None
+    # OperationID
+    for prop in srcRef.iter(common_tag + "Operation"):
+        operationID = prop.attrib[gml_tag + "id"]
+        pit.coreInfo.set_operationID(operationID)
+        pit.coreInfo.set_professional(True) # If operation is present, then it is a professional operation
 
-    if srcRef is not None:
-        for prop in srcRef.iter():
-            if prop.tag.endswith("Person"):
-                Person = prop
-                pit.user["ContactPersonID"] = prop.attrib.get(gml_tag + "id")
-                for subProp in Person.iter():
-                    if subProp.tag.endswith("name"):
-                        pit.user["Username"] = subProp.text
-            elif prop.tag.endswith("Operation"):
-                Operation = prop
-                pit.user["Professional"] = True
-                pit.user["OperationID"] = prop.attrib.get(gml_tag + "id")
-                name = []
-                for subProp in Operation.iter():
-                    if subProp.tag.endswith("name"):
-                        name.append(subProp.text)
-                if len(name) > 0:
-                    pit.user["OperationName"] = name[0]
-    ## Location Information
+    # OperationName
+    names = []
+    for prop in srcRef.iter(common_tag + "Operation"):
+        for subProp in prop.iter(common_tag + "name"):
+            names.append(subProp.text)
+    pit.coreInfo.set_operationName(names[0]) # Professional pits have operation name and contact name, the operation name is the first name
+
+    # ContactPersonID and Username
+    for prop in srcRef.iter():
+        if prop.tag.endswith("Person"): # can handle "Person" (non-professional) or "ContactPerson" (professional)  
+            person = prop
+            userID = person.attrib.get(gml_tag + "id")
+            pit.coreInfo.set_userID(userID)
+            for subProp in person.iter():
+                if subProp.tag.endswith("name"):
+                    pit.coreInfo.set_username(subProp.text)
+
+    ## Location (latitude, longitude, elevation, aspect, slopeAngle, country, region, avalache proximity)
 
     # Latitude and Longitude
     try:
         lat_long = next(root.iter(gml_tag + "pos"), None).text
         lat_long = lat_long.split(" ")
+        pit.coreInfo.set_latitude(float(lat_long[0]))
+        pit.coreInfo.set_longitude(float(lat_long[1]))
     except AttributeError:
         lat_long = None
 
-    if lat_long is not None:
-        pit.location["Latitude"] = float(lat_long[0])
-        pit.location["Longitude"] = float(lat_long[1])
+    # elevation
+    for prop in locRef.iter(common_tag + "ElevationPosition"):
+        uom = prop.attrib.get("uom")
+        for subProp in prop.iter(common_tag + "position"):
+            elevation = subProp.text
+            pit.coreInfo.set_elevation([elevation, uom])
 
-    # Elevation, Aspect, and SlopeAngle: Reference code from Ron
-    locations_params_tags = [
-        common_tag + "ElevationPosition",
-        common_tag + "AspectPosition",
-        common_tag + "SlopeAnglePosition",
-    ]
-    name_front_trim = len(common_tag)
-    name_back_trim = -len("Position")
-    position_params = [t for t in root.iter() if t.tag in locations_params_tags]
-    for tp in position_params:
-        pit.location[tp.tag[name_front_trim:name_back_trim]] = [
-            tp.find(common_tag + "position").text,
-            tp.get("uom"),
-        ]
+    # aspect
+    for prop in locRef.iter(common_tag + "AspectPosition"):
+        for subProp in prop.iter(common_tag + "position"):
+            pit.coreInfo.set_aspect(subProp.text)
 
-    # Country and Region
-    try:
-        pit.location["Country"] = next(root.iter(common_tag + "country"), None).text
-    except AttributeError:
-        pit.location["Country"] = None
-    try:
-        pit.location["Region"] = next(root.iter(common_tag + "region"), None).text
-    except AttributeError:
-        pit.location["Region"] = None
+    # slopeAngle
+    for prop in locRef.iter(common_tag + "SlopeAnglePosition"):
+        uom = prop.attrib.get("uom")
+        for subProp in prop.iter(common_tag + "position"):
+            slopeAngle = subProp.text
+            pit.coreInfo.set_slopeAngle([slopeAngle, uom])
 
-    # pitNearAvalanche
-    try:
-        pitNearAvalanche_TF = next(
-            root.iter(snowpilot_tag + "pitNearAvalanche"), None
-        ).text
-        pitNearAvalanche_loc = next(
-            root.iter(snowpilot_tag + "pitNearAvalanche"), None
-        ).get("location")
-        pit.location["pitNearAvalanche"] = [pitNearAvalanche_TF, pitNearAvalanche_loc]
-    except AttributeError:
-        pit.location["pitNearAvalanche"] = None
+    # country
+    for prop in locRef.iter(common_tag + "country"):
+        pit.coreInfo.set_country(prop.text)
+
+    # region
+    for prop in locRef.iter(common_tag + "region"):
+        pit.coreInfo.set_region(prop.text)
+
+    # proximity to avalanches
+    for prop in root.iter(snowpilot_tag + "pitNearAvalanche"):
+        if prop.text == "true":
+            pit.coreInfo.set_avalancheProximity(True)
+        try:
+            location = prop.attrib.get("location")
+            pit.coreInfo.set_avalancheProximityLocation(location)
+        except AttributeError:
+            location = None
 
     ## Snow Profile Information
 

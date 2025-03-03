@@ -1,7 +1,7 @@
 from snowProfile import SnowProfile
 from stabilityTests import StabilityTests
 from whumpfData import WumphData
-
+from coreInfo import CoreInfo
 
 class SnowPit(object):
     """
@@ -9,45 +9,19 @@ class SnowPit(object):
     """
 
     def __init__(self):
-        self.caamlVersion = None
-        self.pitID = None
-        self.date = None
-        self.user = {
-            "OperationID": None,
-            "OperationName": None,
-            "Professional": False,
-            "ContactPersonID": None,
-            "Username": None,
-        }
-        self.location = {
-            "Latitude": None,
-            "Longitude": None,
-            "Elevation": None,
-            "Aspect": None,
-            "SlopeAngle": None,
-            "Country": None,
-            "Region": None,
-            "pitNearAvalanche": None,
-        }
-        self.snowProfile = SnowProfile()
-        self.stabilityTests = StabilityTests()
-        self.wumphData = None
+        self.coreInfo = CoreInfo() # Includes pitID, date, user, location, and weather
+        self.snowProfile = SnowProfile() # Includes layers, tempProfile, densityProfile, and surfCond
+        self.stabilityTests = StabilityTests() # Includes test results from stability tests
+        self.wumphData = WumphData() # Includes custom SnowPilot "wumphData"
 
     def __str__(self):
         snowPit_str = "SnowPit: "
-        snowPit_str += f"\n caamlVersion: {self.caamlVersion} "
-        snowPit_str += f"\n pitID: {self.pitID} "
-        snowPit_str += f"\n Date: {self.date} "
-        snowPit_str += f"\n User:"
-        for key, value in self.user.items():
-            snowPit_str += f"\n    {key}: {value}"
-        snowPit_str += f"\n Location:"
-        for key, value in self.location.items():
-            snowPit_str += f"\n    {key}: {value}"
+        snowPit_str += f"\n Core Info: {self.coreInfo} "
         snowPit_str += f"\n Snow Profile: {self.snowProfile} "
         snowPit_str += f"\n Stability Tests: {self.stabilityTests} "
         snowPit_str += f"\n Wumph Data: {self.wumphData} "
         return snowPit_str
+
 
     # Setters
 
