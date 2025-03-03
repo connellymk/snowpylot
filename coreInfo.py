@@ -24,7 +24,9 @@ class CoreInfo(object):
         coreInfo_str += f"Location: {self.location}\n"
         coreInfo_str += f"WeatherConditions: {self.weatherConditions}\n"
         coreInfo_str += f"Avalanche Proximity: {self.avalancheProximity}\n"
-        coreInfo_str += f"Avalanche Proximity Location: {self.avalancheProximityLocation}\n"
+        coreInfo_str += (
+            f"Avalanche Proximity Location: {self.avalancheProximityLocation}\n"
+        )
         return coreInfo_str
 
     # Setters

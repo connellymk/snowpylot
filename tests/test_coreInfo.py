@@ -1,15 +1,18 @@
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 from caaml_parser import caaml_parser
 from coreInfo import CoreInfo, User, Location, WeatherConditions
 
+
 @pytest.fixture
 def test_pit():
     """Fixture to load the test snowpit file"""
     return caaml_parser("snowpits/test/snowpylot-test-26-Feb-caaml.xml")
+
 
 def test_core_info_structure(test_pit):
     """Test that CoreInfo object is properly structured"""
@@ -18,6 +21,7 @@ def test_core_info_structure(test_pit):
     assert isinstance(core_info.user, User)
     assert isinstance(core_info.location, Location)
     assert isinstance(core_info.weatherConditions, WeatherConditions)
+
 
 def test_basic_core_info(test_pit):
     """Test basic core info fields"""
@@ -28,6 +32,7 @@ def test_basic_core_info(test_pit):
     assert core_info.comment == "Core Info Comment"
     assert core_info.caamlVersion == "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"
 
+
 def test_user_info(test_pit):
     """Test user information"""
     user = test_pit.coreInfo.user
@@ -36,6 +41,7 @@ def test_user_info(test_pit):
     assert user.professional is False
     assert user.operationID is None
     assert user.operationName is None
+
 
 def test_location_info(test_pit):
     """Test location information"""
@@ -50,6 +56,7 @@ def test_location_info(test_pit):
     assert location.pitNearAvalanche is True
     assert location.pitNearAvalancheLocation == "crown"
 
+
 def test_weather_conditions(test_pit):
     """Test weather conditions"""
     weather = test_pit.coreInfo.weatherConditions
@@ -58,6 +65,7 @@ def test_weather_conditions(test_pit):
     assert weather.airTempPres == [28.0, "degC"]
     assert weather.windSpeed == "C"
     assert weather.windDir == "SW"
+
 
 def test_professional_user():
     """Test parsing of a professional user with operation info"""
@@ -76,38 +84,41 @@ def test_professional_user():
     # or modify the parser to accept XML string for testing
     # For now, this serves as documentation of what should be tested
 
+
 def test_missing_optional_fields(test_pit):
     """Test handling of missing optional fields"""
     core_info = test_pit.coreInfo
-    
+
     # These fields should be None or have default values if not present
     assert core_info.user.operationID is None
     assert core_info.user.operationName is None
     assert core_info.user.professional is False  # default value
 
+
 def test_string_representation(test_pit):
     """Test string representation of CoreInfo objects"""
     core_info = test_pit.coreInfo
     str_repr = str(core_info)
-    
+
     # Check that important fields are included in string representation
     assert "PitID: 73109" in str_repr
     assert "PitName: snowpylot-test" in str_repr
     assert "Date: 2025-02-26" in str_repr
     assert "Comment: Core Info Comment" in str_repr
-    
+
     # Check nested object string representations
     user_str = str(core_info.user)
     assert "Username: katisthebatis" in user_str
     assert "Professional: False" in user_str
-    
+
     location_str = str(core_info.location)
     assert "Latitude: 45.828056" in location_str
     assert "Longitude: -110.932875" in location_str
-    
+
     weather_str = str(core_info.weatherConditions)
     assert "skyCond: SCT" in weather_str
     assert "windDir: SW" in weather_str
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

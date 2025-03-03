@@ -31,7 +31,9 @@ def test_user_info(test_pit):
     """Test user information parsing"""
     assert test_pit.coreInfo.user.username == "katisthebatis"
     assert test_pit.coreInfo.user.userID == "SnowPilot-User-15812"
-    assert test_pit.coreInfo.user.professional is False  # No operation info in test file
+    assert (
+        test_pit.coreInfo.user.professional is False
+    )  # No operation info in test file
 
 
 def test_location_info(test_pit):

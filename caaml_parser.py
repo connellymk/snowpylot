@@ -20,7 +20,7 @@ def caaml_parser(file_path):
     root = ET.parse(file_path).getroot()
 
     ### Core Info (pitID, pitName, date, user, location, weather, core comments, caamlVersion)
-    
+
     # pitID
     try:
         pitID_str = next(root.iter(common_tag + "locRef"), None).attrib[gml_tag + "id"]
@@ -47,10 +47,9 @@ def caaml_parser(file_path):
     for prop in metaData.iter(common_tag + "comment"):
         comment = prop.text
         pit.coreInfo.set_comment(comment)
-    
+
     # caamlVersion
     pit.set_caamlVersion(common_tag)
-
 
     ## User (OperationID, OperationName, Professional, ContactPersonID, Username)
     srcRef = next(root.iter(common_tag + "srcRef"), None)
@@ -59,7 +58,9 @@ def caaml_parser(file_path):
     for prop in srcRef.iter(common_tag + "Operation"):
         operationID = prop.attrib[gml_tag + "id"]
         pit.coreInfo.user.set_operationID(operationID)
-        pit.coreInfo.user.set_professional(True) # If operation is present, then it is a professional operation
+        pit.coreInfo.user.set_professional(
+            True
+        )  # If operation is present, then it is a professional operation
 
     # OperationName
     names = []
@@ -67,13 +68,17 @@ def caaml_parser(file_path):
         for subProp in prop.iter(common_tag + "name"):
             names.append(subProp.text)
     if names:
-        pit.coreInfo.user.set_operationName(names[0]) # Professional pits have operation name and contact name, the operation name is the first name
+        pit.coreInfo.user.set_operationName(
+            names[0]
+        )  # Professional pits have operation name and contact name, the operation name is the first name
     else:
         pit.coreInfo.user.set_operationName(None)
 
     # ContactPersonID and Username
     for prop in srcRef.iter():
-        if prop.tag.endswith("Person"): # can handle "Person" (non-professional) or "ContactPerson" (professional)  
+        if prop.tag.endswith(
+            "Person"
+        ):  # can handle "Person" (non-professional) or "ContactPerson" (professional)
             person = prop
             userID = person.attrib.get(gml_tag + "id")
             pit.coreInfo.user.set_userID(userID)
@@ -158,7 +163,6 @@ def caaml_parser(file_path):
         weatherConditions = None
 
     if weatherConditions is not None:
-
         for prop in weatherConditions.iter():
             if prop.tag.endswith("skyCond"):
                 pit.coreInfo.weatherConditions.set_skyCond(prop.text)
