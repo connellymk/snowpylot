@@ -10,7 +10,7 @@ class SnowPit(object):
     """
 
     def __init__(self):
-        self.coreInfo = CoreInfo()  # Includes pitID, date, user, location, and weather
+        self.coreInfo = CoreInfo()  # Includes pitID, pitName, date, comment, caamlVersion, user, location, and weather
         self.snowProfile = (
             SnowProfile()
         )  # Includes layers, tempProfile, densityProfile, and surfCond
