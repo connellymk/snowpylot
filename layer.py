@@ -1,22 +1,21 @@
 class Layer(object):
-
     """
     Layer class for representing a layer of snow from a SnowPilot caaml.xml file
     """
-    
+
     def __init__(self):
         # Parsed properties
-        self.depthTop=None
-        self.thickness=None
-        self.hardness=None
-        self.hardnessTop=None
-        self.hardnessBottom=None
-        self.grainFormPrimary=None
-        self.grainFormSecondary=None
-        self.density=None
-        self.wetness=None
-        self.layerOfConcern=False
-        self.comments=None
+        self.depthTop = None
+        self.thickness = None
+        self.hardness = None
+        self.hardnessTop = None
+        self.hardnessBottom = None
+        self.grainFormPrimary = None
+        self.grainFormSecondary = None
+        self.density = None
+        self.wetness = None
+        self.layerOfConcern = False
+        self.comments = None
 
     def __str__(self):
         layer_str = ""
@@ -32,7 +31,6 @@ class Layer(object):
         layer_str += f"\n\t layerOfConcern: {self.layerOfConcern}"
         layer_str += f"\n\t comments: {self.comments}"
         return layer_str
-    
 
     # Setters
     def set_depthTop(self, depthTop):
@@ -59,10 +57,8 @@ class Layer(object):
     def set_comments(self, comments):
         self.comments = comments
 
-        
 
 class Grain(object):
-
     def __init__(self):
         # Parsed properties
         self.grainForm = None
@@ -84,58 +80,57 @@ class Grain(object):
         grain_str += f"\n\t\t subGrainClass_code: {self.subGrainClass_code}"
         grain_str += f"\n\t\t subGrainClass_name: {self.subGrainClass_name}"
         return grain_str
-    
+
     # Setters
     def set_grainForm(self, grainForm):
-
         basicGrainClassDict = {
-            'PP': 'Precipitation particles',
-            'DF': 'Decomposing and fragmented precipitation particles',
-            'RG': 'Rounded grains',
-            'FC': 'Faceted crystals',
-            'DH': 'Depth hoar',
-            'SH': 'Surface hoar',
-            'MF': 'Melt forms',
-            'IF': 'Ice formations',
-            'MM': 'Machine made Snow'
+            "PP": "Precipitation particles",
+            "DF": "Decomposing and fragmented precipitation particles",
+            "RG": "Rounded grains",
+            "FC": "Faceted crystals",
+            "DH": "Depth hoar",
+            "SH": "Surface hoar",
+            "MF": "Melt forms",
+            "IF": "Ice formations",
+            "MM": "Machine made Snow",
         }
         subGrainClassDict = {
-            'PPgp': 'Graupel',
-            'PPco': 'Columns',
-            'PPpl': 'Plates',
-            'PPnd': 'Needles',
-            'PPsd': 'Stellars, Dendrites',
-            'PPir': 'Irregular crystals',
-            'PPip': 'Ice pellets',
-            'PPrm': 'Rime',
-            'DFdc': 'Partly decomposed precipitation particles',
-            'DFbk': 'Wind-broken precipitation particles',
-            'RGsr': 'Small rounded particles',
-            'RGlr': 'Large rounded particles',
-            'RGwp': 'Wind packed',
-            'RGxf': 'Faceted rounded particles',
-            'FCso': 'Solid faceted particles',
-            'FCsf': 'Near surface faceted particles',
-            'FCxr': 'Rounding faceted particles',
-            'DHcp': 'Hollow cups',
-            'DHpr': 'Hollow prisms',
-            'DHch': 'Chains of depth hoar',
-            'DHla': 'Large striated crystals',
-            'DHxr': 'Rounding depth hoar',
-            'SHsu': 'Surface hoar crystals',
-            'SHcv': 'Cavity or crevasse hoar',
-            'SHxr': 'Rounding surface hoar',
-            'MFcl': 'Clustered rounded grains',
-            'MFpc': 'Rounded polycrystals',
-            'MFsl': 'Slush',
-            'MFcr': 'Melt-freeze crust',
-            'IFil': 'Ice layer',
-            'IFic': 'Ice column',
-            'IFbi': 'Basal ice',
-            'IFrc': 'Rain crust',
-            'IFsc': 'Sun crust',
-            'MMrp': 'Round polycrystalline particles',
-            'MMci': 'Crushed ice particles'
+            "PPgp": "Graupel",
+            "PPco": "Columns",
+            "PPpl": "Plates",
+            "PPnd": "Needles",
+            "PPsd": "Stellars, Dendrites",
+            "PPir": "Irregular crystals",
+            "PPip": "Ice pellets",
+            "PPrm": "Rime",
+            "DFdc": "Partly decomposed precipitation particles",
+            "DFbk": "Wind-broken precipitation particles",
+            "RGsr": "Small rounded particles",
+            "RGlr": "Large rounded particles",
+            "RGwp": "Wind packed",
+            "RGxf": "Faceted rounded particles",
+            "FCso": "Solid faceted particles",
+            "FCsf": "Near surface faceted particles",
+            "FCxr": "Rounding faceted particles",
+            "DHcp": "Hollow cups",
+            "DHpr": "Hollow prisms",
+            "DHch": "Chains of depth hoar",
+            "DHla": "Large striated crystals",
+            "DHxr": "Rounding depth hoar",
+            "SHsu": "Surface hoar crystals",
+            "SHcv": "Cavity or crevasse hoar",
+            "SHxr": "Rounding surface hoar",
+            "MFcl": "Clustered rounded grains",
+            "MFpc": "Rounded polycrystals",
+            "MFsl": "Slush",
+            "MFcr": "Melt-freeze crust",
+            "IFil": "Ice layer",
+            "IFic": "Ice column",
+            "IFbi": "Basal ice",
+            "IFrc": "Rain crust",
+            "IFsc": "Sun crust",
+            "MMrp": "Round polycrystalline particles",
+            "MMci": "Crushed ice particles",
         }
 
         self.grainForm = grainForm
@@ -147,6 +142,7 @@ class Grain(object):
         else:
             self.basicGrainClass_code = grainForm
             self.basicGrainClass_name = basicGrainClassDict[self.basicGrainClass_code]
+
     def set_grainSizeAvg(self, grainSizeAvg):
         self.grainSizeAvg = grainSizeAvg
 
@@ -155,4 +151,3 @@ class Grain(object):
 
     def set_grainFormClass(self, grainFormClass):
         self.grainFormClass = grainFormClass
-        

@@ -1,39 +1,36 @@
 class StabilityTests:
-
-    """ 
+    """
     StabilityTests class for representing stability tests from a SnowPilot caaml.xml file
 
     Object holds a list of objects that represent stability tests
     """
 
     def __init__(self):
-        self.ECT = [] # ExtColumn Test
-        self.CT = [] # Compression Test
-        self.RBT = [] # Rutschblock Test
-        self.PST = [] # Propogation Saw Test
-        self.SBT = [] # StuffBlockTest
-        self.SST = [] # Shovel Shear Test
-        self.DTT = [] # Deep Tap Test
-
+        self.ECT = []  # ExtColumn Test
+        self.CT = []  # Compression Test
+        self.RBT = []  # Rutschblock Test
+        self.PST = []  # Propogation Saw Test
+        self.SBT = []  # StuffBlockTest
+        self.SST = []  # Shovel Shear Test
+        self.DTT = []  # Deep Tap Test
 
     def __str__(self):
         stbTests_str = ""
         for i, test in enumerate(self.ECT):
-            stbTests_str += f"\n    ExtColumnTest {i+1}: {test}"
+            stbTests_str += f"\n    ExtColumnTest {i + 1}: {test}"
         for i, test in enumerate(self.CT):
-            stbTests_str += f"\n    CompressionTest {i+1}: {test}"
+            stbTests_str += f"\n    CompressionTest {i + 1}: {test}"
         for i, test in enumerate(self.RBT):
-            stbTests_str += f"\n    RutschblockTest {i+1}: {test}"
+            stbTests_str += f"\n    RutschblockTest {i + 1}: {test}"
         for i, test in enumerate(self.PST):
-            stbTests_str += f"\n    PropSawTest {i+1}: {test}"
+            stbTests_str += f"\n    PropSawTest {i + 1}: {test}"
         for i, test in enumerate(self.SBT):
-            stbTests_str += f"\n    StuffBlockTest {i+1}: {test}"
+            stbTests_str += f"\n    StuffBlockTest {i + 1}: {test}"
         for i, test in enumerate(self.SST):
-            stbTests_str += f"\n    ShovelShearTest {i+1}: {test}"
+            stbTests_str += f"\n    ShovelShearTest {i + 1}: {test}"
         for i, test in enumerate(self.DTT):
-            stbTests_str += f"\n    DeepTapTest {i+1}: {test}"
+            stbTests_str += f"\n    DeepTapTest {i + 1}: {test}"
         return stbTests_str
-    
 
     def add_ECT(self, ect):
         self.ECT.append(ect)
@@ -56,8 +53,8 @@ class StabilityTests:
     def add_DTT(self, dtt):
         self.DTT.append(dtt)
 
-class ExtColumnTest:
 
+class ExtColumnTest:
     """
     ExtColumnTest class for representing results of ExtColumnTest stability test
     """
@@ -67,10 +64,9 @@ class ExtColumnTest:
         self.depthTop = None
         self.testScore = None
         self.comment = None
-        #Computed Properties
+        # Computed Properties
         self.propogation = None
         self.numTaps = None
-
 
     def __str__(self):
         ect_str = ""
@@ -88,7 +84,7 @@ class ExtColumnTest:
         self.testScore = testScore
 
         propChar = testScore[3]
-        if propChar == 'P':
+        if propChar == "P":
             self.propogation = True
         else:
             self.propogation = False
@@ -97,7 +93,7 @@ class ExtColumnTest:
         self.numTaps = numTaps
 
     def set_comment(self, comment):
-        self.comment = comment   
+        self.comment = comment
 
     def set_propogation(self, propogation):
         self.propogation = propogation
@@ -105,8 +101,8 @@ class ExtColumnTest:
     def set_numTaps(self, numTaps):
         self.numTaps = numTaps
 
-class ComprTest:
 
+class ComprTest:
     """
     ComprTest class for representing results of a Compression Test stability test
     """
@@ -133,12 +129,12 @@ class ComprTest:
 
     def set_shearQuality(self, shearQuality):
         self.shearQuality = shearQuality
-        
+
     def set_comment(self, comment):
         self.comment = comment
 
-class RutschblockTest:
 
+class RutschblockTest:
     """
     RutschblockTest class for representing results of a Rutschblock Test
     """
@@ -170,12 +166,12 @@ class RutschblockTest:
 
     def set_releaseType(self, releaseType):
         self.releaseType = releaseType
-        
+
     def set_comment(self, comment):
         self.comment = comment
 
-class PropSawTest:
 
+class PropSawTest:
     """
     PropSawTest class for representing results of a Propogation Saw Test
     """
@@ -198,8 +194,6 @@ class PropSawTest:
         ps_str += f"\n\t columnLength: {self.columnLength}"
         return ps_str
 
-
-
     def set_failure(self, failure):
         self.failure = failure
 
@@ -218,8 +212,8 @@ class PropSawTest:
     def set_columnLength(self, columnLength):
         self.columnLength = columnLength
 
-class StuffBlockTest:
 
+class StuffBlockTest:
     """
     StuffBlockTest class for representing results of a Stuff Block Test
     """
@@ -237,7 +231,7 @@ class StuffBlockTest:
         sb_str += f"\n\t shearQuality: {self.shearQuality}"
         sb_str += f"\n\t comment: {self.comment}"
         return sb_str
-        
+
     def set_depthTop(self, depthTop):
         self.depthTop = depthTop
 
@@ -247,11 +241,11 @@ class StuffBlockTest:
     def set_shearQuality(self, shearQuality):
         self.shearQuality = shearQuality
 
-    def set_comment(self, comment): 
+    def set_comment(self, comment):
         self.comment = comment
 
-class ShovelShearTest:
 
+class ShovelShearTest:
     """
     ShovelShearTest class for representing results of a Shovel Shear Test
     """
@@ -267,7 +261,7 @@ class ShovelShearTest:
         ss_str += f"\n\t testScore: {self.testScore}"
         ss_str += f"\n\t comment: {self.comment}"
         return ss_str
-        
+
     def set_depthTop(self, depthTop):
         self.depthTop = depthTop
 
@@ -277,8 +271,8 @@ class ShovelShearTest:
     def set_comment(self, comment):
         self.comment = comment
 
-class DeepTapTest:
 
+class DeepTapTest:
     """
     DeepTapTest class for representing results of a Deep Tap Test
     """
@@ -308,4 +302,3 @@ class DeepTapTest:
 
     def set_comment(self, comment):
         self.comment = comment
-

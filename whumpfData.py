@@ -1,5 +1,4 @@
 class WumphData:
-
     """
     WumphData class for representing custom wumph data
     """
@@ -23,7 +22,7 @@ class WumphData:
         wumph_str += f"\n\t whumpfTriggeredRemoteAva: {self.whumpfTriggeredRemoteAva}"
         wumph_str += f"\n\t whumpfSize: {self.whumpfSize}"
         return wumph_str
-    
+
     def set_wumphCracking(self, wumphCracking):
         self.wumphCracking = wumphCracking
 
@@ -44,5 +43,3 @@ class WumphData:
 
     def set_whumpfSize(self, whumpfSize):
         self.whumpfSize = whumpfSize
-
-

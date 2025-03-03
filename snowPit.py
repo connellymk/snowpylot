@@ -2,36 +2,36 @@ from snowProfile import SnowProfile
 from stabilityTests import StabilityTests
 from whumpfData import WumphData
 
-class SnowPit(object):
 
-    """ 
+class SnowPit(object):
+    """
     SnowPit class for representing a single snow pit  observation
     """
 
     def __init__(self):
-        self.caamlVersion=None
-        self.pitID = None 
-        self.date = None 
+        self.caamlVersion = None
+        self.pitID = None
+        self.date = None
         self.user = {
-            'OperationID': None,
-            'OperationName': None,
-            'Professional': False,
-            'ContactPersonID': None,
-            'Username': None,
-            }   
+            "OperationID": None,
+            "OperationName": None,
+            "Professional": False,
+            "ContactPersonID": None,
+            "Username": None,
+        }
         self.location = {
-            'Latitude': None, 
-            'Longitude': None, 
-            'Elevation': None, 
-            'Aspect': None, 
-            'SlopeAngle': None, 
-            'Country': None, 
-            'Region': None,
-            'pitNearAvalanche': None} 
-        self.snowProfile = SnowProfile() 
+            "Latitude": None,
+            "Longitude": None,
+            "Elevation": None,
+            "Aspect": None,
+            "SlopeAngle": None,
+            "Country": None,
+            "Region": None,
+            "pitNearAvalanche": None,
+        }
+        self.snowProfile = SnowProfile()
         self.stabilityTests = StabilityTests()
         self.wumphData = None
-        
 
     def __str__(self):
         snowPit_str = "SnowPit: "
@@ -50,13 +50,12 @@ class SnowPit(object):
         return snowPit_str
 
     # Setters
-    
+
     def set_caamlVersion(self, caamlVersion):
         self.caamlVersion = caamlVersion
 
     def set_pitID(self, pitID):
         self.pitID = pitID
-
 
     def set_date(self, date):
         self.date = date
@@ -67,11 +66,9 @@ class SnowPit(object):
     def set_location(self, location):
         self.location = location
 
-
     def set_snowProfile(self, snowProfile):
         self.snowProfile = snowProfile
 
-        
     def set_stabilityTests(self, stabilityTests):
         self.stabilityTests = stabilityTests
 

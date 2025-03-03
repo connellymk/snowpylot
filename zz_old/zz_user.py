@@ -1,6 +1,5 @@
 class User(object):
-
-    """ 
+    """
     User class for representing the user info from a snowPilot caaml.xml file
     """
 
@@ -10,5 +9,3 @@ class User(object):
         self.role = None
         self.name = None
         self.userID = None
-
-

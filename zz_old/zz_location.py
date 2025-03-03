@@ -1,21 +1,19 @@
 class Location(object):
-
-    """ 
-    LocationInfo class for representing a the reported location of a snowPilot observation  
+    """
+    LocationInfo class for representing a the reported location of a snowPilot observation
     """
 
     def __init__(self):
-        self.elevation=None
-        self.aspect=None
-        self.slopeAngle=None
-        self.coords=None
-        self.latitude=None
-        self.longitude=None
-        self.country=None
-        self.region=None
+        self.elevation = None
+        self.aspect = None
+        self.slopeAngle = None
+        self.coords = None
+        self.latitude = None
+        self.longitude = None
+        self.country = None
+        self.region = None
 
     def __str__(self):
-
         location_str = "LocationInfo: "
         location_str += f"\n elevation={self.elevation} "
         location_str += f"\n aspect={self.aspect} "
@@ -27,13 +25,12 @@ class Location(object):
         location_str += f"\n region={self.region} "
         return location_str
 
-
-    #Setters
+    # Setters
     def set_elevation(self, elevation):
         self.elevation = elevation
 
     def set_aspect(self, aspect):
-        self.aspect = aspect    
+        self.aspect = aspect
 
     def set_slopeAngle(self, slopeAngle):
         self.slopeAngle = slopeAngle
@@ -53,30 +50,28 @@ class Location(object):
     def set_region(self, region):
         self.region = region
 
-    #Getters
+    # Getters
 
     def get_elevation(self):
         return self.elevation
-    
+
     def get_aspect(self):
         return self.aspect
-    
+
     def get_slopeAngle(self):
         return self.slopeAngle
-    
+
     def get_coords(self):
         return self.coords
-    
+
     def get_latitude(self):
         return self.latitude
-    
+
     def get_longitude(self):
         return self.longitude
-    
+
     def get_country(self):
         return self.country
-    
+
     def get_region(self):
         return self.region
-
-
