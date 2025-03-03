@@ -58,25 +58,28 @@ def caaml_parser(file_path):
     # OperationID
     for prop in srcRef.iter(common_tag + "Operation"):
         operationID = prop.attrib[gml_tag + "id"]
-        pit.coreInfo.set_operationID(operationID)
-        pit.coreInfo.set_professional(True) # If operation is present, then it is a professional operation
+        pit.coreInfo.user.set_operationID(operationID)
+        pit.coreInfo.user.set_professional(True) # If operation is present, then it is a professional operation
 
     # OperationName
     names = []
     for prop in srcRef.iter(common_tag + "Operation"):
         for subProp in prop.iter(common_tag + "name"):
             names.append(subProp.text)
-    pit.coreInfo.set_operationName(names[0]) # Professional pits have operation name and contact name, the operation name is the first name
+    if names:
+        pit.coreInfo.user.set_operationName(names[0]) # Professional pits have operation name and contact name, the operation name is the first name
+    else:
+        pit.coreInfo.user.set_operationName(None)
 
     # ContactPersonID and Username
     for prop in srcRef.iter():
         if prop.tag.endswith("Person"): # can handle "Person" (non-professional) or "ContactPerson" (professional)  
             person = prop
             userID = person.attrib.get(gml_tag + "id")
-            pit.coreInfo.set_userID(userID)
+            pit.coreInfo.user.set_userID(userID)
             for subProp in person.iter():
                 if subProp.tag.endswith("name"):
-                    pit.coreInfo.set_username(subProp.text)
+                    pit.coreInfo.user.set_username(subProp.text)
 
     ## Location (latitude, longitude, elevation, aspect, slopeAngle, country, region, avalache proximity)
 
@@ -84,8 +87,8 @@ def caaml_parser(file_path):
     try:
         lat_long = next(root.iter(gml_tag + "pos"), None).text
         lat_long = lat_long.split(" ")
-        pit.coreInfo.set_latitude(float(lat_long[0]))
-        pit.coreInfo.set_longitude(float(lat_long[1]))
+        pit.coreInfo.location.set_latitude(float(lat_long[0]))
+        pit.coreInfo.location.set_longitude(float(lat_long[1]))
     except AttributeError:
         lat_long = None
 
@@ -94,35 +97,35 @@ def caaml_parser(file_path):
         uom = prop.attrib.get("uom")
         for subProp in prop.iter(common_tag + "position"):
             elevation = subProp.text
-            pit.coreInfo.set_elevation([elevation, uom])
+            pit.coreInfo.location.set_elevation([elevation, uom])
 
     # aspect
     for prop in locRef.iter(common_tag + "AspectPosition"):
         for subProp in prop.iter(common_tag + "position"):
-            pit.coreInfo.set_aspect(subProp.text)
+            pit.coreInfo.location.set_aspect(subProp.text)
 
     # slopeAngle
     for prop in locRef.iter(common_tag + "SlopeAnglePosition"):
         uom = prop.attrib.get("uom")
         for subProp in prop.iter(common_tag + "position"):
             slopeAngle = subProp.text
-            pit.coreInfo.set_slopeAngle([slopeAngle, uom])
+            pit.coreInfo.location.set_slopeAngle([slopeAngle, uom])
 
     # country
     for prop in locRef.iter(common_tag + "country"):
-        pit.coreInfo.set_country(prop.text)
+        pit.coreInfo.location.set_country(prop.text)
 
     # region
     for prop in locRef.iter(common_tag + "region"):
-        pit.coreInfo.set_region(prop.text)
+        pit.coreInfo.location.set_region(prop.text)
 
     # proximity to avalanches
     for prop in root.iter(snowpilot_tag + "pitNearAvalanche"):
         if prop.text == "true":
-            pit.coreInfo.set_avalancheProximity(True)
+            pit.coreInfo.location.set_pitNearAvalanche(True)
         try:
             location = prop.attrib.get("location")
-            pit.coreInfo.set_avalancheProximityLocation(location)
+            pit.coreInfo.location.set_pitNearAvalancheLocation(location)
         except AttributeError:
             location = None
 
@@ -155,21 +158,21 @@ def caaml_parser(file_path):
         weatherConditions = None
 
     if weatherConditions is not None:
-        pit.snowProfile.weatherConditions = WeatherConditions()
+
         for prop in weatherConditions.iter():
             if prop.tag.endswith("skyCond"):
-                pit.snowProfile.weatherConditions.set_skyCond(prop.text)
+                pit.coreInfo.weatherConditions.set_skyCond(prop.text)
             if prop.tag.endswith("precipTI"):
-                pit.snowProfile.weatherConditions.set_precipTI(prop.text)
+                pit.coreInfo.weatherConditions.set_precipTI(prop.text)
             if prop.tag.endswith("airTempPres"):
                 temp_val = prop.text
                 temp_units = prop.get("uom")
                 temp = [float(temp_val), temp_units]
-                pit.snowProfile.weatherConditions.set_airTempPres(temp)
+                pit.coreInfo.weatherConditions.set_airTempPres(temp)
             if prop.tag.endswith("windSpd"):
-                pit.snowProfile.weatherConditions.set_windSpeed(prop.text)
+                pit.coreInfo.weatherConditions.set_windSpeed(prop.text)
             if prop.tag.endswith("position"):
-                pit.snowProfile.weatherConditions.set_windDir(prop.text)
+                pit.coreInfo.weatherConditions.set_windDir(prop.text)
 
     # hS
     try:

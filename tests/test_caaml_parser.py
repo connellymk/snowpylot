@@ -21,27 +21,30 @@ def test_basic_pit_info(test_pit):
     """Test basic snowpit information parsing"""
     assert isinstance(test_pit, SnowPit)
     assert test_pit.caamlVersion == "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"
-    assert test_pit.pitID == "73109"
-    assert test_pit.date == "2025-02-26"
+    assert test_pit.coreInfo.pitID == "73109"
+    assert test_pit.coreInfo.date == "2025-02-26"
+    assert test_pit.coreInfo.pitName == "snowpylot-test"
+    assert test_pit.coreInfo.comment == "Core Info Comment"
 
 
 def test_user_info(test_pit):
     """Test user information parsing"""
-    assert test_pit.user["Username"] == "katisthebatis"
-    assert test_pit.user["ContactPersonID"] == "SnowPilot-User-15812"
-    assert test_pit.user.get("Professional") is False
+    assert test_pit.coreInfo.user.username == "katisthebatis"
+    assert test_pit.coreInfo.user.userID == "SnowPilot-User-15812"
+    assert test_pit.coreInfo.user.professional is False  # No operation info in test file
 
 
 def test_location_info(test_pit):
     """Test location information parsing"""
-    assert test_pit.location["Latitude"] == 45.828056
-    assert test_pit.location["Longitude"] == -110.932875
-    assert test_pit.location["Elevation"] == ["2598", "m"]
-    assert test_pit.location["Aspect"] == ["NE", None]
-    assert test_pit.location["SlopeAngle"] == ["30", "deg"]
-    assert test_pit.location["Country"] == "US"
-    assert test_pit.location["Region"] == "MT"
-    assert test_pit.location["pitNearAvalanche"] == ["true", "crown"]
+    assert test_pit.coreInfo.location.latitude == 45.828056
+    assert test_pit.coreInfo.location.longitude == -110.932875
+    assert test_pit.coreInfo.location.elevation == ["2598", "m"]
+    assert test_pit.coreInfo.location.aspect == "NE"
+    assert test_pit.coreInfo.location.slopeAngle == ["30", "deg"]
+    assert test_pit.coreInfo.location.country == "US"
+    assert test_pit.coreInfo.location.region == "MT"
+    assert test_pit.coreInfo.location.avalancheProximity is True
+    assert test_pit.coreInfo.location.avalancheProximityLocation == "crown"
 
 
 def test_snow_profile_basic(test_pit):
@@ -84,6 +87,7 @@ def test_layers(test_pit):
     assert layer1.grainFormPrimary.grainForm == "RG"
     assert layer1.grainFormSecondary.grainForm == "DF"
     assert layer1.grainFormPrimary.grainSizeAvg == [0.5, "mm"]
+    assert layer1.comments == "layer 1 comment"
 
     # Test layer of concern (layer 7)
     layer7 = layers[6]
@@ -91,6 +95,7 @@ def test_layers(test_pit):
     assert layer7.depthTop == ["66", "cm"]
     assert layer7.grainFormPrimary.grainForm == "SHxr"
     assert layer7.grainFormSecondary.grainForm == "FCxr"
+    assert layer7.comments == "layer 7 comment"
 
 
 def test_temperature_profile(test_pit):
@@ -116,6 +121,7 @@ def test_stability_tests(test_pit):
     assert ect1.testScore == "ECTN4"
     assert ect1.propogation is False
     assert ect1.numTaps == "4"
+    assert ect1.comment == "ECT 1 comment"
 
     # Test CTs
     assert len(test_pit.stabilityTests.CT) == 3
@@ -123,6 +129,7 @@ def test_stability_tests(test_pit):
     assert ct1.depthTop == [11.0, "cm"]
     assert ct1.testScore == "13"
     assert ct1.shearQuality == "Q2"
+    assert ct1.comment == "CT comment 1"
 
     # Test RBT
     assert len(test_pit.stabilityTests.RBT) == 1
@@ -131,6 +138,7 @@ def test_stability_tests(test_pit):
     assert rbt.testScore == "RB3"
     assert rbt.releaseType == "MB"
     assert rbt.shearQuality == "Q2"
+    assert rbt.comment == "RBlock 1 comment"
 
     # Test PST
     assert len(test_pit.stabilityTests.PST) == 1
@@ -139,6 +147,7 @@ def test_stability_tests(test_pit):
     assert pst.fractureProp == "Arr"
     assert pst.cutLength == "13.0"
     assert pst.columnLength == "100.0"
+    assert pst.comment == "PST comment"
 
 
 if __name__ == "__main__":

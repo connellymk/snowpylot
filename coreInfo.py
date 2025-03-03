@@ -5,7 +5,7 @@ class CoreInfo(object):
 
     def __init__(self):
         self.pitID = None
-        self.snowPitName = None
+        self.pitName = None
         self.date = None
         self.comment = None
         self.caamlVersion = None
@@ -16,13 +16,32 @@ class CoreInfo(object):
     def __str__(self):
         coreInfo_str = ""
         coreInfo_str += f"PitID: {self.pitID}\n"
-        coreInfo_str += f"SnowPitName: {self.snowPitName}\n"
+        coreInfo_str += f"PitName: {self.pitName}\n"
         coreInfo_str += f"Date: {self.date}\n"
         coreInfo_str += f"Comment: {self.comment}\n"
         coreInfo_str += f"CAAML Version: {self.caamlVersion}\n"
         coreInfo_str += f"User: {self.user}\n"
         coreInfo_str += f"Location: {self.location}\n"
         coreInfo_str += f"WeatherConditions: {self.weatherConditions}\n"
+        coreInfo_str += f"Avalanche Proximity: {self.avalancheProximity}\n"
+        coreInfo_str += f"Avalanche Proximity Location: {self.avalancheProximityLocation}\n"
+        return coreInfo_str
+
+    # Setters
+    def set_pitID(self, pitID):
+        self.pitID = pitID
+
+    def set_pitName(self, pitName):
+        self.pitName = pitName
+
+    def set_date(self, date):
+        self.date = date
+
+    def set_comment(self, comment):
+        self.comment = comment
+
+    def set_caamlVersion(self, caamlVersion):
+        self.caamlVersion = caamlVersion
 
 
 class User(object):
