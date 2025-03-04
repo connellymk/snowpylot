@@ -8,8 +8,7 @@ def grain_form_name(grain_form):
     }
     return grain_form_dict[grain_form]
 
+
 # Weather conditions dictionary
 
 # Density from grain form df
-
-

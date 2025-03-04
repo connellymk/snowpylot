@@ -17,7 +17,7 @@ class SnowPit(object):
         self.stabilityTests = (
             StabilityTests()
         )  # Includes test results from stability tests
-        self.wumphData = WumphData()  # Includes custom SnowPilot "wumphData"
+        # self.whumpfData = WhumpfData()  # Includes custom SnowPilot "wumphData"
 
     def __str__(self):
         snowPit_str = "SnowPit: "
@@ -50,5 +50,5 @@ class SnowPit(object):
     def set_stabilityTests(self, stabilityTests):
         self.stabilityTests = stabilityTests
 
-    def set_wumphData(self, wumphData):
-        self.wumphData = wumphData
+    # def set_whumpfData(self, whumpfData):
+    #    self.whumpfData = whumpfData
