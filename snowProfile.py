@@ -22,7 +22,6 @@ class SnowProfile(object):
         snowProfile_str = ""
         snowProfile_str += f"\n    measurementDirection: {self.measurementDirection}"
         snowProfile_str += f"\n    profileDepth: {self.profileDepth}"
-        snowProfile_str += f"\n    weatherConditions: {self.weatherConditions}"
         snowProfile_str += f"\n    hS: {self.hS}"
         snowProfile_str += f"\n    surfCond: {self.surfCond}"
         snowProfile_str += f"\n    Layers:"
