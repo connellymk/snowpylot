@@ -135,16 +135,28 @@ def caaml_parser(file_path):
             location = None
 
     ## Weather Conditions (skyCond, precipTI, airTempPres, windSpeed, windDir)
+    weatherCond = next(root.iter(common_tag + "weatherCond"), None)
 
     # skyCond
+    for prop in weatherCond.iter(common_tag + 'skyCond'):
+        pit.coreInfo.weatherConditions.set_skyCond(prop.text)
 
     # precipTI
+    for prop in weatherCond.iter(common_tag + 'precipTI'):
+        pit.coreInfo.weatherConditions.set_precipTI(prop.text)
 
     # airTempPres
-
+    for prop in weatherCond.iter(common_tag + 'airTempPres'):
+        pit.coreInfo.weatherConditions.set_airTempPres([float(prop.text), prop.get("uom")])
+    
     # windSpeed
+    for prop in weatherCond.iter(common_tag + 'windSpd'):
+        pit.coreInfo.weatherConditions.set_windSpeed(prop.text)
 
     # windDir
+    for prop in weatherCond.iter(common_tag + 'windDir'):
+        for subProp in prop.iter(common_tag + 'position'):
+            pit.coreInfo.weatherConditions.set_windDir(subProp.text)
 
     ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
 

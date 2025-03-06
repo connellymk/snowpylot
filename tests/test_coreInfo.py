@@ -60,12 +60,12 @@ def test_location_info(test_pit):
     """Test weather conditions"""
 
 
-#    weather = test_pit.coreInfo.weatherConditions
-#    assert weather.skyCond == "SCT"
-#    assert weather.precipTI == "Nil"
-#    assert weather.airTempPres == [28.0, "degC"]
-#    assert weather.windSpeed == "C"
-#    assert weather.windDir == "SW"
+    weather = test_pit.coreInfo.weatherConditions
+    assert weather.skyCond == "SCT"
+    assert weather.precipTI == "Nil"
+    assert weather.airTempPres == [28.0, "degC"]
+    assert weather.windSpeed == "C"
+    assert weather.windDir == "SW"
 
 
 def test_professional_user():
