@@ -19,26 +19,26 @@ def test_snow_profile_structure(test_pit):
     """Test that SnowProfile object is properly structured"""
     profile = test_pit.snowProfile
     assert isinstance(profile, SnowProfile)
-    #assert isinstance(profile.surfCond, SurfaceCondition)
+    # assert isinstance(profile.surfCond, SurfaceCondition)
     assert isinstance(profile.layers, list)
-    #assert isinstance(profile.tempProfile, list)
-    #assert profile.densityProfile is None  # No density measurements in test file
+    # assert isinstance(profile.tempProfile, list)
+    # assert profile.densityProfile is None  # No density measurements in test file
 
 
 def test_basic_profile_info(test_pit):
     """Test basic snow profile information"""
     profile = test_pit.snowProfile
-    #assert profile.measurementDirection == "top down"
-    #assert profile.profileDepth == ["155", "cm"]
-    #assert profile.hS == ["155", "cm"]
+    # assert profile.measurementDirection == "top down"
+    # assert profile.profileDepth == ["155", "cm"]
+    # assert profile.hS == ["155", "cm"]
 
 
 def test_surface_conditions(test_pit):
     """Test surface conditions parsing"""
     surface = test_pit.snowProfile.surfCond
-    #assert surface.windLoading == "previous"
-    #assert surface.penetrationFoot == [60.0, "cm"]
-    #assert surface.penetrationSki == [20.0, "cm"]
+    # assert surface.windLoading == "previous"
+    # assert surface.penetrationFoot == [60.0, "cm"]
+    # assert surface.penetrationSki == [20.0, "cm"]
 
 
 def test_layers(test_pit):
@@ -82,20 +82,20 @@ def test_layers(test_pit):
 
 def test_temperature_profile(test_pit):
     """Test temperature profile parsing"""
-    #temps = test_pit.snowProfile.tempProfile
-    #assert len(temps) == 16  # Test file has 16 temperature measurements
+    # temps = test_pit.snowProfile.tempProfile
+    # assert len(temps) == 16  # Test file has 16 temperature measurements
 
     # Test first temperature measurement
-    #assert temps[0].depth == ["0", "cm"]
-    #assert temps[0].snowTemp == [-2.2222222222222, "degC"]
+    # assert temps[0].depth == ["0", "cm"]
+    # assert temps[0].snowTemp == [-2.2222222222222, "degC"]
 
     # Test middle temperature measurement
-    #assert temps[7].depth == ["65", "cm"]
-    #assert temps[7].snowTemp == [-2.7777777777778, "degC"]
+    # assert temps[7].depth == ["65", "cm"]
+    # assert temps[7].snowTemp == [-2.7777777777778, "degC"]
 
     # Test last temperature measurement
-    #assert temps[-1].depth == ["145", "cm"]
-    #assert temps[-1].snowTemp == [-2.2222222222222, "degC"]
+    # assert temps[-1].depth == ["145", "cm"]
+    # assert temps[-1].snowTemp == [-2.2222222222222, "degC"]
 
 
 def test_grain_form_classification(test_pit):
@@ -125,13 +125,13 @@ def test_layer_of_concern(test_pit):
 def test_string_representation(test_pit):
     """Test string representation of SnowProfile objects"""
     profile = test_pit.snowProfile
-    #str_repr = str(profile)
+    # str_repr = str(profile)
 
     # Check that important fields are included in string representation
-    #assert "measurementDirection: top down" in str_repr
-    #assert "profileDepth: ['155', 'cm']" in str_repr
-    #assert "Layer" in str_repr
-    #assert "tempProfile" in str_repr
+    # assert "measurementDirection: top down" in str_repr
+    # assert "profileDepth: ['155', 'cm']" in str_repr
+    # assert "Layer" in str_repr
+    # assert "tempProfile" in str_repr
 
     # Test layer string representation
     layer_str = str(profile.layers[0])
@@ -140,9 +140,9 @@ def test_string_representation(test_pit):
     assert "\n\t grainFormPrimary" in layer_str
 
     # Test temperature observation string representation
-    #temp_str = str(profile.tempProfile[0])
-    #assert "depth: ['0', 'cm']" in temp_str
-    #assert "snowTemp" in temp_str
+    # temp_str = str(profile.tempProfile[0])
+    # assert "depth: ['0', 'cm']" in temp_str
+    # assert "snowTemp" in temp_str
 
 
 if __name__ == "__main__":

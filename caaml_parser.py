@@ -138,24 +138,26 @@ def caaml_parser(file_path):
     weatherCond = next(root.iter(common_tag + "weatherCond"), None)
 
     # skyCond
-    for prop in weatherCond.iter(common_tag + 'skyCond'):
+    for prop in weatherCond.iter(common_tag + "skyCond"):
         pit.coreInfo.weatherConditions.set_skyCond(prop.text)
 
     # precipTI
-    for prop in weatherCond.iter(common_tag + 'precipTI'):
+    for prop in weatherCond.iter(common_tag + "precipTI"):
         pit.coreInfo.weatherConditions.set_precipTI(prop.text)
 
     # airTempPres
-    for prop in weatherCond.iter(common_tag + 'airTempPres'):
-        pit.coreInfo.weatherConditions.set_airTempPres([float(prop.text), prop.get("uom")])
-    
+    for prop in weatherCond.iter(common_tag + "airTempPres"):
+        pit.coreInfo.weatherConditions.set_airTempPres(
+            [float(prop.text), prop.get("uom")]
+        )
+
     # windSpeed
-    for prop in weatherCond.iter(common_tag + 'windSpd'):
+    for prop in weatherCond.iter(common_tag + "windSpd"):
         pit.coreInfo.weatherConditions.set_windSpeed(prop.text)
 
     # windDir
-    for prop in weatherCond.iter(common_tag + 'windDir'):
-        for subProp in prop.iter(common_tag + 'position'):
+    for prop in weatherCond.iter(common_tag + "windDir"):
+        for subProp in prop.iter(common_tag + "position"):
             pit.coreInfo.weatherConditions.set_windDir(subProp.text)
 
     ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
@@ -166,46 +168,46 @@ def caaml_parser(file_path):
 
     for layer in layers:
         layer_obj = Layer()
-        
-        for prop in layer.iter(common_tag + 'depthTop'):
+
+        for prop in layer.iter(common_tag + "depthTop"):
             layer_obj.set_depthTop([float(prop.text), prop.get("uom")])
-        
-        for prop in layer.iter(common_tag + 'thickness'):
+
+        for prop in layer.iter(common_tag + "thickness"):
             layer_obj.set_thickness([float(prop.text), prop.get("uom")])
-        
-        for prop in layer.iter(common_tag + 'hardness'):
+
+        for prop in layer.iter(common_tag + "hardness"):
             layer_obj.set_hardness(prop.text)
-        
-        for prop in layer.iter(common_tag + 'hardnessTop'):
+
+        for prop in layer.iter(common_tag + "hardnessTop"):
             layer_obj.set_hardnessTop(prop.text)
-        
-        for prop in layer.iter(common_tag + 'hardnessBottom'):
+
+        for prop in layer.iter(common_tag + "hardnessBottom"):
             layer_obj.set_hardnessBottom(prop.text)
-        
-        for prop in layer.iter(common_tag + 'grainFormPrimary'):
+
+        for prop in layer.iter(common_tag + "grainFormPrimary"):
             layer_obj.grainFormPrimary = Grain()
             layer_obj.grainFormPrimary.set_grainForm(prop.text)
-        
-        for prop in layer.iter(common_tag + 'grainFormSecondary'):
+
+        for prop in layer.iter(common_tag + "grainFormSecondary"):
             layer_obj.grainFormSecondary = Grain()
             layer_obj.grainFormSecondary.set_grainForm(prop.text)
-        
-        for prop in layer.iter(common_tag + 'grainSize'):
+
+        for prop in layer.iter(common_tag + "grainSize"):
             uom = prop.get("uom")
-            
-            for subProp in prop.iter(common_tag + 'avg'):
+
+            for subProp in prop.iter(common_tag + "avg"):
                 layer_obj.grainFormPrimary.set_grainSizeAvg([float(subProp.text), uom])
-            
-            for subProp in prop.iter(common_tag + 'avgMax'):
+
+            for subProp in prop.iter(common_tag + "avgMax"):
                 layer_obj.grainFormPrimary.set_grainSizeMax([float(subProp.text), uom])
-        
-        for prop in layer.iter(common_tag + 'wetness'):
+
+        for prop in layer.iter(common_tag + "wetness"):
             layer_obj.set_wetness(prop.text)
-        
-        for prop in layer.iter(common_tag + 'layerOfConcern'):
+
+        for prop in layer.iter(common_tag + "layerOfConcern"):
             layer_obj.set_layerOfConcern(prop.text)
-        
-        for prop in layer.iter(common_tag + 'comment'):
+
+        for prop in layer.iter(common_tag + "comment"):
             layer_obj.set_comments(prop.text)
 
         pit.snowProfile.add_layer(layer_obj)
