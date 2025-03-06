@@ -135,9 +135,9 @@ def test_string_representation(test_pit):
 
     # Test layer string representation
     layer_str = str(profile.layers[0])
-    assert "depthTop: ['0.0', 'cm']" in layer_str
-    assert "thickness: ['11.0', 'cm']" in layer_str
-    assert "grainFormPrimary" in layer_str
+    assert "\n\t depthTop: [0.0, 'cm']" in layer_str  # Updated to match exact format
+    assert "\n\t thickness: [11.0, 'cm']" in layer_str  # Updated to match exact format
+    assert "\n\t grainFormPrimary" in layer_str
 
     # Test temperature observation string representation
     #temp_str = str(profile.tempProfile[0])
