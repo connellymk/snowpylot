@@ -19,10 +19,10 @@ def test_snow_profile_structure(test_pit):
     """Test that SnowProfile object is properly structured"""
     profile = test_pit.snowProfile
     assert isinstance(profile, SnowProfile)
-    # assert isinstance(profile.surfCond, SurfaceCondition)
+    assert isinstance(profile.surfCond, SurfaceCondition)
     assert isinstance(profile.layers, list)
-    # assert isinstance(profile.tempProfile, list)
-    # assert profile.densityProfile is None  # No density measurements in test file
+    assert isinstance(profile.tempProfile, list)
+    assert profile.densityProfile is None  # No density measurements in test file
 
 
 def test_basic_profile_info(test_pit):
@@ -36,9 +36,9 @@ def test_basic_profile_info(test_pit):
 def test_surface_conditions(test_pit):
     """Test surface conditions parsing"""
     surface = test_pit.snowProfile.surfCond
-    # assert surface.windLoading == "previous"
-    # assert surface.penetrationFoot == [60.0, "cm"]
-    # assert surface.penetrationSki == [20.0, "cm"]
+    assert surface.windLoading == "previous"
+    assert surface.penetrationFoot == [60.0, "cm"]
+    assert surface.penetrationSki == [20.0, "cm"]
 
 
 def test_layers(test_pit):

@@ -20,21 +20,17 @@ def caaml_parser(file_path):
     root = ET.parse(file_path).getroot()
 
     ### Core Info (pitID, pitName, date, user, location, weather, core comments, caamlVersion)
-
+    locRef = next(root.iter(common_tag + "locRef"), None)
+    
     # pitID
-    try:
-        pitID_str = next(root.iter(common_tag + "locRef"), None).attrib[gml_tag + "id"]
-        pitID = pitID_str.split("-")[-1]
-        pit.coreInfo.set_pitID(pitID)
-    except AttributeError:
-        pitID = None
+    pitID_str = locRef.attrib[gml_tag + "id"]
+    pitID = pitID_str.split("-")[-1]
+    pit.coreInfo.set_pitID(pitID)
+
 
     # snowPitName
-    locRef = next(root.iter(common_tag + "locRef"), None)
-
     for prop in locRef.iter(common_tag + "name"):
-        pitName = prop.text
-        pit.coreInfo.set_pitName(pitName)
+        pit.coreInfo.set_pitName(prop.text)
 
     # date
     for prop in root.iter(common_tag + "timePosition"):
@@ -161,7 +157,7 @@ def caaml_parser(file_path):
 
     ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
 
-    # layers
+    ## layers
     stratProfile = next(root.iter(common_tag + "stratProfile"), None)
 
     if stratProfile is not None:
@@ -217,7 +213,7 @@ def caaml_parser(file_path):
 
             pit.snowProfile.add_layer(layer_obj)
 
-    # tempProfile
+    ## tempProfile
     tempProfile = next(root.iter(common_tag + "tempProfile"), None)
 
     if tempProfile is not None:
@@ -234,7 +230,7 @@ def caaml_parser(file_path):
 
             pit.snowProfile.add_tempObs(tempObs_obj)
 
-    # densityProfile
+    ## densityProfile
     densityProfile = next(root.iter(common_tag + "densityProfile"), None)
 
     if densityProfile is not None:
@@ -255,7 +251,23 @@ def caaml_parser(file_path):
 
             pit.snowProfile.add_densityObs(obs)
 
-    # surfCond
+    ## surfCond
+    surfCond = next(root.iter(common_tag + "surfCond"), None)
+
+    if surfCond is not None:
+        pit.snowProfile.surfCond = SurfaceCondition()
+
+        # windLoading
+        for prop in surfCond.iter(snowpilot_tag + "windLoading"):
+            pit.snowProfile.surfCond.set_windLoading(prop.text)
+
+        # penetrationFoot
+        for prop in surfCond.iter(common_tag + "penetrationFoot"):
+            pit.snowProfile.surfCond.set_penetrationFoot([round(float(prop.text), 2), prop.get("uom")])
+
+        # penetrationSki
+        for prop in surfCond.iter(common_tag + "penetrationSki"):
+            pit.snowProfile.surfCond.set_penetrationSki([round(float(prop.text), 2), prop.get("uom")])
 
     ### Stability Tests (testResults)
 

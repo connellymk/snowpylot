@@ -48,7 +48,7 @@ def test_location_info(test_pit):
     location = test_pit.coreInfo.location
     assert location.latitude == 45.828056
     assert location.longitude == -110.932875
-    assert location.elevation == ["2598", "m"]
+    assert location.elevation == [2598.0, "m"]
     assert location.aspect == "NE"
     assert location.slopeAngle == ["30", "deg"]
     assert location.country == "US"
