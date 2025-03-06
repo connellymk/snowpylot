@@ -164,7 +164,7 @@ def caaml_parser(file_path):
     # layers
     stratProfile = next(root.iter(common_tag + "stratProfile"), None)
 
-    if stratProfile is not None:  
+    if stratProfile is not None:
         layers = [layer for layer in stratProfile if layer.tag.endswith("Layer")]
 
         for layer in layers:
@@ -220,7 +220,7 @@ def caaml_parser(file_path):
     # tempProfile
     tempProfile = next(root.iter(common_tag + "tempProfile"), None)
 
-    if tempProfile is not None: 
+    if tempProfile is not None:
         tempObs = [obs for obs in tempProfile if obs.tag.endswith("Obs")]
 
         for obs in tempObs:
@@ -238,8 +238,10 @@ def caaml_parser(file_path):
     densityProfile = next(root.iter(common_tag + "densityProfile"), None)
 
     if densityProfile is not None:
-        densityLayer = [layer for layer in densityProfile if layer.tag.endswith("Layer")]
-        
+        densityLayer = [
+            layer for layer in densityProfile if layer.tag.endswith("Layer")
+        ]
+
         for layer in densityLayer:
             obs = DensityObs()
             for prop in layer.iter(common_tag + "depthTop"):
