@@ -163,76 +163,95 @@ def caaml_parser(file_path):
 
     # layers
     stratProfile = next(root.iter(common_tag + "stratProfile"), None)
-    layers = list(stratProfile)
 
-    for layer in layers:
-        layer_obj = Layer()
+    if stratProfile is not None:  
+        layers = [layer for layer in stratProfile if layer.tag.endswith("Layer")]
 
-        for prop in layer.iter(common_tag + "depthTop"):
-            layer_obj.set_depthTop([round(float(prop.text), 2), prop.get("uom")])
+        for layer in layers:
+            layer_obj = Layer()
 
-        for prop in layer.iter(common_tag + "thickness"):
-            layer_obj.set_thickness([round(float(prop.text), 2), prop.get("uom")])
+            for prop in layer.iter(common_tag + "depthTop"):
+                layer_obj.set_depthTop([round(float(prop.text), 2), prop.get("uom")])
 
-        for prop in layer.iter(common_tag + "hardness"):
-            layer_obj.set_hardness(prop.text)
+            for prop in layer.iter(common_tag + "thickness"):
+                layer_obj.set_thickness([round(float(prop.text), 2), prop.get("uom")])
 
-        for prop in layer.iter(common_tag + "hardnessTop"):
-            layer_obj.set_hardnessTop(prop.text)
+            for prop in layer.iter(common_tag + "hardness"):
+                layer_obj.set_hardness(prop.text)
 
-        for prop in layer.iter(common_tag + "hardnessBottom"):
-            layer_obj.set_hardnessBottom(prop.text)
+            for prop in layer.iter(common_tag + "hardnessTop"):
+                layer_obj.set_hardnessTop(prop.text)
 
-        for prop in layer.iter(common_tag + "grainFormPrimary"):
-            layer_obj.grainFormPrimary = Grain()
-            layer_obj.grainFormPrimary.set_grainForm(prop.text)
+            for prop in layer.iter(common_tag + "hardnessBottom"):
+                layer_obj.set_hardnessBottom(prop.text)
 
-        for prop in layer.iter(common_tag + "grainFormSecondary"):
-            layer_obj.grainFormSecondary = Grain()
-            layer_obj.grainFormSecondary.set_grainForm(prop.text)
+            for prop in layer.iter(common_tag + "grainFormPrimary"):
+                layer_obj.grainFormPrimary = Grain()
+                layer_obj.grainFormPrimary.set_grainForm(prop.text)
 
-        for prop in layer.iter(common_tag + "grainSize"):
-            uom = prop.get("uom")
+            for prop in layer.iter(common_tag + "grainFormSecondary"):
+                layer_obj.grainFormSecondary = Grain()
+                layer_obj.grainFormSecondary.set_grainForm(prop.text)
 
-            for subProp in prop.iter(common_tag + "avg"):
-                layer_obj.grainFormPrimary.set_grainSizeAvg(
-                    [round(float(subProp.text), 2), uom]
-                )
+            for prop in layer.iter(common_tag + "grainSize"):
+                uom = prop.get("uom")
 
-            for subProp in prop.iter(common_tag + "avgMax"):
-                layer_obj.grainFormPrimary.set_grainSizeMax(
-                    [round(float(subProp.text), 2), uom]
-                )
+                for subProp in prop.iter(common_tag + "avg"):
+                    layer_obj.grainFormPrimary.set_grainSizeAvg(
+                        [round(float(subProp.text), 2), uom]
+                    )
 
-        for prop in layer.iter(common_tag + "wetness"):
-            layer_obj.set_wetness(prop.text)
+                for subProp in prop.iter(common_tag + "avgMax"):
+                    layer_obj.grainFormPrimary.set_grainSizeMax(
+                        [round(float(subProp.text), 2), uom]
+                    )
 
-        for prop in layer.iter(common_tag + "layerOfConcern"):
-            layer_obj.set_layerOfConcern(prop.text)
+            for prop in layer.iter(common_tag + "wetness"):
+                layer_obj.set_wetness(prop.text)
 
-        for prop in layer.iter(common_tag + "comment"):
-            layer_obj.set_comments(prop.text)
+            for prop in layer.iter(common_tag + "layerOfConcern"):
+                layer_obj.set_layerOfConcern(prop.text)
 
-        pit.snowProfile.add_layer(layer_obj)
+            for prop in layer.iter(common_tag + "comment"):
+                layer_obj.set_comments(prop.text)
+
+            pit.snowProfile.add_layer(layer_obj)
 
     # tempProfile
     tempProfile = next(root.iter(common_tag + "tempProfile"), None)
-    if tempProfile is not None:  # Add check for None
+
+    if tempProfile is not None: 
         tempObs = [obs for obs in tempProfile if obs.tag.endswith("Obs")]
+
         for obs in tempObs:
             tempObs_obj = TempObs()
+
             for prop in obs.iter(common_tag + "depth"):
-                print(f"Found depth: {prop.text}")  # Debug print
                 tempObs_obj.set_depth([round(float(prop.text), 2), prop.get("uom")])
+
             for prop in obs.iter(common_tag + "snowTemp"):
-                print(f"Found temp: {prop.text}")  # Debug print
                 tempObs_obj.set_snowTemp([round(float(prop.text), 2), prop.get("uom")])
+
             pit.snowProfile.add_tempObs(tempObs_obj)
-        print(
-            f"Final number of temps in profile: {len(pit.snowProfile.tempProfile)}"
-        )  # Debug print
 
     # densityProfile
+    densityProfile = next(root.iter(common_tag + "densityProfile"), None)
+
+    if densityProfile is not None:
+        densityLayer = [layer for layer in densityProfile if layer.tag.endswith("Layer")]
+        
+        for layer in densityLayer:
+            obs = DensityObs()
+            for prop in layer.iter(common_tag + "depthTop"):
+                obs.set_depthTop([round(float(prop.text), 2), prop.get("uom")])
+
+            for prop in layer.iter(common_tag + "thickness"):
+                obs.set_thickness([round(float(prop.text), 2), prop.get("uom")])
+
+            for prop in layer.iter(common_tag + "density"):
+                obs.set_density([round(float(prop.text), 2), prop.get("uom")])
+
+            pit.snowProfile.add_densityObs(obs)
 
     # surfCond
 
