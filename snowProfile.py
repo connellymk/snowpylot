@@ -54,7 +54,7 @@ class SnowProfile(object):
 
     def add_layer(self, layer):
         self.layers.append(layer)
-        if layer.layerOfConcern == True:
+        if layer.layerOfConcern == "true":
             self.layer_of_concern = layer
 
     def add_tempObs(self, tempObs):

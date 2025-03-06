@@ -12,7 +12,6 @@ class Layer(object):
         self.hardnessBottom = None
         self.grainFormPrimary = None
         self.grainFormSecondary = None
-        self.density = None
         self.wetness = None
         self.layerOfConcern = False
         self.comments = None
@@ -26,7 +25,6 @@ class Layer(object):
         layer_str += f"\n\t hardnessBottom: {self.hardnessBottom}"
         layer_str += f"\n\t grainFormPrimary: {self.grainFormPrimary}"
         layer_str += f"\n\t grainFormSecondary: {self.grainFormSecondary}"
-        layer_str += f"\n\t density: {self.density}"
         layer_str += f"\n\t wetness: {self.wetness}"
         layer_str += f"\n\t layerOfConcern: {self.layerOfConcern}"
         layer_str += f"\n\t comments: {self.comments}"

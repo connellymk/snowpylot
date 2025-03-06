@@ -59,7 +59,6 @@ def test_location_info(test_pit):
     # def test_weather_conditions(test_pit):
     """Test weather conditions"""
 
-
     weather = test_pit.coreInfo.weatherConditions
     assert weather.skyCond == "SCT"
     assert weather.precipTI == "Nil"
