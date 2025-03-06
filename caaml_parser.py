@@ -17,6 +17,7 @@ def caaml_parser(file_path):
     caaml_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
+    
     root = ET.parse(file_path).getroot()
 
     ### Core Info (pitID, pitName, date, user, location, weather, core comments, caamlVersion)
