@@ -14,44 +14,43 @@ def caaml_parser(file_path):
     pit = SnowPit()  # create a new SnowPit object
 
     # Parse file and add info to SnowPit object
-    common_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
+    caaml_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
     root = ET.parse(file_path).getroot()
 
     ### Core Info (pitID, pitName, date, user, location, weather, core comments, caamlVersion)
-    locRef = next(root.iter(common_tag + "locRef"), None)
-    
+    locRef = next(root.iter(caaml_tag + "locRef"), None)
+
     # pitID
     pitID_str = locRef.attrib[gml_tag + "id"]
     pitID = pitID_str.split("-")[-1]
     pit.coreInfo.set_pitID(pitID)
 
-
     # snowPitName
-    for prop in locRef.iter(common_tag + "name"):
+    for prop in locRef.iter(caaml_tag + "name"):
         pit.coreInfo.set_pitName(prop.text)
 
     # date
-    for prop in root.iter(common_tag + "timePosition"):
+    for prop in root.iter(caaml_tag + "timePosition"):
         date = prop.text.split("T")[0] if prop.text is not None else None
         pit.coreInfo.set_date(date)
 
     # Comment
-    metaData = next(root.iter(common_tag + "metaData"), None)
+    metaData = next(root.iter(caaml_tag + "metaData"), None)
 
-    for prop in metaData.iter(common_tag + "comment"):
+    for prop in metaData.iter(caaml_tag + "comment"):
         comment = prop.text
         pit.coreInfo.set_comment(comment)
 
     # caamlVersion
-    pit.set_caamlVersion(common_tag)
+    pit.set_caamlVersion(caaml_tag)
 
     ## User (OperationID, OperationName, Professional, ContactPersonID, Username)
-    srcRef = next(root.iter(common_tag + "srcRef"), None)
+    srcRef = next(root.iter(caaml_tag + "srcRef"), None)
 
     # OperationID
-    for prop in srcRef.iter(common_tag + "Operation"):
+    for prop in srcRef.iter(caaml_tag + "Operation"):
         operationID = prop.attrib[gml_tag + "id"]
         pit.coreInfo.user.set_operationID(operationID)
         pit.coreInfo.user.set_professional(
@@ -60,8 +59,8 @@ def caaml_parser(file_path):
 
     # OperationName
     names = []
-    for prop in srcRef.iter(common_tag + "Operation"):
-        for subProp in prop.iter(common_tag + "name"):
+    for prop in srcRef.iter(caaml_tag + "Operation"):
+        for subProp in prop.iter(caaml_tag + "name"):
             names.append(subProp.text)
     if names:
         pit.coreInfo.user.set_operationName(
@@ -94,29 +93,29 @@ def caaml_parser(file_path):
         lat_long = None
 
     # elevation
-    for prop in locRef.iter(common_tag + "ElevationPosition"):
+    for prop in locRef.iter(caaml_tag + "ElevationPosition"):
         uom = prop.attrib.get("uom")
-        for subProp in prop.iter(common_tag + "position"):
+        for subProp in prop.iter(caaml_tag + "position"):
             pit.coreInfo.location.set_elevation([round(float(subProp.text), 2), uom])
 
     # aspect
-    for prop in locRef.iter(common_tag + "AspectPosition"):
-        for subProp in prop.iter(common_tag + "position"):
+    for prop in locRef.iter(caaml_tag + "AspectPosition"):
+        for subProp in prop.iter(caaml_tag + "position"):
             pit.coreInfo.location.set_aspect(subProp.text)
 
     # slopeAngle
-    for prop in locRef.iter(common_tag + "SlopeAnglePosition"):
+    for prop in locRef.iter(caaml_tag + "SlopeAnglePosition"):
         uom = prop.attrib.get("uom")
-        for subProp in prop.iter(common_tag + "position"):
+        for subProp in prop.iter(caaml_tag + "position"):
             slopeAngle = subProp.text
             pit.coreInfo.location.set_slopeAngle([slopeAngle, uom])
 
     # country
-    for prop in locRef.iter(common_tag + "country"):
+    for prop in locRef.iter(caaml_tag + "country"):
         pit.coreInfo.location.set_country(prop.text)
 
     # region
-    for prop in locRef.iter(common_tag + "region"):
+    for prop in locRef.iter(caaml_tag + "region"):
         pit.coreInfo.location.set_region(prop.text)
 
     # proximity to avalanches
@@ -130,35 +129,35 @@ def caaml_parser(file_path):
             location = None
 
     ## Weather Conditions (skyCond, precipTI, airTempPres, windSpeed, windDir)
-    weatherCond = next(root.iter(common_tag + "weatherCond"), None)
+    weatherCond = next(root.iter(caaml_tag + "weatherCond"), None)
 
     # skyCond
-    for prop in weatherCond.iter(common_tag + "skyCond"):
+    for prop in weatherCond.iter(caaml_tag + "skyCond"):
         pit.coreInfo.weatherConditions.set_skyCond(prop.text)
 
     # precipTI
-    for prop in weatherCond.iter(common_tag + "precipTI"):
+    for prop in weatherCond.iter(caaml_tag + "precipTI"):
         pit.coreInfo.weatherConditions.set_precipTI(prop.text)
 
     # airTempPres
-    for prop in weatherCond.iter(common_tag + "airTempPres"):
+    for prop in weatherCond.iter(caaml_tag + "airTempPres"):
         pit.coreInfo.weatherConditions.set_airTempPres(
             [round(float(prop.text), 2), prop.get("uom")]
         )
 
     # windSpeed
-    for prop in weatherCond.iter(common_tag + "windSpd"):
+    for prop in weatherCond.iter(caaml_tag + "windSpd"):
         pit.coreInfo.weatherConditions.set_windSpeed(prop.text)
 
     # windDir
-    for prop in weatherCond.iter(common_tag + "windDir"):
-        for subProp in prop.iter(common_tag + "position"):
+    for prop in weatherCond.iter(caaml_tag + "windDir"):
+        for subProp in prop.iter(caaml_tag + "position"):
             pit.coreInfo.weatherConditions.set_windDir(subProp.text)
 
     ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
 
     ## layers
-    stratProfile = next(root.iter(common_tag + "stratProfile"), None)
+    stratProfile = next(root.iter(caaml_tag + "stratProfile"), None)
 
     if stratProfile is not None:
         layers = [layer for layer in stratProfile if layer.tag.endswith("Layer")]
@@ -166,55 +165,55 @@ def caaml_parser(file_path):
         for layer in layers:
             layer_obj = Layer()
 
-            for prop in layer.iter(common_tag + "depthTop"):
+            for prop in layer.iter(caaml_tag + "depthTop"):
                 layer_obj.set_depthTop([round(float(prop.text), 2), prop.get("uom")])
 
-            for prop in layer.iter(common_tag + "thickness"):
+            for prop in layer.iter(caaml_tag + "thickness"):
                 layer_obj.set_thickness([round(float(prop.text), 2), prop.get("uom")])
 
-            for prop in layer.iter(common_tag + "hardness"):
+            for prop in layer.iter(caaml_tag + "hardness"):
                 layer_obj.set_hardness(prop.text)
 
-            for prop in layer.iter(common_tag + "hardnessTop"):
+            for prop in layer.iter(caaml_tag + "hardnessTop"):
                 layer_obj.set_hardnessTop(prop.text)
 
-            for prop in layer.iter(common_tag + "hardnessBottom"):
+            for prop in layer.iter(caaml_tag + "hardnessBottom"):
                 layer_obj.set_hardnessBottom(prop.text)
 
-            for prop in layer.iter(common_tag + "grainFormPrimary"):
+            for prop in layer.iter(caaml_tag + "grainFormPrimary"):
                 layer_obj.grainFormPrimary = Grain()
                 layer_obj.grainFormPrimary.set_grainForm(prop.text)
 
-            for prop in layer.iter(common_tag + "grainFormSecondary"):
+            for prop in layer.iter(caaml_tag + "grainFormSecondary"):
                 layer_obj.grainFormSecondary = Grain()
                 layer_obj.grainFormSecondary.set_grainForm(prop.text)
 
-            for prop in layer.iter(common_tag + "grainSize"):
+            for prop in layer.iter(caaml_tag + "grainSize"):
                 uom = prop.get("uom")
 
-                for subProp in prop.iter(common_tag + "avg"):
+                for subProp in prop.iter(caaml_tag + "avg"):
                     layer_obj.grainFormPrimary.set_grainSizeAvg(
                         [round(float(subProp.text), 2), uom]
                     )
 
-                for subProp in prop.iter(common_tag + "avgMax"):
+                for subProp in prop.iter(caaml_tag + "avgMax"):
                     layer_obj.grainFormPrimary.set_grainSizeMax(
                         [round(float(subProp.text), 2), uom]
                     )
 
-            for prop in layer.iter(common_tag + "wetness"):
+            for prop in layer.iter(caaml_tag + "wetness"):
                 layer_obj.set_wetness(prop.text)
 
-            for prop in layer.iter(common_tag + "layerOfConcern"):
+            for prop in layer.iter(caaml_tag + "layerOfConcern"):
                 layer_obj.set_layerOfConcern(prop.text)
 
-            for prop in layer.iter(common_tag + "comment"):
+            for prop in layer.iter(caaml_tag + "comment"):
                 layer_obj.set_comments(prop.text)
 
             pit.snowProfile.add_layer(layer_obj)
 
     ## tempProfile
-    tempProfile = next(root.iter(common_tag + "tempProfile"), None)
+    tempProfile = next(root.iter(caaml_tag + "tempProfile"), None)
 
     if tempProfile is not None:
         tempObs = [obs for obs in tempProfile if obs.tag.endswith("Obs")]
@@ -222,16 +221,16 @@ def caaml_parser(file_path):
         for obs in tempObs:
             tempObs_obj = TempObs()
 
-            for prop in obs.iter(common_tag + "depth"):
+            for prop in obs.iter(caaml_tag + "depth"):
                 tempObs_obj.set_depth([round(float(prop.text), 2), prop.get("uom")])
 
-            for prop in obs.iter(common_tag + "snowTemp"):
+            for prop in obs.iter(caaml_tag + "snowTemp"):
                 tempObs_obj.set_snowTemp([round(float(prop.text), 2), prop.get("uom")])
 
             pit.snowProfile.add_tempObs(tempObs_obj)
 
     ## densityProfile
-    densityProfile = next(root.iter(common_tag + "densityProfile"), None)
+    densityProfile = next(root.iter(caaml_tag + "densityProfile"), None)
 
     if densityProfile is not None:
         densityLayer = [
@@ -240,19 +239,19 @@ def caaml_parser(file_path):
 
         for layer in densityLayer:
             obs = DensityObs()
-            for prop in layer.iter(common_tag + "depthTop"):
+            for prop in layer.iter(caaml_tag + "depthTop"):
                 obs.set_depthTop([round(float(prop.text), 2), prop.get("uom")])
 
-            for prop in layer.iter(common_tag + "thickness"):
+            for prop in layer.iter(caaml_tag + "thickness"):
                 obs.set_thickness([round(float(prop.text), 2), prop.get("uom")])
 
-            for prop in layer.iter(common_tag + "density"):
+            for prop in layer.iter(caaml_tag + "density"):
                 obs.set_density([round(float(prop.text), 2), prop.get("uom")])
 
             pit.snowProfile.add_densityObs(obs)
 
     ## surfCond
-    surfCond = next(root.iter(common_tag + "surfCond"), None)
+    surfCond = next(root.iter(caaml_tag + "surfCond"), None)
 
     if surfCond is not None:
         pit.snowProfile.surfCond = SurfaceCondition()
@@ -262,12 +261,16 @@ def caaml_parser(file_path):
             pit.snowProfile.surfCond.set_windLoading(prop.text)
 
         # penetrationFoot
-        for prop in surfCond.iter(common_tag + "penetrationFoot"):
-            pit.snowProfile.surfCond.set_penetrationFoot([round(float(prop.text), 2), prop.get("uom")])
+        for prop in surfCond.iter(caaml_tag + "penetrationFoot"):
+            pit.snowProfile.surfCond.set_penetrationFoot(
+                [round(float(prop.text), 2), prop.get("uom")]
+            )
 
         # penetrationSki
-        for prop in surfCond.iter(common_tag + "penetrationSki"):
-            pit.snowProfile.surfCond.set_penetrationSki([round(float(prop.text), 2), prop.get("uom")])
+        for prop in surfCond.iter(caaml_tag + "penetrationSki"):
+            pit.snowProfile.surfCond.set_penetrationSki(
+                [round(float(prop.text), 2), prop.get("uom")]
+            )
 
     ### Stability Tests (testResults)
 

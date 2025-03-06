@@ -14,7 +14,7 @@ def caaml_parser(file_path):
     pit = SnowPit()  # create a new SnowPit object
 
     # Parse file and add info to SnowPit object
-    common_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
+    caaml_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
     root = ET.parse(file_path).getroot()
@@ -23,39 +23,39 @@ def caaml_parser(file_path):
 
     # pitID
     try:
-        pitID_str = next(root.iter(common_tag + "locRef"), None).attrib[gml_tag + "id"]
+        pitID_str = next(root.iter(caaml_tag + "locRef"), None).attrib[gml_tag + "id"]
         pitID = pitID_str.split("-")[-1]
         pit.coreInfo.set_pitID(pitID)
     except AttributeError:
         pitID = None
 
     # snowPitName
-    locRef = next(root.iter(common_tag + "locRef"), None)
+    locRef = next(root.iter(caaml_tag + "locRef"), None)
 
-    for prop in locRef.iter(common_tag + "name"):
+    for prop in locRef.iter(caaml_tag + "name"):
         pitName = prop.text
         pit.coreInfo.set_pitName(pitName)
 
     # date
-    for prop in root.iter(common_tag + "timePosition"):
+    for prop in root.iter(caaml_tag + "timePosition"):
         date = prop.text.split("T")[0] if prop.text is not None else None
         pit.coreInfo.set_date(date)
 
     # Comment
-    metaData = next(root.iter(common_tag + "metaData"), None)
+    metaData = next(root.iter(caaml_tag + "metaData"), None)
 
-    for prop in metaData.iter(common_tag + "comment"):
+    for prop in metaData.iter(caaml_tag + "comment"):
         comment = prop.text
         pit.coreInfo.set_comment(comment)
 
     # caamlVersion
-    pit.set_caamlVersion(common_tag)
+    pit.set_caamlVersion(caaml_tag)
 
     ## User (OperationID, OperationName, Professional, ContactPersonID, Username)
-    srcRef = next(root.iter(common_tag + "srcRef"), None)
+    srcRef = next(root.iter(caaml_tag + "srcRef"), None)
 
     # OperationID
-    for prop in srcRef.iter(common_tag + "Operation"):
+    for prop in srcRef.iter(caaml_tag + "Operation"):
         operationID = prop.attrib[gml_tag + "id"]
         pit.coreInfo.user.set_operationID(operationID)
         pit.coreInfo.user.set_professional(
@@ -64,8 +64,8 @@ def caaml_parser(file_path):
 
     # OperationName
     names = []
-    for prop in srcRef.iter(common_tag + "Operation"):
-        for subProp in prop.iter(common_tag + "name"):
+    for prop in srcRef.iter(caaml_tag + "Operation"):
+        for subProp in prop.iter(caaml_tag + "name"):
             names.append(subProp.text)
     if names:
         pit.coreInfo.user.set_operationName(
@@ -98,30 +98,30 @@ def caaml_parser(file_path):
         lat_long = None
 
     # elevation
-    for prop in locRef.iter(common_tag + "ElevationPosition"):
+    for prop in locRef.iter(caaml_tag + "ElevationPosition"):
         uom = prop.attrib.get("uom")
-        for subProp in prop.iter(common_tag + "position"):
+        for subProp in prop.iter(caaml_tag + "position"):
             elevation = subProp.text
             pit.coreInfo.location.set_elevation([elevation, uom])
 
     # aspect
-    for prop in locRef.iter(common_tag + "AspectPosition"):
-        for subProp in prop.iter(common_tag + "position"):
+    for prop in locRef.iter(caaml_tag + "AspectPosition"):
+        for subProp in prop.iter(caaml_tag + "position"):
             pit.coreInfo.location.set_aspect(subProp.text)
 
     # slopeAngle
-    for prop in locRef.iter(common_tag + "SlopeAnglePosition"):
+    for prop in locRef.iter(caaml_tag + "SlopeAnglePosition"):
         uom = prop.attrib.get("uom")
-        for subProp in prop.iter(common_tag + "position"):
+        for subProp in prop.iter(caaml_tag + "position"):
             slopeAngle = subProp.text
             pit.coreInfo.location.set_slopeAngle([slopeAngle, uom])
 
     # country
-    for prop in locRef.iter(common_tag + "country"):
+    for prop in locRef.iter(caaml_tag + "country"):
         pit.coreInfo.location.set_country(prop.text)
 
     # region
-    for prop in locRef.iter(common_tag + "region"):
+    for prop in locRef.iter(caaml_tag + "region"):
         pit.coreInfo.location.set_region(prop.text)
 
     # proximity to avalanches
@@ -139,7 +139,7 @@ def caaml_parser(file_path):
     # Measurement Direction
     try:
         measurementDirection = next(
-            root.iter(common_tag + "SnowProfileMeasurements"), None
+            root.iter(caaml_tag + "SnowProfileMeasurements"), None
         ).get("dir")
     except AttributeError:
         measurementDirection = None
@@ -147,8 +147,8 @@ def caaml_parser(file_path):
 
     # Profile Depth
     try:
-        profileDepth = next(root.iter(common_tag + "profileDepth"), None).text
-        profileDepth_units = next(root.iter(common_tag + "profileDepth"), None).get(
+        profileDepth = next(root.iter(caaml_tag + "profileDepth"), None).text
+        profileDepth_units = next(root.iter(caaml_tag + "profileDepth"), None).get(
             "uom"
         )
         profileDepth = [float(profileDepth), profileDepth_units]
@@ -158,7 +158,7 @@ def caaml_parser(file_path):
 
     # Weather Conditions
     try:
-        weatherConditions = next(root.iter(common_tag + "weatherCond"), None)
+        weatherConditions = next(root.iter(caaml_tag + "weatherCond"), None)
     except AttributeError:
         weatherConditions = None
 
@@ -180,8 +180,8 @@ def caaml_parser(file_path):
 
     # hS
     try:
-        hS_val = next(root.iter(common_tag + "height"), None).text
-        hS_units = next(root.iter(common_tag + "height"), None).get("uom")
+        hS_val = next(root.iter(caaml_tag + "height"), None).text
+        hS_units = next(root.iter(caaml_tag + "height"), None).get("uom")
         hS = [float(hS_val), hS_units]
     except AttributeError:
         hS = None
@@ -189,7 +189,7 @@ def caaml_parser(file_path):
 
     ## Surface Conditions
     try:
-        surfaceConditions = next(root.iter(common_tag + "surfCond"), None)
+        surfaceConditions = next(root.iter(caaml_tag + "surfCond"), None)
     except AttributeError:
         surfaceConditions = None
 
@@ -198,8 +198,8 @@ def caaml_parser(file_path):
 
     # Boot Penetration
     try:
-        penFoot_val = next(root.iter(common_tag + "penetrationFoot"), None).text
-        penFoot_units = next(root.iter(common_tag + "penetrationFoot"), None).get("uom")
+        penFoot_val = next(root.iter(caaml_tag + "penetrationFoot"), None).text
+        penFoot_units = next(root.iter(caaml_tag + "penetrationFoot"), None).get("uom")
         penFoot = [float(penFoot_val), penFoot_units]
     except AttributeError:
         penFoot = None
@@ -207,15 +207,15 @@ def caaml_parser(file_path):
 
     # Ski Penetration
     try:
-        penSki_val = next(root.iter(common_tag + "penetrationSki"), None).text
-        penSki_units = next(root.iter(common_tag + "penetrationSki"), None).get("uom")
+        penSki_val = next(root.iter(caaml_tag + "penetrationSki"), None).text
+        penSki_units = next(root.iter(caaml_tag + "penetrationSki"), None).get("uom")
         penSki = [float(penSki_val), penSki_units]
     except AttributeError:
         penSki = None
     pit.snowProfile.surfCond.set_penetrationSki(penSki)
 
     # Layers
-    stratProfile = next(root.iter(common_tag + "stratProfile"), None)
+    stratProfile = next(root.iter(caaml_tag + "stratProfile"), None)
     layers = list(stratProfile)
 
     for layer in layers:
@@ -247,14 +247,14 @@ def caaml_parser(file_path):
             if prop.tag.endswith("grainSize"):
                 grainSize_units = prop.get("uom")
                 try:
-                    grainSizeAvg = next(prop.iter(common_tag + "avg"), None).text
+                    grainSizeAvg = next(prop.iter(caaml_tag + "avg"), None).text
                     layer_obj.grainFormPrimary.set_grainSizeAvg(
                         [float(grainSizeAvg), grainSize_units]
                     )
                 except AttributeError:
                     grainSizeAvg = None
                 try:
-                    grainSizeMax = next(prop.iter(common_tag + "avgMax"), None).text
+                    grainSizeMax = next(prop.iter(caaml_tag + "avgMax"), None).text
                     layer_obj.grainFormPrimary.set_grainSizeMax(
                         [float(grainSizeMax), grainSize_units]
                     )
@@ -281,12 +281,12 @@ def caaml_parser(file_path):
 
     # Temperature Profile
     try:
-        tempProfile = next(root.iter(common_tag + "tempProfile"), None)
+        tempProfile = next(root.iter(caaml_tag + "tempProfile"), None)
     except AttributeError:
         tempProfile = None
 
     if tempProfile is not None:
-        for obs in tempProfile.iter(common_tag + "Obs"):
+        for obs in tempProfile.iter(caaml_tag + "Obs"):
             obs_obj = TempObs()
             for prop in obs.iter():
                 if prop.tag.endswith("depth"):
@@ -302,12 +302,12 @@ def caaml_parser(file_path):
 
     # Density Profile
     try:
-        densityProfile = next(root.iter(common_tag + "densityProfile"), None)
+        densityProfile = next(root.iter(caaml_tag + "densityProfile"), None)
     except AttributeError:
         densityProfile = None
 
     if densityProfile is not None:
-        for obs in densityProfile.iter(common_tag + "Layer"):
+        for obs in densityProfile.iter(caaml_tag + "Layer"):
             obs_obj = DensityObs()
             for prop in obs.iter():
                 if prop.tag.endswith("depthTop"):
@@ -326,9 +326,9 @@ def caaml_parser(file_path):
             pit.snowProfile.add_densityObs(obs_obj)
 
     # Stability Tests
-    test_results = next(root.iter(common_tag + "stbTests"))
+    test_results = next(root.iter(caaml_tag + "stbTests"))
 
-    for test in test_results.iter(common_tag + "ExtColumnTest"):  # All ECTs
+    for test in test_results.iter(caaml_tag + "ExtColumnTest"):  # All ECTs
         ect = ExtColumnTest()
         for prop in test[0].iter():
             if prop.tag.endswith("depthTop"):
@@ -342,7 +342,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_ECT(ect)
 
-    for test in test_results.iter(common_tag + "ComprTest"):  # All CTs
+    for test in test_results.iter(caaml_tag + "ComprTest"):  # All CTs
         ct = ComprTest()
         for prop in test[0].iter():
             if prop.tag.endswith("depthTop"):
@@ -359,7 +359,7 @@ def caaml_parser(file_path):
         pit.stabilityTests.add_CT(ct)
 
     for test in test_results.iter(
-        common_tag + "RBlockTest"
+        caaml_tag + "RBlockTest"
     ):  # All RBTs  #### confirm correct tag
         rbt = RutschblockTest()
         for prop in test[0].iter():
@@ -378,7 +378,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_RBT(rbt)
 
-    for test in test_results.iter(common_tag + "PropSawTest"):  # All PSTs
+    for test in test_results.iter(caaml_tag + "PropSawTest"):  # All PSTs
         ps = PropSawTest()
 
         for prop in test[0].iter():
@@ -395,7 +395,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_PST(ps)
 
-    for test in test_results.iter(common_tag + "StuffBlockTest"):  # All SBTs
+    for test in test_results.iter(caaml_tag + "StuffBlockTest"):  # All SBTs
         sb = StuffBlockTest()
         for prop in test[0].iter():
             if prop.tag.endswith("depthTop"):
@@ -411,7 +411,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_SBT(sb)
 
-    for test in test_results.iter(common_tag + "ShovelShearTest"):  # All SSTs
+    for test in test_results.iter(caaml_tag + "ShovelShearTest"):  # All SSTs
         ss = ShovelShearTest()
         for prop in test[0].iter():
             if prop.tag.endswith("depthTop"):
@@ -425,7 +425,7 @@ def caaml_parser(file_path):
 
         pit.stabilityTests.add_SST(ss)
 
-    for test in test_results.iter(common_tag + "DeepTapTest"):  # All DTTs
+    for test in test_results.iter(caaml_tag + "DeepTapTest"):  # All DTTs
         dt = DeepTapTest()
         for prop in test[0].iter():
             if prop.tag.endswith("depthTop"):
@@ -443,7 +443,7 @@ def caaml_parser(file_path):
 
     # Custom Data (Whumpf Data and Wind Loading)
     try:
-        customData = root.iter(common_tag + "customData")
+        customData = root.iter(caaml_tag + "customData")
     except AttributeError:
         customData = None
 
