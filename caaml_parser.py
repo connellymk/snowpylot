@@ -306,67 +306,68 @@ def caaml_parser(file_path):
                                 ect.set_comment(subProp.text)
                 for prop in ECT.iter(caaml_tag + "Layer"):
                         for subProp in prop.iter(caaml_tag + "depthTop"):
-                                depthTop = [float(subProp.text), subProp.get("uom")]
-                                
+                                ect.set_depthTop([float(subProp.text), subProp.get("uom")])
+
                 for prop in ECT.iter(caaml_tag + "Results"):
                         for subProp in prop.iter(caaml_tag + "testScore"):
-                                testScore = subProp.text
-                print(depthTop, testScore, '"',comment,'"')
+                                ect.set_testScore(subProp.text)
+
+                pit.snowProfile.add_extColumnTest(ect)
 
         for CT in CTs:
-                depthTop = None
-                testScore = None
-                comment = None
-                fractureCharacter = None
+                ct = ComprTest()
                 for prop in CT.iter(caaml_tag + "metaData"):
                         for subProp in prop.iter(caaml_tag + "comment"):
-                                comment = subProp.text
+                                ct.set_comment(subProp.text)
                 for prop in CT.iter(caaml_tag + "Layer"):
                         for subProp in prop.iter(caaml_tag + "depthTop"):
-                                depthTop = [float(subProp.text), subProp.get("uom")]
+                                ct.set_depthTop([float(subProp.text), subProp.get("uom")])
                 for prop in CT.iter(caaml_tag + "Results"):
                         for subProp in prop.iter(caaml_tag + "fractureCharacter"):
-                                fractureCharacter = subProp.text
+                                ct.set_fractureCharacter(subProp.text)
                         for subProp in prop.iter(caaml_tag + "testScore"):
-                                testScore = subProp.text
+                                ct.set_testScore(subProp.text)
                 for prop in CT.iter(caaml_tag + "noFailure"):
-                        testScore = "CTN"
+                        ct.set_testScore("CTN")
 
-                print(depthTop, fractureCharacter, testScore, '"',comment,'"')
+                pit.snowProfile.add_comprTest(ct)
 
         for RBlock in RBlocks:
+                rbt = RBlockTest()
                 for prop in RBlock.iter(caaml_tag + "metaData"):
                         for subProp in prop.iter(caaml_tag + "comment"):
-                                comment = subProp.text
+                                rbt.set_comment(subProp.text)
                 for prop in RBlock.iter(caaml_tag + "Layer"):
                         for subProp in prop.iter(caaml_tag + "depthTop"):
-                                depthTop = [float(subProp.text), subProp.get("uom")]
+                                rbt.set_depthTop([float(subProp.text), subProp.get("uom")])
                 for prop in RBlock.iter(caaml_tag + "Results"):
                         for subProp in prop.iter(caaml_tag + "fractureCharacter"):
-                                fractureCharacter = subProp.text
+                                rbt.set_fractureCharacter(subProp.text)
                         for subProp in prop.iter(caaml_tag + "releaseType"):
-                                releaseType = subProp.text
+                                rbt.set_releaseType(subProp.text)
                         for subProp in prop.iter(caaml_tag + "testScore"):
-                                testScore = subProp.text
+                                rbt.set_testScore(subProp.text)
 
-                print(depthTop, fractureCharacter, releaseType, testScore, '"',comment,'"')
+                pit.snowProfile.add_rBlockTest(rbt)
 
         for PST in PSTs:
+                pst = PropSawTest()
                 for prop in PST.iter(caaml_tag + "metaData"):   
                         for subProp in prop.iter(caaml_tag + "comment"):
-                                comment = subProp.text
+                                pst.set_comment(subProp.text)
                 for prop in PST.iter(caaml_tag + "Layer"):
                         for subProp in prop.iter(caaml_tag + "depthTop"):
-                                depthTop = [float(subProp.text), subProp.get("uom")]
+                                pst.set_depthTop([float(subProp.text), subProp.get("uom")])
                 for prop in PST.iter(caaml_tag + "Results"):
                         for subProp in prop.iter(caaml_tag + "fracturePropagation"):
-                                fracturePropagation = subProp.text
+                                pst.set_fractureProp(subProp.text)
                         for subProp in prop.iter(caaml_tag + "cutLength"):
-                                cutLength = [float(subProp.text), subProp.get("uom")]
+                                pst.set_cutLength([float(subProp.text), subProp.get("uom")])
                         for subProp in prop.iter(caaml_tag + "columnLength"):
-                                columnLength = [float(subProp.text), subProp.get("uom")]
+                                pst.set_columnLength([float(subProp.text), subProp.get("uom")])
 
-
+                pit.snowProfile.add_propSawTest(pst)
+                
     ### Wumph Data (wumphData)
 
     # wumphData

@@ -8,7 +8,7 @@ class StabilityTests:
     def __init__(self):
         self.ECT = []  # ExtColumn Test
         self.CT = []  # Compression Test
-        self.RBT = []  # Rutschblock Test
+        self.RBlock = []  # Rutschblock Test
         self.PST = []  # Propogation Saw Test
         self.SBT = []  # StuffBlockTest
         self.SST = []  # Shovel Shear Test
@@ -20,7 +20,7 @@ class StabilityTests:
             stbTests_str += f"\n    ExtColumnTest {i + 1}: {test}"
         for i, test in enumerate(self.CT):
             stbTests_str += f"\n    CompressionTest {i + 1}: {test}"
-        for i, test in enumerate(self.RBT):
+        for i, test in enumerate(self.RBlock):
             stbTests_str += f"\n    RutschblockTest {i + 1}: {test}"
         for i, test in enumerate(self.PST):
             stbTests_str += f"\n    PropSawTest {i + 1}: {test}"
@@ -38,8 +38,8 @@ class StabilityTests:
     def add_CT(self, ct):
         self.CT.append(ct)
 
-    def add_RBT(self, rbt):
-        self.RBT.append(rbt)
+    def add_RBlock(self, rblock):
+        self.RBlock.append(rblock)
 
     def add_PST(self, pst):
         self.PST.append(pst)
@@ -134,9 +134,9 @@ class ComprTest:
         self.comment = comment
 
 
-class RutschblockTest:
+class RBlockTest:
     """
-    RutschblockTest class for representing results of a Rutschblock Test
+    RBlockTest class for representing results of a Rutschblock Test
     """
 
     def __init__(self):
