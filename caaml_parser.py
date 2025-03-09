@@ -8,12 +8,12 @@ from whumpfData import WhumpfData
 
 def caaml_parser(file_path):
     """
-    The function receives a path to a SnowPilot caaml.xml file and returns a populated SnowPit object
+    The function receives a path to a SnowPilot caaml.xml file, parses the file, and returns a populated SnowPit object
     """
 
     pit = SnowPit()  # create a new SnowPit object
 
-    # Parse file and add info to SnowPit object
+    # tags in the caaml.xml file
     caaml_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
