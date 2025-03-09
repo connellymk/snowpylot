@@ -158,34 +158,20 @@ def caaml_parser(file_path):
     ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
 
     # Measurement Direction
-    try:
-        measurementDirection = next(
-            root.iter(caaml_tag + "SnowProfileMeasurements"), None
-        ).get("dir")
-        pit.snowProfile.set_measurementDirection(measurementDirection)
-    except AttributeError:
-        measurementDirection = None
+    for prop in root.iter(caaml_tag + "SnowProfileMeasurements"):
+        pit.snowProfile.set_measurementDirection(prop.get("dir"))
 
     # Profile Depth
-    try:
-        profileDepth = next(root.iter(caaml_tag + "profileDepth"), None).text
-        profileDepth_units = next(root.iter(caaml_tag + "profileDepth"), None).get(
-            "uom"
+    for prop in root.iter(caaml_tag + "profileDepth"):
+        pit.snowProfile.set_profileDepth(
+            [round(float(prop.text), 2), prop.get("uom")]
         )
-        profileDepth = [float(profileDepth), profileDepth_units]
-        pit.snowProfile.set_profileDepth(profileDepth)
-    except AttributeError:
-        profileDepth = None
 
     # hS
-    try:
-        hS_val = next(root.iter(caaml_tag + "height"), None).text
-        hS_units = next(root.iter(caaml_tag + "height"), None).get("uom")
-        hS = [float(hS_val), hS_units]
-        pit.snowProfile.set_hS(hS)
-    except AttributeError:
-        hS = None
-
+    for prop in root.iter(caaml_tag + "height"):
+        pit.snowProfile.set_hS(
+            [round(float(prop.text), 2), prop.get("uom")]
+        )
 
     ## layers
     stratProfile = next(root.iter(caaml_tag + "stratProfile"), None)
@@ -304,8 +290,82 @@ def caaml_parser(file_path):
             )
 
     ### Stability Tests (testResults)
+    test_results = next(root.iter(caaml_tag + "stbTests"))
 
-    # testResults
+    if test_results is not None:
+
+        ECTs = [test for test in test_results if test.tag.endswith("ExtColumnTest")]
+        CTs = [test for test in test_results if test.tag.endswith("ComprTest")]
+        RBlocks = [test for test in test_results if test.tag.endswith("RBlockTest")]
+        PSTs = [test for test in test_results if test.tag.endswith("PropSawTest")]
+
+        for ECT in ECTs:
+                ect = ExtColumnTest()
+                for prop in ECT.iter(caaml_tag + "metaData"):
+                        for subProp in prop.iter(caaml_tag + "comment"):
+                                ect.set_comment(subProp.text)
+                for prop in ECT.iter(caaml_tag + "Layer"):
+                        for subProp in prop.iter(caaml_tag + "depthTop"):
+                                depthTop = [float(subProp.text), subProp.get("uom")]
+                                
+                for prop in ECT.iter(caaml_tag + "Results"):
+                        for subProp in prop.iter(caaml_tag + "testScore"):
+                                testScore = subProp.text
+                print(depthTop, testScore, '"',comment,'"')
+
+        for CT in CTs:
+                depthTop = None
+                testScore = None
+                comment = None
+                fractureCharacter = None
+                for prop in CT.iter(caaml_tag + "metaData"):
+                        for subProp in prop.iter(caaml_tag + "comment"):
+                                comment = subProp.text
+                for prop in CT.iter(caaml_tag + "Layer"):
+                        for subProp in prop.iter(caaml_tag + "depthTop"):
+                                depthTop = [float(subProp.text), subProp.get("uom")]
+                for prop in CT.iter(caaml_tag + "Results"):
+                        for subProp in prop.iter(caaml_tag + "fractureCharacter"):
+                                fractureCharacter = subProp.text
+                        for subProp in prop.iter(caaml_tag + "testScore"):
+                                testScore = subProp.text
+                for prop in CT.iter(caaml_tag + "noFailure"):
+                        testScore = "CTN"
+
+                print(depthTop, fractureCharacter, testScore, '"',comment,'"')
+
+        for RBlock in RBlocks:
+                for prop in RBlock.iter(caaml_tag + "metaData"):
+                        for subProp in prop.iter(caaml_tag + "comment"):
+                                comment = subProp.text
+                for prop in RBlock.iter(caaml_tag + "Layer"):
+                        for subProp in prop.iter(caaml_tag + "depthTop"):
+                                depthTop = [float(subProp.text), subProp.get("uom")]
+                for prop in RBlock.iter(caaml_tag + "Results"):
+                        for subProp in prop.iter(caaml_tag + "fractureCharacter"):
+                                fractureCharacter = subProp.text
+                        for subProp in prop.iter(caaml_tag + "releaseType"):
+                                releaseType = subProp.text
+                        for subProp in prop.iter(caaml_tag + "testScore"):
+                                testScore = subProp.text
+
+                print(depthTop, fractureCharacter, releaseType, testScore, '"',comment,'"')
+
+        for PST in PSTs:
+                for prop in PST.iter(caaml_tag + "metaData"):   
+                        for subProp in prop.iter(caaml_tag + "comment"):
+                                comment = subProp.text
+                for prop in PST.iter(caaml_tag + "Layer"):
+                        for subProp in prop.iter(caaml_tag + "depthTop"):
+                                depthTop = [float(subProp.text), subProp.get("uom")]
+                for prop in PST.iter(caaml_tag + "Results"):
+                        for subProp in prop.iter(caaml_tag + "fracturePropagation"):
+                                fracturePropagation = subProp.text
+                        for subProp in prop.iter(caaml_tag + "cutLength"):
+                                cutLength = [float(subProp.text), subProp.get("uom")]
+                        for subProp in prop.iter(caaml_tag + "columnLength"):
+                                columnLength = [float(subProp.text), subProp.get("uom")]
+
 
     ### Wumph Data (wumphData)
 
