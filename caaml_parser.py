@@ -157,6 +157,36 @@ def caaml_parser(file_path):
 
     ### Snow Profile (layers, tempProfile, densityProfile, surfCond)
 
+    # Measurement Direction
+    try:
+        measurementDirection = next(
+            root.iter(caaml_tag + "SnowProfileMeasurements"), None
+        ).get("dir")
+        pit.snowProfile.set_measurementDirection(measurementDirection)
+    except AttributeError:
+        measurementDirection = None
+
+    # Profile Depth
+    try:
+        profileDepth = next(root.iter(caaml_tag + "profileDepth"), None).text
+        profileDepth_units = next(root.iter(caaml_tag + "profileDepth"), None).get(
+            "uom"
+        )
+        profileDepth = [float(profileDepth), profileDepth_units]
+        pit.snowProfile.set_profileDepth(profileDepth)
+    except AttributeError:
+        profileDepth = None
+
+    # hS
+    try:
+        hS_val = next(root.iter(caaml_tag + "height"), None).text
+        hS_units = next(root.iter(caaml_tag + "height"), None).get("uom")
+        hS = [float(hS_val), hS_units]
+        pit.snowProfile.set_hS(hS)
+    except AttributeError:
+        hS = None
+
+
     ## layers
     stratProfile = next(root.iter(caaml_tag + "stratProfile"), None)
 

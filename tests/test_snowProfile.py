@@ -28,9 +28,9 @@ def test_snow_profile_structure(test_pit):
 def test_basic_profile_info(test_pit):
     """Test basic snow profile information"""
     profile = test_pit.snowProfile
-    # assert profile.measurementDirection == "top down"
-    # assert profile.profileDepth == ["155", "cm"]
-    # assert profile.hS == ["155", "cm"]
+    assert profile.measurementDirection == "top down"
+    assert profile.profileDepth == [155.0, "cm"]
+    assert profile.hS == [155.0, "cm"]
 
 
 def test_surface_conditions(test_pit):
@@ -128,8 +128,8 @@ def test_string_representation(test_pit):
     str_repr = str(profile)
 
     # Check that important fields are included in string representation
-    # assert "measurementDirection: top down" in str_repr
-    # assert "profileDepth: ['155', 'cm']" in str_repr
+    assert "measurementDirection: top down" in str_repr
+    assert "profileDepth: [155.0, 'cm']" in str_repr
     assert "Layer" in str_repr
     assert "tempProfile" in str_repr
 
