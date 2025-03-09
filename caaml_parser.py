@@ -312,7 +312,7 @@ def caaml_parser(file_path):
                         for subProp in prop.iter(caaml_tag + "testScore"):
                                 ect.set_testScore(subProp.text)
 
-                pit.snowProfile.add_extColumnTest(ect)
+                pit.stabilityTests.add_ECT(ect)
 
         for CT in CTs:
                 ct = ComprTest()
@@ -330,7 +330,7 @@ def caaml_parser(file_path):
                 for prop in CT.iter(caaml_tag + "noFailure"):
                         ct.set_testScore("CTN")
 
-                pit.snowProfile.add_comprTest(ct)
+                pit.stabilityTests.add_CT(ct)
 
         for RBlock in RBlocks:
                 rbt = RBlockTest()
@@ -348,7 +348,7 @@ def caaml_parser(file_path):
                         for subProp in prop.iter(caaml_tag + "testScore"):
                                 rbt.set_testScore(subProp.text)
 
-                pit.snowProfile.add_rBlockTest(rbt)
+                pit.stabilityTests.add_RBlock(rbt)
 
         for PST in PSTs:
                 pst = PropSawTest()
@@ -366,8 +366,8 @@ def caaml_parser(file_path):
                         for subProp in prop.iter(caaml_tag + "columnLength"):
                                 pst.set_columnLength([float(subProp.text), subProp.get("uom")])
 
-                pit.snowProfile.add_propSawTest(pst)
-                
+                pit.stabilityTests.add_PST(pst)
+
     ### Wumph Data (wumphData)
 
     # wumphData
