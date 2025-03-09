@@ -1,8 +1,8 @@
 import xml.etree.ElementTree as ET
-from layer import *
+from layer import Layer, Grain
 from snowPit import SnowPit
-from stabilityTests import *
-from snowProfile import *
+from stabilityTests import ExtColumnTest, ComprTest, RBlockTest, PropSawTest
+from snowProfile import TempObs, DensityObs, SurfaceCondition
 from whumpfData import WhumpfData
 
 
