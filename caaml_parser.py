@@ -17,7 +17,7 @@ def caaml_parser(file_path):
     caaml_tag = "{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}"  # Update to read from xml file
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
-    
+
     root = ET.parse(file_path).getroot()
 
     ### Core Info (pitID, pitName, date, user, location, weather, core comments, caamlVersion)
@@ -163,15 +163,11 @@ def caaml_parser(file_path):
 
     # Profile Depth
     for prop in root.iter(caaml_tag + "profileDepth"):
-        pit.snowProfile.set_profileDepth(
-            [round(float(prop.text), 2), prop.get("uom")]
-        )
+        pit.snowProfile.set_profileDepth([round(float(prop.text), 2), prop.get("uom")])
 
     # hS
     for prop in root.iter(caaml_tag + "height"):
-        pit.snowProfile.set_hS(
-            [round(float(prop.text), 2), prop.get("uom")]
-        )
+        pit.snowProfile.set_hS([round(float(prop.text), 2), prop.get("uom")])
 
     ## layers
     stratProfile = next(root.iter(caaml_tag + "stratProfile"), None)
@@ -293,83 +289,84 @@ def caaml_parser(file_path):
     test_results = next(root.iter(caaml_tag + "stbTests"))
 
     if test_results is not None:
-
         ECTs = [test for test in test_results if test.tag.endswith("ExtColumnTest")]
         CTs = [test for test in test_results if test.tag.endswith("ComprTest")]
         RBlocks = [test for test in test_results if test.tag.endswith("RBlockTest")]
         PSTs = [test for test in test_results if test.tag.endswith("PropSawTest")]
 
         for ECT in ECTs:
-                ect = ExtColumnTest()
-                for prop in ECT.iter(caaml_tag + "metaData"):
-                        for subProp in prop.iter(caaml_tag + "comment"):
-                                ect.set_comment(subProp.text)
-                for prop in ECT.iter(caaml_tag + "Layer"):
-                        for subProp in prop.iter(caaml_tag + "depthTop"):
-                                ect.set_depthTop([float(subProp.text), subProp.get("uom")])
+            ect = ExtColumnTest()
+            for prop in ECT.iter(caaml_tag + "metaData"):
+                for subProp in prop.iter(caaml_tag + "comment"):
+                    ect.set_comment(subProp.text)
+            for prop in ECT.iter(caaml_tag + "Layer"):
+                for subProp in prop.iter(caaml_tag + "depthTop"):
+                    ect.set_depthTop([float(subProp.text), subProp.get("uom")])
 
-                for prop in ECT.iter(caaml_tag + "Results"):
-                        for subProp in prop.iter(caaml_tag + "testScore"):
-                                ect.set_testScore(subProp.text)
+            for prop in ECT.iter(caaml_tag + "Results"):
+                for subProp in prop.iter(caaml_tag + "testScore"):
+                    ect.set_testScore(subProp.text)
 
-                pit.stabilityTests.add_ECT(ect)
+            pit.stabilityTests.add_ECT(ect)
 
         for CT in CTs:
-                ct = ComprTest()
-                for prop in CT.iter(caaml_tag + "metaData"):
-                        for subProp in prop.iter(caaml_tag + "comment"):
-                                ct.set_comment(subProp.text)
-                for prop in CT.iter(caaml_tag + "Layer"):
-                        for subProp in prop.iter(caaml_tag + "depthTop"):
-                                ct.set_depthTop([float(subProp.text), subProp.get("uom")])
-                for prop in CT.iter(caaml_tag + "Results"):
-                        for subProp in prop.iter(caaml_tag + "fractureCharacter"):
-                                ct.set_fractureCharacter(subProp.text)
-                        for subProp in prop.iter(caaml_tag + "testScore"):
-                                ct.set_testScore(subProp.text)
-                for prop in CT.iter(caaml_tag + "noFailure"):
-                        ct.set_testScore("CTN")
+            ct = ComprTest()
+            for prop in CT.iter(caaml_tag + "metaData"):
+                for subProp in prop.iter(caaml_tag + "comment"):
+                    ct.set_comment(subProp.text)
+            for prop in CT.iter(caaml_tag + "Layer"):
+                for subProp in prop.iter(caaml_tag + "depthTop"):
+                    ct.set_depthTop([float(subProp.text), subProp.get("uom")])
+            for prop in CT.iter(caaml_tag + "Results"):
+                for subProp in prop.iter(caaml_tag + "fractureCharacter"):
+                    ct.set_fractureCharacter(subProp.text)
+                for subProp in prop.iter(caaml_tag + "testScore"):
+                    ct.set_testScore(subProp.text)
+            for prop in CT.iter(caaml_tag + "noFailure"):
+                ct.set_testScore("CTN")
 
-                pit.stabilityTests.add_CT(ct)
+            pit.stabilityTests.add_CT(ct)
 
         for RBlock in RBlocks:
-                rbt = RBlockTest()
-                for prop in RBlock.iter(caaml_tag + "metaData"):
-                        for subProp in prop.iter(caaml_tag + "comment"):
-                                rbt.set_comment(subProp.text)
-                for prop in RBlock.iter(caaml_tag + "Layer"):
-                        for subProp in prop.iter(caaml_tag + "depthTop"):
-                                rbt.set_depthTop([float(subProp.text), subProp.get("uom")])
-                for prop in RBlock.iter(caaml_tag + "Results"):
-                        for subProp in prop.iter(caaml_tag + "fractureCharacter"):
-                                rbt.set_fractureCharacter(subProp.text)
-                        for subProp in prop.iter(caaml_tag + "releaseType"):
-                                rbt.set_releaseType(subProp.text)
-                        for subProp in prop.iter(caaml_tag + "testScore"):
-                                rbt.set_testScore(subProp.text)
+            rbt = RBlockTest()
+            for prop in RBlock.iter(caaml_tag + "metaData"):
+                for subProp in prop.iter(caaml_tag + "comment"):
+                    rbt.set_comment(subProp.text)
+            for prop in RBlock.iter(caaml_tag + "Layer"):
+                for subProp in prop.iter(caaml_tag + "depthTop"):
+                    rbt.set_depthTop([float(subProp.text), subProp.get("uom")])
+            for prop in RBlock.iter(caaml_tag + "Results"):
+                for subProp in prop.iter(caaml_tag + "fractureCharacter"):
+                    rbt.set_fractureCharacter(subProp.text)
+                for subProp in prop.iter(caaml_tag + "releaseType"):
+                    rbt.set_releaseType(subProp.text)
+                for subProp in prop.iter(caaml_tag + "testScore"):
+                    rbt.set_testScore(subProp.text)
 
-                pit.stabilityTests.add_RBlock(rbt)
+            pit.stabilityTests.add_RBlock(rbt)
 
         for PST in PSTs:
-                pst = PropSawTest()
-                for prop in PST.iter(caaml_tag + "metaData"):   
-                        for subProp in prop.iter(caaml_tag + "comment"):
-                                pst.set_comment(subProp.text)
-                for prop in PST.iter(caaml_tag + "Layer"):
-                        for subProp in prop.iter(caaml_tag + "depthTop"):
-                                pst.set_depthTop([float(subProp.text), subProp.get("uom")])
-                for prop in PST.iter(caaml_tag + "Results"):
-                        for subProp in prop.iter(caaml_tag + "fracturePropagation"):
-                                pst.set_fractureProp(subProp.text)
-                        for subProp in prop.iter(caaml_tag + "cutLength"):
-                                pst.set_cutLength([float(subProp.text), subProp.get("uom")])
-                        for subProp in prop.iter(caaml_tag + "columnLength"):
-                                pst.set_columnLength([float(subProp.text), subProp.get("uom")])
+            pst = PropSawTest()
+            for prop in PST.iter(caaml_tag + "metaData"):
+                for subProp in prop.iter(caaml_tag + "comment"):
+                    pst.set_comment(subProp.text)
+            for prop in PST.iter(caaml_tag + "Layer"):
+                for subProp in prop.iter(caaml_tag + "depthTop"):
+                    pst.set_depthTop([float(subProp.text), subProp.get("uom")])
+            for prop in PST.iter(caaml_tag + "Results"):
+                for subProp in prop.iter(caaml_tag + "fracturePropagation"):
+                    pst.set_fractureProp(subProp.text)
+                for subProp in prop.iter(caaml_tag + "cutLength"):
+                    pst.set_cutLength([float(subProp.text), subProp.get("uom")])
+                for subProp in prop.iter(caaml_tag + "columnLength"):
+                    pst.set_columnLength([float(subProp.text), subProp.get("uom")])
 
-                pit.stabilityTests.add_PST(pst)
+            pit.stabilityTests.add_PST(pst)
 
     ### Wumph Data (wumphData)
-    whumpfData = next(root.iter(snowpilot_tag + "whumpfData"), None)  # Add None as default
+    whumpfData = next(
+        root.iter(snowpilot_tag + "whumpfData"), None
+    )  # Add None as default
 
     if whumpfData is not None:
         pit.whumpfData = WhumpfData()

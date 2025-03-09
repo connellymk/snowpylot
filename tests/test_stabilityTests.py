@@ -1,5 +1,6 @@
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
@@ -9,13 +10,15 @@ from stabilityTests import (
     ExtColumnTest,
     ComprTest,
     RBlockTest,
-    PropSawTest
+    PropSawTest,
 )
+
 
 @pytest.fixture
 def test_pit():
     """Fixture to load the test snowpit file"""
     return caaml_parser("snowpits/test/snowpylot-test-26-Feb-caaml.xml")
+
 
 def test_stability_tests_structure(test_pit):
     """Test that StabilityTests object is properly structured"""
@@ -29,6 +32,7 @@ def test_stability_tests_structure(test_pit):
     assert isinstance(stability_tests.SST, list)
     assert isinstance(stability_tests.DTT, list)
 
+
 def test_extended_column_tests(test_pit):
     """Test Extended Column Test parsing"""
     ects = test_pit.stabilityTests.ECT
@@ -41,7 +45,7 @@ def test_extended_column_tests(test_pit):
     assert ect1.testScore == "ECTN4"
     assert ect1.propogation is False
     assert ect1.numTaps == "4"
-    #assert ect1.comment == "ECT 1 comment"
+    # assert ect1.comment == "ECT 1 comment"
 
     # Test second ECT
     ect2 = ects[1]
@@ -49,7 +53,8 @@ def test_extended_column_tests(test_pit):
     assert ect2.testScore == "ECTN25"
     assert ect2.propogation is False
     assert ect2.numTaps == "25"
-    #assert ect2.comment == "ECT 2 comment"
+    # assert ect2.comment == "ECT 2 comment"
+
 
 def test_compression_tests(test_pit):
     """Test Compression Test parsing"""
@@ -62,7 +67,7 @@ def test_compression_tests(test_pit):
     assert ct1.depthTop == [11.0, "cm"]
     assert ct1.testScore == "13"
     assert ct1.fractureCharacter == "Q2"
-    #assert ct1.comment == "CT comment 1"
+    # assert ct1.comment == "CT comment 1"
 
     # Test second CT (no failure)
     ct2 = cts[1]
@@ -73,7 +78,8 @@ def test_compression_tests(test_pit):
     assert ct3.depthTop == [94.0, "cm"]
     assert ct3.testScore == "28"
     assert ct3.fractureCharacter == "Q2"
-    #assert ct3.comment == "CT 3 comment"
+    # assert ct3.comment == "CT 3 comment"
+
 
 def test_rutschblock_tests(test_pit):
     """Test Rutschblock Test parsing"""
@@ -86,7 +92,8 @@ def test_rutschblock_tests(test_pit):
     assert rbt.testScore == "RB3"
     assert rbt.releaseType == "MB"
     assert rbt.fractureCharacter == "Q2"
-    #assert rbt.comment == "RBlock 1 comment"
+    # assert rbt.comment == "RBlock 1 comment"
+
 
 def test_propagation_saw_tests(test_pit):
     """Test Propagation Saw Test parsing"""
@@ -99,7 +106,8 @@ def test_propagation_saw_tests(test_pit):
     assert pst.fractureProp == "Arr"
     assert pst.cutLength == [13.0, "cm"]
     assert pst.columnLength == [100.0, "cm"]
-    #assert pst.comment == "PST comment"
+    # assert pst.comment == "PST comment"
+
 
 def test_empty_test_lists(test_pit):
     """Test that unused test types are empty lists"""
@@ -107,6 +115,7 @@ def test_empty_test_lists(test_pit):
     assert len(stability_tests.SBT) == 0
     assert len(stability_tests.SST) == 0
     assert len(stability_tests.DTT) == 0
+
 
 def test_string_representation(test_pit):
     """Test string representation of StabilityTests objects"""
@@ -139,6 +148,7 @@ def test_string_representation(test_pit):
     assert "depthTop: [65.0, 'cm']" in pst_str
     assert "fractureProp: Arr" in pst_str
     assert "cutLength: [13.0, 'cm']" in pst_str
+
 
 if __name__ == "__main__":
     pytest.main([__file__])
