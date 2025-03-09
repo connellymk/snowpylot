@@ -3,7 +3,7 @@ from layer import *
 from snowPit import SnowPit
 from stabilityTests import *
 from snowProfile import *
-from whumpfData import WumphData
+from whumpfData import WhumpfData
 
 
 def caaml_parser(file_path):
@@ -369,7 +369,26 @@ def caaml_parser(file_path):
                 pit.stabilityTests.add_PST(pst)
 
     ### Wumph Data (wumphData)
+    whumpfData = next(root.iter(snowpilot_tag + "whumpfData"), None)  # Add None as default
 
-    # wumphData
+    if whumpfData is not None:
+        pit.whumpfData = WhumpfData()
+
+        for prop in whumpfData.iter(snowpilot_tag + "whumpfCracking"):
+            pit.whumpfData.set_whumpfCracking(prop.text)
+        for prop in whumpfData.iter(snowpilot_tag + "whumpfNoCracking"):
+            pit.whumpfData.set_whumpfNoCracking(prop.text)
+        for prop in whumpfData.iter(snowpilot_tag + "crackingNoWhumpf"):
+            pit.whumpfData.set_crackingNoWhumpf(prop.text)
+        for prop in whumpfData.iter(snowpilot_tag + "whumpfNearPit"):
+            pit.whumpfData.set_whumpfNearPit(prop.text)
+        for prop in whumpfData.iter(snowpilot_tag + "whumpfDepthWeakLayer"):
+            pit.whumpfData.set_whumpfDepthWeakLayer(prop.text)
+        for prop in whumpfData.iter(snowpilot_tag + "whumpfTriggeredRemoteAva"):
+            pit.whumpfData.set_whumpfTriggeredRemoteAva(prop.text)
+        for prop in whumpfData.iter(snowpilot_tag + "whumpfSize"):
+            pit.whumpfData.set_whumpfSize(prop.text)
+    else:
+        pit.whumpfData = None
 
     return pit

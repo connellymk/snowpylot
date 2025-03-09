@@ -1,6 +1,6 @@
 from snowProfile import SnowProfile
 from stabilityTests import StabilityTests
-from whumpfData import WumphData
+from whumpfData import WhumpfData
 from coreInfo import CoreInfo
 
 
@@ -17,14 +17,14 @@ class SnowPit(object):
         self.stabilityTests = (
             StabilityTests()
         )  # Includes test results from stability tests
-        # self.whumpfData = WhumpfData()  # Includes custom SnowPilot "wumphData"
+        self.whumpfData = WhumpfData()  # Includes custom SnowPilot "whumpfData"
 
     def __str__(self):
         snowPit_str = "SnowPit: "
         snowPit_str += f"\n Core Info: {self.coreInfo} "
         snowPit_str += f"\n Snow Profile: {self.snowProfile} "
         snowPit_str += f"\n Stability Tests: {self.stabilityTests} "
-        snowPit_str += f"\n Wumph Data: {self.wumphData} "
+        snowPit_str += f"\n Whumpf Data: {self.whumpfData} "
         return snowPit_str
 
     # Setters
