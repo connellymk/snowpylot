@@ -33,7 +33,7 @@ for test in snowpit.stabilityTests.ECT:
 
 ## Features
 
-- Parse CAAML snow profile data
+- Parse CAAML snow profile data from SnowPilot.org
 - Access core information (pit ID, date, location, etc.)
 - Work with snow layers and grain types
 - Access stability test results
@@ -60,7 +60,7 @@ pytest
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Mary Kate's Snow Pilot Analytics Independent Study
+## Mary Kate's SP2025 Independent Study
 
  The data for this project comes from Snowpilot.org
 
@@ -128,3 +128,4 @@ To do
 
 *Create Package*
 https://www.freecodecamp.org/news/build-your-first-python-package/
+https://realpython.com/pypi-publish-python-package/
