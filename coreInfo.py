@@ -181,7 +181,7 @@ class WeatherConditions(object):
             "SCT": "Scattered",
             "BKN": "Broken",
             "OVC": "Overcast",
-            "X": "Obscured"
+            "X": "Obscured",
         }
         try:
             self.skyCond_Desc = skyCond_dict[self.skyCond]
@@ -203,7 +203,7 @@ class WeatherConditions(object):
             "RV": "Very light rain - mist",
             "RL": "Light Rain < 2.5mm/hr",
             "RM": "Moderate rain < 7.5mm/hr",
-            "RH": "Heavy rain > 7.5mm/hr"
+            "RH": "Heavy rain > 7.5mm/hr",
         }
 
         try:
@@ -222,7 +222,7 @@ class WeatherConditions(object):
             "L": "Light breeze",
             "M": "Moderate",
             "S": "Strong",
-            "X": "gale force winds"
+            "X": "gale force winds",
         }
 
         try:

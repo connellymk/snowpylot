@@ -61,7 +61,7 @@ class Layer(object):
             "W-VW": "Wet to very wet",
             "VW": "Very wet",
             "VW-S": "Very wet to slush",
-            "S": "Slush"
+            "S": "Slush",
         }
 
         try:

@@ -364,9 +364,7 @@ def caaml_parser(file_path):
             pit.stabilityTests.add_PST(pst)
 
     ### Wumph Data (wumphData)
-    whumpfData = next(
-        root.iter(snowpilot_tag + "whumpfData"), None
-    )  
+    whumpfData = next(root.iter(snowpilot_tag + "whumpfData"), None)
 
     if whumpfData is not None:
         pit.whumpfData = WhumpfData()
