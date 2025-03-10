@@ -1,7 +1,7 @@
-from snowProfile import SnowProfile
-from stabilityTests import StabilityTests
-from whumpfData import WhumpfData
-from coreInfo import CoreInfo
+from .snowProfile import SnowProfile
+from .stabilityTests import StabilityTests
+from .whumpfData import WhumpfData
+from .coreInfo import CoreInfo
 
 
 class SnowPit(object):

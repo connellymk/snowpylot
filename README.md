@@ -1,5 +1,65 @@
-# SnowPilotAnalytics
- 
+# SnowPylot
+
+A Python library for working with CAAML snow profile data from SnowPilot.org.
+
+## Installation
+
+```bash
+pip install snowpylot
+```
+
+## Usage
+
+```python
+from snowpylot import caaml_parser
+
+# Parse a CAAML file
+snowpit = caaml_parser("path/to/snowpit.caaml.xml")
+
+# Access snow pit data
+print(f"Pit ID: {snowpit.coreInfo.pitID}")
+print(f"Date: {snowpit.coreInfo.date}")
+print(f"Location: {snowpit.coreInfo.location}")
+
+# Work with layers
+for layer in snowpit.snowProfile.layers:
+    print(f"Layer at depth {layer.depthTop}")
+    print(f"Grain form: {layer.grainFormPrimary.grainForm}")
+
+# Access stability tests
+for test in snowpit.stabilityTests.ECT:
+    print(f"ECT at depth {test.depthTop}: {test.testScore}")
+```
+
+## Features
+
+- Parse CAAML snow profile data
+- Access core information (pit ID, date, location, etc.)
+- Work with snow layers and grain types
+- Access stability test results
+- Handle whumpf observations
+
+## Development
+
+To set up the development environment:
+
+```bash
+git clone https://github.com/yourusername/snowpylot.git
+cd snowpylot
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+```
+
+Run tests:
+```bash
+pytest
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 ## Mary Kate's Snow Pilot Analytics Independent Study
 
  The data for this project comes from Snowpilot.org

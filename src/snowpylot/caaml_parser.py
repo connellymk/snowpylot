@@ -1,9 +1,9 @@
 import xml.etree.ElementTree as ET
-from layer import Layer, Grain
-from snowPit import SnowPit
-from stabilityTests import ExtColumnTest, ComprTest, RBlockTest, PropSawTest
-from snowProfile import TempObs, DensityObs, SurfaceCondition
-from whumpfData import WhumpfData
+from .layer import Layer, Grain
+from .snowPit import SnowPit
+from .stabilityTests import ExtColumnTest, ComprTest, RBlockTest, PropSawTest
+from .snowProfile import TempObs, DensityObs, SurfaceCondition
+from .whumpfData import WhumpfData
 
 
 def caaml_parser(file_path):

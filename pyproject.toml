@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snowpylot"
+version = "0.1.0"
+authors = [
+  { name="Mary Kate Connelly", email="connellymarykate@gmail.com" },
+]
+description = "A Python library for working with CAAML snow profile data"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/snowpylot"
+"Bug Tracker" = "https://github.com/yourusername/snowpylot/issues" 

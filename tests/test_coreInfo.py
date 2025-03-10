@@ -4,9 +4,6 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
-from caaml_parser import caaml_parser
-from coreInfo import CoreInfo, User, Location, WeatherConditions
-
 
 @pytest.fixture
 def test_pit():
