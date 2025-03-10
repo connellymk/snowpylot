@@ -286,7 +286,7 @@ def caaml_parser(file_path):
             )
 
     ### Stability Tests (testResults)
-    test_results = next(root.iter(caaml_tag + "stbTests"))
+    test_results = next(root.iter(caaml_tag + "stbTests"), None)
 
     if test_results is not None:
         ECTs = [test for test in test_results if test.tag.endswith("ExtColumnTest")]
