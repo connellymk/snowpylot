@@ -148,18 +148,26 @@ class WeatherConditions(object):
     """
 
     def __init__(self):
+        # Parsed properties
         self.skyCond = None
         self.precipTI = None
         self.airTempPres = None
         self.windSpeed = None
         self.windDir = None
+        # Computed properties
+        self.skyCond_Desc = None
+        self.precipTI_Desc = None
+        self.windSpeed_Desc = None
 
     def __str__(self):
         weatherConditions_str = ""
         weatherConditions_str += f"\n\t skyCond: {self.skyCond}"
+        weatherConditions_str += f"\n\t skyCond_Desc: {self.skyCond_Desc}"
         weatherConditions_str += f"\n\t precipTI: {self.precipTI}"
+        weatherConditions_str += f"\n\t precipTI_Desc: {self.precipTI_Desc}"
         weatherConditions_str += f"\n\t airTempPres: {self.airTempPres}"
         weatherConditions_str += f"\n\t windSpeed: {self.windSpeed}"
+        weatherConditions_str += f"\n\t windSpeed_Desc: {self.windSpeed_Desc}"
         weatherConditions_str += f"\n\t windDir: {self.windDir}"
         return weatherConditions_str
 
@@ -167,14 +175,60 @@ class WeatherConditions(object):
     def set_skyCond(self, skyCond):
         self.skyCond = skyCond
 
+        skyCond_dict = {
+            "CLR": "Clear",
+            "FEW": "Few",
+            "SCT": "Scattered",
+            "BKN": "Broken",
+            "OVC": "Overcast",
+            "X": "Obscured"
+        }
+        try:
+            self.skyCond_Desc = skyCond_dict[self.skyCond]
+        except KeyError:
+            self.skyCond_Desc = None
+
     def set_precipTI(self, precipTI):
         self.precipTI = precipTI
+
+        precipTI_dict = {
+            "NIL": "None",
+            "S-1": "Snow < 0.5 cm/hr",
+            "S1": "Snow - 1 cm/hr",
+            "S2": "Snow - 2 cm/hr",
+            "S5": "Snow - 5 cm/hr",
+            "S10": "Snow - 10 cm/hr",
+            "G": "Graupel or hail",
+            "RS": "Mixed rain and snow",
+            "RV": "Very light rain - mist",
+            "RL": "Light Rain < 2.5mm/hr",
+            "RM": "Moderate rain < 7.5mm/hr",
+            "RH": "Heavy rain > 7.5mm/hr"
+        }
+
+        try:
+            self.precipTI_Desc = precipTI_dict[self.precipTI]
+        except KeyError:
+            self.precipTI_Desc = None
 
     def set_airTempPres(self, airTempPres):
         self.airTempPres = airTempPres
 
     def set_windSpeed(self, windSpeed):
         self.windSpeed = windSpeed
+
+        windSpeed_dict = {
+            "C": "Calm",
+            "L": "Light breeze",
+            "M": "Moderate",
+            "S": "Strong",
+            "X": "gale force winds"
+        }
+
+        try:
+            self.windSpeed_Desc = windSpeed_dict[self.windSpeed]
+        except KeyError:
+            self.windSpeed_Desc = None
 
     def set_windDir(self, windDir):
         self.windDir = windDir
