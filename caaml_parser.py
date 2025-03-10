@@ -204,6 +204,9 @@ def caaml_parser(file_path):
             for prop in layer.iter(caaml_tag + "grainSize"):
                 uom = prop.get("uom")
 
+                if layer_obj.grainFormPrimary is None:
+                    layer_obj.grainFormPrimary = Grain()
+
                 for subProp in prop.iter(caaml_tag + "avg"):
                     layer_obj.grainFormPrimary.set_grainSizeAvg(
                         [round(float(subProp.text), 2), uom]
