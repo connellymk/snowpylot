@@ -15,6 +15,8 @@ class Layer(object):
         self.wetness = None
         self.layerOfConcern = False
         self.comments = None
+        # Computed properties
+        self.wetness_Desc = None
 
     def __str__(self):
         layer_str = ""
@@ -26,6 +28,7 @@ class Layer(object):
         layer_str += f"\n\t grainFormPrimary: {self.grainFormPrimary}"
         layer_str += f"\n\t grainFormSecondary: {self.grainFormSecondary}"
         layer_str += f"\n\t wetness: {self.wetness}"
+        layer_str += f"\n\t wetness_Desc: {self.wetness_Desc}"
         layer_str += f"\n\t layerOfConcern: {self.layerOfConcern}"
         layer_str += f"\n\t comments: {self.comments}"
         return layer_str
@@ -48,6 +51,23 @@ class Layer(object):
 
     def set_wetness(self, wetness):
         self.wetness = wetness
+
+        wetness_dict = {
+            "D": "Dry",
+            "D-M": "Dry to moist",
+            "M": "Moist",
+            "M-W": "Moist to wet",
+            "W": "Wet",
+            "W-VW": "Wet to very wet",
+            "VW": "Very wet",
+            "VW-S": "Very wet to slush",
+            "S": "Slush"
+        }
+
+        try:
+            self.wetness_Desc = wetness_dict[self.wetness]
+        except KeyError:
+            self.wetness_Desc = None
 
     def set_layerOfConcern(self, layerOfConcern):
         self.layerOfConcern = layerOfConcern
