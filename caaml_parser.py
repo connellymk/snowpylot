@@ -366,7 +366,7 @@ def caaml_parser(file_path):
     ### Wumph Data (wumphData)
     whumpfData = next(
         root.iter(snowpilot_tag + "whumpfData"), None
-    )  # Add None as default
+    )  
 
     if whumpfData is not None:
         pit.whumpfData = WhumpfData()
