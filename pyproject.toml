@@ -44,3 +44,5 @@ push = true
     "{pep440_version}",
 ]
 "src/snowpylot/__init__.py" = ["{version}"]
+
+#test
