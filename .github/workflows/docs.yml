@@ -1,0 +1,50 @@
+name: Build and publish Sphinx 🪬 documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'weac/**'
+      - 'docs/sphinx/**'
+
+jobs:
+  build-docs:
+    runs-on: macos-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install Sphinx and extensions
+      run: |
+        python -m pip install --upgrade pip
+        pip install sphinx sphinxawesome_theme weac IPython
+
+    - name: Clean old html files
+      run: |
+        rm -rf docs/_* docs/*.html docs/*.js docs/*.inv
+
+    - name: Generate API documentation with sphinx-apidoc
+      run: |
+        sphinx-apidoc -o docs/sphinx/ weac --force --separate
+
+    - name: Build Sphinx documentation
+      run: |
+        cd docs/sphinx
+        make clean html
+
+    - name: Copy built documentation to docs/
+      run: |
+        cp -rf docs/sphinx/_build/html/* docs/
+
+    - name: Commit and push documentation
+      run: |
+        git add docs/
+        git commit -m "Update documentation" || echo "No changes to commit"
+        git push origin main
