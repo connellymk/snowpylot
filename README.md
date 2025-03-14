@@ -17,6 +17,12 @@ A Python library for working with CAAML snow profile data from SnowPilot.org.
 pip install snowpylot
 ```
 
+for clone the repo:
+
+```bash
+git clone https://github.com/connellymk/snowpylot.git
+```
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
