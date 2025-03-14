@@ -10,9 +10,6 @@ class StabilityTests:
         self.CT = []  # Compression Test
         self.RBlock = []  # Rutschblock Test
         self.PST = []  # Propogation Saw Test
-        self.SBT = []  # StuffBlockTest
-        self.SST = []  # Shovel Shear Test
-        self.DTT = []  # Deep Tap Test
 
     def __str__(self):
         stbTests_str = ""
