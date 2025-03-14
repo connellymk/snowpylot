@@ -1,5 +1,5 @@
-CAAML Parser Module
-==================
+CAAML Parser
+===========
 
 .. automodule:: snowpylot.caaml_parser
    :members:

@@ -1,6 +1,12 @@
-snowpylot.caaml\_parser
+﻿snowpylot.caaml\_parser
 =======================
 
-.. currentmodule:: snowpylot
+.. automodule:: snowpylot.caaml_parser
 
-.. autofunction:: caaml_parser
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CaamlParser
+   
