@@ -3,15 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-snowpylot documentation
-=======================
-
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+Welcome to SnowPylot's documentation!
+===================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+   modules/coreinfo
+   modules/layer
+   modules/snowprofile
+   modules/stabilitytests
+   modules/whumpfdata
+   modules/parser
+
+API Reference
+------------
+
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
+
+   snowpylot
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
