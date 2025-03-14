@@ -48,13 +48,16 @@ Basic information about the snow pit:
 - `date` - Date of observation
 - `comment` - General comments
 - `caamlVersion` - Version of CAAML schema used
+- `user` - User information
+- `location` - Location information
+- `weatherConditions` - Weather conditions
 
 #### User Info (snowpit.coreInfo.user)
 - `operationID` - ID of the operation
 - `operationName` - Name of the operation
 - `professional` - Boolean indicating if user is professional
 - `userID` - User identifier
-- `username` - Name of the user
+- `username` - SnowPilot username of the user
 
 #### Location Info (snowpit.coreInfo.location)
 - `latitude` - Decimal degrees
@@ -96,7 +99,7 @@ List of Layer objects, each containing:
 - `wetness_Desc` - Wetness description
 - `layerOfConcern` - Boolean
 
-##### Grain Info (layer.grainFormPrimary/Secondary)
+##### Grain Info (layer.grainFormPrimary or layer.grainFormSecondary)
 - `grainForm` - Grain form code
 - `grainSizeAvg` - [size, units]
 - `grainSizeMax` - [size, units]
@@ -111,35 +114,39 @@ List of temperature observations, each containing:
 - `snowTemp` - [temperature, units]
 
 #### Density Profile (snowpit.snowProfile.densityProfile)
-List of density observations, each containing:
+List of density observation, each containing:
 - `depthTop` - [depth, units]
 - `thickness` - [thickness, units]
 - `density` - [density, units]
 
 ### 3. Stability Tests (snowpit.stabilityTests)
 Contains lists of different stability test results:
+- `ECT` - Extended Column Test
+- `CT` - Compression Test
+- `RBlock` - Rutschblock Test
+- `PST` - Propagation Saw Test
 
-#### Extended Column Test (snowpit.stabilityTests.ECT)
+#### Extended Column Test (snowpit.stabilityTests.ECT) is a list of ExtColumnTest objects, each containing:
 - `depthTop` - [depth, units]
 - `testScore` - Test result code
 - `propogation` - Boolean
 - `numTaps` - Number of taps
 - `comment` - Test comments
 
-#### Compression Test (snowpit.stabilityTests.CT)
+#### Compression Test (snowpit.stabilityTests.CT) is a list of ComprTest objects, each containing:
 - `depthTop` - [depth, units]
 - `fractureCharacter` - Fracture character code
 - `testScore` - Test result code
 - `comment` - Test comments
 
-#### Rutschblock Test (snowpit.stabilityTests.RBlock)
+#### Rutschblock Test (snowpit.stabilityTests.RBlock) is a list of RBlockTest objects, each containing:
 - `depthTop` - [depth, units]
 - `fractureCharacter` - Fracture character code
 - `releaseType` - Release type code
 - `testScore` - Test result code
 - `comment` - Test comments
 
-#### Propagation Saw Test (snowpit.stabilityTests.PST)
+#### Propagation Saw Test (snowpit.stabilityTests.PST) is a list of PropSawTest objects, each containing:
 - `depthTop` - [depth, units]
 - `fractureProp` - Propagation result
 - `cutLength` - [length, units]
