@@ -17,23 +17,6 @@ A Python library for working with CAAML snow profile data from SnowPilot.org.
 pip install snowpylot
 ```
 
-## Development
-
-To set up the development environment:
-
-```bash
-git clone https://github.com/yourusername/snowpylot.git
-cd snowpylot
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-```
-
-Run tests:
-```bash
-pytest
-```
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -180,8 +163,6 @@ Resources:
 https://snowpilot.org/
 
 https://github.com/SnowpitData/AvscienceServer
-
-https://github.com/ArcticSnow/snowpyt
 
 http://caaml.org/Schemas/V4.2/Doc/#complexType_RescuedByBaseType_Link0BC1FC30
 
