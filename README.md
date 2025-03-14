@@ -17,23 +17,6 @@ A Python library for working with CAAML snow profile data from SnowPilot.org.
 pip install snowpylot
 ```
 
-## Development
-
-To set up the development environment:
-
-```bash
-git clone https://github.com/yourusername/snowpylot.git
-cd snowpylot
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-```
-
-Run tests:
-```bash
-pytest
-```
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -65,13 +48,16 @@ Basic information about the snow pit:
 - `date` - Date of observation
 - `comment` - General comments
 - `caamlVersion` - Version of CAAML schema used
+- `user` - User information
+- `location` - Location information
+- `weatherConditions` - Weather conditions
 
 #### User Info (snowpit.coreInfo.user)
 - `operationID` - ID of the operation
 - `operationName` - Name of the operation
 - `professional` - Boolean indicating if user is professional
 - `userID` - User identifier
-- `username` - Name of the user
+- `username` - SnowPilot username of the user
 
 #### Location Info (snowpit.coreInfo.location)
 - `latitude` - Decimal degrees
@@ -113,7 +99,7 @@ List of Layer objects, each containing:
 - `wetness_Desc` - Wetness description
 - `layerOfConcern` - Boolean
 
-##### Grain Info (layer.grainFormPrimary/Secondary)
+##### Grain Info (layer.grainFormPrimary or layer.grainFormSecondary)
 - `grainForm` - Grain form code
 - `grainSizeAvg` - [size, units]
 - `grainSizeMax` - [size, units]
@@ -128,35 +114,39 @@ List of temperature observations, each containing:
 - `snowTemp` - [temperature, units]
 
 #### Density Profile (snowpit.snowProfile.densityProfile)
-List of density observations, each containing:
+List of density observation, each containing:
 - `depthTop` - [depth, units]
 - `thickness` - [thickness, units]
 - `density` - [density, units]
 
 ### 3. Stability Tests (snowpit.stabilityTests)
 Contains lists of different stability test results:
+- `ECT` - Extended Column Test
+- `CT` - Compression Test
+- `RBlock` - Rutschblock Test
+- `PST` - Propagation Saw Test
 
-#### Extended Column Test (snowpit.stabilityTests.ECT)
+#### Extended Column Test (snowpit.stabilityTests.ECT) is a list of ExtColumnTest objects, each containing:
 - `depthTop` - [depth, units]
 - `testScore` - Test result code
 - `propogation` - Boolean
 - `numTaps` - Number of taps
 - `comment` - Test comments
 
-#### Compression Test (snowpit.stabilityTests.CT)
+#### Compression Test (snowpit.stabilityTests.CT) is a list of ComprTest objects, each containing:
 - `depthTop` - [depth, units]
 - `fractureCharacter` - Fracture character code
 - `testScore` - Test result code
 - `comment` - Test comments
 
-#### Rutschblock Test (snowpit.stabilityTests.RBlock)
+#### Rutschblock Test (snowpit.stabilityTests.RBlock) is a list of RBlockTest objects, each containing:
 - `depthTop` - [depth, units]
 - `fractureCharacter` - Fracture character code
 - `releaseType` - Release type code
 - `testScore` - Test result code
 - `comment` - Test comments
 
-#### Propagation Saw Test (snowpit.stabilityTests.PST)
+#### Propagation Saw Test (snowpit.stabilityTests.PST) is a list of PropSawTest objects, each containing:
 - `depthTop` - [depth, units]
 - `fractureProp` - Propagation result
 - `cutLength` - [length, units]
@@ -180,8 +170,6 @@ Resources:
 https://snowpilot.org/
 
 https://github.com/SnowpitData/AvscienceServer
-
-https://github.com/ArcticSnow/snowpyt
 
 http://caaml.org/Schemas/V4.2/Doc/#complexType_RescuedByBaseType_Link0BC1FC30
 
