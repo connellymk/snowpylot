@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-18327">
+  <caaml:metaData>
+    <caaml:comment>Top of Paranoia bootpack. We had everal large collapses on this slope and similar ones, often triggered by the third or fourth person on the slope. We found poor structure with snow from October of now well-developed facets and a few decomposing crust layers within. The problematic interface is the old snow surface before our Thanksgiving storm. </caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2019-12-11T11:30:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2019-12-11T12:50:52-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2019-12-11T13:04:21-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-168">
+      <caaml:name>American Avalanche Institute</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-5024">
+        <caaml:name>kbockel</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-18327">
+    <caaml:name>Paranoia Bootpack</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>2926</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>N</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>15</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:country>US</caaml:country>
+    <caaml:region>WY</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">140</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>X</caaml:skyCond>
+        <caaml:precipTI>-SN</caaml:precipTI>
+        <caaml:windSpd uom="">L</caaml:windSpd>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">140</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:surfGrainType uom="mm">PP</snowpilot:surfGrainType>
+          </caaml:customData>
+        </caaml:metaData>
+        <caaml:penetrationFoot uom="cm">35</caaml:penetrationFoot>
+        <caaml:penetrationSki uom="cm">15</caaml:penetrationSki>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">25</caaml:thickness>
+          <caaml:grainFormPrimary>PP</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>0.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">25</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>SH</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">26</caaml:depthTop>
+          <caaml:thickness uom="cm">44</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">70</caaml:depthTop>
+          <caaml:thickness uom="cm">8</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>0.5</caaml:avg>
+              <caaml:avgMax>1</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">78</caaml:depthTop>
+          <caaml:thickness uom="cm">6</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+              <caaml:avgMax>2</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="all">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">84</caaml:depthTop>
+          <caaml:thickness uom="cm">10</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+              <caaml:avgMax>2</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>multiple decomposing crust </caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">94</caaml:depthTop>
+          <caaml:thickness uom="cm">10</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>basal facets with striation</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">104</caaml:depthTop>
+          <caaml:thickness uom="cm">36</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>2</caaml:avg>
+              <caaml:avgMax>3</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">25</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTN18</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:metaData>
+                <caaml:comment>T-storm interfac</caaml:comment>
+              </caaml:metaData>
+              <caaml:depthTop uom="cm">84</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTP26</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+        <caaml:PropSawTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">84</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fracturePropagation>End</caaml:fracturePropagation>
+              <caaml:cutLength uom="cm">50.0</caaml:cutLength>
+              <caaml:columnLength uom="cm">150.0</caaml:columnLength>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:PropSawTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

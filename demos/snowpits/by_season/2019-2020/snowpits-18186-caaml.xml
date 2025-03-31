@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-18186">
+  <caaml:metaData>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2019-12-08T14:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2019-12-09T16:26:36-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2019-12-09T16:26:56-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-6890">
+      <caaml:name>TonyLeBaron</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-18186">
+    <caaml:name>Horse Spring 20191208</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>2556</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>E</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>40.4215940 -111.6140340</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>UT</caaml:country>
+    <caaml:region>Wasatch Range</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">63</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:precipTI>-SN</caaml:precipTI>
+        <caaml:airTempPres uom="degC">-1.5</caaml:airTempPres>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">63</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData/>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">5</caaml:thickness>
+          <caaml:grainFormPrimary>PP</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">5</caaml:depthTop>
+          <caaml:thickness uom="cm">6</caaml:thickness>
+          <caaml:grainFormPrimary>PPgp</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>2</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">11</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>IF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">K</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">12</caaml:depthTop>
+          <caaml:thickness uom="cm">18</caaml:thickness>
+          <caaml:grainFormPrimary>DFdc</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">30</caaml:depthTop>
+          <caaml:thickness uom="cm">16</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">P</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">46</caaml:depthTop>
+          <caaml:thickness uom="cm">17</caaml:thickness>
+          <caaml:grainFormPrimary>DHxr</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:tempProfile>
+        <caaml:tempMetaData/>
+        <caaml:Obs>
+          <caaml:depth uom="cm">0</caaml:depth>
+          <caaml:snowTemp uom="degC">-2.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">5</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.5</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">11</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">12</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">30</caaml:depth>
+          <caaml:snowTemp uom="degC">0.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">46</caaml:depth>
+          <caaml:snowTemp uom="degC">0.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">63</caaml:depth>
+          <caaml:snowTemp uom="degC">0.0</caaml:snowTemp>
+        </caaml:Obs>
+      </caaml:tempProfile>
+      <caaml:stbTests>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">46</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTN15</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>
