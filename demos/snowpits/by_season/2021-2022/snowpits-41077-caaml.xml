@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-41077">
+  <caaml:metaData>
+    <caaml:comment>Analysis 1 day after the huge storm that deposited close to a meter of snow (depending on location) to the region:&#13;
+&#13;
+Surprisingly stable conditions on slopes with a southern aspect!&#13;
+&#13;
+&#13;
+There appeared to be a strange change in the snow consistency, as if a crust was attempting to form, a few cm below the snow surface, which is strange, given the cold temperatures.&#13;
+It even started to be felt when skiing on this southern slope, but it was not present on slopes of other orientations.&#13;
+&#13;
+Below that, at the location of the snowpit, there are about 70 cm of fresh powder, which seems a bit less than other locations, where the new snow seemed close to a meter. There does not look like there was a lot of wind-loading and depositing with this storm - the accumulations seem fairly even.&#13;
+There is a huge amount of snow on the ground with a total snow depth of 350 cm.&#13;
+&#13;
+This snow lies on a extremely hard layer, around 40 cm, of mainly ice. It is very diffucult to shovel through it (feels like your metal shovel will break) an even the probe can barely pass through it.&#13;
+There was a lot of concern about the bond between this icy layer and the huge amount of new snow, but the compression test showed a stable result on this aspect.&#13;
+Surprsingly, on this moderately steep southern slope, near its bottom part, the icy layer is not slippery. At CT26, after rougly half of the new snow has already gotten compressed, a sudden crack appears in the remaining new snow above the ice, and the crack gets larger and two blocks are separated by CT30, but they do not slide at this slope angle of 32 degrees (Q3).&#13;
+&#13;
+&#13;
+There is some recent avalanche activity visible in several nearby places in the mountain, but all of it is likely from 27.02 and perhaps a bit on 28.02, during the course of the snowfall. There are no slabs observed - the avalanches are loose snow avalanches, and they seem fairly shallow. They do not seem to have slid on the icy layer. The largest one observed in on the north face of Todorka, but it is most likely from Sunday 27.02 and the new snow has covered it up. A few very small fresh snow slides are observed in the gullies in the Echmishte region. They seem to be spontanous rather than skier-triggered and very small and shallow - probably not related to the icy layer below in any way but rather the fast accumulation of new snowfall and no time for the crystals to bond between themselves.&#13;
+&#13;
+The "bulletproof" icy layer, formed from repreated melting and freezing over the course of several weeks (southern slopes get a lot of sunshine), seems to "shield" everything below it well and likely will help preserve a stable snowpack. The danger should likely remain the same and become reduced these days, before potentially another snowfall for the weekend.&#13;
+</caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2022-03-01T16:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2022-03-01T12:05:02-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2022-03-01T12:39:19-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-354">
+      <caaml:name>Bulgarian extreme freeskiing association (BEFSA)</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-12498">
+        <caaml:name>kalinmarkov95</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-41077">
+    <caaml:name>Todorka Peak Snowpit</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>2403</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>S</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>32</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>41.7560730 23.4390420</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>BG</caaml:country>
+    <caaml:region>Pirin</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">350</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>X</caaml:skyCond>
+        <caaml:precipTI>-SN</caaml:precipTI>
+        <caaml:airTempPres uom="degC">-10.0</caaml:airTempPres>
+        <caaml:windSpd uom="">C</caaml:windSpd>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">350</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:windLoading>no</snowpilot:windLoading>
+          </caaml:customData>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">3</caaml:thickness>
+          <caaml:hardness uom="">F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">3</caaml:depthTop>
+          <caaml:thickness uom="cm">70</caaml:thickness>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Very hard layer of ice</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">73</caaml:depthTop>
+          <caaml:thickness uom="cm">40</caaml:thickness>
+          <caaml:hardness uom="">K+</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="top">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">113</caaml:depthTop>
+          <caaml:thickness uom="cm">40</caaml:thickness>
+          <caaml:hardness uom="">P</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests>
+        <caaml:ComprTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">50</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fractureCharacter>Q3</caaml:fractureCharacter>
+              <caaml:testScore>26</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ComprTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>
