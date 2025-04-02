@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-19750">
+  <caaml:metaData>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2020-01-03T12:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2020-01-04T04:43:54-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2020-01-04T04:46:10-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-6446">
+      <caaml:name>Luke23</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-19750">
+    <caaml:name>East Above Treeline</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>3602</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>E</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:country>US</caaml:country>
+    <caaml:region>NM</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">127</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>CLR</caaml:skyCond>
+        <caaml:precipTI>Nil</caaml:precipTI>
+        <caaml:airTempPres uom="degC">20.0</caaml:airTempPres>
+        <caaml:windSpd uom="">C</caaml:windSpd>
+        <caaml:windDir>
+          <caaml:AspectPosition>
+            <caaml:position>NW</caaml:position>
+          </caaml:AspectPosition>
+        </caaml:windDir>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">127</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:windLoading>previous</snowpilot:windLoading>
+          </caaml:customData>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">2</caaml:thickness>
+          <caaml:grainFormPrimary>RGwp</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">2</caaml:depthTop>
+          <caaml:thickness uom="cm">16</caaml:thickness>
+          <caaml:grainFormPrimary>PP</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">18</caaml:depthTop>
+          <caaml:thickness uom="cm">46</caaml:thickness>
+          <caaml:grainFormPrimary>RGsr</caaml:grainFormPrimary>
+          <caaml:hardnessTop uom="">4F</caaml:hardnessTop>
+          <caaml:hardnessBottom uom="">1F</caaml:hardnessBottom>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">64</caaml:depthTop>
+          <caaml:thickness uom="cm">3</caaml:thickness>
+          <caaml:grainFormPrimary>FCso</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>0.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="bottom">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">67</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>RGxf</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">82</caaml:depthTop>
+          <caaml:thickness uom="cm">2</caaml:thickness>
+          <caaml:grainFormPrimary>FCso</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">84</caaml:depthTop>
+          <caaml:thickness uom="cm">29</caaml:thickness>
+          <caaml:grainFormPrimary>RGxf</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">113</caaml:depthTop>
+          <caaml:thickness uom="cm">14</caaml:thickness>
+          <caaml:grainFormPrimary>FCso</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+              <caaml:avgMax>2</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">64</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTP13</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

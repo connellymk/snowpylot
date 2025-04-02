@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-54654">
+  <caaml:metaData>
+    <caaml:comment>OBJ: kartlägga nysnömängd och underlag för framtida drevsnöflak. </caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2023-04-26T10:25:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2023-04-26T03:24:30-08:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2023-04-26T03:26:41-08:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-342">
+      <caaml:name>SEPA Sweden</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-4308">
+        <caaml:name>jwilco</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-54654">
+    <caaml:name>Hästkläppen</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>933</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>20</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>62.6462860 12.3607590</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>SE</caaml:country>
+    <caaml:region>Funäsfjällen</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">75</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>OVC</caaml:skyCond>
+        <caaml:precipTI>-SN</caaml:precipTI>
+        <caaml:airTempPres uom="degC">-3.4</caaml:airTempPres>
+        <caaml:windSpd uom="">L</caaml:windSpd>
+        <caaml:windDir>
+          <caaml:AspectPosition>
+            <caaml:position>N</caaml:position>
+          </caaml:AspectPosition>
+        </caaml:windDir>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">240</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:surfGrainType uom="mm">PP</snowpilot:surfGrainType>
+            <snowpilot:windLoading>no</snowpilot:windLoading>
+          </caaml:customData>
+        </caaml:metaData>
+        <caaml:penetrationFoot uom="cm">30</caaml:penetrationFoot>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>PP</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>DF</caaml:grainFormSecondary>
+          <caaml:hardness uom="">F</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+          <caaml:layerOfConcern partOfLayer="all">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">15</caaml:depthTop>
+          <caaml:thickness uom="cm">8</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F+</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">23</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:hardness uom="">K</caaml:hardness>
+          <caaml:wetness uom="">D-M</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">38</caaml:depthTop>
+          <caaml:thickness uom="cm">37</caaml:thickness>
+          <caaml:grainFormPrimary>MF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">P</caaml:hardness>
+          <caaml:wetness uom="">M</caaml:wetness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:tempProfile>
+        <caaml:tempMetaData/>
+        <caaml:Obs>
+          <caaml:depth uom="cm">10</caaml:depth>
+          <caaml:snowTemp uom="degC">-2.2</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">20</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.9</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">30</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.2</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">40</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">50</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.1</caaml:snowTemp>
+        </caaml:Obs>
+      </caaml:tempProfile>
+      <caaml:stbTests>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:metaData>
+                <caaml:comment>MFcr ej sågat</caaml:comment>
+              </caaml:metaData>
+              <caaml:depthTop uom="cm">15</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTN6</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:metaData>
+                <caaml:comment>MFcr ej sågat</caaml:comment>
+              </caaml:metaData>
+              <caaml:depthTop uom="cm">23</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTN21</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+        <caaml:ComprTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:metaData>
+                <caaml:comment>MFcr ej sågat</caaml:comment>
+              </caaml:metaData>
+              <caaml:depthTop uom="cm">15</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fractureCharacter>PC</caaml:fractureCharacter>
+              <caaml:testScore>9</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ComprTest>
+        <caaml:ComprTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:metaData>
+                <caaml:comment>MFcr ej sågat</caaml:comment>
+              </caaml:metaData>
+              <caaml:depthTop uom="cm">23</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fractureCharacter>SC</caaml:fractureCharacter>
+              <caaml:testScore>13</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ComprTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

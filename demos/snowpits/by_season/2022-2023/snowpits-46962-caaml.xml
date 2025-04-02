@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-46962">
+  <caaml:metaData>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2022-12-28T12:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2022-12-28T13:35:32-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2022-12-28T13:36:00-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-8712">
+      <caaml:name>Banff Park Snow Safety</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-46962">
+    <caaml:name>Mt Stephen BTL</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:country>CA</caaml:country>
+    <caaml:region>AB</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">84</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>OVC</caaml:skyCond>
+      </caaml:weatherCond>
+      <caaml:snowPackCond/>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData/>
+        </caaml:metaData>
+        <caaml:penetrationFoot uom="cm">83</caaml:penetrationFoot>
+        <caaml:penetrationSki uom="cm">70</caaml:penetrationSki>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">24</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">24</caaml:depthTop>
+          <caaml:thickness uom="cm">20</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">44</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">59</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>DH</caaml:grainFormSecondary>
+          <caaml:hardness uom="">F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">74</caaml:depthTop>
+          <caaml:thickness uom="cm">10</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>DH</caaml:grainFormSecondary>
+          <caaml:hardnessTop uom="">F-</caaml:hardnessTop>
+          <caaml:hardnessBottom uom="">P+</caaml:hardnessBottom>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests>
+        <caaml:ComprTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">44</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fractureCharacter>SC</caaml:fractureCharacter>
+              <caaml:testScore>CTV</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ComprTest>
+        <caaml:ComprTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">24</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fractureCharacter>SP</caaml:fractureCharacter>
+              <caaml:testScore>3</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ComprTest>
+        <caaml:ComprTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">44</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:fractureCharacter>SP</caaml:fractureCharacter>
+              <caaml:testScore>11</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ComprTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

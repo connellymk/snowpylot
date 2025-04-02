@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-34127">
+  <caaml:metaData>
+    <caaml:comment>HS - 310cm. Spring Conditions with solid freeze overnight due to cool temps and light breeze alowing convective surface cooling.</caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2021-05-11T10:30:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2021-05-13T21:31:37-08:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2021-05-13T21:32:47-08:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-11620">
+      <caaml:name>Skipowski</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-34127">
+    <caaml:name>North Windy Mountain</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>1516</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>SW</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>28</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>47.7409750 -121.1575410</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>US</caaml:country>
+    <caaml:region>WA</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">145</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>FEW</caaml:skyCond>
+        <caaml:precipTI>Nil</caaml:precipTI>
+        <caaml:airTempPres uom="degC">7.0</caaml:airTempPres>
+        <caaml:windSpd uom="">L</caaml:windSpd>
+        <caaml:windDir>
+          <caaml:AspectPosition>
+            <caaml:position>NW</caaml:position>
+          </caaml:AspectPosition>
+        </caaml:windDir>
+      </caaml:weatherCond>
+      <caaml:snowPackCond/>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData/>
+        </caaml:metaData>
+        <caaml:penetrationFoot uom="cm">10</caaml:penetrationFoot>
+        <caaml:penetrationSki uom="cm">5</caaml:penetrationSki>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>A Little late on corn here</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">8</caaml:thickness>
+          <caaml:grainFormPrimary>MFcl</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>2.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+          <caaml:wetness uom="">M-W</caaml:wetness>
+          <caaml:layerOfConcern partOfLayer="">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">8</caaml:depthTop>
+          <caaml:thickness uom="cm">39</caaml:thickness>
+          <caaml:grainFormPrimary>MFpc</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>2</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">P</caaml:hardness>
+          <caaml:wetness uom="">M</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">47</caaml:depthTop>
+          <caaml:thickness uom="cm">58</caaml:thickness>
+          <caaml:grainFormPrimary>RGlr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">P+</caaml:hardness>
+          <caaml:wetness uom="">D-M</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Dug to 145cm. HS 310cm</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">105</caaml:depthTop>
+          <caaml:thickness uom="cm">40</caaml:thickness>
+          <caaml:grainFormPrimary>RGlr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>2</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">K</caaml:hardness>
+          <caaml:wetness uom="">D-M</caaml:wetness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests/>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

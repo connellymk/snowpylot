@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-43013">
+  <caaml:metaData>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2022-03-27T01:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2022-04-05T08:06:34-08:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2022-04-05T08:07:06-08:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-5740">
+      <caaml:name>CalebLeland</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-43013">
+    <caaml:name>Zone 7 March 2022</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>3719</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>N</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>37</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:country>US</caaml:country>
+    <caaml:region>CO</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">150</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>CLR</caaml:skyCond>
+        <caaml:windSpd uom="">L</caaml:windSpd>
+        <caaml:windDir>
+          <caaml:AspectPosition>
+            <caaml:position>N</caaml:position>
+          </caaml:AspectPosition>
+        </caaml:windDir>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">150</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:windLoading>no</snowpilot:windLoading>
+          </caaml:customData>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>DFdc</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">15</caaml:depthTop>
+          <caaml:thickness uom="cm">45</caaml:thickness>
+          <caaml:grainFormPrimary>RGsr</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Dust Layer</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">60</caaml:depthTop>
+          <caaml:thickness uom="cm">3</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="bottom">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">63</caaml:depthTop>
+          <caaml:thickness uom="cm">87</caaml:thickness>
+          <caaml:grainFormPrimary>FCxr</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>FCso</caaml:grainFormSecondary>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests/>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

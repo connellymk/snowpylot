@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-52276">
+  <caaml:metaData>
+    <caaml:comment>Numerous size 1 to 2 natural slides that went about 36 hours ago on one of our regular runs; almost all covex rolls at this elevation had slid; fracture line profile on one of the rolls. Suspected 2 to 4mm surface hoar from 5 days ago mixed with stellars. It appears the layer has tightened up significantly</caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2023-03-04T09:45:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2023-03-04T17:24:00-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2023-03-04T17:24:32-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-1369">
+      <caaml:name>Bella Coola Heli-Sports</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-3726">
+        <caaml:name>Geoclimb</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-52276">
+    <caaml:name>Denmark</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>1650</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>NE</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>25</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>52.2811340 -126.4458050</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>CA</caaml:country>
+    <caaml:region>BC</caaml:region>
+    <snowpilot:pitNearAvalanche location="crown">true</snowpilot:pitNearAvalanche>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">80</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>CLR</caaml:skyCond>
+        <caaml:precipTI>Nil</caaml:precipTI>
+        <caaml:windSpd uom="">C</caaml:windSpd>
+      </caaml:weatherCond>
+      <caaml:snowPackCond/>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData/>
+        </caaml:metaData>
+        <caaml:penetrationFoot uom="cm">40</caaml:penetrationFoot>
+        <caaml:penetrationSki uom="cm">20</caaml:penetrationSki>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>PP</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">15</caaml:depthTop>
+          <caaml:thickness uom="cm">20</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">35</caaml:depthTop>
+          <caaml:thickness uom="cm">5</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">40</caaml:depthTop>
+          <caaml:thickness uom="cm">10</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>SH</caaml:grainFormSecondary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="top">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">50</caaml:depthTop>
+          <caaml:thickness uom="cm">5</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">55</caaml:depthTop>
+          <caaml:thickness uom="cm">5</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">60</caaml:depthTop>
+          <caaml:thickness uom="cm">20</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:hardnessTop uom="">1F</caaml:hardnessTop>
+          <caaml:hardnessBottom uom="">1F+</caaml:hardnessBottom>
+          <caaml:metaData>
+            <caaml:comment>x2</caaml:comment>
+          </caaml:metaData>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests>
+        <caaml:ExtColumnTest>
+          <caaml:noFailure/>
+        </caaml:ExtColumnTest>
+        <caaml:ComprTest>
+          <caaml:noFailure/>
+        </caaml:ComprTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

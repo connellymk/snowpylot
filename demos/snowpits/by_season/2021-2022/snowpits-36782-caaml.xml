@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-36782">
+  <caaml:metaData>
+    <caaml:comment>This is the trigger point pits of a remotely triggered avalanche about 30 m away. The crown pit's name is  CurrentCreekCrown. Images from this trigger are attached to the avalanche crown pit</caaml:comment>
+    <caaml:customData>
+      <snowpilot:whumpfData>
+        <snowpilot:whumpfCracking>true</snowpilot:whumpfCracking>
+        <snowpilot:whumpfNoCracking>false</snowpilot:whumpfNoCracking>
+        <snowpilot:crackingNoWhumpf>false</snowpilot:crackingNoWhumpf>
+        <snowpilot:whumpfNearPit>true</snowpilot:whumpfNearPit>
+        <snowpilot:whumpfDepthWeakLayer>true</snowpilot:whumpfDepthWeakLayer>
+        <snowpilot:whumpfTriggeredRemoteAva>true</snowpilot:whumpfTriggeredRemoteAva>
+        <snowpilot:whumpfSize>slope-wide</snowpilot:whumpfSize>
+      </snowpilot:whumpfData>
+    </caaml:customData>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2021-12-29T12:05:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2021-12-29T17:50:07-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2021-12-29T17:52:57-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-181">
+      <caaml:name>Colorado Avalanche Information Center</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-3817">
+        <caaml:name>Ron.Simenhois</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-36782">
+    <caaml:name>CurrentCreekTrigger</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>3409</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>NE</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>41</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:country>US</caaml:country>
+    <caaml:region>CO</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">64</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>OVC</caaml:skyCond>
+        <caaml:precipTI>-SN</caaml:precipTI>
+        <caaml:airTempPres uom="degC">-10.0</caaml:airTempPres>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">64</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData/>
+        </caaml:metaData>
+        <caaml:penetrationSki uom="cm">50</caaml:penetrationSki>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">45</caaml:thickness>
+          <caaml:grainFormPrimary>DF</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>0.5</caaml:avg>
+              <caaml:avgMax>1</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardnessTop uom="">F</caaml:hardnessTop>
+          <caaml:hardnessBottom uom="">4F</caaml:hardnessBottom>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">45</caaml:depthTop>
+          <caaml:thickness uom="cm">3</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F-</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="top">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">48</caaml:depthTop>
+          <caaml:thickness uom="cm">16</caaml:thickness>
+          <caaml:grainFormPrimary>DH</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F+</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:densityProfile>
+        <caaml:densityMetaData>
+          <caaml:comment/>
+          <caaml:customData/>
+          <caaml:methodOfMeas>unknown</caaml:methodOfMeas>
+        </caaml:densityMetaData>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">9</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">100</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">34</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">160</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">47</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">216</caaml:density>
+        </caaml:Layer>
+      </caaml:densityProfile>
+      <caaml:stbTests>
+        <caaml:ExtColumnTest>
+          <caaml:failedOn>
+            <caaml:Layer>
+              <caaml:depthTop uom="cm">46</caaml:depthTop>
+            </caaml:Layer>
+            <caaml:Results>
+              <caaml:testScore>ECTP15</caaml:testScore>
+            </caaml:Results>
+          </caaml:failedOn>
+        </caaml:ExtColumnTest>
+      </caaml:stbTests>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

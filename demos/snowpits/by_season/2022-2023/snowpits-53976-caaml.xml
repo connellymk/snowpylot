@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-53976">
+  <caaml:metaData>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2023-04-03T10:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2023-04-03T01:44:53-08:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2023-04-03T01:45:05-08:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-58">
+      <caaml:name>Ski Patrol</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-14237">
+        <caaml:name>ikernete</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-53976">
+    <caaml:name>Ordino-Arcalís</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:country>AD</caaml:country>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">25</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>FEW</caaml:skyCond>
+        <caaml:precipTI>-SN</caaml:precipTI>
+        <caaml:airTempPres uom="degC">1.5</caaml:airTempPres>
+        <caaml:windSpd uom="">L</caaml:windSpd>
+        <caaml:windDir>
+          <caaml:AspectPosition>
+            <caaml:position>N</caaml:position>
+          </caaml:AspectPosition>
+        </caaml:windDir>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">25</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:surfGrainType uom="mm">PPsd</snowpilot:surfGrainType>
+            <snowpilot:surfGrainSize uom="mm">0.3</snowpilot:surfGrainSize>
+          </caaml:customData>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">5</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>DF</caaml:grainFormSecondary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>0.3</caaml:avg>
+              <caaml:avgMax>0.5</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F</caaml:hardness>
+          <caaml:wetness uom="">D-M</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">5</caaml:depthTop>
+          <caaml:thickness uom="cm">5</caaml:thickness>
+          <caaml:grainFormPrimary>IF</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>IF</caaml:grainFormSecondary>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">10</caaml:depthTop>
+          <caaml:thickness uom="cm">3</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>DF</caaml:grainFormSecondary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>0.3</caaml:avg>
+              <caaml:avgMax>0.5</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F</caaml:hardness>
+          <caaml:wetness uom="">D-M</caaml:wetness>
+          <caaml:layerOfConcern partOfLayer="">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">13</caaml:depthTop>
+          <caaml:thickness uom="cm">12</caaml:thickness>
+          <caaml:grainFormPrimary>IF</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>IF</caaml:grainFormSecondary>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:tempProfile>
+        <caaml:tempMetaData/>
+        <caaml:Obs>
+          <caaml:depth uom="cm">0</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">5</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">15</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">25</caaml:depth>
+          <caaml:snowTemp uom="degC">0.0</caaml:snowTemp>
+        </caaml:Obs>
+      </caaml:tempProfile>
+      <caaml:stbTests/>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>

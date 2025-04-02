@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-35096">
+  <caaml:metaData>
+    <caaml:comment>BRRR glides @ 3150-3200 W aspect near Pass; old dry loose SW aspect ~4000'&#13;
+HS near trail 659avg 75) - 105cm increasing w/ elev.</caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2021-11-27T13:40:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2021-11-27T18:47:26-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2021-11-27T19:29:23-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Operation gml:id="SnowPilot-Group-1002">
+      <caaml:name>Chugach Electric Association</caaml:name>
+      <caaml:contactPerson gml:id="SnowPilot-User-6306">
+        <caaml:name>ceaavalanche</caaml:name>
+      </caaml:contactPerson>
+    </caaml:Operation>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-35096">
+    <caaml:name>Powerline Pass</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>977</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validAspect>
+      <caaml:AspectPosition>
+        <caaml:position>N</caaml:position>
+      </caaml:AspectPosition>
+    </caaml:validAspect>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>22</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>61.0663280 -149.6080970</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>US</caaml:country>
+    <caaml:region>AK</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">220</caaml:profileDepth>
+      <caaml:weatherCond>
+        <caaml:skyCond>CLR</caaml:skyCond>
+        <caaml:precipTI>Nil</caaml:precipTI>
+        <caaml:airTempPres uom="degC">-20.0</caaml:airTempPres>
+        <caaml:windSpd uom="">L</caaml:windSpd>
+        <caaml:windDir>
+          <caaml:AspectPosition>
+            <caaml:position>SE</caaml:position>
+          </caaml:AspectPosition>
+        </caaml:windDir>
+      </caaml:weatherCond>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">220</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData>
+            <snowpilot:windLoading>previous</snowpilot:windLoading>
+          </caaml:customData>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>DFdc</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">15</caaml:depthTop>
+          <caaml:thickness uom="cm">3</caaml:thickness>
+          <caaml:grainFormPrimary>DFbk</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>RGwp</caaml:grainFormSecondary>
+          <caaml:hardness uom="">1F</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>no faceting @btm o layer</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">18</caaml:depthTop>
+          <caaml:thickness uom="cm">20</caaml:thickness>
+          <caaml:grainFormPrimary>RGxf</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>RG</caaml:grainFormSecondary>
+          <caaml:hardness uom="">F+</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>small facets below</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">38</caaml:depthTop>
+          <caaml:thickness uom="cm">0.59999999999999</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:hardness uom="">P-</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+          <caaml:layerOfConcern partOfLayer="bottom">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>?? mor facet@btm o layer </caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">38.6</caaml:depthTop>
+          <caaml:thickness uom="cm">6.4</caaml:thickness>
+          <caaml:grainFormPrimary>FC</caaml:grainFormPrimary>
+          <caaml:hardness uom="">4F</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">45</caaml:depthTop>
+          <caaml:thickness uom="cm">11</caaml:thickness>
+          <caaml:grainFormPrimary>RGxf</caaml:grainFormPrimary>
+          <caaml:hardness uom="">1F-</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">56</caaml:depthTop>
+          <caaml:thickness uom="cm">0.40000000000001</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:hardness uom="">P+</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>well develop refrzn facets</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">56.4</caaml:depthTop>
+          <caaml:thickness uom="cm">6.6</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>FC</caaml:grainFormSecondary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+              <caaml:avgMax>2</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F+</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">63</caaml:depthTop>
+          <caaml:thickness uom="cm">10</caaml:thickness>
+          <caaml:grainFormPrimary>RGwp</caaml:grainFormPrimary>
+          <caaml:hardness uom="">P-</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>well bonded above-below</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">73</caaml:depthTop>
+          <caaml:thickness uom="cm">2</caaml:thickness>
+          <caaml:grainFormPrimary>FCsf</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>FC</caaml:grainFormSecondary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1</caaml:avg>
+              <caaml:avgMax>1.5</caaml:avgMax>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F-</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">75</caaml:depthTop>
+          <caaml:thickness uom="cm">10</caaml:thickness>
+          <caaml:grainFormPrimary>RGwp</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>RG</caaml:grainFormSecondary>
+          <caaml:hardness uom="">P-</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>btm of pit</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">85</caaml:depthTop>
+          <caaml:thickness uom="cm">15</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainFormSecondary>RGwp</caaml:grainFormSecondary>
+          <caaml:hardness uom="">P-</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>probe muddy @ grnd</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">100</caaml:depthTop>
+          <caaml:thickness uom="cm">120</caaml:thickness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:stbTests/>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>
