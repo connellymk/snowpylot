@@ -115,6 +115,7 @@ class Grain(object):
         subGrainClassDict = {
             "PPgp": "Graupel",
             "PPco": "Columns",
+            "PPhl": "Hail",
             "PPpl": "Plates",
             "PPnd": "Needles",
             "PPsd": "Stellars, Dendrites",
