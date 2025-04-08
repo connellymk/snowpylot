@@ -16,4 +16,4 @@ from .stabilityTests import (
 )
 from .whumpfData import WhumpfData
 
-__version__ = "1.0.7"
+__version__ = "1.0.8"
