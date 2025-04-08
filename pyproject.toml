@@ -30,8 +30,8 @@ tag = true
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
-search = "version = \"{current_version}\""
-replace = "version = \"{new_version}\""
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "setup.cfg"
@@ -40,5 +40,5 @@ replace = "current_version = {new_version}"
 
 [[tool.bumpversion.files]]
 filename = "src/snowpylot/__init__.py"
-search = "__version__ = \"{current_version}\""
-replace = "__version__ = \"{new_version}\""
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
