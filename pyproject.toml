@@ -22,28 +22,18 @@ requires-python = ">=3.7"
 [project.urls]
 "Homepage" = "https://github.com/connellymk/snowpylot"
 
-[tool.bumpver]
-current_version = "1.0.6"
-version_pattern = "{semver}"
-commit_message = "bump version {old_version} -> {new_version}"
-tag_message = "{new_version}"
-tag_scope = "default"
-pre_commit_hook = ""
-post_commit_hook = ""
-commit = true
-tag = true
-push = true
 
-[tool.bumpver.file_patterns]
-"pyproject.toml" = [
-    'version = "{version}"',
-    'current_version = "{version}"'
-]
-"README.md" = [
-    'version = "{version}"'
-]
-"src/snowpylot/__init__.py" = [
-    '__version__ = "{version}"'
-]
+[tool.bumpversion]
+current_version = 1.0.6
+commit = True
+tag = True
 
-#test
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = version = "{current_version}"
+replace = version = "{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "snowpylot/__init__.py"
+search = "__version__ = '{current_version}'"
+replace = "__version__ = '{new_version}'"
