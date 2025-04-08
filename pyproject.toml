@@ -36,14 +36,14 @@ push = true
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
-    'version = "{version}"',
-    'current_version = "{version}"'
+    '^version = "{version}"$',
+    '^current_version = "{version}"$'
 ]
 "README.md" = [
-    'version = "{version}"'
+    '^version = "{version}"$'
 ]
 "src/snowpylot/__init__.py" = [
-    '__version__ = "{version}"'
+    '^__version__ = "{version}"$'
 ]
 
 #test
