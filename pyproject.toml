@@ -23,8 +23,8 @@ requires-python = ">=3.7"
 "Homepage" = "https://github.com/connellymk/snowpylot"
 
 [tool.bumpver]
-current_version = "2025.1001-alpha"
-version_pattern = "YYYY.BUILD[-TAG]"
+current_version = "1.0.3"
+version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 tag_message = "{new_version}"
 tag_scope = "default"
