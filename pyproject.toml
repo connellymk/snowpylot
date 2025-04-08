@@ -34,6 +34,11 @@ search = "version = \"{current_version}\""
 replace = "version = \"{new_version}\""
 
 [[tool.bumpversion.files]]
-filename = "snowpylot/__init__.py"
-search = "__version__ = '{current_version}'"
-replace = "__version__ = '{new_version}'"
+filename = "setup.cfg"
+search = "current_version = {current_version}"
+replace = "current_version = {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "src/snowpylot/__init__.py"
+search = "__version__ = \"{current_version}\""
+replace = "__version__ = \"{new_version}\""
