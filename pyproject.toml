@@ -40,9 +40,10 @@ push = true
     'version = "{version}"'
 ]
 "README.md" = [
-    "{version}",
-    "{pep440_version}",
+    'version = "{version}"'
 ]
-"src/snowpylot/__init__.py" = ["{version}"]
+"src/snowpylot/__init__.py" = [
+    '__version__ = "{version}"'
+]
 
 #test
