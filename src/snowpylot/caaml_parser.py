@@ -45,7 +45,7 @@ def caaml_parser(file_path):
         pit.coreInfo.set_comment(comment)
 
     # caamlVersion
-    pit.set_caamlVersion(caaml_tag)
+    pit.coreInfo.set_caamlVersion(caaml_tag)
 
     ## User (OperationID, OperationName, Professional, ContactPersonID, Username)
     srcRef = next(root.iter(caaml_tag + "srcRef"), None)
