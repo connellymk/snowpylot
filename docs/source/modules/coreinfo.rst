@@ -32,4 +32,4 @@ WeatherConditions
 .. autoclass:: snowpylot.coreInfo.WeatherConditions
    :members:
    :undoc-members:
-   :show-inheritance: 
+   :show-inheritance:

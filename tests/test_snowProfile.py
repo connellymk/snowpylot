@@ -1,12 +1,12 @@
-import sys
 import os
+import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 from snowpylot.caaml_parser import caaml_parser
-from snowpylot.snowProfile import SnowProfile, SurfaceCondition, TempObs, DensityObs
-from snowpylot.layer import Layer, Grain
+from snowpylot.layer import Grain
+from snowpylot.snowProfile import SnowProfile, SurfaceCondition
 
 
 @pytest.fixture

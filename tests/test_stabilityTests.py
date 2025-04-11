@@ -1,16 +1,17 @@
-import sys
 import os
+import sys
+
+import pytest
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import pytest
 from snowpylot.caaml_parser import caaml_parser
 from snowpylot.stabilityTests import (
-    StabilityTests,
-    ExtColumnTest,
     ComprTest,
-    RBlockTest,
+    ExtColumnTest,
     PropSawTest,
+    RBlockTest,
+    StabilityTests,
 )
 
 

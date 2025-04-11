@@ -1,11 +1,11 @@
-import sys
 import os
+import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 from snowpylot.caaml_parser import caaml_parser
-from snowpylot.coreInfo import CoreInfo, User, Location, WeatherConditions
+from snowpylot.coreInfo import CoreInfo, Location, User, WeatherConditions
 
 
 @pytest.fixture
@@ -80,9 +80,10 @@ def test_professional_user():
         </caaml:ContactPerson>
     </caaml:srcRef>
     """
-    # You would need to create a temporary XML file with this content
-    # or modify the parser to accept XML string for testing
-    # For now, this serves as documentation of what should be tested
+    core_info = CoreInfo()
+    core_info.parse_xml(xml_content)
+    assert core_info.operation_name == "Professional Org"
+    assert core_info.observer_name == "Pro Observer"
 
 
 def test_missing_optional_fields(test_pit):

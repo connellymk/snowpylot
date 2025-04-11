@@ -3,7 +3,7 @@
 
 .. automodule:: snowpylot
 
-   
+
 .. rubric:: Modules
 
 .. autosummary::

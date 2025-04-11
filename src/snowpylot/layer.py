@@ -1,4 +1,4 @@
-class Layer(object):
+class Layer:
     """
     Layer class for representing a layer of snow from a SnowPilot caaml.xml file
     """
@@ -76,7 +76,7 @@ class Layer(object):
         self.comments = comments
 
 
-class Grain(object):
+class Grain:
     def __init__(self):
         # Parsed properties
         self.grainForm = None

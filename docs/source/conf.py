@@ -12,11 +12,11 @@ import sys
 sys.path.insert(0, os.path.abspath("../../src"))
 
 project = "Snowpylot"
-copyright = "2024"
-author = "Your Name"
+copyright = "2025, Mary Kate Connelly"
+author = "Mary Kate Connelly"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.0"
+release = "1.0.10"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -28,6 +28,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+    "sphinx_rtd_theme",
+    "sphinx_autodoc_typehints",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -35,11 +37,14 @@ templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # HTML theme settings
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
+
+# Theme options
+html_theme_options = {"navigation_depth": 4, "titles_only": False}
 
 # Napoleon settings
 napoleon_google_docstring = True
