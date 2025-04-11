@@ -12,4 +12,4 @@ Core Info
 .. automodule:: snowpylot.coreInfo
    :members:
    :undoc-members:
-   :show-inheritance: 
+   :show-inheritance:

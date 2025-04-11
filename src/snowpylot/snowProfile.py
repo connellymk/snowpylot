@@ -1,7 +1,4 @@
-from .layer import Layer
-
-
-class SnowProfile(object):
+class SnowProfile:
     """
     SnowProfile class for representing a snow profile from a SnowPilot caaml.xml file
     """
@@ -24,15 +21,15 @@ class SnowProfile(object):
         snowProfile_str += f"\n    profileDepth: {self.profileDepth}"
         snowProfile_str += f"\n    hS: {self.hS}"
         snowProfile_str += f"\n    surfCond: {self.surfCond}"
-        snowProfile_str += f"\n    Layers:"
+        snowProfile_str += "\n    Layers:"
         if self.layers is not None:
             for i, layer in enumerate(self.layers):
                 snowProfile_str += f"\n    Layer {i + 1}: {layer}"
-        snowProfile_str += f"\n    tempProfile:"
+        snowProfile_str += "\n    tempProfile:"
         if self.tempProfile is not None:
             for i, temp in enumerate(self.tempProfile):
                 snowProfile_str += f"\n    temp {i + 1}: {temp}"
-        snowProfile_str += f"\n    densityProfile:"
+        snowProfile_str += "\n    densityProfile:"
         if self.densityProfile is not None:
             for i, density in enumerate(self.densityProfile):
                 snowProfile_str += f"\n    density {i + 1}: {density}"
@@ -67,7 +64,7 @@ class SnowProfile(object):
         self.densityProfile.append(densityObs)
 
 
-class SurfaceCondition(object):
+class SurfaceCondition:
     """
     SurfCond class for representing the surface condition of a snow profile from a SnowPilot caaml.xml file
     """
@@ -95,7 +92,7 @@ class SurfaceCondition(object):
         self.penetrationSki = penetrationSki
 
 
-class TempObs(object):
+class TempObs:
     """
     TempMeasurement class for representing a temperature measurement from a SnowPilot caaml.xml file
     """
@@ -118,7 +115,7 @@ class TempObs(object):
         self.snowTemp = snowTemp
 
 
-class DensityObs(object):
+class DensityObs:
     """
     DensityObs class for representing a density measurement from a SnowPilot caaml.xml file
     """

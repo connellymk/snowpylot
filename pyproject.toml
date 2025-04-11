@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "snowpylot"
-version = "1.0.8"
+version = "1.0.10"
 description = "A Python library for working CAAML.XML files from SnowPilot"
 readme = "README.md"
 authors = [
@@ -21,3 +21,17 @@ requires-python = ">=3.7"
 
 [project.urls]
 "Homepage" = "https://github.com/connellymk/snowpylot"
+
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "C4", "UP", "RUF"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

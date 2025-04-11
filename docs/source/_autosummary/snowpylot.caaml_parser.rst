@@ -3,10 +3,9 @@
 
 .. automodule:: snowpylot.caaml_parser
 
-   
-   .. rubric:: Classes
+
+   .. rubric:: Functions
 
    .. autosummary::
-   
-      CaamlParser
-   
+
+      caaml_parser
