@@ -1,4 +1,4 @@
-class CoreInfo(object):
+class CoreInfo:
     """
     CoreInfo class for representing a "core Info" from a Snowpilot XML file. Includes the pitID, snowPitName, date, user, location, and weather.
     """
@@ -42,7 +42,7 @@ class CoreInfo(object):
         self.caamlVersion = caamlVersion
 
 
-class User(object):
+class User:
     """
     User class for representing a Snow Pilot user
     """
@@ -81,7 +81,7 @@ class User(object):
         self.username = username
 
 
-class Location(object):
+class Location:
     """
     Location class for representing a location from a Snowpilot XML file
     """
@@ -142,7 +142,7 @@ class Location(object):
         self.pitNearAvalancheLocation = pitNearAvalancheLocation
 
 
-class WeatherConditions(object):
+class WeatherConditions:
     """
     WeatherConditions class for representing the weather conditions of a snow profile from a SnowPilot caaml.xml file
     """

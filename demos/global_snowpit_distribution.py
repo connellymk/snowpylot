@@ -1,6 +1,7 @@
 import os
-import pandas as pd
+
 import folium
+import pandas as pd
 from folium.plugins import MarkerCluster
 from snowpylot.caaml_parser import caaml_parser
 
@@ -111,9 +112,9 @@ for idx, row in df.iterrows():
 
 # Add a title to the map
 title_html = """
-<div style="position: fixed; 
-            top: 10px; left: 50px; width: 300px; height: 30px; 
-            border:2px solid grey; z-index:9999; 
+<div style="position: fixed;
+            top: 10px; left: 50px; width: 300px; height: 30px;
+            border:2px solid grey; z-index:9999;
             background-color:white;
             padding: 10px;
             font-size: 16px;
@@ -126,9 +127,9 @@ m.get_root().html.add_child(folium.Element(title_html))
 
 # Add a legend
 legend_html = """
-<div style="position: fixed; 
-            bottom: 50px; right: 50px; width: 200px; height: 300px; 
-            border:2px solid grey; z-index:9999; 
+<div style="position: fixed;
+            bottom: 50px; right: 50px; width: 200px; height: 300px;
+            border:2px solid grey; z-index:9999;
             background-color:white;
             padding: 10px;
             font-size: 14px;

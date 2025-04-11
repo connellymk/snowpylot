@@ -1,10 +1,10 @@
+from .coreInfo import CoreInfo
 from .snowProfile import SnowProfile
 from .stabilityTests import StabilityTests
 from .whumpfData import WhumpfData
-from .coreInfo import CoreInfo
 
 
-class SnowPit(object):
+class SnowPit:
     """
     SnowPit class for representing a single snow pit  observation
     """
@@ -26,29 +26,3 @@ class SnowPit(object):
         snowPit_str += f"\n Stability Tests: {self.stabilityTests} "
         snowPit_str += f"\n Whumpf Data: {self.whumpfData} "
         return snowPit_str
-
-    # Setters
-
-    def set_caamlVersion(self, caamlVersion):
-        self.caamlVersion = caamlVersion
-
-    def set_pitID(self, pitID):
-        self.pitID = pitID
-
-    def set_date(self, date):
-        self.date = date
-
-    def set_user(self, user):
-        self.user = user
-
-    def set_location(self, location):
-        self.location = location
-
-    def set_snowProfile(self, snowProfile):
-        self.snowProfile = snowProfile
-
-    def set_stabilityTests(self, stabilityTests):
-        self.stabilityTests = stabilityTests
-
-    # def set_whumpfData(self, whumpfData):
-    #    self.whumpfData = whumpfData

@@ -84,7 +84,7 @@ ID = snowpit.coreInfo.pitID
 
 #### User Info (snowpit.coreInfo.user)
 
-- `operationID` - ID of the operation 
+- `operationID` - ID of the operation
 - `operationName` - Name of the operation
 - `professional` - Boolean indicating if user is professional
 - `userID` - User identifier
@@ -98,7 +98,7 @@ operationID = snowpit.coreInfo.user.operationID
 
 #### Location Info (snowpit.coreInfo.location)
 
-- `latitude` - Decimal degrees 
+- `latitude` - Decimal degrees
 - `longitude` - Decimal degrees
 - `elevation` - [value, units]
 - `aspect` - Slope aspect
@@ -116,7 +116,7 @@ lat = snowpit.coreInfo.location.latitude
 
 #### Weather Conditions (snowpit.coreInfo.weatherConditions)
 
-- `skyCond` - Sky conditions code 
+- `skyCond` - Sky conditions code
 - `skyCond_Desc` - Sky conditions description
 - `precipTI` - Precipitation type and intensity code
 - `precipTI_Desc` - Precipitation description
@@ -137,7 +137,7 @@ Contains layer data and measurements:
 
 #### Profile Info
 
-- `measurementDirection` - Direction of measurements 
+- `measurementDirection` - Direction of measurements
 - `profileDepth` - [depth, units]
 - `hS` - Total snow height [value, units]
 
@@ -157,7 +157,7 @@ layers_list = snowpit.snowProfile.layers
 
 List of Layer objects, each containing:
 
-- `depthTop` - [depth, units] 
+- `depthTop` - [depth, units]
 - `thickness` - [thickness, units]
 - `hardness` - Hand hardness code
 - `hardnessTop` - Top of layer hardness
@@ -174,7 +174,7 @@ depthTop_layer1 = snowpit.snowProfile.layers[0].depthTop
 
 ##### Grain Info (layer.grainFormPrimary or layer.grainFormSecondary)
 
-- `grainForm` - Grain form code 
+- `grainForm` - Grain form code
 - `grainSizeAvg` - [size, units]
 - `grainSizeMax` - [size, units]
 - `basicGrainClass_code` - Basic grain type code
@@ -192,7 +192,7 @@ primaryGrainForm_layer1 = snowpit.snowProfile.layers[0].grainFormPrimary.grainFo
 
 List of temperature observations, each containing:
 
-- `depth` - [depth, units] 
+- `depth` - [depth, units]
 - `snowTemp` - [temperature, units]
 
 Example:
@@ -205,7 +205,7 @@ depth_obs1 = snowpit.snowProfile.tempProfile[0].depth
 
 List of density observation, each containing:
 
-- `depthTop` - [depth, units] 
+- `depthTop` - [depth, units]
 - `thickness` - [thickness, units]
 - `density` - [density, units]
 
@@ -219,7 +219,7 @@ depthTop_obs1 = snowpit.snowProfile.densityProfile[0].depthTop
 
 Contains lists of different stability test results:
 
-- `ECT` - Extended Column Test 
+- `ECT` - Extended Column Test
 - `CT` - Compression Test
 - `RBlock` - Rutschblock Test
 - `PST` - Propagation Saw Test
@@ -246,7 +246,7 @@ Example:
 ECT1_depthTop = snowpit.stabilityTests.ECT[0].depthTop
 ```
 
-#### Compression Test (snowpit.stabilityTests.CT) is a list of ComprTest objects 
+#### Compression Test (snowpit.stabilityTests.CT) is a list of ComprTest objects
 
 Each containing:
 
@@ -327,7 +327,7 @@ results = []
 for file in caaml_files:
     file_path = os.path.join(folder_path, file)
     pit = caaml_parser(file_path)
-    
+
     # Extract data of interest
     result = {
         "PitID": pit.coreInfo.pitID,
