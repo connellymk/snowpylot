@@ -3,6 +3,7 @@ import os
 import folium
 import pandas as pd
 from folium.plugins import MarkerCluster
+
 from snowpylot.caaml_parser import caaml_parser
 
 # Define the folder path for 2019-2020 season
@@ -26,14 +27,14 @@ for file in caaml_files:
 
         # Check if latitude and longitude are available
         if (
-            pit.coreInfo.location.latitude is not None
-            and pit.coreInfo.location.longitude is not None
+            pit.core_info.location.latitude is not None
+            and pit.core_info.location.longitude is not None
         ):
-            latitudes.append(pit.coreInfo.location.latitude)
-            longitudes.append(pit.coreInfo.location.longitude)
-            pit_ids.append(pit.coreInfo.pitID)
-            countries.append(pit.coreInfo.location.country)
-            regions.append(pit.coreInfo.location.region)
+            latitudes.append(pit.core_info.location.latitude)
+            longitudes.append(pit.core_info.location.longitude)
+            pit_ids.append(pit.core_info.pit_id)
+            countries.append(pit.core_info.location.country)
+            regions.append(pit.core_info.location.region)
     except Exception as e:
         print(f"Error parsing {file}: {e}")
 
@@ -90,7 +91,7 @@ colors = [
 country_to_color = dict(zip(unique_countries, colors[: len(unique_countries)]))
 
 # Add markers for each snowpit with country-specific colors
-for idx, row in df.iterrows():
+for _idx, row in df.iterrows():
     # Create a popup with information about the snowpit
     popup_text = f"""
     <b>Pit ID:</b> {row["PitID"]}<br>
@@ -151,6 +152,6 @@ m.get_root().html.add_child(folium.Element(legend_html))
 m.save("demos/snowpit_distribution_by_country_2019_2020.html")
 
 print(
-    "Map has been created and saved as 'demos/snowpit_distribution_by_country_2019_2020.html'"
+    "Map has been created and saved as 'demos/snowpit_distribution_by_country_2019_2020.html'"  # noqa: E501
 )
 print("Open the HTML file in a web browser to view the interactive map.")

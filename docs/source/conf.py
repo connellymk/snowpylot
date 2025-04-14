@@ -16,7 +16,7 @@ copyright = "2025, Mary Kate Connelly"
 author = "Mary Kate Connelly"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.11"
+release = "1.1.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -30,6 +30,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_rtd_theme",
     "sphinx_autodoc_typehints",
+    "sphinx.ext.githubpages",  # For GitHub Pages integration
+    "IPython.sphinxext.ipython_console_highlighting",  # For notebook support
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -44,7 +46,12 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 # Theme options
-html_theme_options = {"navigation_depth": 4, "titles_only": False}
+html_theme_options = {
+    "navigation_depth": 4,
+    "titles_only": False,
+    "style_external_links": True,
+    "style_nav_header_background": "#2980B9",
+}
 
 # Napoleon settings
 napoleon_google_docstring = True
@@ -62,3 +69,10 @@ napoleon_type_aliases = None
 
 # Autosummary settings
 autosummary_generate = True
+
+# Intersphinx settings
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "pandas": ("https://pandas.pydata.org/docs/", None),
+}
