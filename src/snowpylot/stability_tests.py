@@ -297,7 +297,8 @@ class PropSawTest:
 @dataclass
 class StabilityTests:
     """
-    StabilityTests class for representing stability tests from a SnowPilot caaml.xml file.
+    StabilityTests class for representing stability tests from a SnowPilot
+    caaml.xml file.
 
     Attributes:
         ECT: List of extended column tests

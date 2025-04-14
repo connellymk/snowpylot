@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple
 
 
 @dataclass
@@ -251,7 +251,8 @@ class Location:
         Set the location of the pit relative to the avalanche.
 
         Args:
-            pit_near_avalanche_location: The location of the pit relative to the avalanche
+            pit_near_avalanche_location: The location of the pit relative to the
+                avalanche
         """
         self.pit_near_avalanche_location = pit_near_avalanche_location
 
