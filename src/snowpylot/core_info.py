@@ -157,19 +157,19 @@ class Location:
     def __str__(self) -> str:
         """Return a string representation of the location."""
         location_str = (
-            f"Latitude: {self.latitude}\n"
-            f"Longitude: {self.longitude}\n"
-            f"Elevation: {self.elevation}\n"
-            f"Aspect: {self.aspect}\n"
-            f"SlopeAngle: {self.slope_angle}\n"
-            f"Country: {self.country}\n"
-            f"Region: {self.region}\n"
-            f"PitNearAvalanche: {self.pit_near_avalanche}\n"
+            f"latitude: {self.latitude}\n"
+            f"longitude: {self.longitude}\n"
+            f"elevation: {self.elevation}\n"
+            f"aspect: {self.aspect}\n"
+            f"slope_angle: {self.slope_angle}\n"
+            f"country: {self.country}\n"
+            f"region: {self.region}\n"
+            f"pit_near_avalanche: {self.pit_near_avalanche}\n"
         )
 
         if self.pit_near_avalanche_location is not None:
             location_str += (
-                f"PitNearAvalancheLocation: {self.pit_near_avalanche_location}\n"
+                f"pit_near_avalanche_location: {self.pit_near_avalanche_location}\n"
             )
 
         return location_str
@@ -278,15 +278,15 @@ class User:
 
     def __str__(self) -> str:
         """Return a string representation of the user."""
-        user_str = f"OperationID: {self.operation_id}\n"
+        user_str = f"operation_id: {self.operation_id}\n"
 
         if self.operation_name is not None:
-            user_str += f"OperationName: {self.operation_name}\n"
+            user_str += f"operation_name: {self.operation_name}\n"
 
         user_str += (
-            f"Professional: {self.professional}\n"
-            f"UserID: {self.user_id}\n"
-            f"Username: {self.username}\n"
+            f"professional: {self.professional}\n"
+            f"user_id: {self.user_id}\n"
+            f"username: {self.username}\n"
         )
 
         return user_str
@@ -365,14 +365,14 @@ class CoreInfo:
     def __str__(self) -> str:
         """Return a string representation of the core info."""
         return (
-            f"PitID: {self.pit_id}\n"
-            f"PitName: {self.pit_name}\n"
-            f"Date: {self.date}\n"
-            f"Comment: {self.comment}\n"
-            f"CAAML Version: {self.caaml_version}\n"
-            f"User: {self.user}\n"
-            f"Location: {self.location}\n"
-            f"WeatherConditions: {self.weather_conditions}\n"
+            f"pit_id: {self.pit_id}\n"
+            f"pit_name: {self.pit_name}\n"
+            f"date: {self.date}\n"
+            f"comment: {self.comment}\n"
+            f"caaml_version: {self.caaml_version}\n"
+            f"user: {self.user}\n"
+            f"location: {self.location}\n"
+            f"weather_conditions: {self.weather_conditions}\n"
         )
 
     def set_pit_id(self, pit_id: str) -> None:
