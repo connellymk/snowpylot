@@ -35,22 +35,22 @@ from snowpylot import caaml_parser
 snowpit = caaml_parser("path/to/snowpit.caaml.xml")
 
 # Access basic information
-print(f"Pit ID: {snowpit.coreInfo.pitID}")
-print(f"Date: {snowpit.coreInfo.date}")
-print(f"Location: {snowpit.coreInfo.location.latitude}, {snowpit.coreInfo.location.longitude}")
+print(f"Pit ID: {snowpit.core_info.pit_id}")
+print(f"Date: {snowpit.core_info.date}")
+print(f"Location: {snowpit.core_info.location.latitude}, {snowpit.core_info.location.longitude}")
 
 # Access snow profile data
-print(f"HS: {snowpit.snowProfile.hS}")
+print(f"HS: {snowpit.snow_profile.hs}")
 
 # Access layer information
-for i, layer in enumerate(snowpit.snowProfile.layers):
-    print(f"Layer {i+1}: Depth {layer.depthTop}, Thickness {layer.thickness}")
-    print(f"  Grain form: {layer.grainFormPrimary.grainForm}")
+for i, layer in enumerate(snowpit.snow_profile.layers):
+    print(f"Layer {i+1}: Depth {layer.depth_top}, Thickness {layer.thickness}")
+    print(f"  Grain form: {layer.grain_form_primary.grain_form}")
     print(f"  Hardness: {layer.hardness}")
 
 # Access ECT test results
-for ect in snowpit.stabilityTests.ECT:
-    print(f"ECT at depth {ect.depthTop}: Score {ect.testScore}")
+for ect in snowpit.stability_tests.ECT:
+    print(f"ECT at depth {ect.depth_top}: Score {ect.test_score}")
 ```
 
 ## Documentation
@@ -63,161 +63,161 @@ For more detailed examples, the demos directory contains Jupyter notebooks demon
 
 The SnowPit object is the main container for all snow pit data. It consists of four main components:
 
-### 1. Core Info (snowpit.coreInfo)
+### 1. Core Info (snowpit.core_info)
 
 Basic information about the snow pit:
 
-- `pitID` - Unique identifier
-- `pitName` - Name of the pit
+- `pit_id` - Unique identifier
+- `pit_name` - Name of the pit
 - `date` - Date of observation
 - `comment` - General comments
-- `caamlVersion` - Version of CAAML schema used
+- `caaml_version` - Version of CAAML schema used
 - `user` - User information
 - `location` - Location information
-- `weatherConditions` - Weather conditions
+- `weather_conditions` - Weather conditions
 
 Example:
 
 ```python
-ID = snowpit.coreInfo.pitID
+ID = snowpit.core_info.pit_id
 ```
 
-#### User Info (snowpit.coreInfo.user)
+#### User Info (snowpit.core_info.user)
 
-- `operationID` - ID of the operation
-- `operationName` - Name of the operation
+- `operation_id` - ID of the operation
+- `operation_name` - Name of the operation
 - `professional` - Boolean indicating if user is professional
-- `userID` - User identifier
+- `user_id` - User identifier
 - `username` - SnowPilot username of the user
 
 Example:
 
 ```python
-operationID = snowpit.coreInfo.user.operationID
+operationID = snowpit.core_info.user.operation_id
 ```
 
-#### Location Info (snowpit.coreInfo.location)
+#### Location Info (snowpit.core_info.location)
 
 - `latitude` - Decimal degrees
 - `longitude` - Decimal degrees
 - `elevation` - [value, units]
 - `aspect` - Slope aspect
-- `slopeAngle` - [value, units]
+- `slope_angle` - [value, units]
 - `country` - Country name
 - `region` - Region name
-- `pitNearAvalanche` - Boolean
-- `pitNearAvalancheLocation` - Location description if near avalanche
+- `pit_near_avalanche` - Boolean
+- `pit_near_avalanche_location` - Location description if near avalanche
 
 Example:
 
 ```python
-lat = snowpit.coreInfo.location.latitude
+lat = snowpit.core_info.location.latitude
 ```
 
-#### Weather Conditions (snowpit.coreInfo.weatherConditions)
+#### Weather Conditions (snowpit.core_info.weather_conditions)
 
-- `skyCond` - Sky conditions code
-- `skyCond_Desc` - Sky conditions description
-- `precipTI` - Precipitation type and intensity code
-- `precipTI_Desc` - Precipitation description
-- `airTempPres` - [temperature, units]
-- `windSpeed` - Wind speed code
-- `windSpeed_Desc` - Wind speed description
-- `windDir` - Wind direction
+- `sky_cond` - Sky conditions code
+- `sky_cond_desc` - Sky conditions description
+- `precip_ti` - Precipitation type and intensity code
+- `precip_ti_desc` - Precipitation description
+- `air_temp_pres` - [temperature, units]
+- `wind_speed` - Wind speed code
+- `wind_speed_desc` - Wind speed description
+- `wind_dir` - Wind direction
 
 Example:
 
 ```python
-skyCond = snowpit.coreInfo.weatherConditions.skyCond
+skyCond = snowpit.core_info.weather_conditions.sky_cond
 ```
 
-### 2. Snow Profile (snowpit.snowProfile)
+### 2. Snow Profile (snowpit.snow_profile)
 
 Contains layer data and measurements:
 
 #### Profile Info
 
-- `measurementDirection` - Direction of measurements
-- `profileDepth` - [depth, units]
-- `hS` - Total snow height [value, units]
+- `measurement_direction` - Direction of measurements
+- `profile_depth` - [depth, units]
+- `hs` - Total snow height [value, units]
 
 Example:
 
 ```python
-measDir = snowpit.snowProfile.measurementDirection
+measDir = snowpit.snow_profile.measurement_direction
 ```
 
-#### Layers (snowpit.snowProfile.layers)
+#### Layers (snowpit.snow_profile.layers)
 
 Example:
 
 ```python
-layers_list = snowpit.snowProfile.layers
+layers_list = snowpit.snow_profile.layers
 ```
 
 List of Layer objects, each containing:
 
-- `depthTop` - [depth, units]
+- `depth_top` - [depth, units]
 - `thickness` - [thickness, units]
 - `hardness` - Hand hardness code
-- `hardnessTop` - Top of layer hardness
-- `hardnessBottom` - Bottom of layer hardness
+- `hardness_top` - Top of layer hardness
+- `hardness_bottom` - Bottom of layer hardness
 - `wetness` - Wetness code
-- `wetness_Desc` - Wetness description
-- `layerOfConcern` - Boolean
-- `grainFormPrimary` - grain form object representing primary grain form
-- `grainFormSecondary` - grain form object representing secondary grain form
+- `wetness_desc` - Wetness description
+- `layer_of_concern` - Boolean
+- `grain_form_primary` - grain form object representing primary grain form
+- `grain_form_secondary` - grain form object representing secondary grain form
 
 Example:
 
 ```python
-depthTop_layer1 = snowpit.snowProfile.layers[0].depthTop
+depthTop_layer1 = snowpit.snow_profile.layers[0].depth_top
 ```
 
-##### Grain Info (layer.grainFormPrimary or layer.grainFormSecondary)
+##### Grain Info (layer.grain_form_primary or layer.grain_form_secondary)
 
-- `grainForm` - Grain form code
-- `grainSizeAvg` - [size, units]
-- `grainSizeMax` - [size, units]
-- `basicGrainClass_code` - Basic grain type code
-- `basicGrainClass_name` - Basic grain type name
-- `subGrainClass_code` - Detailed grain type code
-- `subGrainClass_name` - Detailed grain type name
+- `grain_form` - Grain form code
+- `grain_size_avg` - [size, units]
+- `grain_size_max` - [size, units]
+- `basic_grain_class_code` - Basic grain type code
+- `basic_grain_class_name` - Basic grain type name
+- `sub_grain_class_code` - Detailed grain type code
+- `sub_grain_class_name` - Detailed grain type name
 
 Example:
 
 ```python
-primaryGrainForm_layer1 = snowpit.snowProfile.layers[0].grainFormPrimary.grainForm
+primaryGrainForm_layer1 = snowpit.snow_profile.layers[0].grain_form_primary.grain_form
 ```
 
-#### Temperature Profile (snowpit.snowProfile.tempProfile)
+#### Temperature Profile (snowpit.snow_profile.temp_profile)
 
 List of temperature observations, each containing:
 
 - `depth` - [depth, units]
-- `snowTemp` - [temperature, units]
+- `snow_temp` - [temperature, units]
 
 Example:
 
 ```python
-depth_obs1 = snowpit.snowProfile.tempProfile[0].depth
+depth_obs1 = snowpit.snow_profile.temp_profile[0].depth
 ```
 
-#### Density Profile (snowpit.snowProfile.densityProfile)
+#### Density Profile (snowpit.snow_profile.density_profile)
 
 List of density observation, each containing:
 
-- `depthTop` - [depth, units]
+- `depth_top` - [depth, units]
 - `thickness` - [thickness, units]
 - `density` - [density, units]
 
 Example:
 
 ```python
-depthTop_obs1 = snowpit.snowProfile.densityProfile[0].depthTop
+depthTop_obs1 = snowpit.snow_profile.density_profile[0].depth_top
 ```
 
-### 3. Stability Tests (snowpit.stabilityTests)
+### 3. Stability Tests (snowpit.stability_tests)
 
 Contains lists of different stability test results:
 
@@ -229,88 +229,88 @@ Contains lists of different stability test results:
 Example:
 
 ```python
-ECTs_list = snowpit.stabilityTests.ECT
+ECTs_list = snowpit.stability_tests.ECT
 ```
 
-#### Extended Column Test (snowpit.stabilityTests.ECT) is a list of ExtColumnTest objects
+#### Extended Column Test (snowpit.stability_tests.ECT) is a list of ExtColumnTest objects
 
 Each containing:
 
-- `depthTop` - [depth, units]
-- `testScore` - Test result code
-- `propogation` - Boolean
-- `numTaps` - Number of taps
+- `depth_top` - [depth, units]
+- `test_score` - Test result code
+- `propagation` - Boolean
+- `num_taps` - Number of taps
 - `comment` - Test comments
 
 Example:
 
 ```python
-ECT1_depthTop = snowpit.stabilityTests.ECT[0].depthTop
+ECT1_depthTop = snowpit.stability_tests.ECT[0].depth_top
 ```
 
-#### Compression Test (snowpit.stabilityTests.CT) is a list of ComprTest objects
+#### Compression Test (snowpit.stability_tests.CT) is a list of ComprTest objects
 
 Each containing:
 
-- `depthTop` - [depth, units]
-- `fractureCharacter` - Fracture character code
-- `testScore` - Test result code
+- `depth_top` - [depth, units]
+- `fracture_character` - Fracture character code
+- `test_score` - Test result code
 - `comment` - Test comments
 
 Example:
 
 ```python
-CT1_depthTop = snowpit.stabilityTests.CT[0].depthTop
+CT1_depthTop = snowpit.stability_tests.CT[0].depth_top
 ```
 
-#### Rutschblock Test (snowpit.stabilityTests.RBlock) is a list of RBlockTest objects
+#### Rutschblock Test (snowpit.stability_tests.RBlock) is a list of RBlockTest objects
 
 Each containing:
 
-- `depthTop` - [depth, units]
-- `fractureCharacter` - Fracture character code
-- `releaseType` - Release type code
-- `testScore` - Test result code
+- `depth_top` - [depth, units]
+- `fracture_character` - Fracture character code
+- `release_type` - Release type code
+- `test_score` - Test result code
 - `comment` - Test comments
 
 Example:
 
 ```python
-RBlock1_depthTop = snowpit.stabilityTests.RBlock[0].depthTop
+RBlock1_depthTop = snowpit.stability_tests.RBlock[0].depth_top
 ```
 
-#### Propagation Saw Test (snowpit.stabilityTests.PST) is a list of PropSawTest objects
+#### Propagation Saw Test (snowpit.stability_tests.PST) is a list of PropSawTest objects
 
 Each containing:
 
-- `depthTop` - [depth, units]
-- `fractureProp` - Propagation result
-- `cutLength` - [length, units]
-- `columnLength` - [length, units]
+- `depth_top` - [depth, units]
+- `fracture_prop` - Propagation result
+- `cut_length` - [length, units]
+- `column_length` - [length, units]
 - `comment` - Test comments
 
 Example:
 
 ```python
-PST1_depthTop = snowpit.stabilityTests.PST[0].depthTop
+PST1_depthTop = snowpit.stability_tests.PST[0].depth_top
 ```
 
-### 4. Whumpf Data (snowpit.whumpfData)
+### 4. Whumpf Data (snowpit.whumpf_data)
 
 Custom SnowPilot data about collapsing weak layers:
 
-- `whumpfCracking` - Presence of whumpf with cracking
-- `whumpfNoCracking` - Presence of whumpf without cracking
-- `crackingNoWhumpf` - Presence of cracking without whumpf
-- `whumpfNearPit` - Whumpf location relative to pit
-- `whumpfDepthWeakLayer` - Depth of weak layer
-- `whumpfTriggeredRemoteAva` - If whumpf triggered remote avalanche
-- `whumpfSize` - Size of the whumpf
+- `whumpf_cracking` - Presence of whumpf with cracking
+- `whumpf_no_cracking` - Presence of whumpf without cracking
+- `cracking_no_whumpf` - Presence of cracking without whumpf
+- `whumpf_near_pit` - Whumpf location relative to pit
+- `whumpf_depth_weak_layer` - Depth of weak layer
+- `whumpf_triggered_remote_ava` - If whumpf triggered remote avalanche
+- `whumpf_size` - Size of the whumpf
 
 Example:
 
 ```python
-whumpfCracking = snowpit.whumpfData.whumpfCracking
+whumpfCracking = snowpit.whumpf_data.whumpf_cracking
 ```
 
 ## Advanced Usage Examples
@@ -332,12 +332,12 @@ for file in caaml_files:
 
     # Extract data of interest
     result = {
-        "PitID": pit.coreInfo.pitID,
-        "Date": pit.coreInfo.date,
-        "Location": f"{pit.coreInfo.location.latitude}, {pit.coreInfo.location.longitude}",
-        "HS": pit.snowProfile.hS,
-        "LayerCount": len(pit.snowProfile.layers),
-        "ECTCount": len(pit.stabilityTests.ECT)
+        "PitID": pit.core_info.pit_id,
+        "Date": pit.core_info.date,
+        "Location": f"{pit.core_info.location.latitude}, {pit.core_info.location.longitude}",
+        "HS": pit.snow_profile.hs,
+        "LayerCount": len(pit.snow_profile.layers),
+        "ECTCount": len(pit.stability_tests.ECT)
     }
     results.append(result)
 
@@ -355,17 +355,17 @@ from snowpylot import caaml_parser
 pit = caaml_parser("path/to/snowpit.caaml.xml")
 
 # Analyze ECT results
-for ect in pit.stabilityTests.ECT:
-    print(f"ECT at depth {ect.depthTop}: Score {ect.testScore}")
-    print(f"  Propagation: {ect.propogation}")
-    print(f"  Number of taps: {ect.numTaps}")
+for ect in pit.stability_tests.ECT:
+    print(f"ECT at depth {ect.depth_top}: Score {ect.test_score}")
+    print(f"  Propagation: {ect.propagation}")
+    print(f"  Number of taps: {ect.num_taps}")
     print(f"  Comment: {ect.comment}")
 
 # Find layers of concern
-for layer in pit.snowProfile.layers:
-    if layer.layerOfConcern:
-        print(f"Layer of concern at depth {layer.depthTop}")
-        print(f"  Grain form: {layer.grainFormPrimary.grainForm}")
+for layer in pit.snow_profile.layers:
+    if layer.layer_of_concern:
+        print(f"Layer of concern at depth {layer.depth_top}")
+        print(f"  Grain form: {layer.grain_form_primary.grain_form}")
         print(f"  Hardness: {layer.hardness}")
 ```
 
