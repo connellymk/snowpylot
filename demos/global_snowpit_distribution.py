@@ -3,6 +3,7 @@ import os
 import folium
 import pandas as pd
 from folium.plugins import MarkerCluster
+
 from snowpylot.caaml_parser import caaml_parser
 
 # Define the folder path for 2019-2020 season
@@ -90,7 +91,7 @@ colors = [
 country_to_color = dict(zip(unique_countries, colors[: len(unique_countries)]))
 
 # Add markers for each snowpit with country-specific colors
-for idx, row in df.iterrows():
+for _idx, row in df.iterrows():
     # Create a popup with information about the snowpit
     popup_text = f"""
     <b>Pit ID:</b> {row["PitID"]}<br>
