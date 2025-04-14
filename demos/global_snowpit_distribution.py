@@ -27,14 +27,14 @@ for file in caaml_files:
 
         # Check if latitude and longitude are available
         if (
-            pit.coreInfo.location.latitude is not None
-            and pit.coreInfo.location.longitude is not None
+            pit.core_info.location.latitude is not None
+            and pit.core_info.location.longitude is not None
         ):
-            latitudes.append(pit.coreInfo.location.latitude)
-            longitudes.append(pit.coreInfo.location.longitude)
-            pit_ids.append(pit.coreInfo.pitID)
-            countries.append(pit.coreInfo.location.country)
-            regions.append(pit.coreInfo.location.region)
+            latitudes.append(pit.core_info.location.latitude)
+            longitudes.append(pit.core_info.location.longitude)
+            pit_ids.append(pit.core_info.pit_id)
+            countries.append(pit.core_info.location.country)
+            regions.append(pit.core_info.location.region)
     except Exception as e:
         print(f"Error parsing {file}: {e}")
 
@@ -152,6 +152,6 @@ m.get_root().html.add_child(folium.Element(legend_html))
 m.save("demos/snowpit_distribution_by_country_2019_2020.html")
 
 print(
-    "Map has been created and saved as 'demos/snowpit_distribution_by_country_2019_2020.html'"
+    "Map has been created and saved as 'demos/snowpit_distribution_by_country_2019_2020.html'"  # noqa: E501
 )
 print("Open the HTML file in a web browser to view the interactive map.")
