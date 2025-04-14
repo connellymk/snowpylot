@@ -165,6 +165,8 @@ List of Layer objects, each containing:
 - `wetness` - Wetness code
 - `wetness_Desc` - Wetness description
 - `layerOfConcern` - Boolean
+- `grainFormPrimary` - grain form object representing primary grain form
+- `grainFormSecondary` - grain form object representing secondary grain form
 
 Example:
 
