@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 from snowpylot.caaml_parser import caaml_parser
-from snowpylot.coreInfo import CoreInfo, Location, User, WeatherConditions
+from snowpylot.core_info import CoreInfo, Location, User, WeatherConditions
 
 
 @pytest.fixture

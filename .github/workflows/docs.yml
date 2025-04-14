@@ -1,16 +1,16 @@
-name: Build and publish Sphinx 🪬 documentation
+name: Build and publish Sphinx documentation
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'weac/**'
-      - 'docs/sphinx/**'
+      - 'src/**'
+      - 'docs/**'
 
 jobs:
   build-docs:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Check out the repository
@@ -21,30 +21,27 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install Sphinx and extensions
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install sphinx sphinxawesome_theme weac IPython
+        pip install sphinx sphinxawesome_theme
+        pip install -e .
 
-    - name: Clean old html files
+    - name: Clean old build files
       run: |
-        rm -rf docs/_* docs/*.html docs/*.js docs/*.inv
+        rm -rf docs/build/*
 
     - name: Generate API documentation with sphinx-apidoc
       run: |
-        sphinx-apidoc -o docs/sphinx/ weac --force --separate
+        sphinx-apidoc -o docs/source/api src --force --separate
 
     - name: Build Sphinx documentation
       run: |
-        cd docs/sphinx
-        make clean html
+        cd docs
+        make html
 
-    - name: Copy built documentation to docs/
-      run: |
-        cp -rf docs/sphinx/_build/html/* docs/
-
-    - name: Commit and push documentation
-      run: |
-        git add docs/
-        git commit -m "Update documentation" || echo "No changes to commit"
-        git push origin main
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/build/html

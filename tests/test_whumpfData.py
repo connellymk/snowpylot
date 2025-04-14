@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 from snowpylot.caaml_parser import caaml_parser
-from snowpylot.whumpfData import WhumpfData
+from snowpylot.whumpf_data import WhumpfData
 
 
 @pytest.fixture

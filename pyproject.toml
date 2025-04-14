@@ -18,9 +18,24 @@ classifiers = [
 ]
 keywords = ["snowpit", "caaml", "snowpilot"]
 requires-python = ">=3.7"
+dependencies = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "sphinx-autodoc-typehints>=1.25.0",
+    "IPython>=8.0.0",
+]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "sphinx-autodoc-typehints>=1.25.0",
+    "IPython>=8.0.0",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/connellymk/snowpylot"
+"Documentation" = "https://connellymk.github.io/snowpylot"
 
 [tool.ruff]
 line-length = 88

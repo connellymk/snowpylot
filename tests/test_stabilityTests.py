@@ -6,7 +6,7 @@ import pytest
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from snowpylot.caaml_parser import caaml_parser
-from snowpylot.stabilityTests import (
+from snowpylot.stability_tests import (
     ComprTest,
     ExtColumnTest,
     PropSawTest,
