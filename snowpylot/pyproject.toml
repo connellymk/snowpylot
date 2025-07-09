@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snowpylot"
+version = "1.1.1"
+description = "A Python library for working CAAML.XML files from SnowPilot"
+readme = "README.md"
+authors = [
+  { name="Mary Kate Connelly", email="connellymarykate@gmail.com" },
+]
+license = { file = "LICENSE" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+keywords = ["snowpit", "caaml", "snowpilot"]
+requires-python = ">=3.7"
+dependencies = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "sphinx-autodoc-typehints>=1.25.0",
+    "IPython>=8.0.0",
+]
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "sphinx-autodoc-typehints>=1.25.0",
+    "IPython>=8.0.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/connellymk/snowpylot"
+"Documentation" = "https://connellymk.github.io/snowpylot"
+
+[tool.ruff]
+line-length = 88
+target-version = "py37"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "C4", "UP", "RUF"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
