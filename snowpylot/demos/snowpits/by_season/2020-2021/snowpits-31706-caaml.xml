@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-31706">
+  <caaml:metaData>
+    <caaml:comment>Snow pit was dug by S. Clark and M. Olsen and uploaded to snow pilot by Travis Morrison to validate the SNOWPACK model at the Atwater site. </caaml:comment>
+    <caaml:customData/>
+  </caaml:metaData>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2021-02-24T12:15:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2021-02-26T15:45:43-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2021-02-26T15:50:32-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-10113">
+      <caaml:name>T.Morrison</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-31706">
+    <caaml:name>Atwater Study Plot</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>2677</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:validSlopeAngle>
+      <caaml:SlopeAnglePosition uom="deg">
+        <caaml:position>0</caaml:position>
+      </caaml:SlopeAnglePosition>
+    </caaml:validSlopeAngle>
+    <caaml:pointLocation>
+      <gml:Point gml:id="pointID" srsDimension="2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+        <gml:pos>40.5916970 -111.6360280</gml:pos>
+      </gml:Point>
+    </caaml:pointLocation>
+    <caaml:country>UT</caaml:country>
+    <caaml:region>Central Wasatch</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">234</caaml:profileDepth>
+      <caaml:weatherCond/>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">234</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData>
+          <caaml:customData/>
+        </caaml:metaData>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">9</caaml:thickness>
+          <caaml:grainFormPrimary>PP</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">F</caaml:hardness>
+          <caaml:wetness uom="">D</caaml:wetness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">9</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">10</caaml:depthTop>
+          <caaml:thickness uom="cm">90</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">100</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>PPgp</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Dust 123-113/some graupel</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">101</caaml:depthTop>
+          <caaml:thickness uom="cm">33</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">134</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>6</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">K</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">135</caaml:depthTop>
+          <caaml:thickness uom="cm">12</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>1.5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">P</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>3 crusts/rounds</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">147</caaml:depthTop>
+          <caaml:thickness uom="cm">4</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">K</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">151</caaml:depthTop>
+          <caaml:thickness uom="cm">13</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">P</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">164</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>5</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">165</caaml:depthTop>
+          <caaml:thickness uom="cm">24</caaml:thickness>
+          <caaml:grainFormPrimary>RG</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">P</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">189</caaml:depthTop>
+          <caaml:thickness uom="cm">1</caaml:thickness>
+          <caaml:grainFormPrimary>MFcr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>6</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">K</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Rounding facets</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">190</caaml:depthTop>
+          <caaml:thickness uom="cm">17</caaml:thickness>
+          <caaml:grainFormPrimary>FCxr</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">P</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Variable hardness</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">207</caaml:depthTop>
+          <caaml:thickness uom="cm">27</caaml:thickness>
+          <caaml:grainFormPrimary>FCso</caaml:grainFormPrimary>
+          <caaml:grainSize uom="mm">
+            <caaml:Components>
+              <caaml:avg>3</caaml:avg>
+            </caaml:Components>
+          </caaml:grainSize>
+          <caaml:hardness uom="">1F</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+      <caaml:tempProfile>
+        <caaml:tempMetaData/>
+        <caaml:Obs>
+          <caaml:depth uom="cm">0</caaml:depth>
+          <caaml:snowTemp uom="degC">-6.2</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">4</caaml:depth>
+          <caaml:snowTemp uom="degC">-4.8</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">14</caaml:depth>
+          <caaml:snowTemp uom="degC">-6.7</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">24</caaml:depth>
+          <caaml:snowTemp uom="degC">-8.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">34</caaml:depth>
+          <caaml:snowTemp uom="degC">-6.5</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">44</caaml:depth>
+          <caaml:snowTemp uom="degC">-5.3</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">54</caaml:depth>
+          <caaml:snowTemp uom="degC">-4.5</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">64</caaml:depth>
+          <caaml:snowTemp uom="degC">-4.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">74</caaml:depth>
+          <caaml:snowTemp uom="degC">-3.7</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">84</caaml:depth>
+          <caaml:snowTemp uom="degC">-3.4</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">94</caaml:depth>
+          <caaml:snowTemp uom="degC">-3.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">104</caaml:depth>
+          <caaml:snowTemp uom="degC">-2.9</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">114</caaml:depth>
+          <caaml:snowTemp uom="degC">-2.7</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">124</caaml:depth>
+          <caaml:snowTemp uom="degC">-2.5</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">134</caaml:depth>
+          <caaml:snowTemp uom="degC">-2.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">144</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.8</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">154</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.6</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">164</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.3</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">174</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.2</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">184</caaml:depth>
+          <caaml:snowTemp uom="degC">-1.0</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">194</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.7</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">204</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.6</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">214</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.2</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">224</caaml:depth>
+          <caaml:snowTemp uom="degC">-0.1</caaml:snowTemp>
+        </caaml:Obs>
+        <caaml:Obs>
+          <caaml:depth uom="cm">234</caaml:depth>
+          <caaml:snowTemp uom="degC">0.0</caaml:snowTemp>
+        </caaml:Obs>
+      </caaml:tempProfile>
+      <caaml:densityProfile>
+        <caaml:densityMetaData>
+          <caaml:comment/>
+          <caaml:customData/>
+          <caaml:methodOfMeas>unknown</caaml:methodOfMeas>
+        </caaml:densityMetaData>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">5</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">66</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">15</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">170</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">25</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">153.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">35</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">186.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">45</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">194</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">55</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">197.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">65</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">231.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">75</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">244.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">85</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">237</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">95</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">238</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">105</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">262.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">115</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">308.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">125</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">327.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">135</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">334.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">145</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">340.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">155</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">339</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">165</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">342</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">175</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">358</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">185</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">378.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">195</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">375</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">205</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">348.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">215</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">319.5</caaml:density>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:depthTop uom="cm">225</caaml:depthTop>
+          <caaml:thickness uom="cm">4.0</caaml:thickness>
+          <caaml:density uom="kgm-3">327.5</caaml:density>
+        </caaml:Layer>
+      </caaml:densityProfile>
+      <caaml:stbTests/>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+</caaml:SnowProfile>
