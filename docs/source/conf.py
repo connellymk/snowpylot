@@ -16,7 +16,7 @@ copyright = "2025, Mary Kate Connelly"
 author = "Mary Kate Connelly"
 
 # The full version, including alpha/beta/rc tags
-release = "1.1.2"
+release = "1.1.3"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
