@@ -10,6 +10,7 @@ import logging
 import os
 import shutil
 import tarfile
+import time
 from datetime import datetime, timedelta
 from glob import glob
 from typing import Dict, List, Optional, Union, Any
@@ -22,6 +23,7 @@ from .snow_pit import SnowPit
 
 # Configuration constants
 DEFAULT_PITS_PATH = "data/snowpits"
+DEFAULT_REQUEST_DELAY = 2  # seconds between requests to prevent rate limiting
 
 # Create basic logger
 logging.basicConfig(level=logging.INFO)
@@ -34,8 +36,12 @@ class QueryFilter:
 
     pit_id: Optional[str] = None
     pit_name: Optional[str] = None
-    date_start: Optional[str] = None  # Format: YYYY-MM-DD
-    date_end: Optional[str] = None  # Format: YYYY-MM-DD
+    date_start: Optional[Union[str, datetime, Any]] = (
+        None  # Format: YYYY-MM-DD or datetime-like object
+    )
+    date_end: Optional[Union[str, datetime, Any]] = (
+        None  # Format: YYYY-MM-DD or datetime-like object
+    )
     country: Optional[str] = None
     state: Optional[str] = None
     region: Optional[str] = None
@@ -46,7 +52,7 @@ class QueryFilter:
     elevation_min: Optional[float] = None
     elevation_max: Optional[float] = None
     aspect: Optional[str] = None
-    per_page: int = 100  # Default to 100 for CAAML queries
+    per_page: int = 100  # Default to 100 to match working implementation
 
 
 @dataclass
@@ -103,14 +109,13 @@ class QueryBuilder:
         }
 
     def build_caaml_query(self, query_filter: QueryFilter) -> str:
-        """Build query string for CAAML endpoint using correct parameter format"""
+        """Build query string for CAAML endpoint with all required form parameters"""
         params = []
 
-        # PIT_NAME parameter
-        pit_name = query_filter.pit_name or ""
-        params.append(f"PIT_NAME={pit_name}")
+        # Add all required form parameters (even if empty) to match the working URLs
+        params.append(f"PIT_NAME={query_filter.pit_name or ''}")
 
-        # STATE parameter is required for snowpilot.org API
+        # STATE parameter
         if query_filter.state:
             if query_filter.state not in self.supported_states:
                 raise ValueError(
@@ -118,35 +123,28 @@ class QueryBuilder:
                 )
             params.append(f"STATE={query_filter.state}")
         else:
-            # If no state specified, default to Montana (MT) as it has good data coverage
-            logger.warning("No state specified, defaulting to Montana (MT)")
-            params.append("STATE=MT")
+            params.append("STATE=")  # Empty but present
 
         # Date parameters
-        if query_filter.date_start:
-            params.append(f"OBS_DATE_MIN={query_filter.date_start}")
-        if query_filter.date_end:
-            params.append(f"OBS_DATE_MAX={query_filter.date_end}")
+        params.append(f"OBS_DATE_MIN={query_filter.date_start or ''}")
+        params.append(f"OBS_DATE_MAX={query_filter.date_end or ''}")
 
-        # Recent dates parameter (always 0 for custom date ranges)
+        # This seems to be required by the server
         params.append("recent_dates=0")
 
-        # USERNAME parameter
-        username = query_filter.username or ""
-        params.append(f"USERNAME={username}")
+        # User and organization parameters
+        params.append(f"USERNAME={query_filter.username or ''}")
+        params.append(f"AFFIL={query_filter.organization_name or ''}")
 
-        # AFFIL parameter (organization/affiliation)
-        affil = query_filter.organization_name or ""
-        params.append(f"AFFIL={affil}")
+        # Per page parameter (use 100 like the working implementation)
+        per_page = min(query_filter.per_page, 100)
+        params.append(f"per_page={per_page}")
 
-        # Per page parameter
-        params.append(f"per_page={query_filter.per_page}")
-
-        # Advanced query parameter (empty for now)
+        # Advanced query parameter (always empty)
         params.append("ADV_WHERE_QUERY=")
 
-        # Submit parameter
-        params.append("submit=Get%20Pits")
+        # Form submit parameter
+        params.append("submit=Get+Pits")
 
         return "&".join(params)
 
@@ -161,6 +159,20 @@ class SnowPilotSession:
         self.login_url = self.site_url + "/user/login"
         self.caaml_query_url = self.site_url + "/avscience-query-caaml.xml?"
         self.data_url = "https://snowpilot.org/sites/default/files/tmp/"
+        self.last_request_time = 0
+        self.request_delay = DEFAULT_REQUEST_DELAY
+
+    def _enforce_rate_limit(self):
+        """Enforce rate limiting between requests"""
+        current_time = time.time()
+        time_since_last_request = current_time - self.last_request_time
+
+        if time_since_last_request < self.request_delay:
+            sleep_time = self.request_delay - time_since_last_request
+            logger.debug(f"Rate limiting: sleeping for {sleep_time:.2f} seconds")
+            time.sleep(sleep_time)
+
+        self.last_request_time = time.time()
 
     def authenticate(self) -> bool:
         """Authenticate with snowpilot.org"""
@@ -198,7 +210,7 @@ class SnowPilotSession:
             return False
 
     def download_caaml_data(self, query_string: str) -> Optional[bytes]:
-        """Download CAAML data from snowpilot.org"""
+        """Download CAAML data from snowpilot.org (single request with all pits)"""
         user = os.environ.get("SNOWPILOT_USER")
         password = os.environ.get("SNOWPILOT_PASSWORD")
 
@@ -219,43 +231,84 @@ class SnowPilotSession:
             # Create a fresh session context
             with requests.Session() as s:
                 # Authenticate
-                _ = s.post(self.login_url, data=payload)
+                login_response = s.post(self.login_url, data=payload)
+                if login_response.status_code != 200:
+                    logger.error(
+                        f"Login failed with status {login_response.status_code}"
+                    )
+                    return None
 
-                # Make the CAAML query request
                 logger.info(f"Requesting CAAML data with query: {query_string}")
-                query_response = s.post(self.caaml_query_url + query_string)
+                self._enforce_rate_limit()
+                query_response = s.get(self.caaml_query_url + query_string)
+
+                # Debug logging
+                logger.debug(f"Query response status: {query_response.status_code}")
+                logger.debug(f"Query response headers: {dict(query_response.headers)}")
 
                 # Check for Content-Disposition header and success status
                 content_disposition = query_response.headers.get(
                     "Content-Disposition", None
                 )
+
                 if (
                     content_disposition is not None
                     and query_response.status_code == 200
                 ):
                     # Extract filename from Content-Disposition header
                     # Format: attachment; filename="filename.tar.gz"
-                    filename = content_disposition[22:-1].replace("_caaml", "")
-                    file_url = self.data_url + filename
+                    try:
+                        filename = content_disposition[22:-1].replace("_caaml", "")
+                        if not filename or filename == ".tar.gz":
+                            logger.error(
+                                f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
+                            )
+                            return None
 
-                    # Download the actual file
-                    logger.info(f"Downloading CAAML file from: {file_url}")
-                    file_response = s.get(file_url)
-                    if file_response.status_code == 200:
-                        logger.info(f"CAAML download successful: {filename}")
-                        return file_response.content
-                    else:
-                        logger.warning(
-                            f"File download failed with status {file_response.status_code}"
+                        file_url = self.data_url + filename
+
+                        # Download the actual file
+                        logger.info(f"Downloading CAAML file from: {file_url}")
+                        file_response = s.get(file_url)
+
+                        if file_response.status_code == 200:
+                            logger.info(f"CAAML download successful: {filename}")
+                            return file_response.content
+                        else:
+                            logger.warning(
+                                f"File download failed with status {file_response.status_code}"
+                            )
+                            if file_response.status_code == 403:
+                                logger.error(
+                                    "403 Forbidden - possible rate limiting or authentication issue"
+                                )
+                                logger.error(
+                                    "Consider adding delays between requests or checking credentials"
+                                )
+                            return None
+                    except Exception as e:
+                        logger.error(
+                            f"Error parsing Content-Disposition header '{content_disposition}': {e}"
                         )
                         return None
                 else:
                     logger.warning(
                         f"CAAML download failed with status {query_response.status_code}"
                     )
-                    if query_response.status_code == 500:
+                    if query_response.status_code == 403:
+                        logger.error(
+                            "403 Forbidden - possible rate limiting or authentication issue"
+                        )
+                        logger.error(
+                            "Try reducing query frequency or checking credentials"
+                        )
+                    elif query_response.status_code == 500:
                         logger.error(
                             "Server error (500) - this may indicate an issue with the query parameters or server"
+                        )
+                    elif content_disposition is None:
+                        logger.error(
+                            "No Content-Disposition header found - query may have returned no results"
                         )
                     return None
 
@@ -265,8 +318,8 @@ class SnowPilotSession:
 
     def preview_query(self, query_string: str) -> int:
         """
-        Preview a query to get the estimated count of pits without downloading all data
-        Uses a small per_page value to get a quick estimate
+        Preview a query to get the estimated count of pits
+        Downloads and counts the actual CAAML files
 
         Args:
             query_string: The query string to preview
@@ -294,43 +347,113 @@ class SnowPilotSession:
             # Create a fresh session context
             with requests.Session() as s:
                 # Authenticate
-                _ = s.post(self.login_url, data=payload)
+                login_response = s.post(self.login_url, data=payload)
+                if login_response.status_code != 200:
+                    logger.error(
+                        f"Preview login failed with status {login_response.status_code}"
+                    )
+                    return 0
 
-                # Modify query string to use per_page=1 for preview
-                preview_query = query_string.replace(
-                    f"per_page={query_string.split('per_page=')[1].split('&')[0]}",
-                    "per_page=1",
-                )
+                logger.info(f"Previewing query: {query_string}")
 
-                logger.info(f"Previewing query: {preview_query}")
-                response = s.post(self.caaml_query_url + preview_query)
+                # Try to get the CAAML data to see if it's available
+                self._enforce_rate_limit()
+                response = s.get(self.caaml_query_url + query_string)
+
+                # Debug logging
+                logger.debug(f"Preview response status: {response.status_code}")
+                logger.debug(f"Preview response headers: {dict(response.headers)}")
 
                 # Check if we got a successful response
                 content_disposition = response.headers.get("Content-Disposition", None)
                 if content_disposition is not None and response.status_code == 200:
-                    # If we got a file, there's at least one pit
-                    # Try with a slightly larger sample to get a better estimate
-                    estimate_query = query_string.replace(
-                        f"per_page={query_string.split('per_page=')[1].split('&')[0]}",
-                        "per_page=10",
-                    )
+                    # Extract filename from Content-Disposition header
+                    try:
+                        filename = content_disposition[22:-1].replace("_caaml", "")
+                        if not filename or filename == ".tar.gz":
+                            logger.error(
+                                f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
+                            )
+                            return 0
 
-                    estimate_response = s.post(self.caaml_query_url + estimate_query)
-                    if estimate_response.status_code == 200:
-                        estimate_content_disposition = estimate_response.headers.get(
-                            "Content-Disposition", None
+                        file_url = self.data_url + filename
+
+                        # Download and extract the file to count pits
+                        file_response = s.get(file_url)
+                        if file_response.status_code == 200:
+                            # Create a temporary file to extract and count
+                            import tempfile
+
+                            with tempfile.NamedTemporaryFile(
+                                suffix=".tar.gz", delete=False
+                            ) as temp_file:
+                                temp_file.write(file_response.content)
+                                temp_file_path = temp_file.name
+
+                            try:
+                                # Extract and count CAAML files
+                                extract_path = temp_file_path.replace(".tar.gz", "")
+                                with tarfile.open(temp_file_path, "r:gz") as tar:
+                                    tar.extractall(path=extract_path)
+
+                                # Count CAAML files
+                                pit_count = 0
+                                for root, dirs, files in os.walk(extract_path):
+                                    for file in files:
+                                        if file.endswith("caaml.xml"):
+                                            pit_count += 1
+
+                                # Clean up temporary files
+                                import shutil
+
+                                shutil.rmtree(extract_path, ignore_errors=True)
+                                os.remove(temp_file_path)
+
+                                logger.info(f"Preview found exactly {pit_count} pits")
+                                return pit_count
+
+                            except Exception as e:
+                                logger.error(f"Error during preview extraction: {e}")
+                                # Clean up on error
+                                try:
+                                    shutil.rmtree(extract_path, ignore_errors=True)
+                                    os.remove(temp_file_path)
+                                except:
+                                    pass
+                                return 0
+                        else:
+                            logger.warning(
+                                f"Preview file download failed with status {file_response.status_code}"
+                            )
+                            if file_response.status_code == 403:
+                                logger.error(
+                                    "403 Forbidden - possible rate limiting or authentication issue"
+                                )
+                                logger.error(
+                                    "Consider adding delays between requests or checking credentials"
+                                )
+                            return 0
+                    except Exception as e:
+                        logger.error(
+                            f"Error parsing Content-Disposition header '{content_disposition}': {e}"
                         )
-                        if estimate_content_disposition is not None:
-                            logger.info("Preview indicates data is available")
-                            # For now, return a conservative estimate
-                            # In a real implementation, we might try to download and count files
-                            return 10  # Estimate based on per_page=10 request
-
-                    return 1  # At least one pit available
+                        return 0
                 else:
-                    logger.info(
-                        f"Preview shows no data available (status: {response.status_code})"
-                    )
+                    if response.status_code == 403:
+                        logger.error(
+                            "403 Forbidden - possible rate limiting or authentication issue"
+                        )
+                        logger.error(
+                            "Try reducing query frequency or checking credentials"
+                        )
+                    elif content_disposition is None:
+                        logger.info(
+                            f"Preview shows no data available - no Content-Disposition header (status: {response.status_code})"
+                        )
+                    else:
+                        logger.info(
+                            f"Preview shows no data available (status: {response.status_code})"
+                        )
                     return 0
 
         except requests.RequestException as e:
@@ -377,6 +500,51 @@ class QueryEngine:
 
         return preview
 
+    def _convert_to_date_string(self, date_input: Union[str, datetime, Any]) -> str:
+        """
+        Convert various date input types to YYYY-MM-DD string format
+
+        Args:
+            date_input: Date as string, datetime, or datetime-like object (e.g. pandas Timestamp)
+
+        Returns:
+            Date string in YYYY-MM-DD format
+        """
+        if date_input is None:
+            return None
+
+        if isinstance(date_input, str):
+            # Validate string format
+            try:
+                datetime.strptime(date_input, "%Y-%m-%d")
+                return date_input
+            except ValueError:
+                raise ValueError(
+                    f"Invalid date string format: {date_input}. Use YYYY-MM-DD format."
+                )
+
+        # Handle datetime-like objects
+        if hasattr(date_input, "strftime"):
+            # This covers datetime, pandas Timestamp, and other datetime-like objects
+            return date_input.strftime("%Y-%m-%d")
+
+        # Handle objects that can be converted to datetime
+        if hasattr(date_input, "date"):
+            return date_input.date().strftime("%Y-%m-%d")
+
+        # Try to convert to string and parse
+        try:
+            date_str = str(date_input)
+            if " " in date_str:
+                # If it contains time info, split and take date part
+                date_str = date_str.split(" ")[0]
+            datetime.strptime(date_str, "%Y-%m-%d")
+            return date_str
+        except (ValueError, TypeError):
+            raise ValueError(
+                f"Cannot convert {type(date_input).__name__} to date string: {date_input}"
+            )
+
     def _validate_and_set_dates(self, query_filter: QueryFilter) -> QueryFilter:
         """
         Validate and set default date range if not provided
@@ -395,7 +563,11 @@ class QueryEngine:
         if not query_filter.date_end:
             query_filter.date_end = datetime.now().strftime("%Y-%m-%d")
 
-        # Validate date formats
+        # Convert inputs to string format
+        query_filter.date_start = self._convert_to_date_string(query_filter.date_start)
+        query_filter.date_end = self._convert_to_date_string(query_filter.date_end)
+
+        # Validate date formats and convert to datetime objects for comparison
         try:
             start_date = datetime.strptime(query_filter.date_start, "%Y-%m-%d")
             end_date = datetime.strptime(query_filter.date_end, "%Y-%m-%d")
@@ -489,28 +661,93 @@ class QueryEngine:
         return result
 
     def _query_caaml(self, query_filter: QueryFilter) -> QueryResult:
-        """Query CAAML data from snowpilot.org"""
+        """Query CAAML data from snowpilot.org (handles multiple requests if needed)"""
+        result = QueryResult(query_filter=query_filter)
+        all_extracted_files = []
+        saved_files = []
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        # Try to download with current per_page setting
         query_string = self.query_builder.build_caaml_query(query_filter)
         caaml_data = self.session.download_caaml_data(query_string)
 
-        result = QueryResult(query_filter=query_filter)
-
         if caaml_data:
             # Save CAAML data to file
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"{query_filter.date_start}_{query_filter.date_end}_{timestamp}_pits.tar.gz"
             filepath = os.path.join(self.pits_path, filename)
 
             with open(filepath, "wb") as f:
                 f.write(caaml_data)
 
-            result.download_info["saved_file"] = filepath
+            saved_files.append(filepath)
+
+            # Extract and collect CAAML files
+            extracted_files = self._extract_caaml_files(filepath)
+            all_extracted_files.extend(extracted_files)
+
+            # Check if we got exactly per_page pits, which might indicate there are more
+            if len(extracted_files) == query_filter.per_page:
+                logger.info(
+                    f"Got {len(extracted_files)} pits (exactly per_page={query_filter.per_page}), checking if there are more..."
+                )
+
+                # Try with a larger per_page to get remaining pits
+                larger_filter = QueryFilter(
+                    date_start=query_filter.date_start,
+                    date_end=query_filter.date_end,
+                    state=query_filter.state,
+                    per_page=500,  # Try larger batch
+                )
+                larger_query_string = self.query_builder.build_caaml_query(
+                    larger_filter
+                )
+                additional_data = self.session.download_caaml_data(larger_query_string)
+
+                if (
+                    additional_data and additional_data != caaml_data
+                ):  # Make sure it's different data
+                    filename2 = f"{query_filter.date_start}_{query_filter.date_end}_{timestamp}_additional_pits.tar.gz"
+                    filepath2 = os.path.join(self.pits_path, filename2)
+
+                    with open(filepath2, "wb") as f:
+                        f.write(additional_data)
+
+                    saved_files.append(filepath2)
+                    additional_files = self._extract_caaml_files(filepath2)
+
+                    # Only add files that we haven't already processed
+                    existing_ids = set()
+                    for existing_file in all_extracted_files:
+                        try:
+                            # Extract pit ID from filename
+                            pit_id = os.path.basename(existing_file).split("-")[-2]
+                            existing_ids.add(pit_id)
+                        except:
+                            pass
+
+                    new_files = []
+                    for new_file in additional_files:
+                        try:
+                            pit_id = os.path.basename(new_file).split("-")[-2]
+                            if pit_id not in existing_ids:
+                                new_files.append(new_file)
+                        except:
+                            new_files.append(new_file)  # Include if we can't parse ID
+
+                    all_extracted_files.extend(new_files)
+                    logger.info(f"Found {len(new_files)} additional unique pits")
+
+            if saved_files:
+                result.download_info["saved_files"] = saved_files
             result.download_info["format"] = "caaml"
 
-            # Extract and parse CAAML files
-            extracted_files = self._extract_caaml_files(filepath)
-            result.snow_pits = self._parse_caaml_pits(extracted_files, query_filter)
+            # Parse all CAAML files
+            result.snow_pits = self._parse_caaml_pits(all_extracted_files, query_filter)
             result.total_count = len(result.snow_pits)
+
+            logger.info(
+                f"Downloaded {result.total_count} pits total from {len(saved_files)} archives"
+            )
 
         return result
 
