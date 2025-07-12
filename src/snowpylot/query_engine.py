@@ -5,16 +5,17 @@ This module provides tools for downloading and querying CAAML snow pit data
 from snowpilot.org with flexible filtering capabilities.
 """
 
-import json
 import logging
 import os
+import re
 import shutil
 import tarfile
+import tempfile
 import time
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from glob import glob
-from typing import Dict, List, Optional, Union, Any
-from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Union
 
 import requests
 
@@ -23,7 +24,7 @@ from .snow_pit import SnowPit
 
 # Configuration constants
 DEFAULT_PITS_PATH = "data/snowpits"
-DEFAULT_REQUEST_DELAY = 2  # seconds between requests to prevent rate limiting
+DEFAULT_REQUEST_DELAY = 5  # seconds between requests to prevent rate limiting
 
 # Create basic logger
 logging.basicConfig(level=logging.INFO)
@@ -258,7 +259,27 @@ class SnowPilotSession:
                     # Extract filename from Content-Disposition header
                     # Format: attachment; filename="filename.tar.gz"
                     try:
-                        filename = content_disposition[22:-1].replace("_caaml", "")
+                        # Parse the Content-Disposition header more robustly
+                        match = re.search(r'filename="([^"]+)"', content_disposition)
+                        if not match:
+                            logger.error(
+                                f"Could not parse filename from Content-Disposition: '{content_disposition}'"
+                            )
+                            return None
+
+                        full_filename = match.group(1)
+
+                        # Check if we got an empty result (just "_caaml.tar.gz" means no data)
+                        if full_filename == "_caaml.tar.gz":
+                            logger.info(
+                                f"No data available for the requested query - server returned empty filename"
+                            )
+                            return None
+
+                        # Remove the _caaml suffix if present
+                        filename = full_filename.replace("_caaml", "")
+
+                        # Final validation
                         if not filename or filename == ".tar.gz":
                             logger.error(
                                 f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
@@ -369,7 +390,27 @@ class SnowPilotSession:
                 if content_disposition is not None and response.status_code == 200:
                     # Extract filename from Content-Disposition header
                     try:
-                        filename = content_disposition[22:-1].replace("_caaml", "")
+                        # Parse the Content-Disposition header more robustly
+                        match = re.search(r'filename="([^"]+)"', content_disposition)
+                        if not match:
+                            logger.error(
+                                f"Could not parse filename from Content-Disposition: '{content_disposition}'"
+                            )
+                            return 0
+
+                        full_filename = match.group(1)
+
+                        # Check if we got an empty result (just "_caaml.tar.gz" means no data)
+                        if full_filename == "_caaml.tar.gz":
+                            logger.info(
+                                f"No data available for the requested query - server returned empty filename"
+                            )
+                            return 0
+
+                        # Remove the _caaml suffix if present
+                        filename = full_filename.replace("_caaml", "")
+
+                        # Final validation
                         if not filename or filename == ".tar.gz":
                             logger.error(
                                 f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
@@ -382,7 +423,6 @@ class SnowPilotSession:
                         file_response = s.get(file_url)
                         if file_response.status_code == 200:
                             # Create a temporary file to extract and count
-                            import tempfile
 
                             with tempfile.NamedTemporaryFile(
                                 suffix=".tar.gz", delete=False
@@ -404,8 +444,6 @@ class SnowPilotSession:
                                             pit_count += 1
 
                                 # Clean up temporary files
-                                import shutil
-
                                 shutil.rmtree(extract_path, ignore_errors=True)
                                 os.remove(temp_file_path)
 

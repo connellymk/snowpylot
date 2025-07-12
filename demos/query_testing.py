@@ -31,9 +31,9 @@ else:
     print("❌ Authentication failed!")
     print("   Check your credentials and try again")
 
-# Set up dates
-start_date = "2019-09-01"
-end_date = "2020-01-01"
+# Set up dates - Using winter dates more likely to have snow data
+start_date = "2020-01-15"  # Mid-winter
+end_date = "2020-01-20"  # Just a 5-day range to start
 dates = pd.date_range(start_date, end_date)
 
 for date in dates:
