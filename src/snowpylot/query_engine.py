@@ -34,9 +34,10 @@ from .caaml_parser import caaml_parser
 from .snow_pit import SnowPit
 
 # Configuration constants
-DEFAULT_PITS_PATH = "demos/data/snowpits"
-DEFAULT_REQUEST_DELAY = 15  # seconds between requests to prevent rate limiting
+DEFAULT_PITS_PATH = "data/snowpits"
+DEFAULT_REQUEST_DELAY = 5  # seconds between requests to prevent rate limiting
 CHUNK_SIZE_DAYS = 7  # default chunk size in days for large datasets
+RESULTS_PER_PAGE = 1000  # default number of results per page
 
 # Create basic logger
 logging.basicConfig(level=logging.INFO)
@@ -72,7 +73,7 @@ class QueryFilter:
     state: Optional[str] = None
     username: Optional[str] = None
     organization_name: Optional[str] = None
-    per_page: int = 1000  # Default to 100 to match working implementation
+    per_page: int = RESULTS_PER_PAGE  # Default per page limit
     chunk: bool = False  # User-controlled chunking
     chunk_size_days: int = CHUNK_SIZE_DAYS  # Size of chunks in days
     max_retries: int = 3  # Maximum retry attempts for failed chunks
@@ -85,7 +86,6 @@ class ChunkInfo:
     chunk_id: str
     start_date: str
     end_date: str
-    estimated_pits: int
 
 
 @dataclass
@@ -114,7 +114,7 @@ class DryRunResult:
 
         chunk_details = "\n".join(
             [
-                f"    Chunk {i + 1}: {chunk.start_date} to {chunk.end_date} - {chunk.estimated_pits} pits"
+                f"    Chunk {i + 1}: {chunk.start_date} to {chunk.end_date}"
                 for i, chunk in enumerate(self.chunk_details)
             ]
         )
@@ -207,7 +207,7 @@ class QueryBuilder:
         params.append(f"AFFIL={query_filter.organization_name or ''}")
 
         # Per page parameter (use 100 like the working implementation)
-        per_page = min(query_filter.per_page, 100)
+        per_page = min(query_filter.per_page, RESULTS_PER_PAGE)
         params.append(f"per_page={per_page}")
 
         # Advanced query parameter (always empty)
@@ -279,10 +279,8 @@ class SnowPilotSession:
             logger.error(f"Authentication error: {e}")
             return False
 
-    def download_caaml_data(
-        self, query_string: str, max_retries: int = 3
-    ) -> Optional[bytes]:
-        """Download CAAML data from snowpilot.org (single request with all pits)"""
+    def _create_authenticated_session(self) -> Optional[requests.Session]:
+        """Create an authenticated session for making requests"""
         user = os.environ.get("SNOWPILOT_USER")
         password = os.environ.get("SNOWPILOT_PASSWORD")
 
@@ -299,26 +297,45 @@ class SnowPilotSession:
             "op": "Log in",
         }
 
+        session = requests.Session()
+        try:
+            login_response = session.post(self.login_url, data=payload)
+            if login_response.status_code == 200:
+                return session
+            else:
+                logger.error(f"Login failed with status {login_response.status_code}")
+                return None
+        except requests.RequestException as e:
+            logger.error(f"Authentication error: {e}")
+            return None
+
+    def _make_caaml_request(
+        self, query_string: str, max_retries: int = 3
+    ) -> tuple[Optional[bytes], Optional[str]]:
+        """
+        Make a CAAML request and return the data and filename
+
+        Args:
+            query_string: The query string to request
+            max_retries: Maximum number of retry attempts
+
+        Returns:
+            Tuple of (data_bytes, filename) or (None, None) if failed
+        """
         for attempt in range(max_retries):
             try:
-                # Create a fresh session context
-                with requests.Session() as s:
-                    # Authenticate
-                    login_response = s.post(self.login_url, data=payload)
-                    if login_response.status_code != 200:
-                        logger.error(
-                            f"Login failed with status {login_response.status_code}"
+                # Create authenticated session
+                session = self._create_authenticated_session()
+                if not session:
+                    if attempt < max_retries - 1:
+                        logger.info(
+                            f"Retrying authentication... (attempt {attempt + 1}/{max_retries})"
                         )
-                        if attempt < max_retries - 1:
-                            logger.info(
-                                f"Retrying login... (attempt {attempt + 1}/{max_retries})"
-                            )
-                            time.sleep(
-                                self.request_delay * 2
-                            )  # Double delay for retries
-                            continue
-                        return None
+                        time.sleep(self.request_delay * 2)
+                        continue
+                    return None, None
 
+                with session as s:
                     logger.info(f"Requesting CAAML data with query: {query_string}")
                     self._enforce_rate_limit()
                     query_response = s.get(self.caaml_query_url + query_string)
@@ -339,9 +356,7 @@ class SnowPilotSession:
                         and query_response.status_code == 200
                     ):
                         # Extract filename from Content-Disposition header
-                        # Format: attachment; filename="filename.tar.gz"
                         try:
-                            # Parse the Content-Disposition header more robustly
                             match = re.search(
                                 r'filename="([^"]+)"', content_disposition
                             )
@@ -349,16 +364,16 @@ class SnowPilotSession:
                                 logger.error(
                                     f"Could not parse filename from Content-Disposition: '{content_disposition}'"
                                 )
-                                return None
+                                return None, None
 
                             full_filename = match.group(1)
 
-                            # Check if we got an empty result (just "_caaml.tar.gz" means no data)
+                            # Check if we got an empty result
                             if full_filename == "_caaml.tar.gz":
                                 logger.info(
-                                    f"No data available for the requested query - server returned empty filename"
+                                    "No data available for the requested query - server returned empty filename"
                                 )
-                                return None
+                                return None, None
 
                             # Remove the _caaml suffix if present
                             filename = full_filename.replace("_caaml", "")
@@ -368,7 +383,7 @@ class SnowPilotSession:
                                 logger.error(
                                     f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
                                 )
-                                return None
+                                return None, None
 
                             file_url = self.data_url + filename
 
@@ -378,7 +393,7 @@ class SnowPilotSession:
 
                             if file_response.status_code == 200:
                                 logger.info(f"CAAML download successful: {filename}")
-                                return file_response.content
+                                return file_response.content, filename
                             else:
                                 logger.warning(
                                     f"File download failed with status {file_response.status_code}"
@@ -387,43 +402,28 @@ class SnowPilotSession:
                                     logger.error(
                                         "403 Forbidden - possible rate limiting or authentication issue"
                                     )
-                                    logger.error(
-                                        "Consider adding delays between requests or checking credentials"
-                                    )
-                                    # For 403 errors, retry with longer delay
                                     if attempt < max_retries - 1:
                                         logger.info(
                                             f"Retrying after 403 error... (attempt {attempt + 1}/{max_retries})"
                                         )
-                                        time.sleep(
-                                            self.request_delay * 3
-                                        )  # Triple delay for 403 errors
+                                        time.sleep(self.request_delay * 3)
                                         continue
-                                return None
+                                return None, None
                         except Exception as e:
                             logger.error(
                                 f"Error parsing Content-Disposition header '{content_disposition}': {e}"
                             )
-                            return None
+                            return None, None
                     else:
-                        logger.warning(
-                            f"CAAML download failed with status {query_response.status_code}"
-                        )
                         if query_response.status_code == 403:
                             logger.error(
                                 "403 Forbidden - possible rate limiting or authentication issue"
                             )
-                            logger.error(
-                                "Try reducing query frequency or checking credentials"
-                            )
-                            # For 403 errors, retry with longer delay
                             if attempt < max_retries - 1:
                                 logger.info(
                                     f"Retrying after 403 error... (attempt {attempt + 1}/{max_retries})"
                                 )
-                                time.sleep(
-                                    self.request_delay * 3
-                                )  # Triple delay for 403 errors
+                                time.sleep(self.request_delay * 3)
                                 continue
                         elif query_response.status_code == 500:
                             logger.error(
@@ -433,222 +433,84 @@ class SnowPilotSession:
                             logger.error(
                                 "No Content-Disposition header found - query may have returned no results"
                             )
-                        return None
+                        return None, None
 
             except requests.RequestException as e:
-                logger.error(f"CAAML download error: {e}")
+                logger.error(f"CAAML request error: {e}")
                 if attempt < max_retries - 1:
                     logger.info(
                         f"Retrying after request exception... (attempt {attempt + 1}/{max_retries})"
                     )
                     time.sleep(self.request_delay * 2)
                     continue
-                return None
+                return None, None
 
         # If we get here, all retries failed
-        logger.error(f"Failed to download CAAML data after {max_retries} attempts")
-        return None
+        logger.error(f"Failed to make CAAML request after {max_retries} attempts")
+        return None, None
 
-    def preview_query(self, query_string: str, max_retries: int = 3) -> int:
+    def download_caaml_data(
+        self, query_string: str, max_retries: int = 3
+    ) -> Optional[bytes]:
+        """Download CAAML data from snowpilot.org"""
+        data, filename = self._make_caaml_request(query_string, max_retries)
+        return data
+
+    def estimate_pit_count(self, query_string: str, max_retries: int = 3) -> int:
         """
-        Preview a query to get the estimated count of pits
-        Downloads and counts the actual CAAML files
+        Estimate the number of pits for a query by downloading and counting files
+
+        Note: This downloads the actual data to count files. The snowpilot.org API
+        doesn't provide a metadata endpoint for counts without downloading.
 
         Args:
-            query_string: The query string to preview
+            query_string: The query string to estimate
             max_retries: Maximum number of retry attempts
 
         Returns:
-            Estimated number of pits that would be downloaded
+            Number of pits that would be downloaded (0 if failed or no data)
         """
-        user = os.environ.get("SNOWPILOT_USER")
-        password = os.environ.get("SNOWPILOT_PASSWORD")
+        data, filename = self._make_caaml_request(query_string, max_retries)
 
-        if not user or not password:
-            logger.error(
-                "SNOWPILOT_USER and SNOWPILOT_PASSWORD environment variables required"
-            )
+        if not data:
             return 0
 
-        payload = {
-            "name": user,
-            "pass": password,
-            "form_id": "user_login",
-            "op": "Log in",
-        }
+        # Extract and count CAAML files
+        try:
+            with tempfile.NamedTemporaryFile(
+                suffix=".tar.gz", delete=False
+            ) as temp_file:
+                temp_file.write(data)
+                temp_file_path = temp_file.name
 
-        for attempt in range(max_retries):
+            # Extract and count CAAML files
+            extract_path = temp_file_path.replace(".tar.gz", "")
+            with tarfile.open(temp_file_path, "r:gz") as tar:
+                tar.extractall(path=extract_path)
+
+            # Count CAAML files
+            pit_count = 0
+            for root, dirs, files in os.walk(extract_path):
+                for file in files:
+                    if file.endswith("caaml.xml"):
+                        pit_count += 1
+
+            # Clean up temporary files
+            shutil.rmtree(extract_path, ignore_errors=True)
+            os.remove(temp_file_path)
+
+            logger.info(f"Estimated {pit_count} pits for query")
+            return pit_count
+
+        except Exception as e:
+            logger.error(f"Error during pit count estimation: {e}")
+            # Clean up on error
             try:
-                # Create a fresh session context
-                with requests.Session() as s:
-                    # Authenticate
-                    login_response = s.post(self.login_url, data=payload)
-                    if login_response.status_code != 200:
-                        logger.error(
-                            f"Preview login failed with status {login_response.status_code}"
-                        )
-                        if attempt < max_retries - 1:
-                            logger.info(
-                                f"Retrying login... (attempt {attempt + 1}/{max_retries})"
-                            )
-                            time.sleep(self.request_delay * 2)
-                            continue
-                        return 0
-
-                    logger.info(f"Previewing query: {query_string}")
-
-                    # Try to get the CAAML data to see if it's available
-                    self._enforce_rate_limit()
-                    response = s.get(self.caaml_query_url + query_string)
-
-                    # Debug logging
-                    logger.debug(f"Preview response status: {response.status_code}")
-                    logger.debug(f"Preview response headers: {dict(response.headers)}")
-
-                    # Check if we got a successful response
-                    content_disposition = response.headers.get(
-                        "Content-Disposition", None
-                    )
-                    if content_disposition is not None and response.status_code == 200:
-                        # Extract filename from Content-Disposition header
-                        try:
-                            # Parse the Content-Disposition header more robustly
-                            match = re.search(
-                                r'filename="([^"]+)"', content_disposition
-                            )
-                            if not match:
-                                logger.error(
-                                    f"Could not parse filename from Content-Disposition: '{content_disposition}'"
-                                )
-                                return 0
-
-                            full_filename = match.group(1)
-
-                            # Check if we got an empty result (just "_caaml.tar.gz" means no data)
-                            if full_filename == "_caaml.tar.gz":
-                                logger.info(
-                                    f"No data available for the requested query - server returned empty filename"
-                                )
-                                return 0
-
-                            # Remove the _caaml suffix if present
-                            filename = full_filename.replace("_caaml", "")
-
-                            # Final validation
-                            if not filename or filename == ".tar.gz":
-                                logger.error(
-                                    f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
-                                )
-                                return 0
-
-                            file_url = self.data_url + filename
-
-                            # Download and extract the file to count pits
-                            file_response = s.get(file_url)
-                            if file_response.status_code == 200:
-                                # Create a temporary file to extract and count
-
-                                with tempfile.NamedTemporaryFile(
-                                    suffix=".tar.gz", delete=False
-                                ) as temp_file:
-                                    temp_file.write(file_response.content)
-                                    temp_file_path = temp_file.name
-
-                                try:
-                                    # Extract and count CAAML files
-                                    extract_path = temp_file_path.replace(".tar.gz", "")
-                                    with tarfile.open(temp_file_path, "r:gz") as tar:
-                                        tar.extractall(path=extract_path)
-
-                                    # Count CAAML files
-                                    pit_count = 0
-                                    for root, dirs, files in os.walk(extract_path):
-                                        for file in files:
-                                            if file.endswith("caaml.xml"):
-                                                pit_count += 1
-
-                                    # Clean up temporary files
-                                    shutil.rmtree(extract_path, ignore_errors=True)
-                                    os.remove(temp_file_path)
-
-                                    logger.info(
-                                        f"Preview found exactly {pit_count} pits"
-                                    )
-                                    return pit_count
-
-                                except Exception as e:
-                                    logger.error(
-                                        f"Error during preview extraction: {e}"
-                                    )
-                                    # Clean up on error
-                                    try:
-                                        shutil.rmtree(extract_path, ignore_errors=True)
-                                        os.remove(temp_file_path)
-                                    except:
-                                        pass
-                                    return 0
-                            else:
-                                logger.warning(
-                                    f"Preview file download failed with status {file_response.status_code}"
-                                )
-                                if file_response.status_code == 403:
-                                    logger.error(
-                                        "403 Forbidden - possible rate limiting or authentication issue"
-                                    )
-                                    logger.error(
-                                        "Consider adding delays between requests or checking credentials"
-                                    )
-                                    # For 403 errors, retry with longer delay
-                                    if attempt < max_retries - 1:
-                                        logger.info(
-                                            f"Retrying after 403 error... (attempt {attempt + 1}/{max_retries})"
-                                        )
-                                        time.sleep(self.request_delay * 3)
-                                        continue
-                                return 0
-                        except Exception as e:
-                            logger.error(
-                                f"Error parsing Content-Disposition header '{content_disposition}': {e}"
-                            )
-                            return 0
-                    else:
-                        if response.status_code == 403:
-                            logger.error(
-                                "403 Forbidden - possible rate limiting or authentication issue"
-                            )
-                            logger.error(
-                                "Try reducing query frequency or checking credentials"
-                            )
-                            # For 403 errors, retry with longer delay
-                            if attempt < max_retries - 1:
-                                logger.info(
-                                    f"Retrying after 403 error... (attempt {attempt + 1}/{max_retries})"
-                                )
-                                time.sleep(self.request_delay * 3)
-                                continue
-                        elif content_disposition is None:
-                            logger.info(
-                                f"Preview shows no data available - no Content-Disposition header (status: {response.status_code})"
-                            )
-                        else:
-                            logger.info(
-                                f"Preview shows no data available (status: {response.status_code})"
-                            )
-                        return 0
-
-            except requests.RequestException as e:
-                logger.error(f"Preview request error: {e}")
-                if attempt < max_retries - 1:
-                    logger.info(
-                        f"Retrying after request exception... (attempt {attempt + 1}/{max_retries})"
-                    )
-                    time.sleep(self.request_delay * 2)
-                    continue
-                return 0
-
-        # If we get here, all retries failed
-        logger.error(f"Failed to preview query after {max_retries} attempts")
-        return 0
+                shutil.rmtree(extract_path, ignore_errors=True)
+                os.remove(temp_file_path)
+            except:
+                pass
+            return 0
 
 
 class QueryEngine:
@@ -745,7 +607,7 @@ class QueryEngine:
         if not will_be_chunked:
             # Single request - get count directly
             query_string = self.query_builder.build_caaml_query(query_filter)
-            estimated_count = self.session.preview_query(query_string)
+            estimated_count = self.session.estimate_pit_count(query_string)
 
             return DryRunResult(
                 query_filter=query_filter,
@@ -762,45 +624,27 @@ class QueryEngine:
             query_filter.chunk_size_days,
         )
 
-        logger.info(
-            f"Large dataset detected, checking {len(chunks)} chunks individually"
-        )
+        logger.info(f"Chunked query will use {len(chunks)} chunks")
 
         chunk_details = []
-        total_estimated_pits = 0
 
         for i, (chunk_start, chunk_end) in enumerate(chunks):
             chunk_id = f"{chunk_start}_{chunk_end}"
-
-            # Create chunk-specific query filter
-            chunk_filter = QueryFilter(
-                date_start=chunk_start,
-                date_end=chunk_end,
-                state=query_filter.state,
-                username=query_filter.username,
-                organization_name=query_filter.organization_name,
-                per_page=query_filter.per_page,
-                chunk=False,  # Don't chunk chunks
-            )
-
-            # Get count for this chunk
-            chunk_query_string = self.query_builder.build_caaml_query(chunk_filter)
-            chunk_estimated_count = self.session.preview_query(chunk_query_string)
 
             # Create chunk info
             chunk_info = ChunkInfo(
                 chunk_id=chunk_id,
                 start_date=chunk_start,
                 end_date=chunk_end,
-                estimated_pits=chunk_estimated_count,
             )
 
             chunk_details.append(chunk_info)
-            total_estimated_pits += chunk_estimated_count
 
-            logger.info(
-                f"Chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end} - {chunk_estimated_count} pits"
-            )
+            logger.info(f"Chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end}")
+
+        # Get overall estimate for the full query
+        query_string = self.query_builder.build_caaml_query(query_filter)
+        total_estimated_pits = self.session.estimate_pit_count(query_string)
 
         return DryRunResult(
             query_filter=query_filter,
@@ -935,7 +779,7 @@ class QueryEngine:
         should_chunk = self._should_chunk_query(query_filter)
 
         if should_chunk:
-            logger.info("Large dataset detected, using chunked download approach")
+            logger.info("Using chunked download approach")
             return self._query_chunked(query_filter, auto_approve, approval_threshold)
         else:
             logger.info("Small dataset, using standard download approach")
@@ -1238,7 +1082,7 @@ class QueryEngine:
                     date_start=query_filter.date_start,
                     date_end=query_filter.date_end,
                     state=query_filter.state,
-                    per_page=500,  # Try larger batch
+                    per_page=RESULTS_PER_PAGE,  # Try larger batch
                 )
                 larger_query_string = self.query_builder.build_caaml_query(
                     larger_filter
@@ -1359,7 +1203,7 @@ class QueryEngine:
         start_date: str,
         end_date: str,
         states: List[str] = None,
-        chunk_size_days: int = 30,
+        chunk_size_days: int = 7,
         max_retries: int = 3,
     ) -> QueryResult:
         """
@@ -1557,36 +1401,6 @@ def query_by_username(
     return engine.query_pits(query_filter, auto_approve=auto_approve)
 
 
-def download_large_dataset(
-    start_date: str,
-    end_date: str,
-    states: List[str] = None,
-    chunk_size_days: int = 30,
-    max_retries: int = 3,
-    output_dir: str = DEFAULT_PITS_PATH,
-) -> QueryResult:
-    """
-    Download a large dataset with chunking and progress tracking
-
-    Args:
-        start_date: Start date in YYYY-MM-DD format
-        end_date: End date in YYYY-MM-DD format
-        states: List of state codes (defaults to all supported states)
-        chunk_size_days: Size of chunks in days
-        max_retries: Maximum retry attempts for failed chunks
-        output_dir: Directory to save downloaded data
-
-    Returns:
-        QueryResult containing all downloaded pits
-
-    Example:
-        result = download_large_dataset("2019-09-01", "2024-08-31")
-    """
-    engine = QueryEngine(output_dir)
-    return engine.download_large_dataset(
-        start_date=start_date,
-        end_date=end_date,
-        states=states,
-        chunk_size_days=chunk_size_days,
-        max_retries=max_retries,
-    )
+# Example usage:
+# engine = QueryEngine("path/to/data")
+# result = engine.download_large_dataset("2019-09-01", "2024-08-31")

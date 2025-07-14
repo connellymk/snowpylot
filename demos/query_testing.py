@@ -19,8 +19,29 @@ else:
     print("   Please set SNOWPILOT_USER and SNOWPILOT_PASSWORD")
     sys.exit(1)
 
+print("\n=== Setting Up Download Location ===")
+# Ask user for custom download location
+default_path = "data/snowpits"
+custom_path = input(
+    f"Enter download folder path (press Enter for default: {default_path}): "
+).strip()
+
+if custom_path:
+    download_path = custom_path
+    print(f"✅ Using custom download path: {download_path}")
+else:
+    download_path = default_path
+    print(f"✅ Using default download path: {download_path}")
+
+# Show absolute path for clarity
+try:
+    abs_path = os.path.abspath(download_path)
+    print(f"   Absolute path: {abs_path}")
+except Exception as e:
+    print(f"   Warning: Could not determine absolute path: {e}")
+
 print("\n=== Testing Authentication ===")
-engine = QueryEngine()
+engine = QueryEngine(pits_path=download_path)
 auth_success = engine.session.authenticate()
 
 if auth_success:
@@ -32,27 +53,74 @@ else:
 
 print("\n=== Testing Dry Run Functionality ===")
 
-# Create query filter with 1-week chunking
-query_filter = QueryFilter(
+# Test both standard and chunked queries
+print("1. Testing standard (non-chunked) query:")
+standard_filter = QueryFilter(
     date_start="2023-01-01",
-    date_end="2023-01-31",
-    # state="MT",
+    date_end="2023-01-07",  # 1 week
+    state="MT",
+    chunk=False,  # Disable chunking
+)
+
+print("   Performing dry run for standard query...")
+standard_dry_run = engine.dry_run(standard_filter)
+print(f"\n{standard_dry_run}")
+
+print("\n2. Testing chunked query:")
+chunked_filter = QueryFilter(
+    date_start="2023-01-01",
+    date_end="2023-01-31",  # 1 month
     chunk=True,  # Enable chunking
     chunk_size_days=7,
 )
 
-# Perform dry run to see what would be downloaded
-print("Performing dry run...")
-dry_run_result = engine.dry_run(query_filter)
-print(f"\n{dry_run_result}")
+print("   Performing dry run for chunked query...")
+chunked_dry_run = engine.dry_run(chunked_filter)
+print(f"\n{chunked_dry_run}")
+
+print("\n=== Testing Pit Count Estimation ===")
+
+# Test the new estimate_pit_count method directly
+print("Testing direct pit count estimation (this downloads data to count files)...")
+query_string = engine.query_builder.build_caaml_query(standard_filter)
+estimated_count = engine.session.estimate_pit_count(query_string)
+print(f"Direct estimation result: {estimated_count} pits")
 
 print("\n=== Testing Large Dataset Download ===")
 
-# Ask user if they want to proceed with the actual download
-if dry_run_result.total_estimated_pits > 0:
+# Choose which query to use for the actual download
+print("Choose which query to use for actual download:")
+print("1. Standard query (1 week, no chunking)")
+print("2. Chunked query (1 month, with chunking)")
+print("3. Skip download")
+
+choice = input("Enter your choice (1/2/3): ").strip()
+
+if choice == "1":
+    selected_filter = standard_filter
+    selected_dry_run = standard_dry_run
+    query_type = "standard"
+elif choice == "2":
+    selected_filter = chunked_filter
+    selected_dry_run = chunked_dry_run
+    query_type = "chunked"
+elif choice == "3":
+    print("\n⏸️  Download skipped by user")
+    selected_filter = None
+else:
+    print("\n❌ Invalid choice, skipping download")
+    selected_filter = None
+
+if selected_filter and selected_dry_run.total_estimated_pits > 0:
+    print(f"\n--- {query_type.title()} Download Summary ---")
+    print(f"Query type: {query_type}")
+    print(f"Estimated pits: {selected_dry_run.total_estimated_pits}")
+    if selected_dry_run.will_be_chunked:
+        print(f"Will use chunking: {len(selected_dry_run.chunk_details)} chunks")
+
     proceed = (
         input(
-            f"\nDo you want to proceed with downloading {dry_run_result.total_estimated_pits} pits? (y/N): "
+            f"\nDo you want to proceed with downloading {selected_dry_run.total_estimated_pits} pits? (y/N): "
         )
         .lower()
         .strip()
@@ -60,12 +128,20 @@ if dry_run_result.total_estimated_pits > 0:
 
     if proceed in ["y", "yes"]:
         print("Starting download...")
-        result = engine.query_pits(query_filter, auto_approve=True)
+        result = engine.query_pits(selected_filter, auto_approve=True)
 
-        # Show summary statistics
+        # Show detailed summary statistics
         if result.snow_pits:
             print("\n--- Dataset Summary ---")
-            print(f"   Total pits: {len(result.snow_pits)}")
+            print(f"   Total pits downloaded: {len(result.snow_pits)}")
+            print(f"   Was chunked: {result.was_chunked}")
+
+            if result.was_chunked and result.chunk_results:
+                print(f"   Chunks processed: {len(result.chunk_results)}")
+                successful_chunks = sum(
+                    1 for chunk in result.chunk_results if chunk.get("success", False)
+                )
+                print(f"   Successful chunks: {successful_chunks}")
 
             # Group by state
             states = {}
@@ -81,16 +157,32 @@ if dry_run_result.total_estimated_pits > 0:
             for state in sorted(states.keys()):
                 print(f"     {state}: {states[state]} pits")
 
+            # Show download info
+            if result.download_info:
+                print("   Download details:")
+                for key, value in result.download_info.items():
+                    if key not in [
+                        "saved_files",
+                        "chunk_results",
+                    ]:  # Skip verbose details
+                        print(f"     {key}: {value}")
+
             print("\n✅ Download completed successfully!")
-            print(
-                f"\n💾 All data has been saved to the 'demos/data/snowpits/' directory"  # noqa: F541
-            )
-            print("🔄 Progress tracking allows resuming interrupted downloads")
+            print(f"\n💾 All data has been saved to the '{download_path}' directory")
+            if result.was_chunked:
+                print("🔄 Progress tracking allows resuming interrupted downloads")
         else:
             print("\n⚠️  No pits were downloaded (empty result)")
     else:
         print("\n⏸️  Download cancelled by user")
-else:
-    print("\n⚠️  No pits found for the specified query parameters")
+elif selected_filter:
+    print(f"\n⚠️  No pits found for the specified query parameters")
 
 print("\n✅ Test completed successfully!")
+print("\n--- Summary of Changes ---")
+print("📋 This updated test showcases the refactored query engine with:")
+print("   • Enhanced dry_run functionality with detailed chunk information")
+print("   • Consolidated authentication and session management")
+print("   • Improved pit count estimation method")
+print("   • Better separation between standard and chunked queries")
+print("   • More comprehensive result reporting")
