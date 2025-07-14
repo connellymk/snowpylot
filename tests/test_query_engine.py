@@ -64,7 +64,7 @@ class TestQueryFilter(unittest.TestCase):
         self.assertIsNone(query_filter.pit_name)
         self.assertIsNone(query_filter.date_start)
         self.assertIsNone(query_filter.date_end)
-        self.assertEqual(query_filter.per_page, 1000)
+        self.assertEqual(query_filter.per_page, 100)
 
 
 class TestQueryBuilder(unittest.TestCase):
@@ -104,7 +104,7 @@ class TestQueryBuilder(unittest.TestCase):
         self.assertIn("STATE=CO", query_string)
         self.assertIn("OBS_DATE_MIN=2024-01-01", query_string)
         self.assertIn("OBS_DATE_MAX=2024-01-31", query_string)
-        self.assertIn("per_page=1000", query_string)
+        self.assertIn("per_page=100", query_string)
 
     def test_unsupported_state(self):
         """Test handling of unsupported state"""

@@ -4,6 +4,14 @@ Query Engine for SnowPilot.org CAAML Data
 This module provides tools for downloading and querying CAAML snow pit data
 from snowpilot.org with flexible filtering capabilities, including automatic
 handling of large datasets through chunking and progress tracking.
+
+Supported API Filter Fields:
+- pit_name: Filter by pit name
+- state: Filter by state code (e.g., 'MT', 'CO', 'WY')
+- date_start/date_end: Filter by date range (YYYY-MM-DD format)
+- username: Filter by username
+- organization_name: Filter by organization name
+- per_page: Number of results per page (max 100)
 """
 
 import json
@@ -26,10 +34,9 @@ from .caaml_parser import caaml_parser
 from .snow_pit import SnowPit
 
 # Configuration constants
-DEFAULT_PITS_PATH = "data/snowpits"
+DEFAULT_PITS_PATH = "demos/data/snowpits"
 DEFAULT_REQUEST_DELAY = 15  # seconds between requests to prevent rate limiting
-LARGE_DATASET_THRESHOLD = 30  # days - threshold for automatic chunking
-CHUNK_SIZE_DAYS = 30  # default chunk size in days for large datasets
+CHUNK_SIZE_DAYS = 7  # default chunk size in days for large datasets
 
 # Create basic logger
 logging.basicConfig(level=logging.INFO)
@@ -38,9 +45,23 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QueryFilter:
-    """Data class for query filter parameters"""
+    """
+    Data class for query filter parameters
 
-    pit_id: Optional[str] = None
+    Fields used in API calls (sent to snowpilot.org):
+    - pit_name: Filter by pit name
+    - state: Filter by state code (e.g., 'MT', 'CO', 'WY')
+    - date_start/date_end: Filter by date range (YYYY-MM-DD format)
+    - username: Filter by username
+    - organization_name: Filter by organization name
+    - per_page: Number of results per page (max 100)
+
+    Configuration fields:
+    - chunk: Enable chunking for large datasets (user-controlled)
+    - chunk_size_days: Size of chunks in days (used when chunk=True)
+    - max_retries: Maximum retry attempts for failed chunks
+    """
+
     pit_name: Optional[str] = None
     date_start: Optional[Union[str, datetime, Any]] = (
         None  # Format: YYYY-MM-DD or datetime-like object
@@ -48,47 +69,67 @@ class QueryFilter:
     date_end: Optional[Union[str, datetime, Any]] = (
         None  # Format: YYYY-MM-DD or datetime-like object
     )
-    country: Optional[str] = None
     state: Optional[str] = None
-    region: Optional[str] = None
-    user_id: Optional[str] = None
     username: Optional[str] = None
-    organization_id: Optional[str] = None
     organization_name: Optional[str] = None
-    elevation_min: Optional[float] = None
-    elevation_max: Optional[float] = None
-    aspect: Optional[str] = None
-    per_page: int = 100  # Default to 100 to match working implementation
-    auto_chunk: bool = True  # Automatically chunk large datasets
+    per_page: int = 1000  # Default to 100 to match working implementation
+    chunk: bool = False  # User-controlled chunking
     chunk_size_days: int = CHUNK_SIZE_DAYS  # Size of chunks in days
     max_retries: int = 3  # Maximum retry attempts for failed chunks
 
 
 @dataclass
-class QueryPreview:
-    """Data class for query preview information"""
+class ChunkInfo:
+    """Information about a single chunk"""
 
-    estimated_count: int = 0
+    chunk_id: str
+    start_date: str
+    end_date: str
+    estimated_pits: int
+
+
+@dataclass
+class DryRunResult:
+    """Data class for dry run information"""
+
     query_filter: Optional[QueryFilter] = None
-    preview_info: Dict[str, Any] = field(default_factory=dict)
+    total_estimated_pits: int = 0
     will_be_chunked: bool = False
-    estimated_chunks: int = 0
+    chunk_size_days: int = 0
+    chunk_details: List[ChunkInfo] = field(default_factory=list)
 
     def __str__(self) -> str:
-        """Return a formatted preview string"""
-        chunk_info = f"\n  Will be chunked: {self.will_be_chunked}"
-        if self.will_be_chunked:
-            chunk_info += f" ({self.estimated_chunks} chunks)"
+        """Return a formatted dry run string"""
+        if not self.will_be_chunked:
+            return (
+                f"Dry Run Result:\n"
+                f"  Query Type: Single request\n"
+                f"  Date range: {self.query_filter.date_start} to {self.query_filter.date_end}\n"
+                f"  State: {self.query_filter.state or 'Any'}\n"
+                f"  Username: {self.query_filter.username or 'Any'}\n"
+                f"  Organization: {self.query_filter.organization_name or 'Any'}\n"
+                f"  Estimated pits: {self.total_estimated_pits}\n"
+                f"  Format: CAAML"
+            )
+
+        chunk_details = "\n".join(
+            [
+                f"    Chunk {i + 1}: {chunk.start_date} to {chunk.end_date} - {chunk.estimated_pits} pits"
+                for i, chunk in enumerate(self.chunk_details)
+            ]
+        )
 
         return (
-            f"Query Preview:\n"
-            f"  Estimated pits: {self.estimated_count}\n"
+            f"Dry Run Result:\n"
+            f"  Query Type: Chunked ({len(self.chunk_details)} chunks)\n"
+            f"  Chunk size: {self.chunk_size_days} days\n"
             f"  Date range: {self.query_filter.date_start} to {self.query_filter.date_end}\n"
             f"  State: {self.query_filter.state or 'Any'}\n"
             f"  Username: {self.query_filter.username or 'Any'}\n"
             f"  Organization: {self.query_filter.organization_name or 'Any'}\n"
-            f"  Elevation: {self.query_filter.elevation_min or 'Any'} - {self.query_filter.elevation_max or 'Any'}m\n"
-            f"  Format: CAAML{chunk_info}"
+            f"  Total estimated pits: {self.total_estimated_pits}\n"
+            f"  Format: CAAML\n"
+            f"  Chunk breakdown:\n{chunk_details}"
         )
 
 
@@ -100,7 +141,7 @@ class QueryResult:
     total_count: int = 0
     query_filter: Optional[QueryFilter] = None
     download_info: Dict[str, Any] = field(default_factory=dict)
-    preview: Optional[QueryPreview] = None
+    dry_run_result: Optional[DryRunResult] = None
     chunk_results: List[Dict[str, Any]] = field(default_factory=list)
     was_chunked: bool = False
 
@@ -680,66 +721,94 @@ class QueryEngine:
         return chunks
 
     def _should_chunk_query(self, query_filter: QueryFilter) -> bool:
-        """Determine if a query should be chunked based on date range size"""
-        if not query_filter.auto_chunk:
-            return False
+        """Determine if a query should be chunked based on user configuration"""
+        return query_filter.chunk
 
-        if not query_filter.date_start or not query_filter.date_end:
-            return False
-
-        try:
-            start_date = datetime.strptime(query_filter.date_start, "%Y-%m-%d")
-            end_date = datetime.strptime(query_filter.date_end, "%Y-%m-%d")
-            date_range_days = (end_date - start_date).days
-
-            return date_range_days > LARGE_DATASET_THRESHOLD
-        except:
-            return False
-
-    def preview_query(self, query_filter: QueryFilter) -> QueryPreview:
+    def dry_run(self, query_filter: QueryFilter) -> DryRunResult:
         """
-        Preview a query to see how many pits would be downloaded
+        Perform a dry run to see how many chunks will be run and pits per chunk
 
         Args:
             query_filter: Filter parameters for the query
 
         Returns:
-            QueryPreview containing estimated count and filter info
+            DryRunResult containing detailed chunk information
         """
-        logger.info(f"Previewing query with filter: {query_filter}")
+        logger.info(f"Performing dry run with filter: {query_filter}")
 
         # Validate and set default date range if not provided
         query_filter = self._validate_and_set_dates(query_filter)
 
         # Check if this will be chunked
         will_be_chunked = self._should_chunk_query(query_filter)
-        estimated_chunks = 0
 
-        if will_be_chunked:
-            chunks = self._generate_date_chunks(
-                query_filter.date_start,
-                query_filter.date_end,
-                query_filter.chunk_size_days,
+        if not will_be_chunked:
+            # Single request - get count directly
+            query_string = self.query_builder.build_caaml_query(query_filter)
+            estimated_count = self.session.preview_query(query_string)
+
+            return DryRunResult(
+                query_filter=query_filter,
+                total_estimated_pits=estimated_count,
+                will_be_chunked=False,
+                chunk_size_days=0,
+                chunk_details=[],
             )
-            estimated_chunks = len(chunks)
-            logger.info(f"Large dataset detected, will use {estimated_chunks} chunks")
 
-        # Build query string for preview
-        query_string = self.query_builder.build_caaml_query(query_filter)
-
-        # Get estimated count
-        estimated_count = self.session.preview_query(query_string)
-
-        # Create preview object
-        preview = QueryPreview(
-            estimated_count=estimated_count,
-            query_filter=query_filter,
-            preview_info={"format": "CAAML", "query_string": query_string},
-            will_be_chunked=will_be_chunked,
-            estimated_chunks=estimated_chunks,
+        # Chunked request - check each chunk individually
+        chunks = self._generate_date_chunks(
+            query_filter.date_start,
+            query_filter.date_end,
+            query_filter.chunk_size_days,
         )
 
-        return preview
+        logger.info(
+            f"Large dataset detected, checking {len(chunks)} chunks individually"
+        )
+
+        chunk_details = []
+        total_estimated_pits = 0
+
+        for i, (chunk_start, chunk_end) in enumerate(chunks):
+            chunk_id = f"{chunk_start}_{chunk_end}"
+
+            # Create chunk-specific query filter
+            chunk_filter = QueryFilter(
+                date_start=chunk_start,
+                date_end=chunk_end,
+                state=query_filter.state,
+                username=query_filter.username,
+                organization_name=query_filter.organization_name,
+                per_page=query_filter.per_page,
+                chunk=False,  # Don't chunk chunks
+            )
+
+            # Get count for this chunk
+            chunk_query_string = self.query_builder.build_caaml_query(chunk_filter)
+            chunk_estimated_count = self.session.preview_query(chunk_query_string)
+
+            # Create chunk info
+            chunk_info = ChunkInfo(
+                chunk_id=chunk_id,
+                start_date=chunk_start,
+                end_date=chunk_end,
+                estimated_pits=chunk_estimated_count,
+            )
+
+            chunk_details.append(chunk_info)
+            total_estimated_pits += chunk_estimated_count
+
+            logger.info(
+                f"Chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end} - {chunk_estimated_count} pits"
+            )
+
+        return DryRunResult(
+            query_filter=query_filter,
+            total_estimated_pits=total_estimated_pits,
+            will_be_chunked=True,
+            chunk_size_days=query_filter.chunk_size_days,
+            chunk_details=chunk_details,
+        )
 
     def _convert_to_date_string(self, date_input: Union[str, datetime, Any]) -> str:
         """
@@ -876,17 +945,20 @@ class QueryEngine:
         self, query_filter: QueryFilter, auto_approve: bool, approval_threshold: int
     ) -> QueryResult:
         """Standard query for small datasets"""
-        # Get preview first
-        preview = self.preview_query(query_filter)
+        # Get dry run first
+        dry_run_result = self.dry_run(query_filter)
 
         # Check if approval is needed
-        if not auto_approve and preview.estimated_count > approval_threshold:
-            print(f"\n{preview}")
+        if (
+            not auto_approve
+            and dry_run_result.total_estimated_pits > approval_threshold
+        ):
+            print(f"\n{dry_run_result}")
             print(
-                f"\nThis query will download approximately {preview.estimated_count} pits."
+                f"\nThis query will download approximately {dry_run_result.total_estimated_pits} pits."
             )
 
-            if preview.estimated_count > 1000:
+            if dry_run_result.total_estimated_pits > 1000:
                 print(
                     "⚠️  WARNING: This is a large download that may take significant time and bandwidth."
                 )
@@ -899,38 +971,43 @@ class QueryEngine:
 
             if response not in ["y", "yes"]:
                 logger.info("Download cancelled by user")
-                result = QueryResult(query_filter=query_filter, preview=preview)
+                result = QueryResult(
+                    query_filter=query_filter, dry_run_result=dry_run_result
+                )
                 result.download_info["status"] = "cancelled"
                 result.download_info["reason"] = "User cancelled download"
                 return result
         elif not auto_approve:
             print(
-                f"Preview: Will download approximately {preview.estimated_count} pits"
+                f"Dry run: Will download approximately {dry_run_result.total_estimated_pits} pits"
             )
 
         # Execute the CAAML query
         result = self._query_caaml(query_filter)
 
-        # Add preview info to result
-        result.preview = preview
+        # Add dry run info to result
+        result.dry_run_result = dry_run_result
         return result
 
     def _query_chunked(
         self, query_filter: QueryFilter, auto_approve: bool, approval_threshold: int
     ) -> QueryResult:
         """Chunked query for large datasets"""
-        # Get preview first
-        preview = self.preview_query(query_filter)
+        # Get dry run first
+        dry_run_result = self.dry_run(query_filter)
 
         # Check if approval is needed
-        if not auto_approve and preview.estimated_count > approval_threshold:
-            print(f"\n{preview}")
+        if (
+            not auto_approve
+            and dry_run_result.total_estimated_pits > approval_threshold
+        ):
+            print(f"\n{dry_run_result}")
             print(
-                f"\nThis query will download approximately {preview.estimated_count} pits "
-                f"using {preview.estimated_chunks} chunks."
+                f"\nThis query will download approximately {dry_run_result.total_estimated_pits} pits "
+                f"using {len(dry_run_result.chunk_details)} chunks."
             )
 
-            if preview.estimated_count > 1000:
+            if dry_run_result.total_estimated_pits > 1000:
                 print(
                     "⚠️  WARNING: This is a large download that may take significant time and bandwidth."
                 )
@@ -944,27 +1021,35 @@ class QueryEngine:
             if response not in ["y", "yes"]:
                 logger.info("Download cancelled by user")
                 result = QueryResult(
-                    query_filter=query_filter, preview=preview, was_chunked=True
+                    query_filter=query_filter,
+                    dry_run_result=dry_run_result,
+                    was_chunked=True,
                 )
                 result.download_info["status"] = "cancelled"
                 result.download_info["reason"] = "User cancelled download"
                 return result
         elif not auto_approve:
             print(
-                f"Preview: Will download approximately {preview.estimated_count} pits "
-                f"using {preview.estimated_chunks} chunks"
+                f"Dry run: Will download approximately {dry_run_result.total_estimated_pits} pits "
+                f"using {len(dry_run_result.chunk_details)} chunks"
             )
 
         # Execute the chunked download
         result = self._download_chunked_dataset(query_filter)
 
-        # Add preview info to result
-        result.preview = preview
+        # Add dry run info to result
+        result.dry_run_result = dry_run_result
         result.was_chunked = True
         return result
 
     def _download_chunked_dataset(self, query_filter: QueryFilter) -> QueryResult:
         """Download dataset using chunking approach"""
+        # Validate that date range is provided for chunking
+        if not query_filter.date_start or not query_filter.date_end:
+            raise ValueError(
+                "Date range (date_start and date_end) must be provided when chunking is enabled"
+            )
+
         # Generate date chunks
         chunks = self._generate_date_chunks(
             query_filter.date_start, query_filter.date_end, query_filter.chunk_size_days
@@ -1009,11 +1094,8 @@ class QueryEngine:
                 state=query_filter.state,
                 username=query_filter.username,
                 organization_name=query_filter.organization_name,
-                elevation_min=query_filter.elevation_min,
-                elevation_max=query_filter.elevation_max,
-                aspect=query_filter.aspect,
                 per_page=query_filter.per_page,
-                auto_chunk=False,  # Don't chunk chunks
+                chunk=False,  # Don't chunk chunks
             )
 
             # Retry logic for failed chunks
@@ -1241,91 +1323,19 @@ class QueryEngine:
     def _parse_caaml_pits(
         self, caaml_files: List[str], query_filter: QueryFilter
     ) -> List[SnowPit]:
-        """Parse individual CAAML files and apply filters"""
+        """Parse individual CAAML files"""
         pits = []
 
         for file_path in caaml_files:
             try:
                 pit = caaml_parser(file_path)
-
-                # Apply filters
-                if self._matches_filter(pit, query_filter):
-                    pits.append(pit)
-
+                pits.append(pit)
             except Exception as e:
                 logger.error(f"Error parsing CAAML file {file_path}: {e}")
                 continue
 
-        logger.info(
-            f"Parsed and filtered {len(pits)} pits from {len(caaml_files)} files"
-        )
+        logger.info(f"Parsed {len(pits)} pits from {len(caaml_files)} files")
         return pits
-
-    def _matches_filter(self, pit: SnowPit, query_filter: QueryFilter) -> bool:
-        """Check if a snow pit matches the query filter"""
-
-        # Filter by pit ID
-        if query_filter.pit_id and pit.core_info.pit_id != query_filter.pit_id:
-            return False
-
-        # Filter by pit name
-        if (
-            query_filter.pit_name
-            and pit.core_info.pit_name
-            and query_filter.pit_name.lower() not in pit.core_info.pit_name.lower()
-        ):
-            return False
-
-        # Filter by country
-        if (
-            query_filter.country
-            and pit.core_info.location.country
-            and pit.core_info.location.country != query_filter.country
-        ):
-            return False
-
-        # Filter by state/region
-        if (
-            query_filter.state
-            and pit.core_info.location.region
-            and pit.core_info.location.region != query_filter.state
-        ):
-            return False
-
-        # Filter by username
-        if (
-            query_filter.username
-            and pit.core_info.user.username
-            and query_filter.username.lower() not in pit.core_info.user.username.lower()
-        ):
-            return False
-
-        # Filter by organization name
-        if (
-            query_filter.organization_name
-            and pit.core_info.user.operation_name
-            and query_filter.organization_name.lower()
-            not in pit.core_info.user.operation_name.lower()
-        ):
-            return False
-
-        # Filter by elevation
-        if pit.core_info.location.elevation:
-            elevation = pit.core_info.location.elevation[0]
-            if query_filter.elevation_min and elevation < query_filter.elevation_min:
-                return False
-            if query_filter.elevation_max and elevation > query_filter.elevation_max:
-                return False
-
-        # Filter by aspect
-        if (
-            query_filter.aspect
-            and pit.core_info.location.aspect
-            and pit.core_info.location.aspect != query_filter.aspect
-        ):
-            return False
-
-        return True
 
     def search_local_pits(self, query_filter: QueryFilter) -> QueryResult:
         """Search locally saved pit files"""
@@ -1368,11 +1378,11 @@ class QueryEngine:
         if states is None:
             states = list(self.query_builder.supported_states.keys())
 
-        # Create query filter that will force chunking
+        # Create query filter with chunking enabled
         query_filter = QueryFilter(
             date_start=start_date,
             date_end=end_date,
-            auto_chunk=True,
+            chunk=True,
             chunk_size_days=chunk_size_days,
             max_retries=max_retries,
         )
@@ -1388,7 +1398,7 @@ class QueryEngine:
                 date_start=start_date,
                 date_end=end_date,
                 state=state,
-                auto_chunk=True,
+                chunk=True,
                 chunk_size_days=chunk_size_days,
                 max_retries=max_retries,
             )
@@ -1428,56 +1438,74 @@ class QueryEngine:
 
 
 # Convenience functions for common use cases
-def preview_by_date_range(
-    start_date: str, end_date: str, state: str = None
-) -> QueryPreview:
+def dry_run_by_date_range(
+    start_date: str,
+    end_date: str,
+    state: str = None,
+    chunk: bool = False,
+    chunk_size_days: int = CHUNK_SIZE_DAYS,
+) -> DryRunResult:
     """
-    Preview pits by date range
+    Perform a dry run for pits by date range
 
     Args:
         start_date: Start date in YYYY-MM-DD format
         end_date: End date in YYYY-MM-DD format
         state: State code (e.g. 'MT', 'CO', 'WY'). If None, defaults to 'MT'
+        chunk: If True, use chunking for large datasets
+        chunk_size_days: Size of chunks in days (used when chunk=True)
 
     Returns:
-        QueryPreview containing estimated count and filter info
+        DryRunResult containing detailed chunk information
 
     Example:
-        preview = preview_by_date_range("2023-01-01", "2023-01-31", state="MT")
+        dry_run = dry_run_by_date_range("2023-01-01", "2023-01-31", state="MT")
     """
-    query_filter = QueryFilter(date_start=start_date, date_end=end_date, state=state)
+    query_filter = QueryFilter(
+        date_start=start_date,
+        date_end=end_date,
+        state=state,
+        chunk=chunk,
+        chunk_size_days=chunk_size_days,
+    )
 
     engine = QueryEngine()
-    return engine.preview_query(query_filter)
+    return engine.dry_run(query_filter)
 
 
 def query_by_date_range(
-    start_date: str, end_date: str, state: str = None, auto_approve: bool = False
+    start_date: str,
+    end_date: str,
+    state: str = None,
+    auto_approve: bool = False,
+    chunk: bool = False,
+    chunk_size_days: int = CHUNK_SIZE_DAYS,
 ) -> QueryResult:
     """
-    Query pits by date range with automatic chunking for large datasets
+    Query pits by date range with optional chunking for large datasets
 
     Args:
         start_date: Start date in YYYY-MM-DD format
         end_date: End date in YYYY-MM-DD format
         state: State code (e.g. 'MT', 'CO', 'WY'). If None, defaults to 'MT'
         auto_approve: If True, skip approval prompt
+        chunk: If True, use chunking for large datasets
+        chunk_size_days: Size of chunks in days (used when chunk=True)
 
     Returns:
         QueryResult containing snow pit data
 
     Example:
         result = query_by_date_range("2023-01-01", "2023-01-31", state="MT")
+        result = query_by_date_range("2019-01-01", "2024-01-31", state="MT", chunk=True, chunk_size_days=30)
     """
-    query_filter = QueryFilter(date_start=start_date, date_end=end_date, state=state)
-
-    engine = QueryEngine()
-    return engine.query_pits(query_filter, auto_approve=auto_approve)
-
-
-def query_by_pit_id(pit_id: str, auto_approve: bool = True) -> QueryResult:
-    """Query a specific pit by ID (auto-approved by default for single pits)"""
-    query_filter = QueryFilter(pit_id=pit_id)
+    query_filter = QueryFilter(
+        date_start=start_date,
+        date_end=end_date,
+        state=state,
+        chunk=chunk,
+        chunk_size_days=chunk_size_days,
+    )
 
     engine = QueryEngine()
     return engine.query_pits(query_filter, auto_approve=auto_approve)
@@ -1489,6 +1517,8 @@ def query_by_organization(
     date_end: str = None,
     state: str = None,
     auto_approve: bool = False,
+    chunk: bool = False,
+    chunk_size_days: int = CHUNK_SIZE_DAYS,
 ) -> QueryResult:
     """Query pits by organization"""
     query_filter = QueryFilter(
@@ -1496,6 +1526,8 @@ def query_by_organization(
         date_start=date_start,
         date_end=date_end,
         state=state,
+        chunk=chunk,
+        chunk_size_days=chunk_size_days,
     )
 
     engine = QueryEngine()
@@ -1508,35 +1540,17 @@ def query_by_username(
     date_end: str = None,
     state: str = None,
     auto_approve: bool = False,
+    chunk: bool = False,
+    chunk_size_days: int = CHUNK_SIZE_DAYS,
 ) -> QueryResult:
     """Query pits by username"""
     query_filter = QueryFilter(
-        username=username, date_start=date_start, date_end=date_end, state=state
-    )
-
-    engine = QueryEngine()
-    return engine.query_pits(query_filter, auto_approve=auto_approve)
-
-
-def query_by_location(
-    country: str = None,
-    state: str = None,
-    elevation_min: float = None,
-    elevation_max: float = None,
-    aspect: str = None,
-    date_start: str = None,
-    date_end: str = None,
-    auto_approve: bool = False,
-) -> QueryResult:
-    """Query pits by location parameters"""
-    query_filter = QueryFilter(
-        country=country,
-        state=state,
-        elevation_min=elevation_min,
-        elevation_max=elevation_max,
-        aspect=aspect,
+        username=username,
         date_start=date_start,
         date_end=date_end,
+        state=state,
+        chunk=chunk,
+        chunk_size_days=chunk_size_days,
     )
 
     engine = QueryEngine()
@@ -1552,7 +1566,7 @@ def download_large_dataset(
     output_dir: str = DEFAULT_PITS_PATH,
 ) -> QueryResult:
     """
-    Download a large dataset with automatic chunking and progress tracking
+    Download a large dataset with chunking and progress tracking
 
     Args:
         start_date: Start date in YYYY-MM-DD format
