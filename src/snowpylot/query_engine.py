@@ -52,6 +52,7 @@ class QueryFilter:
     Fields used in API calls (sent to snowpilot.org):
     - pit_name: Filter by pit name
     - state: Filter by state code (e.g., 'MT', 'CO', 'WY')
+    - states: List of state codes for multi-state queries (e.g., ['MT', 'CO', 'WY'])
     - date_start/date_end: Filter by date range (YYYY-MM-DD format)
     - username: Filter by username
     - organization_name: Filter by organization name
@@ -71,6 +72,7 @@ class QueryFilter:
         None  # Format: YYYY-MM-DD or datetime-like object
     )
     state: Optional[str] = None
+    states: Optional[List[str]] = None  # For multi-state queries
     username: Optional[str] = None
     organization_name: Optional[str] = None
     per_page: int = RESULTS_PER_PAGE  # Default per page limit
@@ -144,6 +146,8 @@ class QueryResult:
     dry_run_result: Optional[DryRunResult] = None
     chunk_results: List[Dict[str, Any]] = field(default_factory=list)
     was_chunked: bool = False
+    status: str = "success"  # "success", "failed", "no_data"
+    error_message: Optional[str] = None
 
 
 @dataclass
@@ -948,7 +952,7 @@ class QueryEngine:
                 try:
                     chunk_result = self._query_caaml(chunk_filter)
 
-                    if chunk_result.snow_pits:
+                    if chunk_result.status == "success":
                         all_pits.extend(chunk_result.snow_pits)
 
                         # Track chunk results
@@ -974,14 +978,50 @@ class QueryEngine:
                             f"Chunk {chunk_id} completed successfully: {len(chunk_result.snow_pits)} pits"
                         )
                         break
-                    else:
+                    elif chunk_result.status == "no_data":
+                        # Legitimate case of no data for this chunk
                         logger.info(f"Chunk {chunk_id} returned no pits")
+
+                        # Track chunk results
+                        chunk_info = {
+                            "chunk_id": chunk_id,
+                            "start_date": chunk_start,
+                            "end_date": chunk_end,
+                            "pits_count": 0,
+                            "success": True,
+                        }
+                        progress.chunk_results.append(chunk_info)
+                        result.chunk_results.append(chunk_info)
+
                         progress.completed_chunks.append(chunk_id)
                         chunk_success = True
                         break
+                    else:
+                        # Failed chunk - treat as failure and retry
+                        error_msg = chunk_result.error_message or "Unknown error"
+                        logger.error(f"Chunk {chunk_id} failed: {error_msg}")
+
+                        # Don't break here - let it retry
+                        if attempt < query_filter.max_retries - 1:
+                            delay = 30 * (attempt + 1)
+                            logger.info(
+                                f"Retrying chunk {chunk_id} in {delay} seconds..."
+                            )
+                            time.sleep(delay)
+                            continue
+                        else:
+                            # Final failure after all retries
+                            logger.error(
+                                f"Chunk {chunk_id} failed after {query_filter.max_retries} attempts"
+                            )
+                            if chunk_id not in progress.failed_chunks:
+                                progress.failed_chunks.append(chunk_id)
+                            break
 
                 except Exception as e:
-                    logger.error(f"Chunk {chunk_id} attempt {attempt + 1} failed: {e}")
+                    logger.error(
+                        f"Chunk {chunk_id} attempt {attempt + 1} failed with exception: {e}"
+                    )
 
                     if attempt < query_filter.max_retries - 1:
                         delay = 30 * (attempt + 1)
@@ -1135,6 +1175,16 @@ class QueryEngine:
                 f"Downloaded {result.total_count} pits total from {len(saved_files)} archives"
             )
 
+            # Set status based on results
+            if result.total_count > 0:
+                result.status = "success"
+            else:
+                result.status = "no_data"
+        else:
+            # No data received - this could be due to server error or no data available
+            result.status = "failed"
+            result.error_message = "No data received from server (possible server error or no data available)"
+
         return result
 
     def _extract_caaml_files(self, archive_path: str) -> List[str]:
@@ -1198,209 +1248,274 @@ class QueryEngine:
 
         return result
 
-    def download_large_dataset(
+    def download_results(
         self,
-        start_date: str,
-        end_date: str,
-        states: List[str] = None,
-        chunk_size_days: int = 7,
-        max_retries: int = 3,
+        query_filter: QueryFilter,
+        auto_approve: bool = False,
+        approval_threshold: int = 100,
     ) -> QueryResult:
         """
-        Convenience method for downloading large datasets
+        Download snow pit data for any query filter - handles all dataset sizes uniformly
+
+        This method replaces the old download_large_dataset function and provides a unified
+        interface for downloading data regardless of dataset size. It automatically handles
+        chunking, multi-state queries, and progress tracking as needed.
 
         Args:
-            start_date: Start date in YYYY-MM-DD format
-            end_date: End date in YYYY-MM-DD format
-            states: List of state codes to query (defaults to all supported states)
-            chunk_size_days: Size of chunks in days
-            max_retries: Maximum retry attempts for failed chunks
+            query_filter: Filter parameters for the query
+            auto_approve: If True, skip approval prompt
+            approval_threshold: Number of pits above which approval is required
 
         Returns:
-            QueryResult containing all downloaded pits
-        """
-        if states is None:
-            states = list(self.query_builder.supported_states.keys())
+            QueryResult containing snow pit data
 
-        # Create query filter with chunking enabled
-        query_filter = QueryFilter(
-            date_start=start_date,
-            date_end=end_date,
-            chunk=True,
-            chunk_size_days=chunk_size_days,
-            max_retries=max_retries,
+        Examples:
+            # Single state query
+            query_filter = QueryFilter(
+                date_start="2023-01-01",
+                date_end="2023-01-31",
+                state="MT",
+                chunk=True,
+                chunk_size_days=7
+            )
+            result = engine.download_results(query_filter)
+
+            # Multi-state query
+            query_filter = QueryFilter(
+                date_start="2023-01-01",
+                date_end="2023-01-31",
+                states=["MT", "CO", "WY"],
+                chunk=True,
+                chunk_size_days=7
+            )
+            result = engine.download_results(query_filter)
+        """
+        logger.info(f"Starting download with filter: {query_filter}")
+
+        # Handle multi-state queries if states list is provided
+        if hasattr(query_filter, "states") and query_filter.states:
+            return self._download_multi_state_results(
+                query_filter, auto_approve, approval_threshold
+            )
+
+        # Single state or no state specified - use standard query
+        return self.query_pits(query_filter, auto_approve, approval_threshold)
+
+    def _download_multi_state_results(
+        self,
+        query_filter: QueryFilter,
+        auto_approve: bool = False,
+        approval_threshold: int = 100,
+    ) -> QueryResult:
+        """
+        Download results for multiple states uniformly
+
+        Args:
+            query_filter: Filter parameters with states list
+            auto_approve: If True, skip approval prompt
+            approval_threshold: Number of pits above which approval is required
+
+        Returns:
+            QueryResult containing combined data from all states
+        """
+        states = (
+            query_filter.states
+            if hasattr(query_filter, "states")
+            else [query_filter.state]
         )
 
+        # Get dry run estimate for all states combined
+        total_estimated_pits = 0
+        for state in states:
+            state_filter = QueryFilter(
+                pit_name=query_filter.pit_name,
+                date_start=query_filter.date_start,
+                date_end=query_filter.date_end,
+                state=state,
+                username=query_filter.username,
+                organization_name=query_filter.organization_name,
+                per_page=query_filter.per_page,
+                chunk=query_filter.chunk,
+                chunk_size_days=query_filter.chunk_size_days,
+                max_retries=query_filter.max_retries,
+            )
+            dry_run = self.dry_run(state_filter)
+            total_estimated_pits += dry_run.total_estimated_pits
+
+        # Check if approval is needed for the combined total
+        if not auto_approve and total_estimated_pits > approval_threshold:
+            print(f"\nMulti-state download summary:")
+            print(f"  States: {', '.join(states)}")
+            print(f"  Date range: {query_filter.date_start} to {query_filter.date_end}")
+            print(f"  Total estimated pits: {total_estimated_pits}")
+
+            if query_filter.chunk:
+                print(f"  Will use chunking: {query_filter.chunk_size_days} day chunks")
+
+            if total_estimated_pits > 1000:
+                print(
+                    "⚠️  WARNING: This is a large download that may take significant time and bandwidth."
+                )
+
+            response = (
+                input(
+                    f"\nDo you want to proceed with downloading {total_estimated_pits} pits from {len(states)} states? (y/N): "
+                )
+                .lower()
+                .strip()
+            )
+
+            if response not in ["y", "yes"]:
+                logger.info("Download cancelled by user")
+                result = QueryResult(
+                    query_filter=query_filter,
+                    was_chunked=query_filter.chunk,
+                )
+                result.download_info["status"] = "cancelled"
+                result.download_info["reason"] = "User cancelled multi-state download"
+                return result
+
+        # Download data for each state
         all_pits = []
         all_chunk_results = []
+        successful_states = []
+        failed_states = []
 
-        # Query each state separately to avoid overwhelming the server
         for state in states:
             logger.info(f"Downloading data for state: {state}")
 
             state_filter = QueryFilter(
-                date_start=start_date,
-                date_end=end_date,
+                pit_name=query_filter.pit_name,
+                date_start=query_filter.date_start,
+                date_end=query_filter.date_end,
                 state=state,
-                chunk=True,
-                chunk_size_days=chunk_size_days,
-                max_retries=max_retries,
+                username=query_filter.username,
+                organization_name=query_filter.organization_name,
+                per_page=query_filter.per_page,
+                chunk=query_filter.chunk,
+                chunk_size_days=query_filter.chunk_size_days,
+                max_retries=query_filter.max_retries,
             )
 
             try:
                 state_result = self.query_pits(state_filter, auto_approve=True)
                 all_pits.extend(state_result.snow_pits)
-                all_chunk_results.extend(state_result.chunk_results)
 
+                if state_result.chunk_results:
+                    all_chunk_results.extend(state_result.chunk_results)
+
+                successful_states.append(state)
                 logger.info(
                     f"State {state} completed: {len(state_result.snow_pits)} pits"
                 )
 
             except Exception as e:
                 logger.error(f"Failed to download data for state {state}: {e}")
+                failed_states.append(state)
                 continue
 
-        # Combine results
+        # Create combined result
         result = QueryResult(
             snow_pits=all_pits,
             total_count=len(all_pits),
             query_filter=query_filter,
             chunk_results=all_chunk_results,
-            was_chunked=True,
+            was_chunked=query_filter.chunk,
         )
 
         result.download_info = {
+            "multi_state": True,
             "total_states": len(states),
-            "successful_states": len(
-                [r for r in all_chunk_results if r.get("success", False)]
-            ),
+            "successful_states": len(successful_states),
+            "failed_states": len(failed_states),
+            "states_processed": successful_states,
+            "states_failed": failed_states,
             "total_pits": len(all_pits),
-            "chunked": True,
+            "chunked": query_filter.chunk,
         }
+
+        # Print summary
+        print(f"\n{'=' * 60}")
+        print("📊 MULTI-STATE DOWNLOAD SUMMARY")
+        print(f"{'=' * 60}")
+        print(f"✅ Successful states: {len(successful_states)}/{len(states)}")
+        if successful_states:
+            print(f"   States: {', '.join(successful_states)}")
+        if failed_states:
+            print(f"❌ Failed states: {len(failed_states)}")
+            print(f"   States: {', '.join(failed_states)}")
+        print(f"📊 Total pits downloaded: {len(all_pits)}")
+        print(f"⏱️  Date range: {query_filter.date_start} to {query_filter.date_end}")
+        if query_filter.chunk:
+            print(f"📦 Used chunking: {query_filter.chunk_size_days} day chunks")
 
         return result
 
 
-# Convenience functions for common use cases
-def dry_run_by_date_range(
-    start_date: str,
-    end_date: str,
-    state: str = None,
-    chunk: bool = False,
-    chunk_size_days: int = CHUNK_SIZE_DAYS,
-) -> DryRunResult:
-    """
-    Perform a dry run for pits by date range
+# Example usage showing the flexible QueryFilter API:
+"""
+Common Usage Examples:
 
-    Args:
-        start_date: Start date in YYYY-MM-DD format
-        end_date: End date in YYYY-MM-DD format
-        state: State code (e.g. 'MT', 'CO', 'WY'). If None, defaults to 'MT'
-        chunk: If True, use chunking for large datasets
-        chunk_size_days: Size of chunks in days (used when chunk=True)
+# Basic single state query
+engine = QueryEngine()
+query_filter = QueryFilter(
+    date_start="2023-01-01",
+    date_end="2023-01-31",
+    state="MT"
+)
+result = engine.download_results(query_filter)
 
-    Returns:
-        DryRunResult containing detailed chunk information
+# Organization-specific query with date range
+query_filter = QueryFilter(
+    organization_name="Bridger Bowl Ski Patrol",
+    date_start="2023-01-01",
+    date_end="2023-01-31",
+    state="MT"
+)
+result = engine.download_results(query_filter)
 
-    Example:
-        dry_run = dry_run_by_date_range("2023-01-01", "2023-01-31", state="MT")
-    """
-    query_filter = QueryFilter(
-        date_start=start_date,
-        date_end=end_date,
-        state=state,
-        chunk=chunk,
-        chunk_size_days=chunk_size_days,
-    )
+# Username query with multiple filters
+query_filter = QueryFilter(
+    username="john_doe",
+    date_start="2023-01-01",
+    date_end="2023-01-31",
+    state="MT",
+    organization_name="Bridger Bowl Ski Patrol"
+)
+result = engine.download_results(query_filter)
 
-    engine = QueryEngine()
-    return engine.dry_run(query_filter)
+# Large dataset with chunking (single state)
+query_filter = QueryFilter(
+    date_start="2019-01-01",
+    date_end="2024-01-31",
+    state="MT",
+    chunk=True,
+    chunk_size_days=30
+)
+result = engine.download_results(query_filter, auto_approve=True)
 
+# Multi-state query with chunking
+query_filter = QueryFilter(
+    date_start="2023-01-01",
+    date_end="2023-12-31",
+    states=["MT", "CO", "WY"],
+    chunk=True,
+    chunk_size_days=7
+)
+result = engine.download_results(query_filter)
 
-def query_by_date_range(
-    start_date: str,
-    end_date: str,
-    state: str = None,
-    auto_approve: bool = False,
-    chunk: bool = False,
-    chunk_size_days: int = CHUNK_SIZE_DAYS,
-) -> QueryResult:
-    """
-    Query pits by date range with optional chunking for large datasets
+# All supported states for large dataset
+all_states = ["MT", "CO", "WY", "UT", "ID", "WA", "OR", "CA", "AK", "NH", "VT", "ME", "NY"]
+query_filter = QueryFilter(
+    date_start="2023-01-01",
+    date_end="2023-12-31",
+    states=all_states,
+    chunk=True,
+    chunk_size_days=7
+)
+result = engine.download_results(query_filter, auto_approve=True)
 
-    Args:
-        start_date: Start date in YYYY-MM-DD format
-        end_date: End date in YYYY-MM-DD format
-        state: State code (e.g. 'MT', 'CO', 'WY'). If None, defaults to 'MT'
-        auto_approve: If True, skip approval prompt
-        chunk: If True, use chunking for large datasets
-        chunk_size_days: Size of chunks in days (used when chunk=True)
-
-    Returns:
-        QueryResult containing snow pit data
-
-    Example:
-        result = query_by_date_range("2023-01-01", "2023-01-31", state="MT")
-        result = query_by_date_range("2019-01-01", "2024-01-31", state="MT", chunk=True, chunk_size_days=30)
-    """
-    query_filter = QueryFilter(
-        date_start=start_date,
-        date_end=end_date,
-        state=state,
-        chunk=chunk,
-        chunk_size_days=chunk_size_days,
-    )
-
-    engine = QueryEngine()
-    return engine.query_pits(query_filter, auto_approve=auto_approve)
-
-
-def query_by_organization(
-    organization_name: str,
-    date_start: str = None,
-    date_end: str = None,
-    state: str = None,
-    auto_approve: bool = False,
-    chunk: bool = False,
-    chunk_size_days: int = CHUNK_SIZE_DAYS,
-) -> QueryResult:
-    """Query pits by organization"""
-    query_filter = QueryFilter(
-        organization_name=organization_name,
-        date_start=date_start,
-        date_end=date_end,
-        state=state,
-        chunk=chunk,
-        chunk_size_days=chunk_size_days,
-    )
-
-    engine = QueryEngine()
-    return engine.query_pits(query_filter, auto_approve=auto_approve)
-
-
-def query_by_username(
-    username: str,
-    date_start: str = None,
-    date_end: str = None,
-    state: str = None,
-    auto_approve: bool = False,
-    chunk: bool = False,
-    chunk_size_days: int = CHUNK_SIZE_DAYS,
-) -> QueryResult:
-    """Query pits by username"""
-    query_filter = QueryFilter(
-        username=username,
-        date_start=date_start,
-        date_end=date_end,
-        state=state,
-        chunk=chunk,
-        chunk_size_days=chunk_size_days,
-    )
-
-    engine = QueryEngine()
-    return engine.query_pits(query_filter, auto_approve=auto_approve)
-
-
-# Example usage:
-# engine = QueryEngine("path/to/data")
-# result = engine.download_large_dataset("2019-09-01", "2024-08-31")
+# Dry run to see what would be downloaded
+dry_run_result = engine.dry_run(query_filter)
+print(dry_run_result)
+"""

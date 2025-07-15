@@ -6,12 +6,13 @@ This test suite verifies that the query engine works correctly with the existing
 codebase and handles various scenarios properly.
 """
 
-import os
-import sys
-import tempfile
 import unittest
+import tempfile
+import os
 from unittest.mock import Mock, patch, MagicMock
-from datetime import datetime, timedelta
+from datetime import datetime
+import sys
+import shutil
 
 # Add the src directory to the path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
@@ -22,10 +23,9 @@ from snowpylot.query_engine import (
     QueryResult,
     QueryBuilder,
     SnowPilotSession,
-    query_by_date_range,
-    query_by_pit_id,
-    query_by_organization,
-    query_by_location,
+    DryRunResult,
+    ChunkInfo,
+    ProgressTracker,
 )
 from snowpylot.snow_pit import SnowPit
 from snowpylot.caaml_parser import caaml_parser
@@ -302,86 +302,6 @@ class TestLocalSearch(unittest.TestCase):
         self.assertEqual(result.download_info["files_searched"], 2)
 
 
-class TestConvenienceFunctions(unittest.TestCase):
-    """Test convenience functions"""
-
-    @patch("snowpylot.query_engine.QueryEngine")
-    def test_query_by_date_range(self, mock_engine_class):
-        """Test query_by_date_range function"""
-        mock_engine = Mock()
-        mock_result = QueryResult()
-        mock_engine.query_pits.return_value = mock_result
-        mock_engine_class.return_value = mock_engine
-
-        result = query_by_date_range("2024-01-01", "2024-01-31", state="MT")
-
-        self.assertEqual(result, mock_result)
-        mock_engine.query_pits.assert_called_once()
-
-        # Check that the query filter was created correctly
-        call_args = mock_engine.query_pits.call_args[0][0]
-        self.assertEqual(call_args.date_start, "2024-01-01")
-        self.assertEqual(call_args.date_end, "2024-01-31")
-        self.assertEqual(call_args.state, "MT")
-
-    @patch("snowpylot.query_engine.QueryEngine")
-    def test_query_by_pit_id(self, mock_engine_class):
-        """Test query_by_pit_id function"""
-        mock_engine = Mock()
-        mock_result = QueryResult()
-        mock_engine.query_pits.return_value = mock_result
-        mock_engine_class.return_value = mock_engine
-
-        result = query_by_pit_id("13720")
-
-        self.assertEqual(result, mock_result)
-
-        # Check that the query filter was created correctly
-        call_args = mock_engine.query_pits.call_args[0][0]
-        self.assertEqual(call_args.pit_id, "13720")
-
-    @patch("snowpylot.query_engine.QueryEngine")
-    def test_query_by_organization(self, mock_engine_class):
-        """Test query_by_organization function"""
-        mock_engine = Mock()
-        mock_result = QueryResult()
-        mock_engine.query_pits.return_value = mock_result
-        mock_engine_class.return_value = mock_engine
-
-        result = query_by_organization(
-            "Test Organization", date_start="2024-01-01", date_end="2024-01-31"
-        )
-
-        self.assertEqual(result, mock_result)
-
-        # Check that the query filter was created correctly
-        call_args = mock_engine.query_pits.call_args[0][0]
-        self.assertEqual(call_args.organization_name, "Test Organization")
-        self.assertEqual(call_args.date_start, "2024-01-01")
-        self.assertEqual(call_args.date_end, "2024-01-31")
-
-    @patch("snowpylot.query_engine.QueryEngine")
-    def test_query_by_location(self, mock_engine_class):
-        """Test query_by_location function"""
-        mock_engine = Mock()
-        mock_result = QueryResult()
-        mock_engine.query_pits.return_value = mock_result
-        mock_engine_class.return_value = mock_engine
-
-        result = query_by_location(
-            country="US", state="MT", elevation_min=2000, elevation_max=3000
-        )
-
-        self.assertEqual(result, mock_result)
-
-        # Check that the query filter was created correctly
-        call_args = mock_engine.query_pits.call_args[0][0]
-        self.assertEqual(call_args.country, "US")
-        self.assertEqual(call_args.state, "MT")
-        self.assertEqual(call_args.elevation_min, 2000)
-        self.assertEqual(call_args.elevation_max, 3000)
-
-
 class TestIntegrationWithExistingCode(unittest.TestCase):
     """Test integration with existing SnowPylot code"""
 
@@ -418,6 +338,180 @@ class TestIntegrationWithExistingCode(unittest.TestCase):
             self.assertEqual(parsed_pit.core_info.user.username, "benschmidt5")
         else:
             self.skipTest("Test CAAML file not found")
+
+
+class TestQueryEngineAPI(unittest.TestCase):
+    """Test main QueryEngine API with different QueryFilter combinations"""
+
+    def setUp(self):
+        """Set up test fixtures"""
+        self.temp_dir = tempfile.mkdtemp()
+        self.engine = QueryEngine(pits_path=self.temp_dir)
+
+    def tearDown(self):
+        """Clean up test fixtures"""
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_date_range_query(self, mock_session_class):
+        """Test date range query using QueryFilter"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 5
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            date_start="2024-01-01", date_end="2024-01-31", state="MT"
+        )
+
+        # Test dry run
+        dry_run_result = self.engine.dry_run(query_filter)
+        self.assertIsInstance(dry_run_result, DryRunResult)
+        self.assertEqual(dry_run_result.query_filter.date_start, "2024-01-01")
+        self.assertEqual(dry_run_result.query_filter.date_end, "2024-01-31")
+        self.assertEqual(dry_run_result.query_filter.state, "MT")
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_organization_query(self, mock_session_class):
+        """Test organization query using QueryFilter"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 3
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            organization_name="Test Organization",
+            date_start="2024-01-01",
+            date_end="2024-01-31",
+            state="MT",
+        )
+
+        # Test dry run
+        dry_run_result = self.engine.dry_run(query_filter)
+        self.assertIsInstance(dry_run_result, DryRunResult)
+        self.assertEqual(
+            dry_run_result.query_filter.organization_name, "Test Organization"
+        )
+        self.assertEqual(dry_run_result.query_filter.date_start, "2024-01-01")
+        self.assertEqual(dry_run_result.query_filter.state, "MT")
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_username_query(self, mock_session_class):
+        """Test username query using QueryFilter"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 2
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            username="testuser",
+            date_start="2024-01-01",
+            date_end="2024-01-31",
+            state="MT",
+        )
+
+        # Test dry run
+        dry_run_result = self.engine.dry_run(query_filter)
+        self.assertIsInstance(dry_run_result, DryRunResult)
+        self.assertEqual(dry_run_result.query_filter.username, "testuser")
+        self.assertEqual(dry_run_result.query_filter.date_start, "2024-01-01")
+        self.assertEqual(dry_run_result.query_filter.state, "MT")
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_combined_filters_query(self, mock_session_class):
+        """Test query with multiple combined filters"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 1
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            username="testuser",
+            organization_name="Test Organization",
+            date_start="2024-01-01",
+            date_end="2024-01-31",
+            state="MT",
+            pit_name="Test Pit",
+        )
+
+        # Test dry run
+        dry_run_result = self.engine.dry_run(query_filter)
+        self.assertIsInstance(dry_run_result, DryRunResult)
+        self.assertEqual(dry_run_result.query_filter.username, "testuser")
+        self.assertEqual(
+            dry_run_result.query_filter.organization_name, "Test Organization"
+        )
+        self.assertEqual(dry_run_result.query_filter.pit_name, "Test Pit")
+        self.assertEqual(dry_run_result.query_filter.state, "MT")
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_chunked_query(self, mock_session_class):
+        """Test chunked query using QueryFilter"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 10
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            date_start="2024-01-01",
+            date_end="2024-01-31",
+            state="MT",
+            chunk=True,
+            chunk_size_days=7,
+        )
+
+        # Test dry run
+        dry_run_result = self.engine.dry_run(query_filter)
+        self.assertIsInstance(dry_run_result, DryRunResult)
+        self.assertTrue(dry_run_result.will_be_chunked)
+        self.assertEqual(dry_run_result.chunk_size_days, 7)
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_download_results_single_state(self, mock_session_class):
+        """Test download_results method with single state"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 5
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            date_start="2024-01-01", date_end="2024-01-31", state="MT"
+        )
+
+        # Test download_results (should delegate to query_pits)
+        result = self.engine.download_results(query_filter, auto_approve=True)
+        self.assertIsInstance(result, QueryResult)
+        self.assertEqual(result.query_filter.state, "MT")
+
+    @patch("snowpylot.query_engine.SnowPilotSession")
+    def test_download_results_multi_state(self, mock_session_class):
+        """Test download_results method with multiple states"""
+        mock_session = Mock()
+        mock_session.authenticate.return_value = True
+        mock_session.download_caaml_data.return_value = None
+        mock_session.estimate_pit_count.return_value = 3
+        mock_session_class.return_value = mock_session
+
+        query_filter = QueryFilter(
+            date_start="2024-01-01",
+            date_end="2024-01-31",
+            states=["MT", "CO", "WY"],
+            chunk=True,
+            chunk_size_days=7,
+        )
+
+        # Test multi-state download
+        result = self.engine.download_results(query_filter, auto_approve=True)
+        self.assertIsInstance(result, QueryResult)
+        self.assertEqual(result.query_filter.states, ["MT", "CO", "WY"])
+        self.assertTrue(result.download_info.get("multi_state", False))
+        self.assertEqual(result.download_info.get("total_states", 0), 3)
 
 
 if __name__ == "__main__":

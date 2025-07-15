@@ -92,9 +92,10 @@ print("\n=== Testing Large Dataset Download ===")
 print("Choose which query to use for actual download:")
 print("1. Standard query (1 week, no chunking)")
 print("2. Chunked query (1 month, with chunking)")
-print("3. Skip download")
+print("3. Multi-state query (3 states, with chunking)")
+print("4. Skip download")
 
-choice = input("Enter your choice (1/2/3): ").strip()
+choice = input("Enter your choice (1/2/3/4): ").strip()
 
 if choice == "1":
     selected_filter = standard_filter
@@ -105,36 +106,81 @@ elif choice == "2":
     selected_dry_run = chunked_dry_run
     query_type = "chunked"
 elif choice == "3":
+    # Multi-state query example
+    multi_state_filter = QueryFilter(
+        date_start="2023-01-01",
+        date_end="2023-01-31",
+        states=["MT", "CO", "WY"],
+        chunk=True,
+        chunk_size_days=7,
+    )
+
+    print("   Creating multi-state query for MT, CO, WY...")
+    print("   Note: This will estimate pit counts for all states combined...")
+
+    selected_filter = multi_state_filter
+    selected_dry_run = None  # Multi-state dry run is handled differently
+    query_type = "multi-state"
+elif choice == "4":
     print("\n⏸️  Download skipped by user")
     selected_filter = None
 else:
     print("\n❌ Invalid choice, skipping download")
     selected_filter = None
 
-if selected_filter and selected_dry_run.total_estimated_pits > 0:
-    print(f"\n--- {query_type.title()} Download Summary ---")
-    print(f"Query type: {query_type}")
-    print(f"Estimated pits: {selected_dry_run.total_estimated_pits}")
-    if selected_dry_run.will_be_chunked:
-        print(f"Will use chunking: {len(selected_dry_run.chunk_details)} chunks")
+if selected_filter:
+    if query_type == "multi-state":
+        print(f"\n--- Multi-State Download ---")
+        print(f"Query type: {query_type}")
+        print(f"States: {', '.join(selected_filter.states)}")
+        print(f"Date range: {selected_filter.date_start} to {selected_filter.date_end}")
+        print(f"Will use chunking: {selected_filter.chunk_size_days} day chunks")
 
-    proceed = (
-        input(
-            f"\nDo you want to proceed with downloading {selected_dry_run.total_estimated_pits} pits? (y/N): "
+        proceed = (
+            input(f"\nDo you want to proceed with multi-state download? (y/N): ")
+            .lower()
+            .strip()
         )
-        .lower()
-        .strip()
-    )
+    else:
+        print(f"\n--- {query_type.title()} Download Summary ---")
+        print(f"Query type: {query_type}")
+        print(f"Estimated pits: {selected_dry_run.total_estimated_pits}")
+        if selected_dry_run.will_be_chunked:
+            print(f"Will use chunking: {len(selected_dry_run.chunk_details)} chunks")
+
+        proceed = (
+            input(
+                f"\nDo you want to proceed with downloading {selected_dry_run.total_estimated_pits} pits? (y/N): "
+            )
+            .lower()
+            .strip()
+        )
 
     if proceed in ["y", "yes"]:
         print("Starting download...")
-        result = engine.query_pits(selected_filter, auto_approve=True)
+
+        # Use the unified download_results method for all types
+        result = engine.download_results(selected_filter, auto_approve=True)
 
         # Show detailed summary statistics
         if result.snow_pits:
             print("\n--- Dataset Summary ---")
             print(f"   Total pits downloaded: {len(result.snow_pits)}")
             print(f"   Was chunked: {result.was_chunked}")
+
+            # Show multi-state info if applicable
+            if result.download_info.get("multi_state", False):
+                print(
+                    f"   Multi-state download: {result.download_info.get('successful_states', 0)}/{result.download_info.get('total_states', 0)} states successful"
+                )
+                if result.download_info.get("states_processed"):
+                    print(
+                        f"   Successful states: {', '.join(result.download_info['states_processed'])}"
+                    )
+                if result.download_info.get("states_failed"):
+                    print(
+                        f"   Failed states: {', '.join(result.download_info['states_failed'])}"
+                    )
 
             if result.was_chunked and result.chunk_results:
                 print(f"   Chunks processed: {len(result.chunk_results)}")
@@ -164,6 +210,8 @@ if selected_filter and selected_dry_run.total_estimated_pits > 0:
                     if key not in [
                         "saved_files",
                         "chunk_results",
+                        "states_processed",
+                        "states_failed",
                     ]:  # Skip verbose details
                         print(f"     {key}: {value}")
 
@@ -171,6 +219,8 @@ if selected_filter and selected_dry_run.total_estimated_pits > 0:
             print(f"\n💾 All data has been saved to the '{download_path}' directory")
             if result.was_chunked:
                 print("🔄 Progress tracking allows resuming interrupted downloads")
+            if result.download_info.get("multi_state", False):
+                print("🌐 Multi-state data has been combined into a single result")
         else:
             print("\n⚠️  No pits were downloaded (empty result)")
     else:
@@ -181,6 +231,8 @@ elif selected_filter:
 print("\n✅ Test completed successfully!")
 print("\n--- Summary of Changes ---")
 print("📋 This updated test showcases the refactored query engine with:")
+print("   • Unified download_results method for all dataset sizes")
+print("   • Multi-state query support with automatic state handling")
 print("   • Enhanced dry_run functionality with detailed chunk information")
 print("   • Consolidated authentication and session management")
 print("   • Improved pit count estimation method")
