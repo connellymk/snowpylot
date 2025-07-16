@@ -5,6 +5,11 @@ This module provides tools for downloading and querying CAAML snow pit data
 from snowpilot.org with flexible filtering capabilities, including automatic
 handling of large datasets through chunking and progress tracking.
 
+The query engine automatically handles snowpilot.org's exclusive end date behavior
+by applying a +1 day offset to all end dates, ensuring user-specified date ranges
+work as expected (e.g., querying from 2023-01-01 to 2023-01-01 returns data for
+that entire day).
+
 Supported API Filter Fields:
 - pit_name: Filter by pit name
 - state: Filter by state code (e.g., 'MT', 'CO', 'WY')
@@ -34,10 +39,54 @@ from .caaml_parser import caaml_parser
 from .snow_pit import SnowPit
 
 # Configuration constants
+
+# File and path settings
 DEFAULT_PITS_PATH = "data/snowpits"
+
+# Request and rate limiting settings
 DEFAULT_REQUEST_DELAY = 5  # seconds between requests to prevent rate limiting
+DEFAULT_MAX_RETRIES = 1  # default maximum retry attempts for requests
+
+# Data chunking settings
 CHUNK_SIZE_DAYS = 7  # default chunk size in days for large datasets
-RESULTS_PER_PAGE = 1000  # default number of results per page
+MIN_CHUNK_SIZE_DAYS = 1  # minimum chunk size (now supported with offset approach)
+RESULTS_PER_PAGE = 100  # default number of results per page (max allowed by API: 100)
+
+# URL endpoints
+SNOWPILOT_BASE_URL = "https://snowpilot.org"
+SNOWPILOT_LOGIN_PATH = "/user/login"
+SNOWPILOT_CAAML_QUERY_PATH = "/avscience-query-caaml.xml?"
+SNOWPILOT_DATA_URL = "https://snowpilot.org/sites/default/files/tmp/"
+
+# Default date range settings
+DEFAULT_DATE_RANGE_DAYS = 7  # default date range when dates not provided
+MAX_DATE_RANGE_DAYS = 730  # warning threshold for very large date ranges (2 years)
+
+# Approval and warning thresholds
+DEFAULT_APPROVAL_THRESHOLD = 100  # number of pits above which approval is required
+LARGE_DOWNLOAD_WARNING_THRESHOLD = 1000  # threshold for showing large download warning
+
+# Retry delay multipliers
+RETRY_DELAY_MULTIPLIER_AUTH = 2  # multiplier for auth retry delays
+RETRY_DELAY_MULTIPLIER_403 = 3  # multiplier for 403 error retry delays
+CHUNK_RETRY_BASE_DELAY = 30  # base delay in seconds for chunk retry attempts
+
+# Supported state codes and names
+SUPPORTED_STATES = {
+    "MT": "Montana",
+    "CO": "Colorado",
+    "WY": "Wyoming",
+    "UT": "Utah",
+    "ID": "Idaho",
+    "WA": "Washington",
+    "OR": "Oregon",
+    "CA": "California",
+    "AK": "Alaska",
+    "NH": "New Hampshire",
+    "VT": "Vermont",
+    "ME": "Maine",
+    "NY": "New York",
+}
 
 # Create basic logger
 logging.basicConfig(level=logging.INFO)
@@ -54,6 +103,8 @@ class QueryFilter:
     - state: Filter by state code (e.g., 'MT', 'CO', 'WY')
     - states: List of state codes for multi-state queries (e.g., ['MT', 'CO', 'WY'])
     - date_start/date_end: Filter by date range (YYYY-MM-DD format)
+      Note: The query engine automatically adds +1 day to end_date to handle the API's
+      exclusive end date behavior, so user-specified ranges work as expected.
     - username: Filter by username
     - organization_name: Filter by organization name
     - per_page: Number of results per page (max 100)
@@ -78,7 +129,7 @@ class QueryFilter:
     per_page: int = RESULTS_PER_PAGE  # Default per page limit
     chunk: bool = False  # User-controlled chunking
     chunk_size_days: int = CHUNK_SIZE_DAYS  # Size of chunks in days
-    max_retries: int = 3  # Maximum retry attempts for failed chunks
+    max_retries: int = DEFAULT_MAX_RETRIES  # Maximum retry attempts for failed chunks
 
 
 @dataclass
@@ -88,6 +139,7 @@ class ChunkInfo:
     chunk_id: str
     start_date: str
     end_date: str
+    pit_count: int = 0
 
 
 @dataclass
@@ -95,7 +147,7 @@ class DryRunResult:
     """Data class for dry run information"""
 
     query_filter: Optional[QueryFilter] = None
-    total_estimated_pits: int = 0
+    total_pits: int = 0
     will_be_chunked: bool = False
     chunk_size_days: int = 0
     chunk_details: List[ChunkInfo] = field(default_factory=list)
@@ -110,13 +162,13 @@ class DryRunResult:
                 f"  State: {self.query_filter.state or 'Any'}\n"
                 f"  Username: {self.query_filter.username or 'Any'}\n"
                 f"  Organization: {self.query_filter.organization_name or 'Any'}\n"
-                f"  Estimated pits: {self.total_estimated_pits}\n"
+                f"  Total pits: {self.total_pits}\n"
                 f"  Format: CAAML"
             )
 
         chunk_details = "\n".join(
             [
-                f"    Chunk {i + 1}: {chunk.start_date} to {chunk.end_date}"
+                f"    Chunk {i + 1}: {chunk.start_date} to {chunk.end_date} ({chunk.pit_count} pits)"
                 for i, chunk in enumerate(self.chunk_details)
             ]
         )
@@ -129,7 +181,7 @@ class DryRunResult:
             f"  State: {self.query_filter.state or 'Any'}\n"
             f"  Username: {self.query_filter.username or 'Any'}\n"
             f"  Organization: {self.query_filter.organization_name or 'Any'}\n"
-            f"  Total estimated pits: {self.total_estimated_pits}\n"
+            f"  Total pits: {self.total_pits}\n"
             f"  Format: CAAML\n"
             f"  Chunk breakdown:\n{chunk_details}"
         )
@@ -166,24 +218,15 @@ class QueryBuilder:
     """Builds query parameters for snowpilot.org CAAML API"""
 
     def __init__(self):
-        self.supported_states = {
-            "MT": "Montana",
-            "CO": "Colorado",
-            "WY": "Wyoming",
-            "UT": "Utah",
-            "ID": "Idaho",
-            "WA": "Washington",
-            "OR": "Oregon",
-            "CA": "California",
-            "AK": "Alaska",
-            "NH": "New Hampshire",
-            "VT": "Vermont",
-            "ME": "Maine",
-            "NY": "New York",
-        }
+        self.supported_states = SUPPORTED_STATES
 
     def build_caaml_query(self, query_filter: QueryFilter) -> str:
-        """Build query string for CAAML endpoint with all required form parameters"""
+        """
+        Build query string for CAAML endpoint with all required form parameters
+
+        Automatically applies +1 day offset to end_date to handle snowpilot.org API's
+        exclusive end date behavior (start <= date < end).
+        """
         params = []
 
         # Add all required form parameters (even if empty) to match the working URLs
@@ -199,9 +242,22 @@ class QueryBuilder:
         else:
             params.append("STATE=")  # Empty but present
 
-        # Date parameters
-        params.append(f"OBS_DATE_MIN={query_filter.date_start or ''}")
-        params.append(f"OBS_DATE_MAX={query_filter.date_end or ''}")
+        # Date parameters with automatic +1 day offset for end_date
+        # This handles the API's exclusive end date behavior (start <= date < end)
+        # The +1 day offset is ALWAYS applied when end_date is provided (no fallback)
+        start_date = query_filter.date_start or ""
+        end_date = query_filter.date_end or ""
+
+        # Apply +1 day offset to end_date if it's provided
+        # This ensures user-specified date ranges work as expected
+        if end_date:
+            end_date_obj = datetime.strptime(end_date, "%Y-%m-%d")
+            # Add 1 day to make the range inclusive for the user's intended end date
+            adjusted_end_date = end_date_obj + timedelta(days=1)
+            end_date = adjusted_end_date.strftime("%Y-%m-%d")
+
+        params.append(f"OBS_DATE_MIN={start_date}")
+        params.append(f"OBS_DATE_MAX={end_date}")
 
         # This seems to be required by the server
         params.append("recent_dates=0")
@@ -229,10 +285,10 @@ class SnowPilotSession:
     def __init__(self):
         self.session = requests.Session()
         self.authenticated = False
-        self.site_url = "https://snowpilot.org"
-        self.login_url = self.site_url + "/user/login"
-        self.caaml_query_url = self.site_url + "/avscience-query-caaml.xml?"
-        self.data_url = "https://snowpilot.org/sites/default/files/tmp/"
+        self.site_url = SNOWPILOT_BASE_URL
+        self.login_url = self.site_url + SNOWPILOT_LOGIN_PATH
+        self.caaml_query_url = self.site_url + SNOWPILOT_CAAML_QUERY_PATH
+        self.data_url = SNOWPILOT_DATA_URL
         self.last_request_time = 0
         self.request_delay = DEFAULT_REQUEST_DELAY
 
@@ -314,7 +370,7 @@ class SnowPilotSession:
             return None
 
     def _make_caaml_request(
-        self, query_string: str, max_retries: int = 3
+        self, query_string: str, max_retries: int = DEFAULT_MAX_RETRIES
     ) -> tuple[Optional[bytes], Optional[str]]:
         """
         Make a CAAML request and return the data and filename
@@ -335,7 +391,7 @@ class SnowPilotSession:
                         logger.info(
                             f"Retrying authentication... (attempt {attempt + 1}/{max_retries})"
                         )
-                        time.sleep(self.request_delay * 2)
+                        time.sleep(self.request_delay * RETRY_DELAY_MULTIPLIER_AUTH)
                         continue
                     return None, None
 
@@ -410,7 +466,10 @@ class SnowPilotSession:
                                         logger.info(
                                             f"Retrying after 403 error... (attempt {attempt + 1}/{max_retries})"
                                         )
-                                        time.sleep(self.request_delay * 3)
+                                        time.sleep(
+                                            self.request_delay
+                                            * RETRY_DELAY_MULTIPLIER_403
+                                        )
                                         continue
                                 return None, None
                         except Exception as e:
@@ -427,7 +486,9 @@ class SnowPilotSession:
                                 logger.info(
                                     f"Retrying after 403 error... (attempt {attempt + 1}/{max_retries})"
                                 )
-                                time.sleep(self.request_delay * 3)
+                                time.sleep(
+                                    self.request_delay * RETRY_DELAY_MULTIPLIER_403
+                                )
                                 continue
                         elif query_response.status_code == 500:
                             logger.error(
@@ -445,7 +506,7 @@ class SnowPilotSession:
                     logger.info(
                         f"Retrying after request exception... (attempt {attempt + 1}/{max_retries})"
                     )
-                    time.sleep(self.request_delay * 2)
+                    time.sleep(self.request_delay * RETRY_DELAY_MULTIPLIER_AUTH)
                     continue
                 return None, None
 
@@ -454,32 +515,54 @@ class SnowPilotSession:
         return None, None
 
     def download_caaml_data(
-        self, query_string: str, max_retries: int = 3
+        self, query_string: str, max_retries: int = DEFAULT_MAX_RETRIES
     ) -> Optional[bytes]:
         """Download CAAML data from snowpilot.org"""
         data, filename = self._make_caaml_request(query_string, max_retries)
         return data
 
-    def estimate_pit_count(self, query_string: str, max_retries: int = 3) -> int:
+    def get_pit_count(
+        self, query_string: str, max_retries: int = DEFAULT_MAX_RETRIES
+    ) -> int:
         """
-        Estimate the number of pits for a query by downloading and counting files
+        Get the actual number of pits for a query by downloading and counting files
 
         Note: This downloads the actual data to count files. The snowpilot.org API
         doesn't provide a metadata endpoint for counts without downloading.
 
+        This method uses exactly the same pagination logic as _query_caaml to ensure
+        dry run predictions are precisely accurate.
+
         Args:
-            query_string: The query string to estimate
+            query_string: The query string to count pits for
             max_retries: Maximum number of retry attempts
 
         Returns:
-            Number of pits that would be downloaded (0 if failed or no data)
+            Actual number of pits available for download (0 if failed or no data)
         """
+        # Make the initial request
         data, filename = self._make_caaml_request(query_string, max_retries)
 
         if not data:
             return 0
 
-        # Extract and count CAAML files
+        # Parse the query string to recreate the QueryFilter for pagination logic
+        import urllib.parse
+
+        parsed_query = urllib.parse.parse_qs(query_string)
+
+        # Create a QueryFilter to match what _query_caaml expects
+        temp_filter = QueryFilter(
+            date_start=parsed_query.get("OBS_DATE_MIN", [""])[0],
+            date_end=parsed_query.get("OBS_DATE_MAX", [""])[0],
+            state=parsed_query.get("STATE", [""])[0]
+            if parsed_query.get("STATE", [""])[0]
+            else None,
+            per_page=int(parsed_query.get("per_page", [RESULTS_PER_PAGE])[0]),
+        )
+
+        # Extract and count CAAML files from initial request - using the same logic as _query_caaml
+        all_extracted_files = []
         try:
             with tempfile.NamedTemporaryFile(
                 suffix=".tar.gz", delete=False
@@ -492,26 +575,101 @@ class SnowPilotSession:
             with tarfile.open(temp_file_path, "r:gz") as tar:
                 tar.extractall(path=extract_path)
 
-            # Count CAAML files
-            pit_count = 0
+            # Count CAAML files from initial request and collect paths
+            extracted_files = []
             for root, dirs, files in os.walk(extract_path):
                 for file in files:
                     if file.endswith("caaml.xml"):
-                        pit_count += 1
+                        extracted_files.append(os.path.join(root, file))
 
-            # Clean up temporary files
+            all_extracted_files.extend(extracted_files)
+
+            # Clean up initial extraction
             shutil.rmtree(extract_path, ignore_errors=True)
             os.remove(temp_file_path)
 
-            logger.info(f"Estimated {pit_count} pits for query")
-            return pit_count
+            # Apply the EXACT same pagination logic as _query_caaml
+            # Check if we got exactly per_page pits, which might indicate there are more
+            if len(extracted_files) == temp_filter.per_page:
+                logger.debug(
+                    f"Got {len(extracted_files)} pits (exactly per_page={temp_filter.per_page}), checking if there are more..."
+                )
+
+                # Try with a larger per_page to get remaining pits - EXACT same logic as _query_caaml
+                larger_filter = QueryFilter(
+                    date_start=temp_filter.date_start,
+                    date_end=temp_filter.date_end,
+                    state=temp_filter.state,
+                    per_page=RESULTS_PER_PAGE,  # Try larger batch
+                )
+                larger_query_string = self.query_builder.build_caaml_query(
+                    larger_filter
+                )
+                additional_data, additional_filename = self._make_caaml_request(
+                    larger_query_string, max_retries
+                )
+
+                if (
+                    additional_data and additional_data != data
+                ):  # Make sure it's different data - EXACT same check
+                    # Extract and count additional files
+                    with tempfile.NamedTemporaryFile(
+                        suffix=".tar.gz", delete=False
+                    ) as temp_file2:
+                        temp_file2.write(additional_data)
+                        temp_file_path2 = temp_file2.name
+
+                    extract_path2 = temp_file_path2.replace(".tar.gz", "")
+                    with tarfile.open(temp_file_path2, "r:gz") as tar:
+                        tar.extractall(path=extract_path2)
+
+                    additional_files = []
+                    for root, dirs, files in os.walk(extract_path2):
+                        for file in files:
+                            if file.endswith("caaml.xml"):
+                                additional_files.append(os.path.join(root, file))
+
+                    # Only add files that we haven't already processed - EXACT same deduplication logic
+                    existing_ids = set()
+                    for existing_file in all_extracted_files:
+                        try:
+                            # Extract pit ID from filename
+                            pit_id = os.path.basename(existing_file).split("-")[-2]
+                            existing_ids.add(pit_id)
+                        except:
+                            pass
+
+                    new_files = []
+                    for new_file in additional_files:
+                        try:
+                            pit_id = os.path.basename(new_file).split("-")[-2]
+                            if pit_id not in existing_ids:
+                                new_files.append(new_file)
+                        except:
+                            new_files.append(new_file)  # Include if we can't parse ID
+
+                    all_extracted_files.extend(new_files)
+                    logger.debug(f"Found {len(new_files)} additional unique pits")
+
+                    # Clean up additional extraction
+                    shutil.rmtree(extract_path2, ignore_errors=True)
+                    os.remove(temp_file_path2)
+
+            total_pit_count = len(all_extracted_files)
+            logger.info(f"Found {total_pit_count} pits for query")
+            return total_pit_count
 
         except Exception as e:
-            logger.error(f"Error during pit count estimation: {e}")
+            logger.error(f"Error during pit count retrieval: {e}")
             # Clean up on error
             try:
                 shutil.rmtree(extract_path, ignore_errors=True)
                 os.remove(temp_file_path)
+            except:
+                pass
+            try:
+                shutil.rmtree(extract_path2, ignore_errors=True)
+                os.remove(temp_file_path2)
             except:
                 pass
             return 0
@@ -569,7 +727,13 @@ class QueryEngine:
     def _generate_date_chunks(
         self, start_date: str, end_date: str, chunk_size_days: int
     ) -> List[tuple]:
-        """Generate date chunks for large dataset handling"""
+        """
+        Generate date chunks for large dataset handling
+
+        Generates standard date chunks. The +1 day offset for API compatibility
+        is still applied, but chunked queries now use post-processing to filter
+        pits by their actual observation dates to ensure accuracy.
+        """
         chunks = []
         current_date = datetime.strptime(start_date, "%Y-%m-%d")
         end_date_obj = datetime.strptime(end_date, "%Y-%m-%d")
@@ -594,6 +758,9 @@ class QueryEngine:
         """
         Perform a dry run to see how many chunks will be run and pits per chunk
 
+        This method now actually performs the download to ensure exact accuracy,
+        but caches the results so the actual download uses the same data.
+
         Args:
             query_filter: Filter parameters for the query
 
@@ -609,50 +776,143 @@ class QueryEngine:
         will_be_chunked = self._should_chunk_query(query_filter)
 
         if not will_be_chunked:
-            # Single request - get count directly
-            query_string = self.query_builder.build_caaml_query(query_filter)
-            estimated_count = self.session.estimate_pit_count(query_string)
+            # Check if we already have cached data for this exact query
+            cache_key = f"single_{query_filter.date_start}_{query_filter.date_end}_{query_filter.state or 'None'}"
+            if (
+                hasattr(self, "_cached_dry_run_data")
+                and cache_key in self._cached_dry_run_data
+            ):
+                logger.info("Using existing cached dry run data")
+                cached_result = self._cached_dry_run_data[cache_key]
+                return DryRunResult(
+                    query_filter=query_filter,
+                    total_pits=cached_result.total_count,
+                    will_be_chunked=False,
+                    chunk_size_days=0,
+                    chunk_details=[],
+                )
+
+            # Single request - actually perform the download to get exact count
+            result = self._query_caaml(query_filter)
+
+            # Cache the result for the actual download
+            if not hasattr(self, "_cached_dry_run_data"):
+                self._cached_dry_run_data = {}
+            self._cached_dry_run_data[cache_key] = result
 
             return DryRunResult(
                 query_filter=query_filter,
-                total_estimated_pits=estimated_count,
+                total_pits=result.total_count,
                 will_be_chunked=False,
                 chunk_size_days=0,
                 chunk_details=[],
             )
 
-        # Chunked request - check each chunk individually
+        # For chunked requests, check if we already have all cached data
         chunks = self._generate_date_chunks(
             query_filter.date_start,
             query_filter.date_end,
             query_filter.chunk_size_days,
         )
 
+        # Initialize cache if needed
+        if not hasattr(self, "_cached_dry_run_data"):
+            self._cached_dry_run_data = {}
+
+        # Check if we already have cached data for all chunks
+        all_chunks_cached = True
+        cached_chunk_details = []
+        cached_total = 0
+
+        for chunk_start, chunk_end in chunks:
+            cache_key = (
+                f"chunk_{chunk_start}_{chunk_end}_{query_filter.state or 'None'}"
+            )
+            if cache_key not in self._cached_dry_run_data:
+                all_chunks_cached = False
+                break
+            else:
+                # Build chunk details from cached data
+                cached_result = self._cached_dry_run_data[cache_key]
+                chunk_info = ChunkInfo(
+                    chunk_id=f"{chunk_start}_{chunk_end}",
+                    start_date=chunk_start,
+                    end_date=chunk_end,
+                    pit_count=cached_result.total_count,
+                )
+                cached_chunk_details.append(chunk_info)
+                cached_total += cached_result.total_count
+
+        if all_chunks_cached:
+            logger.info("Using existing cached dry run data for all chunks")
+            return DryRunResult(
+                query_filter=query_filter,
+                total_pits=cached_total,
+                will_be_chunked=True,
+                chunk_size_days=query_filter.chunk_size_days,
+                chunk_details=cached_chunk_details,
+            )
+
+        # Chunked request - actually download each chunk to get exact counts
         logger.info(f"Chunked query will use {len(chunks)} chunks")
 
         chunk_details = []
+        total_pits = 0
 
         for i, (chunk_start, chunk_end) in enumerate(chunks):
             chunk_id = f"{chunk_start}_{chunk_end}"
+            cache_key = (
+                f"chunk_{chunk_start}_{chunk_end}_{query_filter.state or 'None'}"
+            )
 
-            # Create chunk info
+            # Skip if already cached
+            if cache_key in self._cached_dry_run_data:
+                cached_result = self._cached_dry_run_data[cache_key]
+                chunk_pit_count = cached_result.total_count
+                logger.info(
+                    f"Using cached data for chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end}"
+                )
+            else:
+                # Create chunk-specific query filter
+                chunk_filter = QueryFilter(
+                    pit_name=query_filter.pit_name,
+                    date_start=chunk_start,
+                    date_end=chunk_end,
+                    state=query_filter.state,
+                    username=query_filter.username,
+                    organization_name=query_filter.organization_name,
+                    per_page=query_filter.per_page,
+                    chunk=False,  # Don't chunk chunks
+                )
+
+                # Actually perform the download to get exact count
+                chunk_result = self._query_caaml(chunk_filter)
+                chunk_pit_count = chunk_result.total_count
+
+                # Cache the result for the actual download
+                self._cached_dry_run_data[cache_key] = chunk_result
+                logger.info(
+                    f"Downloaded and cached chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end}"
+                )
+
+            # Create chunk info with actual pit count
             chunk_info = ChunkInfo(
                 chunk_id=chunk_id,
                 start_date=chunk_start,
                 end_date=chunk_end,
+                pit_count=chunk_pit_count,
             )
 
             chunk_details.append(chunk_info)
+            total_pits += chunk_pit_count
 
-            logger.info(f"Chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end}")
-
-        # Get overall estimate for the full query
-        query_string = self.query_builder.build_caaml_query(query_filter)
-        total_estimated_pits = self.session.estimate_pit_count(query_string)
+            logger.info(
+                f"Chunk {i + 1}/{len(chunks)}: {chunk_start} to {chunk_end} ({chunk_pit_count} pits)"
+            )
 
         return DryRunResult(
             query_filter=query_filter,
-            total_estimated_pits=total_estimated_pits,
+            total_pits=total_pits,
             will_be_chunked=True,
             chunk_size_days=query_filter.chunk_size_days,
             chunk_details=chunk_details,
@@ -715,9 +975,9 @@ class QueryEngine:
         """
         # Set default date range if not provided
         if not query_filter.date_start:
-            query_filter.date_start = (datetime.now() - timedelta(days=7)).strftime(
-                "%Y-%m-%d"
-            )
+            query_filter.date_start = (
+                datetime.now() - timedelta(days=DEFAULT_DATE_RANGE_DAYS)
+            ).strftime("%Y-%m-%d")
         if not query_filter.date_end:
             query_filter.date_end = datetime.now().strftime("%Y-%m-%d")
 
@@ -738,6 +998,13 @@ class QueryEngine:
                 f"Start date ({query_filter.date_start}) must be before end date ({query_filter.date_end})"
             )
 
+        # Validate chunk size if chunking is enabled
+        if query_filter.chunk and query_filter.chunk_size_days < MIN_CHUNK_SIZE_DAYS:
+            raise ValueError(
+                f"Chunk size must be at least {MIN_CHUNK_SIZE_DAYS} day(s). "
+                f"Received: {query_filter.chunk_size_days} days."
+            )
+
         # Check if dates are too far in the future
         today = datetime.now().date()
         if start_date.date() > today:
@@ -750,7 +1017,7 @@ class QueryEngine:
             )
 
         # Check if date range is too large (more than 2 years)
-        if (end_date - start_date).days > 730:
+        if (end_date - start_date).days > MAX_DATE_RANGE_DAYS:
             logger.warning(
                 f"Date range is very large ({(end_date - start_date).days} days). This may result in a very large download."
             )
@@ -761,7 +1028,7 @@ class QueryEngine:
         self,
         query_filter: QueryFilter,
         auto_approve: bool = False,
-        approval_threshold: int = 100,
+        approval_threshold: int = DEFAULT_APPROVAL_THRESHOLD,
     ) -> QueryResult:
         """
         Query snow pits from snowpilot.org in CAAML format with automatic large dataset handling
@@ -797,16 +1064,11 @@ class QueryEngine:
         dry_run_result = self.dry_run(query_filter)
 
         # Check if approval is needed
-        if (
-            not auto_approve
-            and dry_run_result.total_estimated_pits > approval_threshold
-        ):
+        if not auto_approve and dry_run_result.total_pits > approval_threshold:
             print(f"\n{dry_run_result}")
-            print(
-                f"\nThis query will download approximately {dry_run_result.total_estimated_pits} pits."
-            )
+            print(f"\nThis query will download {dry_run_result.total_pits} pits.")
 
-            if dry_run_result.total_estimated_pits > 1000:
+            if dry_run_result.total_pits > LARGE_DOWNLOAD_WARNING_THRESHOLD:
                 print(
                     "⚠️  WARNING: This is a large download that may take significant time and bandwidth."
                 )
@@ -826,12 +1088,21 @@ class QueryEngine:
                 result.download_info["reason"] = "User cancelled download"
                 return result
         elif not auto_approve:
-            print(
-                f"Dry run: Will download approximately {dry_run_result.total_estimated_pits} pits"
-            )
+            print(f"Dry run: Will download {dry_run_result.total_pits} pits")
 
-        # Execute the CAAML query
-        result = self._query_caaml(query_filter)
+        # Use cached data from dry run if available
+        cache_key = f"single_{query_filter.date_start}_{query_filter.date_end}_{query_filter.state or 'None'}"
+        if (
+            hasattr(self, "_cached_dry_run_data")
+            and cache_key in self._cached_dry_run_data
+        ):
+            logger.info("Using cached data from dry run for identical results")
+            result = self._cached_dry_run_data[cache_key]
+            # Clear the cache entry
+            del self._cached_dry_run_data[cache_key]
+        else:
+            # Execute the CAAML query
+            result = self._query_caaml(query_filter)
 
         # Add dry run info to result
         result.dry_run_result = dry_run_result
@@ -845,17 +1116,14 @@ class QueryEngine:
         dry_run_result = self.dry_run(query_filter)
 
         # Check if approval is needed
-        if (
-            not auto_approve
-            and dry_run_result.total_estimated_pits > approval_threshold
-        ):
+        if not auto_approve and dry_run_result.total_pits > approval_threshold:
             print(f"\n{dry_run_result}")
             print(
-                f"\nThis query will download approximately {dry_run_result.total_estimated_pits} pits "
+                f"\nThis query will download {dry_run_result.total_pits} pits "
                 f"using {len(dry_run_result.chunk_details)} chunks."
             )
 
-            if dry_run_result.total_estimated_pits > 1000:
+            if dry_run_result.total_pits > LARGE_DOWNLOAD_WARNING_THRESHOLD:
                 print(
                     "⚠️  WARNING: This is a large download that may take significant time and bandwidth."
                 )
@@ -878,7 +1146,7 @@ class QueryEngine:
                 return result
         elif not auto_approve:
             print(
-                f"Dry run: Will download approximately {dry_run_result.total_estimated_pits} pits "
+                f"Dry run: Will download {dry_run_result.total_pits} pits "
                 f"using {len(dry_run_result.chunk_details)} chunks"
             )
 
@@ -950,7 +1218,20 @@ class QueryEngine:
             chunk_success = False
             for attempt in range(query_filter.max_retries):
                 try:
-                    chunk_result = self._query_caaml(chunk_filter)
+                    # Use cached data from dry run if available
+                    cache_key = f"chunk_{chunk_start}_{chunk_end}_{query_filter.state or 'None'}"
+                    if (
+                        hasattr(self, "_cached_dry_run_data")
+                        and cache_key in self._cached_dry_run_data
+                    ):
+                        logger.info(
+                            f"Using cached data from dry run for chunk {chunk_id}"
+                        )
+                        chunk_result = self._cached_dry_run_data[cache_key]
+                        # Clear the cache entry
+                        del self._cached_dry_run_data[cache_key]
+                    else:
+                        chunk_result = self._query_caaml(chunk_filter)
 
                     if chunk_result.status == "success":
                         all_pits.extend(chunk_result.snow_pits)
@@ -1003,7 +1284,7 @@ class QueryEngine:
 
                         # Don't break here - let it retry
                         if attempt < query_filter.max_retries - 1:
-                            delay = 30 * (attempt + 1)
+                            delay = CHUNK_RETRY_BASE_DELAY * (attempt + 1)
                             logger.info(
                                 f"Retrying chunk {chunk_id} in {delay} seconds..."
                             )
@@ -1024,7 +1305,7 @@ class QueryEngine:
                     )
 
                     if attempt < query_filter.max_retries - 1:
-                        delay = 30 * (attempt + 1)
+                        delay = CHUNK_RETRY_BASE_DELAY * (attempt + 1)
                         logger.info(f"Retrying chunk {chunk_id} in {delay} seconds...")
                         time.sleep(delay)
                     else:
@@ -1085,6 +1366,23 @@ class QueryEngine:
             for chunk_id in progress.failed_chunks:
                 print(f"  - {chunk_id}")
             print("\n💡 You can re-run this query to retry failed chunks")
+
+    def _parse_caaml_pits(
+        self, caaml_files: List[str], query_filter: QueryFilter
+    ) -> List[SnowPit]:
+        """Parse individual CAAML files"""
+        pits = []
+
+        for file_path in caaml_files:
+            try:
+                pit = caaml_parser(file_path)
+                pits.append(pit)
+            except Exception as e:
+                logger.error(f"Error parsing CAAML file {file_path}: {e}")
+                continue
+
+        logger.info(f"Parsed {len(pits)} pits from {len(caaml_files)} files")
+        return pits
 
     def _query_caaml(self, query_filter: QueryFilter) -> QueryResult:
         """Query CAAML data from snowpilot.org (handles multiple requests if needed)"""
@@ -1214,23 +1512,6 @@ class QueryEngine:
             logger.error(f"Error extracting CAAML files: {e}")
             return []
 
-    def _parse_caaml_pits(
-        self, caaml_files: List[str], query_filter: QueryFilter
-    ) -> List[SnowPit]:
-        """Parse individual CAAML files"""
-        pits = []
-
-        for file_path in caaml_files:
-            try:
-                pit = caaml_parser(file_path)
-                pits.append(pit)
-            except Exception as e:
-                logger.error(f"Error parsing CAAML file {file_path}: {e}")
-                continue
-
-        logger.info(f"Parsed {len(pits)} pits from {len(caaml_files)} files")
-        return pits
-
     def search_local_pits(self, query_filter: QueryFilter) -> QueryResult:
         """Search locally saved pit files"""
         result = QueryResult(query_filter=query_filter)
@@ -1252,7 +1533,7 @@ class QueryEngine:
         self,
         query_filter: QueryFilter,
         auto_approve: bool = False,
-        approval_threshold: int = 100,
+        approval_threshold: int = DEFAULT_APPROVAL_THRESHOLD,
     ) -> QueryResult:
         """
         Download snow pit data for any query filter - handles all dataset sizes uniformly
@@ -1305,7 +1586,7 @@ class QueryEngine:
         self,
         query_filter: QueryFilter,
         auto_approve: bool = False,
-        approval_threshold: int = 100,
+        approval_threshold: int = DEFAULT_APPROVAL_THRESHOLD,
     ) -> QueryResult:
         """
         Download results for multiple states uniformly
@@ -1324,8 +1605,8 @@ class QueryEngine:
             else [query_filter.state]
         )
 
-        # Get dry run estimate for all states combined
-        total_estimated_pits = 0
+        # Get dry run counts for all states combined
+        total_pits = 0
         for state in states:
             state_filter = QueryFilter(
                 pit_name=query_filter.pit_name,
@@ -1340,26 +1621,26 @@ class QueryEngine:
                 max_retries=query_filter.max_retries,
             )
             dry_run = self.dry_run(state_filter)
-            total_estimated_pits += dry_run.total_estimated_pits
+            total_pits += dry_run.total_pits
 
         # Check if approval is needed for the combined total
-        if not auto_approve and total_estimated_pits > approval_threshold:
+        if not auto_approve and total_pits > approval_threshold:
             print(f"\nMulti-state download summary:")
             print(f"  States: {', '.join(states)}")
             print(f"  Date range: {query_filter.date_start} to {query_filter.date_end}")
-            print(f"  Total estimated pits: {total_estimated_pits}")
+            print(f"  Total pits: {total_pits}")
 
             if query_filter.chunk:
                 print(f"  Will use chunking: {query_filter.chunk_size_days} day chunks")
 
-            if total_estimated_pits > 1000:
+            if total_pits > LARGE_DOWNLOAD_WARNING_THRESHOLD:
                 print(
                     "⚠️  WARNING: This is a large download that may take significant time and bandwidth."
                 )
 
             response = (
                 input(
-                    f"\nDo you want to proceed with downloading {total_estimated_pits} pits from {len(states)} states? (y/N): "
+                    f"\nDo you want to proceed with downloading {total_pits} pits from {len(states)} states? (y/N): "
                 )
                 .lower()
                 .strip()
