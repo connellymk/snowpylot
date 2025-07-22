@@ -1,5 +1,7 @@
 import os
 import sys
+import time
+from datetime import datetime, timedelta
 
 sys.path.append("../src")
 
@@ -7,8 +9,8 @@ from snowpylot.query_engine import QueryEngine, QueryFilter
 
 # Environment check
 print("=== Environment Check ===")
-user = os.environ.get("SNOWPILOT_USER")
-password = os.environ.get("SNOWPILOT_PASSWORD")
+user = "samuelverplanck@montana.edu"  # os.environ.get("SNOWPILOT_USER")
+password = "vincent21"  # os.environ.get("SNOWPILOT_PASSWORD")
 
 if user and password:
     print("✅ Environment variables are set!")
@@ -51,46 +53,28 @@ else:
     print("   Check your credentials and try again")
     sys.exit(1)
 
-print("\n=== Testing Dry Run Functionality ===")
-
-# Test chunked query
-print("Testing chunked query:")
-chunked_filter = QueryFilter(
-    date_start="2023-01-05",
-    date_end="2023-01-06",  # 1 month
-    chunk=True,  # Enable chunking
-    chunk_size_days=1,
+print("\n=== Manual Chunking Example ===")
+print(
+    "Demonstrating manual chunking with controlled delays to work around API caching bug"
 )
 
-print("   Performing dry run for chunked query (1-day chunks)...")
-chunked_dry_run = engine.dry_run(chunked_filter)
-print(f"\n{chunked_dry_run}")
+# Define date range to chunk manually
+start_date = datetime.strptime("2023-01-06", "%Y-%m-%d")
+end_date = datetime.strptime("2023-01-10", "%Y-%m-%d")
 
-
-# Use the unified download_results method for all types
-result = engine.download_results(chunked_filter, auto_approve=True)
-
-# Show detailed summary statistics
-if result.snow_pits:
-    print("\n--- Dataset Summary ---")
-    print(f"   Total pits downloaded: {len(result.snow_pits)}")
-    print(f"   Was chunked: {result.was_chunked}")
-
-if result.was_chunked and result.chunk_results:
-    print(f"   Chunks processed: {len(result.chunk_results)}")
-    successful_chunks = sum(
-        1 for chunk in result.chunk_results if chunk.get("success", False)
+current_date = start_date
+while current_date < end_date:
+    next_date = current_date + timedelta(days=1)
+    query_filter = QueryFilter(
+        date_start=current_date.strftime("%Y-%m-%d"),
+        date_end=next_date.strftime("%Y-%m-%d"),
     )
-    print(f"   Successful chunks: {successful_chunks}")
 
-# Show download info
-if result.download_info:
-    print("   Download details:")
-    for key, value in result.download_info.items():
-        if key not in [
-            "saved_files",
-            "chunk_results",
-            "states_processed",
-            "states_failed",
-        ]:  # Skip verbose details
-            print(f"     {key}: {value}")
+    print(f"Downloading data for: {current_date.strftime('%Y-%m-%d')}")
+    result = engine.download_results(query_filter, auto_approve=True)
+
+    # Move to next day
+    current_date = next_date
+
+    # add a delay of 10 seconds
+    time.sleep(10)
