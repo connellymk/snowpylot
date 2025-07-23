@@ -157,14 +157,14 @@ class Location:
     def __str__(self) -> str:
         """Return a string representation of the location."""
         location_str = (
-            f"latitude: {self.latitude}\n"
-            f"longitude: {self.longitude}\n"
-            f"elevation: {self.elevation}\n"
-            f"aspect: {self.aspect}\n"
-            f"slope_angle: {self.slope_angle}\n"
-            f"country: {self.country}\n"
-            f"region: {self.region}\n"
-            f"pit_near_avalanche: {self.pit_near_avalanche}\n"
+            f"\n\t latitude: {self.latitude}"
+            f"\n\t longitude: {self.longitude}"
+            f"\n\t elevation: {self.elevation}"
+            f"\n\t aspect: {self.aspect}"
+            f"\n\t slope_angle: {self.slope_angle}"
+            f"\n\t country: {self.country}"
+            f"\n\t region: {self.region}"
+            f"\n\t pit_near_avalanche: {self.pit_near_avalanche}"
         )
 
         if self.pit_near_avalanche_location is not None:
