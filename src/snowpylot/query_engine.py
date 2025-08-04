@@ -30,6 +30,15 @@ from typing import Any, Dict, List, Optional, Union
 
 import requests
 
+# Load environment variables from .env file if it exists
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()  # This will load .env file automatically
+except ImportError:
+    # python-dotenv not installed, continue without it
+    pass
+
 from .caaml_parser import caaml_parser
 from .snow_pit import SnowPit
 
@@ -39,8 +48,8 @@ from .snow_pit import SnowPit
 DEFAULT_PITS_PATH = "data/snowpits"
 
 # Request and rate limiting settings
-DEFAULT_REQUEST_DELAY = 10  # seconds between requests to prevent rate limiting
-DEFAULT_MAX_RETRIES = 1  # default maximum retry attempts for requests
+DEFAULT_REQUEST_DELAY = 15  # seconds between requests to prevent rate limiting
+DEFAULT_MAX_RETRIES = 3  # default maximum retry attempts for requests
 
 # Data settings
 RESULTS_PER_PAGE = 100  # default number of results per page (max allowed by API: 100)
@@ -286,24 +295,121 @@ class SnowPilotSession:
         }
 
     def authenticate(self) -> bool:
-        """Authenticate with snowpilot.org"""
+        """Authenticate with snowpilot.org with proper CSRF token handling"""
         user, password = self._get_credentials()
 
         if not self._validate_credentials(user, password):
             return False
 
-        payload = self._create_auth_payload(user, password)
+        # Add a small delay before authentication to avoid rate limiting
+        time.sleep(3)
 
         try:
-            response = self.session.post(self.login_url, data=payload)
-            self.authenticated = response.status_code == 200
+            # Add realistic browser headers
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+                "Upgrade-Insecure-Requests": "1",
+                "Referer": "https://snowpilot.org/",
+            }
 
-            if self.authenticated:
-                logger.info("Successfully authenticated with snowpilot.org")
+            # First, get the login page to extract CSRF tokens
+            get_response = self.session.get(self.login_url, headers=headers)
+            if get_response.status_code != 200:
+                logger.error(f"Could not access login page: {get_response.status_code}")
+                return False
+
+            # Extract form_build_id from the login page
+            form_build_id = self._extract_form_build_id(get_response.text)
+
+            # Build payload with CSRF token
+            payload = self._create_auth_payload(user, password)
+            if form_build_id:
+                payload["form_build_id"] = form_build_id
+                logger.debug(f"Added form_build_id: {form_build_id}")
+
+            # Add POST-specific headers
+            post_headers = headers.copy()
+            post_headers.update(
+                {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Origin": "https://snowpilot.org",
+                    "Referer": self.login_url,
+                }
+            )
+
+            # Wait a bit more before POST
+            time.sleep(2)
+
+            response = self.session.post(
+                self.login_url, data=payload, headers=post_headers
+            )
+
+            # Check for various success indicators
+            if response.status_code == 200:
+                response_text_lower = response.text.lower()
+
+                # Check for explicit login failure messages first
+                if (
+                    "unrecognized username or password" in response_text_lower
+                    or "invalid login" in response_text_lower
+                    or "incorrect username" in response_text_lower
+                    or "incorrect password" in response_text_lower
+                    or "login failed" in response_text_lower
+                ):
+                    self.authenticated = False
+                    logger.error("Authentication failed: Invalid username or password")
+                    return False
+
+                # Check if we're actually logged in
+                if (
+                    "logout" in response_text_lower
+                    or "profile" in response_text_lower
+                    or "user account" in response_text_lower
+                    or "my account" in response_text_lower
+                    or "dashboard" in response_text_lower
+                    or response.url != self.login_url
+                ):
+                    self.authenticated = True
+                    logger.info("Successfully authenticated with snowpilot.org")
+                else:
+                    self.authenticated = False
+                    # Check if login form is still present (indicates failed login)
+                    if (
+                        'name="name"' in response.text
+                        and 'name="pass"' in response.text
+                    ):
+                        logger.error(
+                            "Authentication failed: Login form still present after POST"
+                        )
+                    else:
+                        logger.error(
+                            "Login POST returned 200 but no success indicators found"
+                        )
+            elif response.status_code in [301, 302]:
+                # Check redirect location
+                location = response.headers.get("Location", "")
+                if "user" in location and "login" not in location:
+                    self.authenticated = True
+                    logger.info(
+                        "Successfully authenticated with snowpilot.org (redirected)"
+                    )
+                else:
+                    self.authenticated = False
+                    logger.error(f"Login redirect to unexpected location: {location}")
             else:
+                self.authenticated = False
                 logger.error(
                     f"Authentication failed with status {response.status_code}"
                 )
+                if response.status_code == 403:
+                    logger.warning(
+                        "403 Forbidden - possible rate limiting or account block. Wait before retrying."
+                    )
+                logger.debug(f"Response content: {response.text[:500]}...")
 
             return self.authenticated
 
@@ -311,22 +417,128 @@ class SnowPilotSession:
             logger.error(f"Authentication error: {e}")
             return False
 
+    def _extract_form_build_id(self, html_content: str) -> str:
+        """Extract form_build_id from login page HTML"""
+        try:
+            # Look for form_build_id in hidden input field
+            import re
+
+            match = re.search(r'name="form_build_id"\s+value="([^"]+)"', html_content)
+            if match:
+                return match.group(1)
+        except Exception as e:
+            logger.debug(f"Could not extract form_build_id: {e}")
+        return None
+
     def _create_authenticated_session(self) -> Optional[requests.Session]:
-        """Create an authenticated session for making requests"""
+        """Create an authenticated session for making requests with CSRF token handling"""
         user, password = self._get_credentials()
 
         if not self._validate_credentials(user, password):
             return None
 
-        payload = self._create_auth_payload(user, password)
+        # Add a small delay before authentication to avoid rate limiting
+        time.sleep(3)
 
         session = requests.Session()
         try:
-            login_response = session.post(self.login_url, data=payload)
+            # Add realistic browser headers
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+                "Upgrade-Insecure-Requests": "1",
+                "Referer": "https://snowpilot.org/",
+            }
+
+            # First, get the login page to extract CSRF tokens
+            get_response = session.get(self.login_url, headers=headers)
+            if get_response.status_code != 200:
+                logger.error(f"Could not access login page: {get_response.status_code}")
+                return None
+
+            # Extract form_build_id from the login page
+            form_build_id = self._extract_form_build_id(get_response.text)
+
+            # Build payload with CSRF token
+            payload = self._create_auth_payload(user, password)
+            if form_build_id:
+                payload["form_build_id"] = form_build_id
+                logger.debug(f"Added form_build_id: {form_build_id}")
+
+            # Add POST-specific headers
+            post_headers = headers.copy()
+            post_headers.update(
+                {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Origin": "https://snowpilot.org",
+                    "Referer": self.login_url,
+                }
+            )
+
+            # Wait a bit more before POST
+            time.sleep(2)
+
+            login_response = session.post(
+                self.login_url, data=payload, headers=post_headers
+            )
+
+            # Check for success indicators
             if login_response.status_code == 200:
-                return session
+                response_text_lower = login_response.text.lower()
+
+                # Check for explicit login failure messages first
+                if (
+                    "unrecognized username or password" in response_text_lower
+                    or "invalid login" in response_text_lower
+                    or "incorrect username" in response_text_lower
+                    or "incorrect password" in response_text_lower
+                    or "login failed" in response_text_lower
+                ):
+                    logger.error("Authentication failed: Invalid username or password")
+                    return None
+
+                # Verify login was successful
+                if (
+                    "logout" in response_text_lower
+                    or "profile" in response_text_lower
+                    or "user account" in response_text_lower
+                    or "my account" in response_text_lower
+                    or "dashboard" in response_text_lower
+                    or login_response.url != self.login_url
+                ):
+                    return session
+                else:
+                    # Check if login form is still present (indicates failed login)
+                    if (
+                        'name="name"' in login_response.text
+                        and 'name="pass"' in login_response.text
+                    ):
+                        logger.error(
+                            "Authentication failed: Login form still present after POST"
+                        )
+                    else:
+                        logger.error(
+                            "Login POST returned 200 but no success indicators found"
+                        )
+                    return None
+            elif login_response.status_code in [301, 302]:
+                # Check redirect location
+                location = login_response.headers.get("Location", "")
+                if "user" in location and "login" not in location:
+                    return session
+                else:
+                    logger.error(f"Login redirect to unexpected location: {location}")
+                    return None
             else:
                 logger.error(f"Login failed with status {login_response.status_code}")
+                if login_response.status_code == 403:
+                    logger.warning(
+                        "403 Forbidden - possible rate limiting or account block"
+                    )
+                logger.debug(f"Response content: {login_response.text[:500]}...")
                 return None
         except requests.RequestException as e:
             logger.error(f"Authentication error: {e}")
@@ -347,125 +559,133 @@ class SnowPilotSession:
         """
         for attempt in range(max_retries):
             try:
-                # Create authenticated session
-                session = self._create_authenticated_session()
-                if not session:
-                    self._sleep_for_retry(
-                        attempt,
-                        max_retries,
-                        RETRY_DELAY_MULTIPLIER_AUTH,
-                        "authentication",
-                    )
-                    if attempt < max_retries - 1:
-                        continue
-                    return None, None
+                # Use the existing authenticated session if available and authenticated
+                # Otherwise create a new one
+                if self.authenticated and self.session:
+                    session_to_use = self.session
+                    logger.debug("Reusing existing authenticated session")
+                else:
+                    session_to_use = self._create_authenticated_session()
+                    if not session_to_use:
+                        self._sleep_for_retry(
+                            attempt,
+                            max_retries,
+                            RETRY_DELAY_MULTIPLIER_AUTH,
+                            "authentication",
+                        )
+                        if attempt < max_retries - 1:
+                            continue
+                        return None, None
+                    logger.debug("Created new authenticated session")
 
-                with session as s:
-                    logger.info(f"Requesting CAAML data with query: {query_string}")
-                    self._enforce_rate_limit()
-                    query_response = s.get(self.caaml_query_url + query_string)
+                # Make the request using the session
+                logger.info(f"Requesting CAAML data with query: {query_string}")
+                self._enforce_rate_limit()
+                query_response = session_to_use.get(self.caaml_query_url + query_string)
 
-                    # Debug logging
-                    logger.debug(f"Query response status: {query_response.status_code}")
-                    logger.debug(
-                        f"Query response headers: {dict(query_response.headers)}"
-                    )
+                # Debug logging
+                logger.debug(f"Query response status: {query_response.status_code}")
+                logger.debug(f"Query response headers: {dict(query_response.headers)}")
 
-                    # Check for Content-Disposition header and success status
-                    content_disposition = query_response.headers.get(
-                        "Content-Disposition", None
-                    )
+                # Check for Content-Disposition header and success status
+                content_disposition = query_response.headers.get(
+                    "Content-Disposition", None
+                )
 
-                    if (
-                        content_disposition is not None
-                        and query_response.status_code == 200
-                    ):
-                        # Extract filename from Content-Disposition header
-                        try:
-                            match = re.search(
-                                r'filename="([^"]+)"', content_disposition
-                            )
-                            if not match:
-                                logger.error(
-                                    f"Could not parse filename from Content-Disposition: '{content_disposition}'"
-                                )
-                                return None, None
-
-                            full_filename = match.group(1)
-
-                            # Check if we got an empty result
-                            if full_filename == "_caaml.tar.gz":
-                                logger.info(
-                                    "No data available for the requested query - server returned empty filename"
-                                )
-                                return None, None
-
-                            # Remove the _caaml suffix if present
-                            filename = full_filename.replace("_caaml", "")
-
-                            # Final validation
-                            if not filename or filename == ".tar.gz":
-                                logger.error(
-                                    f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
-                                )
-                                return None, None
-
-                            file_url = self.data_url + filename
-
-                            # Download the actual file
-                            logger.info(f"Downloading CAAML file from: {file_url}")
-                            file_response = s.get(file_url)
-
-                            if file_response.status_code == 200:
-                                logger.info(f"CAAML download successful: {filename}")
-                                return file_response.content, filename
-                            else:
-                                logger.warning(
-                                    f"File download failed with status {file_response.status_code}"
-                                )
-                                if file_response.status_code == 403:
-                                    logger.error(
-                                        "403 Forbidden - possible rate limiting or authentication issue"
-                                    )
-                                    self._sleep_for_retry(
-                                        attempt,
-                                        max_retries,
-                                        RETRY_DELAY_MULTIPLIER_403,
-                                        "after 403 error",
-                                    )
-                                    if attempt < max_retries - 1:
-                                        continue
-                                return None, None
-                        except Exception as e:
+                if (
+                    content_disposition is not None
+                    and query_response.status_code == 200
+                ):
+                    # Extract filename from Content-Disposition header
+                    try:
+                        match = re.search(r'filename="([^"]+)"', content_disposition)
+                        if not match:
                             logger.error(
-                                f"Error parsing Content-Disposition header '{content_disposition}': {e}"
+                                f"Could not parse filename from Content-Disposition: '{content_disposition}'"
                             )
                             return None, None
-                    else:
-                        if query_response.status_code == 403:
+
+                        full_filename = match.group(1)
+
+                        # Check if we got an empty result
+                        if full_filename == "_caaml.tar.gz":
+                            logger.info(
+                                "No data available for the requested query - server returned empty filename"
+                            )
+                            return None, None
+
+                        # Remove the _caaml suffix if present
+                        filename = full_filename.replace("_caaml", "")
+
+                        # Final validation
+                        if not filename or filename == ".tar.gz":
                             logger.error(
-                                "403 Forbidden - possible rate limiting or authentication issue"
+                                f"Invalid filename extracted from Content-Disposition: '{content_disposition}'"
                             )
-                            self._sleep_for_retry(
-                                attempt,
-                                max_retries,
-                                RETRY_DELAY_MULTIPLIER_403,
-                                "after 403 error",
+                            return None, None
+
+                        file_url = self.data_url + filename
+
+                        # Download the actual file
+                        logger.info(f"Downloading CAAML file from: {file_url}")
+                        file_response = session_to_use.get(file_url)
+
+                        if file_response.status_code == 200:
+                            logger.info(f"CAAML download successful: {filename}")
+                            return file_response.content, filename
+                        else:
+                            logger.warning(
+                                f"File download failed with status {file_response.status_code}"
                             )
-                            if attempt < max_retries - 1:
-                                continue
-                        elif query_response.status_code == 500:
-                            logger.error(
-                                "Server error (500) - this may indicate an issue with the query parameters or server"
-                            )
-                        elif content_disposition is None:
-                            logger.error(
-                                "No Content-Disposition header found - query may have returned no results"
-                            )
+                            if file_response.status_code == 403:
+                                logger.error(
+                                    "403 Forbidden - possible rate limiting or authentication issue"
+                                )
+                                # Mark as not authenticated so we'll create a new session on retry
+                                self.authenticated = False
+                                self._sleep_for_retry(
+                                    attempt,
+                                    max_retries,
+                                    RETRY_DELAY_MULTIPLIER_403,
+                                    "after 403 error",
+                                )
+                                if attempt < max_retries - 1:
+                                    continue
+                            return None, None
+                    except Exception as e:
+                        logger.error(
+                            f"Error parsing Content-Disposition header '{content_disposition}': {e}"
+                        )
                         return None, None
+                else:
+                    if query_response.status_code == 403:
+                        logger.error(
+                            "403 Forbidden - possible rate limiting or authentication issue"
+                        )
+                        # Mark as not authenticated so we'll create a new session on retry
+                        self.authenticated = False
+                        self._sleep_for_retry(
+                            attempt,
+                            max_retries,
+                            RETRY_DELAY_MULTIPLIER_403,
+                            "after 403 error",
+                        )
+                        if attempt < max_retries - 1:
+                            continue
+                    elif query_response.status_code == 500:
+                        logger.error(
+                            "Server error (500) - this may indicate an issue with the query parameters or server"
+                        )
+                    elif content_disposition is None:
+                        logger.error(
+                            "No Content-Disposition header found - query may have returned no results"
+                        )
+                    return None, None
 
             except requests.RequestException as e:
                 logger.error(f"CAAML request error: {e}")
+                # Mark as not authenticated so we'll create a new session on retry
+                self.authenticated = False
                 self._sleep_for_retry(
                     attempt,
                     max_retries,

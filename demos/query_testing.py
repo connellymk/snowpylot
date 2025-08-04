@@ -9,8 +9,12 @@ from snowpylot.query_engine import QueryEngine, QueryFilter
 
 # Environment check
 print("=== Environment Check ===")
-user = "samuelverplanck@montana.edu"  # os.environ.get("SNOWPILOT_USER")
-password = "vincent21"  # os.environ.get("SNOWPILOT_PASSWORD")
+# Set environment variables with hardcoded credentials
+os.environ["SNOWPILOT_USER"] = "katisthebatis"
+os.environ["SNOWPILOT_PASSWORD"] = "mkconn123"
+
+user = os.environ.get("SNOWPILOT_USER")
+password = os.environ.get("SNOWPILOT_PASSWORD")
 
 if user and password:
     print("✅ Environment variables are set!")
@@ -55,7 +59,8 @@ else:
 
 print("\n=== Manual Chunking Example ===")
 print(
-    "Demonstrating manual chunking with controlled delays to work around API caching bug"
+    "Demonstrating manual chunking with controlled delays to work around "
+    "API caching bug"
 )
 
 # Define date range to chunk manually
@@ -64,17 +69,19 @@ end_date = datetime.strptime("2023-01-10", "%Y-%m-%d")
 
 current_date = start_date
 while current_date < end_date:
-    next_date = current_date + timedelta(days=1)
+    # Use single-day query (start_date = end_date)
+    # The query engine will automatically add +1 day to end_date,
+    # so this will fetch exactly one day of data
     query_filter = QueryFilter(
         date_start=current_date.strftime("%Y-%m-%d"),
-        date_end=next_date.strftime("%Y-%m-%d"),
+        date_end=current_date.strftime("%Y-%m-%d"),  # Same as start_date
     )
 
     print(f"Downloading data for: {current_date.strftime('%Y-%m-%d')}")
     result = engine.download_results(query_filter, auto_approve=True)
 
     # Move to next day
-    current_date = next_date
+    current_date = current_date + timedelta(days=1)
 
-    # add a delay of 10 seconds
-    time.sleep(10)
+    # add a delay of 60 seconds to work around API caching and rate limiting
+    time.sleep(60)

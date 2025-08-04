@@ -166,3 +166,4 @@ cython_debug/
 *.doc
 *.xlsx
 *.xls
+.env
