@@ -18,14 +18,15 @@ classifiers = [
 ]
 keywords = ["snowpit", "caaml", "snowpilot"]
 requires-python = ">=3.7"
-dependencies = [
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
     "sphinx>=7.0.0",
     "sphinx-rtd-theme>=2.0.0",
     "sphinx-autodoc-typehints>=1.25.0",
     "IPython>=8.0.0",
 ]
-
-[project.optional-dependencies]
 docs = [
     "sphinx>=7.0.0",
     "sphinx-rtd-theme>=2.0.0",
