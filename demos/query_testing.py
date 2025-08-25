@@ -64,8 +64,10 @@ print(
 )
 
 # Define date range to chunk manually
-start_date = datetime.strptime("2023-01-06", "%Y-%m-%d")
-end_date = datetime.strptime("2023-01-10", "%Y-%m-%d")
+start_date = datetime.strptime(
+    "2019-01-28", "%Y-%m-%d"
+)  # 2015-09-01, 2016-01-04, 2018-12-11
+end_date = datetime.strptime("2025-08-22", "%Y-%m-%d")
 
 current_date = start_date
 while current_date < end_date:
@@ -84,4 +86,4 @@ while current_date < end_date:
     current_date = current_date + timedelta(days=1)
 
     # add a delay of 60 seconds to work around API caching and rate limiting
-    time.sleep(60)
+    time.sleep(5)

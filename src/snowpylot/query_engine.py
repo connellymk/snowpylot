@@ -49,10 +49,10 @@ DEFAULT_PITS_PATH = "data/snowpits"
 
 # Request and rate limiting settings
 DEFAULT_REQUEST_DELAY = 15  # seconds between requests to prevent rate limiting
-DEFAULT_MAX_RETRIES = 3  # default maximum retry attempts for requests
+DEFAULT_MAX_RETRIES = 1  # default maximum retry attempts for requests
 
 # Data settings
-RESULTS_PER_PAGE = 100  # default number of results per page (max allowed by API: 100)
+RESULTS_PER_PAGE = 1000  # default number of results per page (max allowed by API: 100)
 
 # URL endpoints
 SNOWPILOT_BASE_URL = "https://snowpilot.org"
