@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<caaml:SnowProfile xmlns:caaml="http://caaml.org/Schemas/SnowProfileIACS/v6.0.3" xmlns:gml="http://www.opengis.net/gml" xmlns:snowpilot="http://www.snowpilot.org/Schemas/caaml" gml:id="SnowPilot-14311">
+  <caaml:metaData/>
+  <caaml:timeRef>
+    <caaml:recordTime>
+      <caaml:TimeInstant>
+        <caaml:timePosition>2019-02-14T08:00:00</caaml:timePosition>
+      </caaml:TimeInstant>
+    </caaml:recordTime>
+    <caaml:dateTimeReport>2019-02-14T10:29:11-09:00</caaml:dateTimeReport>
+    <caaml:dateTimeLastEdit>2019-02-14T10:30:59-09:00</caaml:dateTimeLastEdit>
+  </caaml:timeRef>
+  <caaml:srcRef>
+    <caaml:Person gml:id="SnowPilot-User-7232">
+      <caaml:name>Shastadog06</caaml:name>
+    </caaml:Person>
+  </caaml:srcRef>
+  <caaml:locRef gml:id="location-nid-14311">
+    <caaml:name>Ely Theoretical</caaml:name>
+    <caaml:obsPointSubType>SnowPilot Snowpit site</caaml:obsPointSubType>
+    <caaml:validElevation>
+      <caaml:ElevationPosition uom="m">
+        <caaml:position>2743</caaml:position>
+      </caaml:ElevationPosition>
+    </caaml:validElevation>
+    <caaml:country>US</caaml:country>
+    <caaml:region>NV</caaml:region>
+  </caaml:locRef>
+  <caaml:snowProfileResultsOf>
+    <caaml:SnowProfileMeasurements dir="top down">
+      <caaml:metaData/>
+      <caaml:profileDepth uom="cm">121.92</caaml:profileDepth>
+      <caaml:weatherCond/>
+      <caaml:snowPackCond>
+        <caaml:hS>
+          <caaml:Components>
+            <caaml:height uom="cm">121.92</caaml:height>
+          </caaml:Components>
+        </caaml:hS>
+      </caaml:snowPackCond>
+      <caaml:surfCond>
+        <caaml:metaData/>
+        <caaml:customData/>
+      </caaml:surfCond>
+      <caaml:stratProfile>
+        <caaml:stratMetaData/>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>light snow / cold</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">0</caaml:depthTop>
+          <caaml:thickness uom="cm">5.08</caaml:thickness>
+          <caaml:grainFormPrimary>SHsu</caaml:grainFormPrimary>
+          <caaml:hardness uom="">F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>possible wind slab</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">5.08</caaml:depthTop>
+          <caaml:thickness uom="cm">7.62</caaml:thickness>
+          <caaml:hardness uom="">4F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Feb 11-12 cold PWL</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">12.7</caaml:depthTop>
+          <caaml:thickness uom="cm">1.27</caaml:thickness>
+          <caaml:hardness uom="">F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>possible wind slabs</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">13.97</caaml:depthTop>
+          <caaml:thickness uom="cm">6.35</caaml:thickness>
+          <caaml:hardness uom="">4F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Feb 10th storm</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">20.32</caaml:depthTop>
+          <caaml:thickness uom="cm">5.08</caaml:thickness>
+          <caaml:hardness uom="">4F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>clear cold PWL Feb7-9</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">25.4</caaml:depthTop>
+          <caaml:thickness uom="cm">1.27</caaml:thickness>
+          <caaml:hardness uom="">F+</caaml:hardness>
+          <caaml:layerOfConcern partOfLayer="all">true</caaml:layerOfConcern>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Feb 3-6 storm snow</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">26.67</caaml:depthTop>
+          <caaml:thickness uom="cm">16.51</caaml:thickness>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>1/27 possible sun crust</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">43.18</caaml:depthTop>
+          <caaml:thickness uom="cm">1.27</caaml:thickness>
+          <caaml:hardness uom="">P-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Jan 17-22 storms</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">44.45</caaml:depthTop>
+          <caaml:thickness uom="cm">11.43</caaml:thickness>
+          <caaml:hardness uom="">4F+</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Early Jan snow consolidated</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">55.88</caaml:depthTop>
+          <caaml:thickness uom="cm">55.88</caaml:thickness>
+          <caaml:hardness uom="">1F-</caaml:hardness>
+        </caaml:Layer>
+        <caaml:Layer>
+          <caaml:metaData>
+            <caaml:comment>Dec snow rounded near groun</caaml:comment>
+          </caaml:metaData>
+          <caaml:depthTop uom="cm">111.76</caaml:depthTop>
+          <caaml:thickness uom="cm">10.16</caaml:thickness>
+          <caaml:hardness uom="">4F</caaml:hardness>
+        </caaml:Layer>
+      </caaml:stratProfile>
+    </caaml:SnowProfileMeasurements>
+  </caaml:snowProfileResultsOf>
+  <caaml:application>SnowPilot</caaml:application>
+  <caaml:applicationVersion>7.91-0.1</caaml:applicationVersion>
+  <caaml:customData>
+    <snowpilot:visibility>public</snowpilot:visibility>
+  </caaml:customData>
+</caaml:SnowProfile>
