@@ -65,7 +65,7 @@ print(
 
 # Define date range to chunk manually
 start_date = datetime.strptime(
-    "2019-01-28", "%Y-%m-%d"
+    "2022-05-16", "%Y-%m-%d"
 )  # 2015-09-01, 2016-01-04, 2018-12-11
 end_date = datetime.strptime("2025-08-22", "%Y-%m-%d")
 
