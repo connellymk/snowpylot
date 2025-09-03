@@ -1,0 +1,1540 @@
+{
+  "completed_chunks": [
+    "2002-12-21_2002-12-27",
+    "2004-11-23_2004-12-06",
+    "2005-01-04_2005-01-10",
+    "2005-01-18_2005-01-24",
+    "2008-03-05_2008-03-18",
+    "2009-12-26_2010-01-01",
+    "2010-01-09_2010-01-15",
+    "2010-02-06_2010-02-12",
+    "2012-02-16_2012-02-22",
+    "2012-02-23_2012-02-29",
+    "2012-03-01_2012-03-14",
+    "2012-03-15_2012-03-28",
+    "2013-01-15_2013-01-21",
+    "2013-12-15_2013-12-21",
+    "2013-12-29_2014-01-04",
+    "2014-01-19_2014-01-25",
+    "2014-02-23_2014-03-01",
+    "2014-12-12_2014-12-18",
+    "2014-12-19_2014-12-25",
+    "2015-01-23_2015-01-29",
+    "2015-01-30_2015-02-05",
+    "2015-02-27_2015-03-05",
+    "2015-06-30_2015-08-28",
+    "2016-01-01_2016-01-07",
+    "2016-01-15_2016-01-21",
+    "2016-01-22_2016-01-28",
+    "2016-02-19_2016-02-25",
+    "2016-04-15_2016-04-28",
+    "2016-06-12_2016-08-10",
+    "2016-10-10_2016-11-08",
+    "2015-10-01_2015-10-30",
+    "2015-10-31_2015-11-29",
+    "2015-11-30_2015-12-13",
+    "2015-12-14_2015-12-20",
+    "2015-12-21_2015-12-27",
+    "2015-12-28_2016-01-03",
+    "2016-01-04_2016-01-10",
+    "2016-01-11_2016-01-17",
+    "2016-01-18_2016-01-24",
+    "2016-01-25_2016-01-31",
+    "2016-02-01_2016-02-07",
+    "2016-02-08_2016-02-14",
+    "2016-02-15_2016-02-21",
+    "2016-02-22_2016-02-28",
+    "2016-02-29_2016-03-06",
+    "2016-03-07_2016-03-20",
+    "2016-03-21_2016-04-03",
+    "2016-04-04_2016-04-17",
+    "2016-04-18_2016-05-01",
+    "2016-05-02_2016-05-31",
+    "2016-06-01_2016-07-30"
+  ],
+  "failed_chunks": [
+    {
+      "chunk_id": "2002-10-01_2002-10-30",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:11:13.714171"
+    },
+    {
+      "chunk_id": "2002-10-31_2002-11-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:12:15.113844"
+    },
+    {
+      "chunk_id": "2002-11-30_2002-12-13",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:13:16.379823"
+    },
+    {
+      "chunk_id": "2002-12-14_2002-12-20",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:14:17.689256"
+    },
+    {
+      "chunk_id": "2002-12-28_2003-01-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:16:26.827673"
+    },
+    {
+      "chunk_id": "2003-01-04_2003-01-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:17:28.219255"
+    },
+    {
+      "chunk_id": "2003-01-11_2003-01-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:18:29.530957"
+    },
+    {
+      "chunk_id": "2003-01-18_2003-01-24",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:19:30.796481"
+    },
+    {
+      "chunk_id": "2003-01-25_2003-01-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:20:32.147648"
+    },
+    {
+      "chunk_id": "2003-02-01_2003-02-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:21:33.527335"
+    },
+    {
+      "chunk_id": "2003-02-08_2003-02-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:22:34.895867"
+    },
+    {
+      "chunk_id": "2003-02-15_2003-02-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:23:36.143625"
+    },
+    {
+      "chunk_id": "2003-02-22_2003-02-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:24:37.996530"
+    },
+    {
+      "chunk_id": "2003-03-01_2003-03-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:25:39.298112"
+    },
+    {
+      "chunk_id": "2003-03-15_2003-03-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:26:40.772206"
+    },
+    {
+      "chunk_id": "2003-03-29_2003-04-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:27:42.082990"
+    },
+    {
+      "chunk_id": "2003-04-12_2003-04-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:28:43.447837"
+    },
+    {
+      "chunk_id": "2003-04-26_2003-05-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:29:44.889581"
+    },
+    {
+      "chunk_id": "2003-05-10_2003-06-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T19:45:44.502821"
+    },
+    {
+      "chunk_id": "2003-06-09_2003-08-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:01:36.983220"
+    },
+    {
+      "chunk_id": "2003-08-08_2003-10-06",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:02:38.285838"
+    },
+    {
+      "chunk_id": "2003-10-07_2003-11-05",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:03:39.548166"
+    },
+    {
+      "chunk_id": "2003-11-06_2003-11-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:04:40.831456"
+    },
+    {
+      "chunk_id": "2003-11-20_2003-12-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:05:42.140084"
+    },
+    {
+      "chunk_id": "2003-12-04_2003-12-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:06:43.488654"
+    },
+    {
+      "chunk_id": "2003-12-11_2003-12-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:07:44.797722"
+    },
+    {
+      "chunk_id": "2003-12-18_2003-12-24",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:08:46.182033"
+    },
+    {
+      "chunk_id": "2003-12-25_2003-12-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:09:47.494566"
+    },
+    {
+      "chunk_id": "2004-01-01_2004-01-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:10:48.797871"
+    },
+    {
+      "chunk_id": "2004-01-08_2004-01-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:11:50.068843"
+    },
+    {
+      "chunk_id": "2004-01-15_2004-01-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:12:51.395171"
+    },
+    {
+      "chunk_id": "2004-01-22_2004-01-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:13:52.697178"
+    },
+    {
+      "chunk_id": "2004-01-29_2004-02-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:14:54.036310"
+    },
+    {
+      "chunk_id": "2004-02-05_2004-02-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:15:55.474334"
+    },
+    {
+      "chunk_id": "2004-02-12_2004-02-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T20:46:53.200636"
+    },
+    {
+      "chunk_id": "2004-02-19_2004-02-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:02:52.250348"
+    },
+    {
+      "chunk_id": "2004-02-26_2004-03-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:18:51.201281"
+    },
+    {
+      "chunk_id": "2004-03-04_2004-03-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:19:52.701288"
+    },
+    {
+      "chunk_id": "2004-03-18_2004-03-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:20:54.095683"
+    },
+    {
+      "chunk_id": "2004-04-01_2004-04-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:21:55.435345"
+    },
+    {
+      "chunk_id": "2004-04-15_2004-04-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:22:56.666615"
+    },
+    {
+      "chunk_id": "2004-04-29_2004-05-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:39:16.526842"
+    },
+    {
+      "chunk_id": "2004-05-13_2004-06-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:40:17.893419"
+    },
+    {
+      "chunk_id": "2004-06-12_2004-08-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:41:19.322063"
+    },
+    {
+      "chunk_id": "2004-08-11_2004-10-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:42:20.662948"
+    },
+    {
+      "chunk_id": "2004-10-10_2004-11-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:43:21.991880"
+    },
+    {
+      "chunk_id": "2004-11-09_2004-11-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:44:23.296083"
+    },
+    {
+      "chunk_id": "2004-12-07_2004-12-13",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:46:26.084658"
+    },
+    {
+      "chunk_id": "2004-12-14_2004-12-20",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:47:27.454167"
+    },
+    {
+      "chunk_id": "2004-12-21_2004-12-27",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:48:28.801520"
+    },
+    {
+      "chunk_id": "2004-12-28_2005-01-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:49:30.169219"
+    },
+    {
+      "chunk_id": "2005-01-11_2005-01-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:51:32.978332"
+    },
+    {
+      "chunk_id": "2005-01-25_2005-01-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:53:35.805813"
+    },
+    {
+      "chunk_id": "2005-02-01_2005-02-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:54:37.249514"
+    },
+    {
+      "chunk_id": "2005-02-08_2005-02-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:55:38.459596"
+    },
+    {
+      "chunk_id": "2005-02-15_2005-02-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:56:39.929931"
+    },
+    {
+      "chunk_id": "2005-02-22_2005-02-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:57:41.368121"
+    },
+    {
+      "chunk_id": "2005-03-01_2005-03-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:58:42.909949"
+    },
+    {
+      "chunk_id": "2005-03-15_2005-03-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T21:59:44.351013"
+    },
+    {
+      "chunk_id": "2005-03-29_2005-04-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:00:45.705559"
+    },
+    {
+      "chunk_id": "2005-04-12_2005-04-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:01:47.231978"
+    },
+    {
+      "chunk_id": "2005-04-26_2005-05-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:02:48.698024"
+    },
+    {
+      "chunk_id": "2005-05-10_2005-06-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:03:50.012053"
+    },
+    {
+      "chunk_id": "2005-06-09_2005-08-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:20:06.113595"
+    },
+    {
+      "chunk_id": "2005-08-08_2005-10-06",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:37:49.852068"
+    },
+    {
+      "chunk_id": "2005-10-07_2005-11-05",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:56:24.652364"
+    },
+    {
+      "chunk_id": "2005-11-06_2005-11-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:57:31.421946"
+    },
+    {
+      "chunk_id": "2005-11-20_2005-12-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T22:58:38.034495"
+    },
+    {
+      "chunk_id": "2005-12-04_2005-12-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T23:31:41.184814"
+    },
+    {
+      "chunk_id": "2005-12-11_2005-12-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-03T23:48:53.372400"
+    },
+    {
+      "chunk_id": "2005-12-18_2005-12-24",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T00:16:31.461081"
+    },
+    {
+      "chunk_id": "2005-12-25_2005-12-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T00:48:37.523112"
+    },
+    {
+      "chunk_id": "2006-01-01_2006-01-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:04:58.108640"
+    },
+    {
+      "chunk_id": "2006-01-08_2006-01-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:22:32.820377"
+    },
+    {
+      "chunk_id": "2006-01-15_2006-01-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:54:35.799115"
+    },
+    {
+      "chunk_id": "2006-01-22_2006-01-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:55:42.562656"
+    },
+    {
+      "chunk_id": "2006-01-29_2006-02-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:56:49.225975"
+    },
+    {
+      "chunk_id": "2006-02-05_2006-02-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:57:55.888715"
+    },
+    {
+      "chunk_id": "2006-02-12_2006-02-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T01:59:02.551563"
+    },
+    {
+      "chunk_id": "2006-02-19_2006-02-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:00:09.143137"
+    },
+    {
+      "chunk_id": "2006-02-26_2006-03-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:01:15.655041"
+    },
+    {
+      "chunk_id": "2006-03-05_2006-03-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:02:22.312216"
+    },
+    {
+      "chunk_id": "2006-03-19_2006-04-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:03:29.173573"
+    },
+    {
+      "chunk_id": "2006-04-02_2006-04-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:04:35.868668"
+    },
+    {
+      "chunk_id": "2006-04-16_2006-04-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:05:42.581819"
+    },
+    {
+      "chunk_id": "2006-04-30_2006-05-13",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:06:49.245497"
+    },
+    {
+      "chunk_id": "2006-05-14_2006-06-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:07:55.957548"
+    },
+    {
+      "chunk_id": "2006-06-13_2006-08-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:09:02.725804"
+    },
+    {
+      "chunk_id": "2006-08-12_2006-10-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:10:09.388965"
+    },
+    {
+      "chunk_id": "2006-10-11_2006-11-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:11:16.088834"
+    },
+    {
+      "chunk_id": "2006-11-10_2006-11-23",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:12:22.738250"
+    },
+    {
+      "chunk_id": "2006-11-24_2006-12-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:13:29.503741"
+    },
+    {
+      "chunk_id": "2006-12-08_2006-12-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:14:36.191489"
+    },
+    {
+      "chunk_id": "2006-12-15_2006-12-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:15:42.830251"
+    },
+    {
+      "chunk_id": "2006-12-22_2006-12-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:16:49.431208"
+    },
+    {
+      "chunk_id": "2006-12-29_2007-01-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:17:56.053954"
+    },
+    {
+      "chunk_id": "2007-01-05_2007-01-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:19:02.616177"
+    },
+    {
+      "chunk_id": "2007-01-12_2007-01-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:20:09.310634"
+    },
+    {
+      "chunk_id": "2007-01-19_2007-01-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:21:16.859753"
+    },
+    {
+      "chunk_id": "2007-01-26_2007-02-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:22:23.493128"
+    },
+    {
+      "chunk_id": "2007-02-02_2007-02-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:23:30.213486"
+    },
+    {
+      "chunk_id": "2007-02-09_2007-02-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:24:37.160243"
+    },
+    {
+      "chunk_id": "2007-02-16_2007-02-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:25:43.825615"
+    },
+    {
+      "chunk_id": "2007-02-23_2007-03-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:26:50.459713"
+    },
+    {
+      "chunk_id": "2007-03-02_2007-03-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:27:57.223864"
+    },
+    {
+      "chunk_id": "2007-03-16_2007-03-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:29:03.891095"
+    },
+    {
+      "chunk_id": "2007-03-30_2007-04-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:30:10.548878"
+    },
+    {
+      "chunk_id": "2007-04-13_2007-04-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:31:17.315702"
+    },
+    {
+      "chunk_id": "2007-04-27_2007-05-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:32:23.978018"
+    },
+    {
+      "chunk_id": "2007-05-11_2007-06-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:33:30.640990"
+    },
+    {
+      "chunk_id": "2007-06-10_2007-08-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:34:37.464976"
+    },
+    {
+      "chunk_id": "2007-08-09_2007-10-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:35:44.273579"
+    },
+    {
+      "chunk_id": "2007-10-08_2007-11-06",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:36:50.976123"
+    },
+    {
+      "chunk_id": "2007-11-07_2007-11-20",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:37:57.660398"
+    },
+    {
+      "chunk_id": "2007-11-21_2007-12-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:39:04.364891"
+    },
+    {
+      "chunk_id": "2007-12-05_2007-12-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:40:11.436700"
+    },
+    {
+      "chunk_id": "2007-12-12_2007-12-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:41:18.099459"
+    },
+    {
+      "chunk_id": "2007-12-19_2007-12-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:42:24.715597"
+    },
+    {
+      "chunk_id": "2007-12-26_2008-01-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:43:31.544651"
+    },
+    {
+      "chunk_id": "2008-01-02_2008-01-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:44:38.308887"
+    },
+    {
+      "chunk_id": "2008-01-09_2008-01-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T02:45:45.385636"
+    },
+    {
+      "chunk_id": "2008-01-16_2008-01-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:17:48.707070"
+    },
+    {
+      "chunk_id": "2008-01-23_2008-01-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:18:55.436210"
+    },
+    {
+      "chunk_id": "2008-01-30_2008-02-05",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:20:02.194923"
+    },
+    {
+      "chunk_id": "2008-02-06_2008-02-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:21:08.960483"
+    },
+    {
+      "chunk_id": "2008-02-13_2008-02-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:22:15.726277"
+    },
+    {
+      "chunk_id": "2008-02-20_2008-02-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:23:22.375345"
+    },
+    {
+      "chunk_id": "2008-02-27_2008-03-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:24:29.051859"
+    },
+    {
+      "chunk_id": "2008-03-19_2008-04-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:26:42.554217"
+    },
+    {
+      "chunk_id": "2008-04-02_2008-04-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:27:49.245786"
+    },
+    {
+      "chunk_id": "2008-04-16_2008-04-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:28:55.907729"
+    },
+    {
+      "chunk_id": "2008-04-30_2008-05-13",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:30:02.717436"
+    },
+    {
+      "chunk_id": "2008-05-14_2008-06-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:31:09.461431"
+    },
+    {
+      "chunk_id": "2008-06-13_2008-08-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:32:16.174320"
+    },
+    {
+      "chunk_id": "2008-08-12_2008-10-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:33:23.091736"
+    },
+    {
+      "chunk_id": "2008-10-11_2008-11-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:34:29.753273"
+    },
+    {
+      "chunk_id": "2008-11-10_2008-11-23",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:35:36.336655"
+    },
+    {
+      "chunk_id": "2008-11-24_2008-12-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:36:43.112579"
+    },
+    {
+      "chunk_id": "2008-12-08_2008-12-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:37:49.824726"
+    },
+    {
+      "chunk_id": "2008-12-15_2008-12-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:38:56.502120"
+    },
+    {
+      "chunk_id": "2008-12-22_2008-12-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:40:03.275260"
+    },
+    {
+      "chunk_id": "2008-12-29_2009-01-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:41:09.938262"
+    },
+    {
+      "chunk_id": "2009-01-05_2009-01-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:42:16.807052"
+    },
+    {
+      "chunk_id": "2009-01-12_2009-01-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:43:23.674271"
+    },
+    {
+      "chunk_id": "2009-01-19_2009-01-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:44:30.311772"
+    },
+    {
+      "chunk_id": "2009-01-26_2009-02-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:45:37.073283"
+    },
+    {
+      "chunk_id": "2009-02-02_2009-02-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:46:43.838354"
+    },
+    {
+      "chunk_id": "2009-02-09_2009-02-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:47:50.528841"
+    },
+    {
+      "chunk_id": "2009-02-16_2009-02-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:48:57.269424"
+    },
+    {
+      "chunk_id": "2009-02-23_2009-03-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:50:04.030725"
+    },
+    {
+      "chunk_id": "2009-03-02_2009-03-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:51:10.796539"
+    },
+    {
+      "chunk_id": "2009-03-16_2009-03-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:52:17.453323"
+    },
+    {
+      "chunk_id": "2009-03-30_2009-04-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:53:24.224910"
+    },
+    {
+      "chunk_id": "2009-04-13_2009-04-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:54:30.888032"
+    },
+    {
+      "chunk_id": "2009-04-27_2009-05-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:55:37.544919"
+    },
+    {
+      "chunk_id": "2009-05-11_2009-06-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:56:44.212261"
+    },
+    {
+      "chunk_id": "2009-06-10_2009-08-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:57:51.101389"
+    },
+    {
+      "chunk_id": "2009-08-09_2009-10-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T03:58:57.742722"
+    },
+    {
+      "chunk_id": "2009-10-08_2009-11-06",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:00:04.405266"
+    },
+    {
+      "chunk_id": "2009-11-07_2009-11-20",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:01:11.147256"
+    },
+    {
+      "chunk_id": "2009-11-21_2009-12-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:02:17.939663"
+    },
+    {
+      "chunk_id": "2009-12-05_2009-12-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:03:24.587445"
+    },
+    {
+      "chunk_id": "2009-12-12_2009-12-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:04:31.276319"
+    },
+    {
+      "chunk_id": "2009-12-19_2009-12-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:05:38.026803"
+    },
+    {
+      "chunk_id": "2010-01-02_2010-01-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:07:52.069205"
+    },
+    {
+      "chunk_id": "2010-01-16_2010-01-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:10:05.629417"
+    },
+    {
+      "chunk_id": "2010-01-23_2010-01-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:11:12.365837"
+    },
+    {
+      "chunk_id": "2010-01-30_2010-02-05",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:12:19.028504"
+    },
+    {
+      "chunk_id": "2010-02-13_2010-02-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:14:32.662198"
+    },
+    {
+      "chunk_id": "2010-02-20_2010-02-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:15:39.317458"
+    },
+    {
+      "chunk_id": "2010-02-27_2010-03-05",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:16:46.039215"
+    },
+    {
+      "chunk_id": "2010-03-06_2010-03-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:17:52.719990"
+    },
+    {
+      "chunk_id": "2010-03-20_2010-04-02",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:18:59.586574"
+    },
+    {
+      "chunk_id": "2010-04-03_2010-04-16",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:20:06.254095"
+    },
+    {
+      "chunk_id": "2010-04-17_2010-04-30",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:21:13.120916"
+    },
+    {
+      "chunk_id": "2010-05-01_2010-05-30",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:22:19.881271"
+    },
+    {
+      "chunk_id": "2010-05-31_2010-06-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:23:26.646014"
+    },
+    {
+      "chunk_id": "2010-06-30_2010-08-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:24:33.353798"
+    },
+    {
+      "chunk_id": "2010-08-29_2010-10-27",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:25:40.073660"
+    },
+    {
+      "chunk_id": "2010-10-28_2010-11-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:26:46.942770"
+    },
+    {
+      "chunk_id": "2010-11-27_2010-12-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:27:53.632373"
+    },
+    {
+      "chunk_id": "2010-12-11_2010-12-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:29:00.295857"
+    },
+    {
+      "chunk_id": "2010-12-18_2010-12-24",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:30:07.029898"
+    },
+    {
+      "chunk_id": "2010-12-25_2010-12-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:31:13.713649"
+    },
+    {
+      "chunk_id": "2011-01-01_2011-01-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:32:20.479628"
+    },
+    {
+      "chunk_id": "2011-01-08_2011-01-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:33:27.162238"
+    },
+    {
+      "chunk_id": "2011-01-15_2011-01-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:34:33.883343"
+    },
+    {
+      "chunk_id": "2011-01-22_2011-01-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:35:40.687236"
+    },
+    {
+      "chunk_id": "2011-01-29_2011-02-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:36:47.453064"
+    },
+    {
+      "chunk_id": "2011-02-05_2011-02-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:37:54.218312"
+    },
+    {
+      "chunk_id": "2011-02-12_2011-02-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:39:00.881348"
+    },
+    {
+      "chunk_id": "2011-02-19_2011-02-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:40:07.646395"
+    },
+    {
+      "chunk_id": "2011-02-26_2011-03-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:41:14.411893"
+    },
+    {
+      "chunk_id": "2011-03-05_2011-03-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:42:21.100034"
+    },
+    {
+      "chunk_id": "2011-03-19_2011-04-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:43:27.836439"
+    },
+    {
+      "chunk_id": "2011-04-02_2011-04-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:44:34.565986"
+    },
+    {
+      "chunk_id": "2011-04-16_2011-04-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:45:41.310742"
+    },
+    {
+      "chunk_id": "2011-04-30_2011-05-13",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:46:48.065946"
+    },
+    {
+      "chunk_id": "2011-05-14_2011-06-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:47:54.832605"
+    },
+    {
+      "chunk_id": "2011-06-13_2011-08-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:49:01.598166"
+    },
+    {
+      "chunk_id": "2011-08-12_2011-10-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:50:08.263521"
+    },
+    {
+      "chunk_id": "2011-10-11_2011-11-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:51:15.026871"
+    },
+    {
+      "chunk_id": "2011-11-10_2011-11-23",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:52:21.616581"
+    },
+    {
+      "chunk_id": "2011-11-24_2011-12-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:53:28.353998"
+    },
+    {
+      "chunk_id": "2011-12-08_2011-12-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:54:35.129549"
+    },
+    {
+      "chunk_id": "2011-12-15_2011-12-21",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:55:41.782188"
+    },
+    {
+      "chunk_id": "2011-12-22_2011-12-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:56:48.552229"
+    },
+    {
+      "chunk_id": "2011-12-29_2012-01-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:57:55.416106"
+    },
+    {
+      "chunk_id": "2012-01-05_2012-01-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T04:59:02.202815"
+    },
+    {
+      "chunk_id": "2012-01-12_2012-01-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:00:08.785847"
+    },
+    {
+      "chunk_id": "2012-01-19_2012-01-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:01:15.609838"
+    },
+    {
+      "chunk_id": "2012-01-26_2012-02-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:02:22.272480"
+    },
+    {
+      "chunk_id": "2012-02-02_2012-02-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:03:28.933855"
+    },
+    {
+      "chunk_id": "2012-02-09_2012-02-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:04:35.701065"
+    },
+    {
+      "chunk_id": "2012-03-29_2012-04-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:10:09.631319"
+    },
+    {
+      "chunk_id": "2012-04-12_2012-04-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:11:16.294479"
+    },
+    {
+      "chunk_id": "2012-04-26_2012-05-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:12:22.959802"
+    },
+    {
+      "chunk_id": "2012-05-10_2012-06-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:13:29.735648"
+    },
+    {
+      "chunk_id": "2012-06-09_2012-08-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:14:36.594142"
+    },
+    {
+      "chunk_id": "2012-08-08_2012-10-06",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:15:43.164846"
+    },
+    {
+      "chunk_id": "2012-10-07_2012-11-05",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:16:49.911308"
+    },
+    {
+      "chunk_id": "2012-11-06_2012-11-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:17:56.657987"
+    },
+    {
+      "chunk_id": "2012-11-20_2012-12-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:19:03.321711"
+    },
+    {
+      "chunk_id": "2012-12-04_2012-12-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:20:09.983311"
+    },
+    {
+      "chunk_id": "2012-12-11_2012-12-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:21:16.623636"
+    },
+    {
+      "chunk_id": "2012-12-18_2012-12-24",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:22:23.309108"
+    },
+    {
+      "chunk_id": "2012-12-25_2012-12-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:23:30.073596"
+    },
+    {
+      "chunk_id": "2013-01-01_2013-01-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:24:36.839841"
+    },
+    {
+      "chunk_id": "2013-01-08_2013-01-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:25:43.808593"
+    },
+    {
+      "chunk_id": "2013-01-22_2013-01-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:27:57.163210"
+    },
+    {
+      "chunk_id": "2013-01-29_2013-02-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:29:04.056706"
+    },
+    {
+      "chunk_id": "2013-02-05_2013-02-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:30:10.767957"
+    },
+    {
+      "chunk_id": "2013-02-12_2013-02-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:31:17.434626"
+    },
+    {
+      "chunk_id": "2013-02-19_2013-02-25",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:32:24.218739"
+    },
+    {
+      "chunk_id": "2013-02-26_2013-03-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:33:30.939253"
+    },
+    {
+      "chunk_id": "2013-03-05_2013-03-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:34:37.652720"
+    },
+    {
+      "chunk_id": "2013-03-19_2013-04-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:35:44.316349"
+    },
+    {
+      "chunk_id": "2013-04-02_2013-04-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:36:51.081949"
+    },
+    {
+      "chunk_id": "2013-04-16_2013-04-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:37:57.744941"
+    },
+    {
+      "chunk_id": "2013-04-30_2013-05-13",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:39:04.305512"
+    },
+    {
+      "chunk_id": "2013-05-14_2013-06-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:40:11.011561"
+    },
+    {
+      "chunk_id": "2013-06-13_2013-08-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:41:17.694306"
+    },
+    {
+      "chunk_id": "2013-08-12_2013-10-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:42:24.295017"
+    },
+    {
+      "chunk_id": "2013-10-11_2013-11-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:43:30.958754"
+    },
+    {
+      "chunk_id": "2013-11-10_2013-11-23",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:44:37.653650"
+    },
+    {
+      "chunk_id": "2013-11-24_2013-12-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:45:44.387476"
+    },
+    {
+      "chunk_id": "2013-12-08_2013-12-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:46:51.050615"
+    },
+    {
+      "chunk_id": "2013-12-22_2013-12-28",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:49:04.450635"
+    },
+    {
+      "chunk_id": "2014-01-05_2014-01-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:51:17.823623"
+    },
+    {
+      "chunk_id": "2014-01-12_2014-01-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:52:24.410508"
+    },
+    {
+      "chunk_id": "2014-01-26_2014-02-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:54:37.927343"
+    },
+    {
+      "chunk_id": "2014-02-02_2014-02-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:55:44.580708"
+    },
+    {
+      "chunk_id": "2014-02-09_2014-02-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:56:51.240119"
+    },
+    {
+      "chunk_id": "2014-02-16_2014-02-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T05:57:57.907401"
+    },
+    {
+      "chunk_id": "2014-03-02_2014-03-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:00:11.541957"
+    },
+    {
+      "chunk_id": "2014-03-16_2014-03-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:01:18.310137"
+    },
+    {
+      "chunk_id": "2014-03-30_2014-04-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:02:24.913364"
+    },
+    {
+      "chunk_id": "2014-04-13_2014-04-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:03:31.526576"
+    },
+    {
+      "chunk_id": "2014-04-27_2014-05-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:04:38.266431"
+    },
+    {
+      "chunk_id": "2014-05-11_2014-06-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:05:44.873466"
+    },
+    {
+      "chunk_id": "2014-06-10_2014-08-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:06:51.490133"
+    },
+    {
+      "chunk_id": "2014-08-09_2014-10-07",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:07:58.126067"
+    },
+    {
+      "chunk_id": "2014-10-08_2014-11-06",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:09:04.711889"
+    },
+    {
+      "chunk_id": "2014-11-07_2014-11-20",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:10:11.476861"
+    },
+    {
+      "chunk_id": "2014-11-21_2014-12-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:11:18.065427"
+    },
+    {
+      "chunk_id": "2014-12-05_2014-12-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:12:24.701843"
+    },
+    {
+      "chunk_id": "2014-12-26_2015-01-01",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:15:44.894667"
+    },
+    {
+      "chunk_id": "2015-01-02_2015-01-08",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:16:51.660864"
+    },
+    {
+      "chunk_id": "2015-01-09_2015-01-15",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:17:58.317162"
+    },
+    {
+      "chunk_id": "2015-01-16_2015-01-22",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:19:04.987598"
+    },
+    {
+      "chunk_id": "2015-02-06_2015-02-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:22:25.278212"
+    },
+    {
+      "chunk_id": "2015-02-13_2015-02-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:23:32.253906"
+    },
+    {
+      "chunk_id": "2015-02-20_2015-02-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:24:39.140535"
+    },
+    {
+      "chunk_id": "2015-03-06_2015-03-19",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:26:52.451448"
+    },
+    {
+      "chunk_id": "2015-03-20_2015-04-02",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:27:59.130681"
+    },
+    {
+      "chunk_id": "2015-04-03_2015-04-16",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:29:05.798614"
+    },
+    {
+      "chunk_id": "2015-04-17_2015-04-30",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:30:12.561247"
+    },
+    {
+      "chunk_id": "2015-05-01_2015-05-30",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:31:19.222051"
+    },
+    {
+      "chunk_id": "2015-05-31_2015-06-29",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:32:25.828845"
+    },
+    {
+      "chunk_id": "2015-08-29_2015-10-27",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:34:39.211882"
+    },
+    {
+      "chunk_id": "2015-10-28_2015-11-26",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:35:45.858637"
+    },
+    {
+      "chunk_id": "2015-11-27_2015-12-10",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:36:52.540407"
+    },
+    {
+      "chunk_id": "2015-12-11_2015-12-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:37:59.168042"
+    },
+    {
+      "chunk_id": "2015-12-18_2015-12-24",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:39:05.882189"
+    },
+    {
+      "chunk_id": "2015-12-25_2015-12-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:40:12.486554"
+    },
+    {
+      "chunk_id": "2016-01-08_2016-01-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:42:25.940540"
+    },
+    {
+      "chunk_id": "2016-01-29_2016-02-04",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:45:46.106999"
+    },
+    {
+      "chunk_id": "2016-02-05_2016-02-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:46:52.765368"
+    },
+    {
+      "chunk_id": "2016-02-12_2016-02-18",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:47:59.314263"
+    },
+    {
+      "chunk_id": "2016-02-26_2016-03-03",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T06:50:12.634352"
+    },
+    {
+      "chunk_id": "2016-03-04_2016-03-17",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T07:06:18.797534"
+    },
+    {
+      "chunk_id": "2016-03-18_2016-03-31",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T07:30:33.770606"
+    },
+    {
+      "chunk_id": "2016-04-01_2016-04-14",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T07:31:40.336123"
+    },
+    {
+      "chunk_id": "2016-04-29_2016-05-12",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T07:33:53.576166"
+    },
+    {
+      "chunk_id": "2016-05-13_2016-06-11",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T07:35:00.256729"
+    },
+    {
+      "chunk_id": "2016-08-11_2016-10-09",
+      "error": "No data received from server (possible server error or no data available)",
+      "timestamp": "2025-08-04T07:37:13.690305"
+    }
+  ],
+  "total_pits_downloaded": 56,
+  "start_time": "2025-08-04T07:45:37.385205",
+  "last_update": "2025-08-04T09:09:46.448977"
+}
