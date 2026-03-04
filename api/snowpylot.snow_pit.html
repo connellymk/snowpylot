@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.snow_pit module &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">snowpylot.snow_pit module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/snowpylot.snow_pit.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-snowpylot.snow_pit">
+<span id="snowpylot-snow-pit-module"></span><h1>snowpylot.snow_pit module<a class="headerlink" href="#module-snowpylot.snow_pit" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.snow_pit.SnowPit">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.snow_pit.</span></span><span class="sig-name descname"><span class="pre">SnowPit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">core_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snow_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stability_tests</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whumpf_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_pit.html#SnowPit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_pit.SnowPit" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>SnowPit class for representing a single snow pit observation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_pit.SnowPit.core_info">
+<span class="sig-name descname"><span class="pre">core_info</span></span><a class="headerlink" href="#snowpylot.snow_pit.SnowPit.core_info" title="Link to this definition"></a></dt>
+<dd><p>Core information about the snow pit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_pit.SnowPit.snow_profile">
+<span class="sig-name descname"><span class="pre">snow_profile</span></span><a class="headerlink" href="#snowpylot.snow_pit.SnowPit.snow_profile" title="Link to this definition"></a></dt>
+<dd><p>Snow profile information</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_pit.SnowPit.stability_tests">
+<span class="sig-name descname"><span class="pre">stability_tests</span></span><a class="headerlink" href="#snowpylot.snow_pit.SnowPit.stability_tests" title="Link to this definition"></a></dt>
+<dd><p>Stability test results</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_pit.SnowPit.whumpf_data">
+<span class="sig-name descname"><span class="pre">whumpf_data</span></span><a class="headerlink" href="#snowpylot.snow_pit.SnowPit.whumpf_data" title="Link to this definition"></a></dt>
+<dd><p>Whumpf data information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_pit.SnowPit.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_pit.html#SnowPit.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_pit.SnowPit.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the snow pit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">core_info</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="snowpylot.core_info.html#snowpylot.core_info.CoreInfo" title="snowpylot.core_info.CoreInfo"><span class="pre">CoreInfo</span></a></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">snow_profile</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="snowpylot.snow_profile.html#snowpylot.snow_profile.SnowProfile" title="snowpylot.snow_profile.SnowProfile"><span class="pre">SnowProfile</span></a></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">stability_tests</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests" title="snowpylot.stability_tests.StabilityTests"><span class="pre">StabilityTests</span></a></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">whumpf_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="snowpylot.whumpf_data.html#snowpylot.whumpf_data.WhumpfData" title="snowpylot.whumpf_data.WhumpfData"><span class="pre">WhumpfData</span></a></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

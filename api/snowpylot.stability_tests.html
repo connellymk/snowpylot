@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.stability_tests module &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">snowpylot.stability_tests module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/snowpylot.stability_tests.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-snowpylot.stability_tests">
+<span id="snowpylot-stability-tests-module"></span><h1>snowpylot.stability_tests module<a class="headerlink" href="#module-snowpylot.stability_tests" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.stability_tests.</span></span><span class="sig-name descname"><span class="pre">ComprTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fracture_character</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ComprTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ComprTest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>ComprTest class for representing results of a Compression Test stability test.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.depth_top">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.depth_top" title="Link to this definition"></a></dt>
+<dd><p>Depth from the surface to the top of the layer with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.fracture_character">
+<span class="sig-name descname"><span class="pre">fracture_character</span></span><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.fracture_character" title="Link to this definition"></a></dt>
+<dd><p>Fracture character</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.test_score">
+<span class="sig-name descname"><span class="pre">test_score</span></span><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.test_score" title="Link to this definition"></a></dt>
+<dd><p>Test score</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.comment" title="Link to this definition"></a></dt>
+<dd><p>Comment</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ComprTest.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the compression test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">comment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">fracture_character</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.set_comment">
+<span class="sig-name descname"><span class="pre">set_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ComprTest.set_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.set_comment" title="Link to this definition"></a></dt>
+<dd><p>Set the comment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>comment</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The comment</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.set_depth_top">
+<span class="sig-name descname"><span class="pre">set_depth_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ComprTest.set_depth_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.set_depth_top" title="Link to this definition"></a></dt>
+<dd><p>Set the depth from the surface to the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.set_fracture_character">
+<span class="sig-name descname"><span class="pre">set_fracture_character</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fracture_character</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ComprTest.set_fracture_character"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.set_fracture_character" title="Link to this definition"></a></dt>
+<dd><p>Set the fracture character.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fracture_character</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The fracture character</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ComprTest.set_test_score">
+<span class="sig-name descname"><span class="pre">set_test_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_score</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ComprTest.set_test_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ComprTest.set_test_score" title="Link to this definition"></a></dt>
+<dd><p>Set the test score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test_score</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The test score</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">test_score</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.stability_tests.</span></span><span class="sig-name descname"><span class="pre">ExtColumnTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_taps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ExtColumnTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>ExtColumnTest class for representing results of ExtColumnTest stability test.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.depth_top">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.depth_top" title="Link to this definition"></a></dt>
+<dd><p>Depth from the surface to the top of the layer with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.test_score">
+<span class="sig-name descname"><span class="pre">test_score</span></span><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.test_score" title="Link to this definition"></a></dt>
+<dd><p>Test score</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.comment" title="Link to this definition"></a></dt>
+<dd><p>Comment</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.propagation">
+<span class="sig-name descname"><span class="pre">propagation</span></span><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.propagation" title="Link to this definition"></a></dt>
+<dd><p>Whether the test propagated</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.num_taps">
+<span class="sig-name descname"><span class="pre">num_taps</span></span><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.num_taps" title="Link to this definition"></a></dt>
+<dd><p>Number of taps</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ExtColumnTest.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the extended column test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">comment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">num_taps</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">propagation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.set_comment">
+<span class="sig-name descname"><span class="pre">set_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ExtColumnTest.set_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.set_comment" title="Link to this definition"></a></dt>
+<dd><p>Set the comment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>comment</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The comment</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.set_depth_top">
+<span class="sig-name descname"><span class="pre">set_depth_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ExtColumnTest.set_depth_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.set_depth_top" title="Link to this definition"></a></dt>
+<dd><p>Set the depth from the surface to the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.ExtColumnTest.set_test_score">
+<span class="sig-name descname"><span class="pre">set_test_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_score</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#ExtColumnTest.set_test_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.ExtColumnTest.set_test_score" title="Link to this definition"></a></dt>
+<dd><p>Set the test score and compute derived properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test_score</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The test score</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">test_score</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.stability_tests.</span></span><span class="sig-name descname"><span class="pre">PropSawTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">failure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fracture_prop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>PropSawTest class for representing results of a Propagation Saw Test.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.failure">
+<span class="sig-name descname"><span class="pre">failure</span></span><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.failure" title="Link to this definition"></a></dt>
+<dd><p>Whether the test failed</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.depth_top">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.depth_top" title="Link to this definition"></a></dt>
+<dd><p>Depth from the surface to the top of the layer with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.fracture_prop">
+<span class="sig-name descname"><span class="pre">fracture_prop</span></span><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.fracture_prop" title="Link to this definition"></a></dt>
+<dd><p>Fracture propagation</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.cut_length">
+<span class="sig-name descname"><span class="pre">cut_length</span></span><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.cut_length" title="Link to this definition"></a></dt>
+<dd><p>Cut length with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.column_length">
+<span class="sig-name descname"><span class="pre">column_length</span></span><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.column_length" title="Link to this definition"></a></dt>
+<dd><p>Column length with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.comment" title="Link to this definition"></a></dt>
+<dd><p>Comment</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the propagation saw test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">column_length</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">comment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">cut_length</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">failure</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">fracture_prop</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.set_column_length">
+<span class="sig-name descname"><span class="pre">set_column_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.set_column_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.set_column_length" title="Link to this definition"></a></dt>
+<dd><p>Set the column length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>column_length</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The column length with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.set_comment">
+<span class="sig-name descname"><span class="pre">set_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.set_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.set_comment" title="Link to this definition"></a></dt>
+<dd><p>Set the comment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>comment</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The comment</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.set_cut_length">
+<span class="sig-name descname"><span class="pre">set_cut_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cut_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.set_cut_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.set_cut_length" title="Link to this definition"></a></dt>
+<dd><p>Set the cut length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cut_length</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The cut length with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.set_depth_top">
+<span class="sig-name descname"><span class="pre">set_depth_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.set_depth_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.set_depth_top" title="Link to this definition"></a></dt>
+<dd><p>Set the depth from the surface to the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.set_failure">
+<span class="sig-name descname"><span class="pre">set_failure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">failure</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.set_failure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.set_failure" title="Link to this definition"></a></dt>
+<dd><p>Set whether the test failed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>failure</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether the test failed</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.PropSawTest.set_fracture_prop">
+<span class="sig-name descname"><span class="pre">set_fracture_prop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fracture_prop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#PropSawTest.set_fracture_prop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.PropSawTest.set_fracture_prop" title="Link to this definition"></a></dt>
+<dd><p>Set the fracture propagation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fracture_prop</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The fracture propagation</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.stability_tests.</span></span><span class="sig-name descname"><span class="pre">RBlockTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fracture_character</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">release_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>RBlockTest class for representing results of a Rutschblock Test.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.depth_top">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.depth_top" title="Link to this definition"></a></dt>
+<dd><p>Depth from the surface to the top of the layer with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.fracture_character">
+<span class="sig-name descname"><span class="pre">fracture_character</span></span><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.fracture_character" title="Link to this definition"></a></dt>
+<dd><p>Fracture character</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.release_type">
+<span class="sig-name descname"><span class="pre">release_type</span></span><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.release_type" title="Link to this definition"></a></dt>
+<dd><p>Release type</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.test_score">
+<span class="sig-name descname"><span class="pre">test_score</span></span><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.test_score" title="Link to this definition"></a></dt>
+<dd><p>Test score</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.comment">
+<span class="sig-name descname"><span class="pre">comment</span></span><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.comment" title="Link to this definition"></a></dt>
+<dd><p>Comment</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the rutschblock test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">comment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">fracture_character</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">release_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id18" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.set_comment">
+<span class="sig-name descname"><span class="pre">set_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest.set_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.set_comment" title="Link to this definition"></a></dt>
+<dd><p>Set the comment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>comment</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The comment</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.set_depth_top">
+<span class="sig-name descname"><span class="pre">set_depth_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest.set_depth_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.set_depth_top" title="Link to this definition"></a></dt>
+<dd><p>Set the depth from the surface to the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.set_fracture_character">
+<span class="sig-name descname"><span class="pre">set_fracture_character</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fracture_character</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest.set_fracture_character"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.set_fracture_character" title="Link to this definition"></a></dt>
+<dd><p>Set the fracture character.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fracture_character</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The fracture character</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.set_release_type">
+<span class="sig-name descname"><span class="pre">set_release_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">release_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest.set_release_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.set_release_type" title="Link to this definition"></a></dt>
+<dd><p>Set the release type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>release_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The release type</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.RBlockTest.set_test_score">
+<span class="sig-name descname"><span class="pre">set_test_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_score</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#RBlockTest.set_test_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.RBlockTest.set_test_score" title="Link to this definition"></a></dt>
+<dd><p>Set the test score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>test_score</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The test score</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">test_score</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id19" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.stability_tests.</span></span><span class="sig-name descname"><span class="pre">StabilityTests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ECT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RBlock</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PST</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#StabilityTests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>StabilityTests class for representing stability tests from a SnowPilot
+caaml.xml file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.ECT">
+<span class="sig-name descname"><span class="pre">ECT</span></span><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.ECT" title="Link to this definition"></a></dt>
+<dd><p>List of extended column tests</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.CT">
+<span class="sig-name descname"><span class="pre">CT</span></span><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.CT" title="Link to this definition"></a></dt>
+<dd><p>List of compression tests</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.RBlock">
+<span class="sig-name descname"><span class="pre">RBlock</span></span><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.RBlock" title="Link to this definition"></a></dt>
+<dd><p>List of rutschblock tests</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.PST">
+<span class="sig-name descname"><span class="pre">PST</span></span><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.PST" title="Link to this definition"></a></dt>
+<dd><p>List of propagation saw tests</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">CT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#snowpylot.stability_tests.ComprTest" title="snowpylot.stability_tests.ComprTest"><span class="pre">ComprTest</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id20" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">ECT</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#snowpylot.stability_tests.ExtColumnTest" title="snowpylot.stability_tests.ExtColumnTest"><span class="pre">ExtColumnTest</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id21" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">PST</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#snowpylot.stability_tests.PropSawTest" title="snowpylot.stability_tests.PropSawTest"><span class="pre">PropSawTest</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id22" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id23">
+<span class="sig-name descname"><span class="pre">RBlock</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#snowpylot.stability_tests.RBlockTest" title="snowpylot.stability_tests.RBlockTest"><span class="pre">RBlockTest</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id23" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#StabilityTests.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the stability tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.add_ct">
+<span class="sig-name descname"><span class="pre">add_ct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ct</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#StabilityTests.add_ct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.add_ct" title="Link to this definition"></a></dt>
+<dd><p>Add a compression test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ct</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.stability_tests.ComprTest" title="snowpylot.stability_tests.ComprTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComprTest</span></code></a></span>) – The compression test to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.add_ect">
+<span class="sig-name descname"><span class="pre">add_ect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ect</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#StabilityTests.add_ect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.add_ect" title="Link to this definition"></a></dt>
+<dd><p>Add an extended column test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ect</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.stability_tests.ExtColumnTest" title="snowpylot.stability_tests.ExtColumnTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtColumnTest</span></code></a></span>) – The extended column test to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.add_pst">
+<span class="sig-name descname"><span class="pre">add_pst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#StabilityTests.add_pst"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.add_pst" title="Link to this definition"></a></dt>
+<dd><p>Add a propagation saw test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pst</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.stability_tests.PropSawTest" title="snowpylot.stability_tests.PropSawTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropSawTest</span></code></a></span>) – The propagation saw test to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.stability_tests.StabilityTests.add_rblock">
+<span class="sig-name descname"><span class="pre">add_rblock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rblock</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/stability_tests.html#StabilityTests.add_rblock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.stability_tests.StabilityTests.add_rblock" title="Link to this definition"></a></dt>
+<dd><p>Add a rutschblock test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rblock</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.stability_tests.RBlockTest" title="snowpylot.stability_tests.RBlockTest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RBlockTest</span></code></a></span>) – The rutschblock test to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

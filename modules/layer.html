@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layer Module &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Snow Profile Module" href="snowprofile.html" />
+    <link rel="prev" title="Core Info Module" href="coreinfo.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Layer Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#snowpylot.layer.Grain"><code class="docutils literal notranslate"><span class="pre">Grain</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.grain_form"><code class="docutils literal notranslate"><span class="pre">Grain.grain_form</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.grain_size_avg"><code class="docutils literal notranslate"><span class="pre">Grain.grain_size_avg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.grain_size_max"><code class="docutils literal notranslate"><span class="pre">Grain.grain_size_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.basic_grain_class_code"><code class="docutils literal notranslate"><span class="pre">Grain.basic_grain_class_code</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.basic_grain_class_name"><code class="docutils literal notranslate"><span class="pre">Grain.basic_grain_class_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.sub_grain_class_code"><code class="docutils literal notranslate"><span class="pre">Grain.sub_grain_class_code</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.sub_grain_class_name"><code class="docutils literal notranslate"><span class="pre">Grain.sub_grain_class_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.__str__"><code class="docutils literal notranslate"><span class="pre">Grain.__str__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Grain.basic_grain_class_code</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Grain.basic_grain_class_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">Grain.grain_form</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">Grain.grain_size_avg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">Grain.grain_size_max</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.set_grain_form"><code class="docutils literal notranslate"><span class="pre">Grain.set_grain_form()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.set_grain_size_avg"><code class="docutils literal notranslate"><span class="pre">Grain.set_grain_size_avg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Grain.set_grain_size_max"><code class="docutils literal notranslate"><span class="pre">Grain.set_grain_size_max()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">Grain.sub_grain_class_code</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">Grain.sub_grain_class_name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#snowpylot.layer.Layer"><code class="docutils literal notranslate"><span class="pre">Layer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.depth_top"><code class="docutils literal notranslate"><span class="pre">Layer.depth_top</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.thickness"><code class="docutils literal notranslate"><span class="pre">Layer.thickness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.hardness"><code class="docutils literal notranslate"><span class="pre">Layer.hardness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.hardness_top"><code class="docutils literal notranslate"><span class="pre">Layer.hardness_top</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.hardness_bottom"><code class="docutils literal notranslate"><span class="pre">Layer.hardness_bottom</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.grain_form_primary"><code class="docutils literal notranslate"><span class="pre">Layer.grain_form_primary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.grain_form_secondary"><code class="docutils literal notranslate"><span class="pre">Layer.grain_form_secondary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.wetness"><code class="docutils literal notranslate"><span class="pre">Layer.wetness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.layer_of_concern"><code class="docutils literal notranslate"><span class="pre">Layer.layer_of_concern</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.comments"><code class="docutils literal notranslate"><span class="pre">Layer.comments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.__str__"><code class="docutils literal notranslate"><span class="pre">Layer.__str__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">Layer.comments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">Layer.depth_top</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">Layer.grain_form_primary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">Layer.grain_form_secondary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">Layer.hardness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12"><code class="docutils literal notranslate"><span class="pre">Layer.hardness_bottom</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13"><code class="docutils literal notranslate"><span class="pre">Layer.hardness_top</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14"><code class="docutils literal notranslate"><span class="pre">Layer.layer_of_concern</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_comments"><code class="docutils literal notranslate"><span class="pre">Layer.set_comments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_depth_top"><code class="docutils literal notranslate"><span class="pre">Layer.set_depth_top()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_hardness"><code class="docutils literal notranslate"><span class="pre">Layer.set_hardness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_hardness_bottom"><code class="docutils literal notranslate"><span class="pre">Layer.set_hardness_bottom()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_hardness_top"><code class="docutils literal notranslate"><span class="pre">Layer.set_hardness_top()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_layer_of_concern"><code class="docutils literal notranslate"><span class="pre">Layer.set_layer_of_concern()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_thickness"><code class="docutils literal notranslate"><span class="pre">Layer.set_thickness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.set_wetness"><code class="docutils literal notranslate"><span class="pre">Layer.set_wetness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15"><code class="docutils literal notranslate"><span class="pre">Layer.thickness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16"><code class="docutils literal notranslate"><span class="pre">Layer.wetness</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snowpylot.layer.Layer.wetness_desc"><code class="docutils literal notranslate"><span class="pre">Layer.wetness_desc</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Layer Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/layer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="layer-module">
+<h1>Layer Module<a class="headerlink" href="#layer-module" title="Link to this heading"></a></h1>
+<dl class="py class" id="module-snowpylot.layer">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.layer.</span></span><span class="sig-name descname"><span class="pre">Grain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grain_form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain_size_avg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain_size_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basic_grain_class_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basic_grain_class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_grain_class_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_grain_class_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Grain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Grain" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Grain class for representing a grain form in a snow layer.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.grain_form">
+<span class="sig-name descname"><span class="pre">grain_form</span></span><a class="headerlink" href="#snowpylot.layer.Grain.grain_form" title="Link to this definition"></a></dt>
+<dd><p>The grain form code</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.grain_size_avg">
+<span class="sig-name descname"><span class="pre">grain_size_avg</span></span><a class="headerlink" href="#snowpylot.layer.Grain.grain_size_avg" title="Link to this definition"></a></dt>
+<dd><p>Average grain size with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.grain_size_max">
+<span class="sig-name descname"><span class="pre">grain_size_max</span></span><a class="headerlink" href="#snowpylot.layer.Grain.grain_size_max" title="Link to this definition"></a></dt>
+<dd><p>Maximum grain size with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.basic_grain_class_code">
+<span class="sig-name descname"><span class="pre">basic_grain_class_code</span></span><a class="headerlink" href="#snowpylot.layer.Grain.basic_grain_class_code" title="Link to this definition"></a></dt>
+<dd><p>Basic grain class code</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.basic_grain_class_name">
+<span class="sig-name descname"><span class="pre">basic_grain_class_name</span></span><a class="headerlink" href="#snowpylot.layer.Grain.basic_grain_class_name" title="Link to this definition"></a></dt>
+<dd><p>Basic grain class name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.sub_grain_class_code">
+<span class="sig-name descname"><span class="pre">sub_grain_class_code</span></span><a class="headerlink" href="#snowpylot.layer.Grain.sub_grain_class_code" title="Link to this definition"></a></dt>
+<dd><p>Sub grain class code</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.sub_grain_class_name">
+<span class="sig-name descname"><span class="pre">sub_grain_class_name</span></span><a class="headerlink" href="#snowpylot.layer.Grain.sub_grain_class_name" title="Link to this definition"></a></dt>
+<dd><p>Sub grain class name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Grain.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Grain.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the grain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">basic_grain_class_code</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">basic_grain_class_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">grain_form</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">grain_size_avg</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">grain_size_max</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.set_grain_form">
+<span class="sig-name descname"><span class="pre">set_grain_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grain_form</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Grain.set_grain_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Grain.set_grain_form" title="Link to this definition"></a></dt>
+<dd><p>Set the grain form and compute derived properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>grain_form</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The grain form code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.set_grain_size_avg">
+<span class="sig-name descname"><span class="pre">set_grain_size_avg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grain_size_avg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Grain.set_grain_size_avg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Grain.set_grain_size_avg" title="Link to this definition"></a></dt>
+<dd><p>Set the average grain size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>grain_size_avg</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The average grain size with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Grain.set_grain_size_max">
+<span class="sig-name descname"><span class="pre">set_grain_size_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grain_size_max</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Grain.set_grain_size_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Grain.set_grain_size_max" title="Link to this definition"></a></dt>
+<dd><p>Set the maximum grain size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>grain_size_max</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The maximum grain size with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">sub_grain_class_code</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">sub_grain_class_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.layer.</span></span><span class="sig-name descname"><span class="pre">Layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardness_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hardness_bottom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain_form_primary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grain_form_secondary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wetness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_of_concern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wetness_desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Layer class for representing a snow layer in a snow profile.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.depth_top">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><a class="headerlink" href="#snowpylot.layer.Layer.depth_top" title="Link to this definition"></a></dt>
+<dd><p>Depth from the surface to the top of the layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.thickness">
+<span class="sig-name descname"><span class="pre">thickness</span></span><a class="headerlink" href="#snowpylot.layer.Layer.thickness" title="Link to this definition"></a></dt>
+<dd><p>Thickness of the layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.hardness">
+<span class="sig-name descname"><span class="pre">hardness</span></span><a class="headerlink" href="#snowpylot.layer.Layer.hardness" title="Link to this definition"></a></dt>
+<dd><p>Hardness of the layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.hardness_top">
+<span class="sig-name descname"><span class="pre">hardness_top</span></span><a class="headerlink" href="#snowpylot.layer.Layer.hardness_top" title="Link to this definition"></a></dt>
+<dd><p>Hardness at the top of the layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.hardness_bottom">
+<span class="sig-name descname"><span class="pre">hardness_bottom</span></span><a class="headerlink" href="#snowpylot.layer.Layer.hardness_bottom" title="Link to this definition"></a></dt>
+<dd><p>Hardness at the bottom of the layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.grain_form_primary">
+<span class="sig-name descname"><span class="pre">grain_form_primary</span></span><a class="headerlink" href="#snowpylot.layer.Layer.grain_form_primary" title="Link to this definition"></a></dt>
+<dd><p>Primary grain form</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.grain_form_secondary">
+<span class="sig-name descname"><span class="pre">grain_form_secondary</span></span><a class="headerlink" href="#snowpylot.layer.Layer.grain_form_secondary" title="Link to this definition"></a></dt>
+<dd><p>Secondary grain form</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.wetness">
+<span class="sig-name descname"><span class="pre">wetness</span></span><a class="headerlink" href="#snowpylot.layer.Layer.wetness" title="Link to this definition"></a></dt>
+<dd><p>Wetness of the layer</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.layer_of_concern">
+<span class="sig-name descname"><span class="pre">layer_of_concern</span></span><a class="headerlink" href="#snowpylot.layer.Layer.layer_of_concern" title="Link to this definition"></a></dt>
+<dd><p>Whether the layer is of concern</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.comments">
+<span class="sig-name descname"><span class="pre">comments</span></span><a class="headerlink" href="#snowpylot.layer.Layer.comments" title="Link to this definition"></a></dt>
+<dd><p>Comments about the layer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">comments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">grain_form_primary</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#snowpylot.layer.Grain" title="snowpylot.layer.Grain"><span class="pre">Grain</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">grain_form_secondary</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#snowpylot.layer.Grain" title="snowpylot.layer.Grain"><span class="pre">Grain</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">hardness</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">hardness_bottom</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">hardness_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">layer_of_concern</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_comments">
+<span class="sig-name descname"><span class="pre">set_comments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_comments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_comments" title="Link to this definition"></a></dt>
+<dd><p>Set comments about the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>comments</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The comments</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_depth_top">
+<span class="sig-name descname"><span class="pre">set_depth_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_depth_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_depth_top" title="Link to this definition"></a></dt>
+<dd><p>Set the depth from the surface to the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_hardness">
+<span class="sig-name descname"><span class="pre">set_hardness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hardness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_hardness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_hardness" title="Link to this definition"></a></dt>
+<dd><p>Set the hardness of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hardness</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The hardness</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_hardness_bottom">
+<span class="sig-name descname"><span class="pre">set_hardness_bottom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hardness_bottom</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_hardness_bottom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_hardness_bottom" title="Link to this definition"></a></dt>
+<dd><p>Set the hardness at the bottom of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hardness_bottom</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The hardness at the bottom</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_hardness_top">
+<span class="sig-name descname"><span class="pre">set_hardness_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hardness_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_hardness_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_hardness_top" title="Link to this definition"></a></dt>
+<dd><p>Set the hardness at the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hardness_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The hardness at the top</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_layer_of_concern">
+<span class="sig-name descname"><span class="pre">set_layer_of_concern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_of_concern</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_layer_of_concern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_layer_of_concern" title="Link to this definition"></a></dt>
+<dd><p>Set whether the layer is of concern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layer_of_concern</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether the layer is of concern</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_thickness">
+<span class="sig-name descname"><span class="pre">set_thickness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_thickness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_thickness" title="Link to this definition"></a></dt>
+<dd><p>Set the thickness of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>thickness</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The thickness with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.set_wetness">
+<span class="sig-name descname"><span class="pre">set_wetness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wetness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/layer.html#Layer.set_wetness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.layer.Layer.set_wetness" title="Link to this definition"></a></dt>
+<dd><p>Set the wetness of the layer and compute the description.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wetness</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The wetness</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">thickness</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">wetness</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.layer.Layer.wetness_desc">
+<span class="sig-name descname"><span class="pre">wetness_desc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#snowpylot.layer.Layer.wetness_desc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="coreinfo.html" class="btn btn-neutral float-left" title="Core Info Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="snowprofile.html" class="btn btn-neutral float-right" title="Snow Profile Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

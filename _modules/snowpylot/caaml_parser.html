@@ -1,0 +1,557 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.caaml_parser &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">snowpylot.caaml_parser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for snowpylot.caaml_parser</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.layer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Grain</span><span class="p">,</span> <span class="n">Layer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.snow_pit</span><span class="w"> </span><span class="kn">import</span> <span class="n">SnowPit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.snow_profile</span><span class="w"> </span><span class="kn">import</span> <span class="n">DensityObs</span><span class="p">,</span> <span class="n">SurfaceCondition</span><span class="p">,</span> <span class="n">TempObs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.stability_tests</span><span class="w"> </span><span class="kn">import</span> <span class="n">ComprTest</span><span class="p">,</span> <span class="n">ExtColumnTest</span><span class="p">,</span> <span class="n">PropSawTest</span><span class="p">,</span> <span class="n">RBlockTest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.whumpf_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">WhumpfData</span>
+
+<div class="viewcode-block" id="caaml_url_parser">
+<a class="viewcode-back" href="../../modules/parser.html#snowpylot.caaml_url_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">caaml_url_parser</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function receives a URL to a SnowPilot observation and retrieves the caaml.xml file,</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+    
+    <span class="n">caaml_href</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;href&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;caaml&quot;</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">caaml_href</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No caaml.xml file found in the provided URL.&quot;</span><span class="p">)</span>
+    
+    <span class="n">caaml_url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">caaml_href</span><span class="p">)</span>
+    <span class="n">caaml</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">caaml_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+
+    <span class="c1"># retrieve the caaml.xml file data</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">caaml</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_parse_caaml</span><span class="p">(</span><span class="n">root</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="caaml_parser">
+<a class="viewcode-back" href="../../modules/parser.html#snowpylot.caaml_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">caaml_parser</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function receives a path to a SnowPilot caaml.xml file, parses the file,</span>
+<span class="sd">    and returns a populated SnowPit object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_parse_caaml</span><span class="p">(</span><span class="n">root</span><span class="p">)</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_caaml</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function receives the root of a parsed caaml.xml file, parses the file, and returns a populated SnowPit object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">pit</span> <span class="o">=</span> <span class="n">SnowPit</span><span class="p">()</span>  <span class="c1"># create a new SnowPit object</span>
+
+    <span class="c1"># tags in the caaml.xml file</span>
+    <span class="n">caaml_tag</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;{http://caaml.org/Schemas/SnowProfileIACS/v6.0.3}&quot;</span>  <span class="c1"># TO DO: get from xml file</span>
+    <span class="p">)</span>
+    <span class="n">gml_tag</span> <span class="o">=</span> <span class="s2">&quot;{http://www.opengis.net/gml}&quot;</span>
+    <span class="n">snowpilot_tag</span> <span class="o">=</span> <span class="s2">&quot;{http://www.snowpilot.org/Schemas/caaml}&quot;</span>
+
+    <span class="c1">### Core Info:</span>
+    <span class="c1"># (pit_id, pit_name, date, user, location, weather, core comments, caaml_version)</span>
+    <span class="n">loc_ref</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;locRef&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># pit_id</span>
+    <span class="n">pit_id_str</span> <span class="o">=</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="n">gml_tag</span> <span class="o">+</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="n">pit_id</span> <span class="o">=</span> <span class="n">pit_id_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">set_pit_id</span><span class="p">(</span><span class="n">pit_id</span><span class="p">)</span>
+
+    <span class="c1"># snow_pit_name</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">set_pit_name</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># date</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;timePosition&quot;</span><span class="p">):</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">set_date</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+
+    <span class="c1"># Comment</span>
+    <span class="n">meta_data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;metaData&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">meta_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;comment&quot;</span><span class="p">):</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">set_comment</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+
+    <span class="c1"># caaml_version</span>
+    <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">set_caaml_version</span><span class="p">(</span><span class="n">caaml_tag</span><span class="p">)</span>
+
+    <span class="c1">## User (operation_id, operation_name, professional, contact_person_id, username)</span>
+    <span class="n">src_ref</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;srcRef&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># operation_id</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">src_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Operation&quot;</span><span class="p">):</span>
+        <span class="n">operation_id</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="n">gml_tag</span> <span class="o">+</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_operation_id</span><span class="p">(</span><span class="n">operation_id</span><span class="p">)</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_professional</span><span class="p">(</span>
+            <span class="kc">True</span>
+        <span class="p">)</span>  <span class="c1"># If operation is present, then it is a professional operation</span>
+
+    <span class="c1"># operation_name</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">src_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Operation&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_operation_name</span><span class="p">(</span>
+            <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># Professional pits have operation name and contact name,</span>
+        <span class="c1"># the operation name is the first name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_operation_name</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># contact_person_id and username</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">src_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span>
+            <span class="s2">&quot;Person&quot;</span>
+        <span class="p">):</span>  <span class="c1"># can handle &quot;Person&quot; (non-professional) or &quot;ContactPerson&quot; (professional)</span>
+            <span class="n">person</span> <span class="o">=</span> <span class="n">prop</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">gml_tag</span> <span class="o">+</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_user_id</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">person</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">):</span>
+                    <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">set_username</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1">## Location:</span>
+    <span class="c1"># (latitude, longitude, elevation, aspect, slope_angle, country, region,</span>
+    <span class="c1"># avalanche proximity)</span>
+
+    <span class="c1"># Latitude and Longitude</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lat_long</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">gml_tag</span> <span class="o">+</span> <span class="s2">&quot;pos&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">lat_long</span> <span class="o">=</span> <span class="n">lat_long</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_latitude</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lat_long</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_longitude</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">lat_long</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">lat_long</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># elevation</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;ElevationPosition&quot;</span><span class="p">):</span>
+        <span class="n">uom</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;position&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_elevation</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">uom</span><span class="p">])</span>
+
+    <span class="c1"># aspect</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;AspectPosition&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;position&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># slope_angle</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;SlopeAnglePosition&quot;</span><span class="p">):</span>
+        <span class="n">uom</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;position&quot;</span><span class="p">):</span>
+            <span class="n">slope_angle</span> <span class="o">=</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_slope_angle</span><span class="p">([</span><span class="n">slope_angle</span><span class="p">,</span> <span class="n">uom</span><span class="p">])</span>
+
+    <span class="c1"># country</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;country&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_country</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># region</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">loc_ref</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;region&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_region</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># proximity to avalanches</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;pitNearAvalanche&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_pit_near_avalanche</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">)</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">set_pit_near_avalanche_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1">## Weather Conditions:</span>
+    <span class="c1"># (sky_cond, precip_ti, air_temp_pres, wind_speed, wind_dir)</span>
+    <span class="n">weather_cond</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;weatherCond&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># sky_cond</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">weather_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;skyCond&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">weather_conditions</span><span class="o">.</span><span class="n">set_sky_cond</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># precip_ti</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">weather_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;precipTI&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">weather_conditions</span><span class="o">.</span><span class="n">set_precip_ti</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># air_temp_pres</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">weather_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;airTempPres&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">weather_conditions</span><span class="o">.</span><span class="n">set_air_temp_pres</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
+
+    <span class="c1"># wind_speed</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">weather_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;windSpd&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">weather_conditions</span><span class="o">.</span><span class="n">set_wind_speed</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># wind_dir</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">weather_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;windDir&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;position&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">core_info</span><span class="o">.</span><span class="n">weather_conditions</span><span class="o">.</span><span class="n">set_wind_dir</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1">### Snow Profile:</span>
+    <span class="c1"># (layers, temp_profile, density_profile, surf_cond)</span>
+
+    <span class="c1"># Measurement Direction</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;SnowProfileMeasurements&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">set_measurement_direction</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dir&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Profile Depth</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;profileDepth&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">set_profile_depth</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)]</span>
+        <span class="p">)</span>
+
+    <span class="c1"># hs</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;height&quot;</span><span class="p">):</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">set_hs</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+    <span class="c1">## layers</span>
+    <span class="n">strat_profile</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;stratProfile&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">strat_profile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">strat_profile</span> <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Layer&quot;</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">:</span>
+            <span class="n">layer_obj</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depthTop&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_depth_top</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;thickness&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_thickness</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;hardness&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_hardness</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;hardnessTop&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_hardness_top</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;hardnessBottom&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_hardness_bottom</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;grainFormPrimary&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_primary</span> <span class="o">=</span> <span class="n">Grain</span><span class="p">()</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_primary</span><span class="o">.</span><span class="n">set_grain_form</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;grainFormSecondary&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_secondary</span> <span class="o">=</span> <span class="n">Grain</span><span class="p">()</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_secondary</span><span class="o">.</span><span class="n">set_grain_form</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;grainSize&quot;</span><span class="p">):</span>
+                <span class="n">uom</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_primary</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_primary</span> <span class="o">=</span> <span class="n">Grain</span><span class="p">()</span>
+
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;avg&quot;</span><span class="p">):</span>
+                    <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_primary</span><span class="o">.</span><span class="n">set_grain_size_avg</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">uom</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;avgMax&quot;</span><span class="p">):</span>
+                    <span class="n">layer_obj</span><span class="o">.</span><span class="n">grain_form_primary</span><span class="o">.</span><span class="n">set_grain_size_max</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">uom</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;wetness&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_wetness</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;layerOfConcern&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_layer_of_concern</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;comment&quot;</span><span class="p">):</span>
+                <span class="n">layer_obj</span><span class="o">.</span><span class="n">set_comments</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">layer_obj</span><span class="p">)</span>
+
+    <span class="c1">## temp_profile</span>
+    <span class="n">temp_profile</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;tempProfile&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">temp_profile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">temp_obs</span> <span class="o">=</span> <span class="p">[</span><span class="n">obs</span> <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="n">temp_profile</span> <span class="k">if</span> <span class="n">obs</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Obs&quot;</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="n">temp_obs</span><span class="p">:</span>
+            <span class="n">temp_obs_obj</span> <span class="o">=</span> <span class="n">TempObs</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">obs</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depth&quot;</span><span class="p">):</span>
+                <span class="n">temp_obs_obj</span><span class="o">.</span><span class="n">set_depth</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">obs</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;snowTemp&quot;</span><span class="p">):</span>
+                <span class="n">temp_obs_obj</span><span class="o">.</span><span class="n">set_snow_temp</span><span class="p">(</span>
+                    <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)]</span>
+                <span class="p">)</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">add_temp_obs</span><span class="p">(</span><span class="n">temp_obs_obj</span><span class="p">)</span>
+
+    <span class="c1">## density_profile</span>
+    <span class="n">density_profile</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;densityProfile&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">density_profile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">density_layer</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">layer</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">density_profile</span> <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;Layer&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">density_layer</span><span class="p">:</span>
+            <span class="n">obs</span> <span class="o">=</span> <span class="n">DensityObs</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depthTop&quot;</span><span class="p">):</span>
+                <span class="n">obs</span><span class="o">.</span><span class="n">set_depth_top</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;thickness&quot;</span><span class="p">):</span>
+                <span class="n">obs</span><span class="o">.</span><span class="n">set_thickness</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;density&quot;</span><span class="p">):</span>
+                <span class="n">obs</span><span class="o">.</span><span class="n">set_density</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">add_density_obs</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+
+    <span class="c1">## surf_cond</span>
+    <span class="n">surf_cond</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;surfCond&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">surf_cond</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">surf_cond</span> <span class="o">=</span> <span class="n">SurfaceCondition</span><span class="p">()</span>
+
+        <span class="c1"># wind_loading</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">surf_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;windLoading&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">surf_cond</span><span class="o">.</span><span class="n">set_wind_loading</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="c1"># penetration_foot</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">surf_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;penetrationFoot&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">surf_cond</span><span class="o">.</span><span class="n">set_penetration_foot</span><span class="p">(</span>
+                <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)]</span>
+            <span class="p">)</span>
+
+        <span class="c1"># penetration_ski</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">surf_cond</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;penetrationSki&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">snow_profile</span><span class="o">.</span><span class="n">surf_cond</span><span class="o">.</span><span class="n">set_penetration_ski</span><span class="p">(</span>
+                <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="mi">2</span><span class="p">),</span> <span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)]</span>
+            <span class="p">)</span>
+
+    <span class="c1">### Stability Tests (test_results)</span>
+    <span class="n">test_results</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;stbTests&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">test_results</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ects</span> <span class="o">=</span> <span class="p">[</span><span class="n">test</span> <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">test_results</span> <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;ExtColumnTest&quot;</span><span class="p">)]</span>
+        <span class="n">cts</span> <span class="o">=</span> <span class="p">[</span><span class="n">test</span> <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">test_results</span> <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;ComprTest&quot;</span><span class="p">)]</span>
+        <span class="n">rblocks</span> <span class="o">=</span> <span class="p">[</span><span class="n">test</span> <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">test_results</span> <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;RBlockTest&quot;</span><span class="p">)]</span>
+        <span class="n">psts</span> <span class="o">=</span> <span class="p">[</span><span class="n">test</span> <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">test_results</span> <span class="k">if</span> <span class="n">test</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;PropSawTest&quot;</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">ect</span> <span class="ow">in</span> <span class="n">ects</span><span class="p">:</span>
+            <span class="n">ect_obj</span> <span class="o">=</span> <span class="n">ExtColumnTest</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">ect</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;metaData&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;comment&quot;</span><span class="p">):</span>
+                    <span class="n">ect_obj</span><span class="o">.</span><span class="n">set_comment</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">ect</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Layer&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depthTop&quot;</span><span class="p">):</span>
+                    <span class="n">ect_obj</span><span class="o">.</span><span class="n">set_depth_top</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">ect</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Results&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;testScore&quot;</span><span class="p">):</span>
+                    <span class="n">ect_obj</span><span class="o">.</span><span class="n">set_test_score</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">stability_tests</span><span class="o">.</span><span class="n">add_ect</span><span class="p">(</span><span class="n">ect_obj</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">cts</span><span class="p">:</span>
+            <span class="n">ct_obj</span> <span class="o">=</span> <span class="n">ComprTest</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;metaData&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;comment&quot;</span><span class="p">):</span>
+                    <span class="n">ct_obj</span><span class="o">.</span><span class="n">set_comment</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Layer&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depthTop&quot;</span><span class="p">):</span>
+                    <span class="n">ct_obj</span><span class="o">.</span><span class="n">set_depth_top</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Results&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;fractureCharacter&quot;</span><span class="p">):</span>
+                    <span class="n">ct_obj</span><span class="o">.</span><span class="n">set_fracture_character</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;testScore&quot;</span><span class="p">):</span>
+                    <span class="n">ct_obj</span><span class="o">.</span><span class="n">set_test_score</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_prop</span> <span class="ow">in</span> <span class="n">ct</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;noFailure&quot;</span><span class="p">):</span>
+                <span class="n">ct_obj</span><span class="o">.</span><span class="n">set_test_score</span><span class="p">(</span><span class="s2">&quot;CTN&quot;</span><span class="p">)</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">stability_tests</span><span class="o">.</span><span class="n">add_ct</span><span class="p">(</span><span class="n">ct_obj</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">rblock</span> <span class="ow">in</span> <span class="n">rblocks</span><span class="p">:</span>
+            <span class="n">rbt</span> <span class="o">=</span> <span class="n">RBlockTest</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">rblock</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;metaData&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;comment&quot;</span><span class="p">):</span>
+                    <span class="n">rbt</span><span class="o">.</span><span class="n">set_comment</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">rblock</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Layer&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depthTop&quot;</span><span class="p">):</span>
+                    <span class="n">rbt</span><span class="o">.</span><span class="n">set_depth_top</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">rblock</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Results&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;fractureCharacter&quot;</span><span class="p">):</span>
+                    <span class="n">rbt</span><span class="o">.</span><span class="n">set_fracture_character</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;releaseType&quot;</span><span class="p">):</span>
+                    <span class="n">rbt</span><span class="o">.</span><span class="n">set_release_type</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;testScore&quot;</span><span class="p">):</span>
+                    <span class="n">rbt</span><span class="o">.</span><span class="n">set_test_score</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">stability_tests</span><span class="o">.</span><span class="n">add_rblock</span><span class="p">(</span><span class="n">rbt</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">pst</span> <span class="ow">in</span> <span class="n">psts</span><span class="p">:</span>
+            <span class="n">pst_obj</span> <span class="o">=</span> <span class="n">PropSawTest</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;metaData&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;comment&quot;</span><span class="p">):</span>
+                    <span class="n">pst_obj</span><span class="o">.</span><span class="n">set_comment</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Layer&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;depthTop&quot;</span><span class="p">):</span>
+                    <span class="n">pst_obj</span><span class="o">.</span><span class="n">set_depth_top</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;Results&quot;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;fracturePropagation&quot;</span><span class="p">):</span>
+                    <span class="n">pst_obj</span><span class="o">.</span><span class="n">set_fracture_prop</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;cutLength&quot;</span><span class="p">):</span>
+                    <span class="n">pst_obj</span><span class="o">.</span><span class="n">set_cut_length</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)])</span>
+                <span class="k">for</span> <span class="n">sub_prop</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">caaml_tag</span> <span class="o">+</span> <span class="s2">&quot;columnLength&quot;</span><span class="p">):</span>
+                    <span class="n">pst_obj</span><span class="o">.</span><span class="n">set_column_length</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">sub_prop</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">sub_prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uom&quot;</span><span class="p">)]</span>
+                    <span class="p">)</span>
+
+            <span class="n">pit</span><span class="o">.</span><span class="n">stability_tests</span><span class="o">.</span><span class="n">add_pst</span><span class="p">(</span><span class="n">pst_obj</span><span class="p">)</span>
+
+    <span class="c1">### Whumpf Data (whumpf_data)</span>
+    <span class="n">whumpf_data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfData&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">whumpf_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span> <span class="o">=</span> <span class="n">WhumpfData</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfCracking&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_whumpf_cracking</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfNoCracking&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_whumpf_no_cracking</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;crackingNoWhumpf&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_cracking_no_whumpf</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfNearPit&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_whumpf_near_pit</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfDepthWeakLayer&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_whumpf_depth_weak_layer</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfTriggeredRemoteAva&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_whumpf_triggered_remote_ava</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">whumpf_data</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">snowpilot_tag</span> <span class="o">+</span> <span class="s2">&quot;whumpfSize&quot;</span><span class="p">):</span>
+            <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span><span class="o">.</span><span class="n">set_whumpf_size</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pit</span><span class="o">.</span><span class="n">whumpf_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">pit</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

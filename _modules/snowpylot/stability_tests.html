@@ -1,0 +1,579 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.stability_tests &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">snowpylot.stability_tests</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for snowpylot.stability_tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+
+<div class="viewcode-block" id="ExtColumnTest">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ExtColumnTest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExtColumnTest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ExtColumnTest class for representing results of ExtColumnTest stability test.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        depth_top: Depth from the surface to the top of the layer with unit</span>
+<span class="sd">        test_score: Test score</span>
+<span class="sd">        comment: Comment</span>
+<span class="sd">        propagation: Whether the test propagated</span>
+<span class="sd">        num_taps: Number of taps</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Parsed Properties</span>
+    <span class="n">depth_top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">test_score</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Computed Properties</span>
+    <span class="n">propagation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_taps</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ExtColumnTest.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ExtColumnTest.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the extended column test.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> depth_top: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> test_score: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">test_score</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> comment: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> propagation: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">propagation</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> num_taps: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_taps</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExtColumnTest.set_depth_top">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ExtColumnTest.set_depth_top">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_depth_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth_top</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the depth from the surface to the top of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            depth_top: The depth with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span> <span class="o">=</span> <span class="n">depth_top</span></div>
+
+
+<div class="viewcode-block" id="ExtColumnTest.set_test_score">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ExtColumnTest.set_test_score">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_test_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_score</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the test score and compute derived properties.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            test_score: The test score</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_score</span> <span class="o">=</span> <span class="n">test_score</span>
+
+        <span class="k">if</span> <span class="n">test_score</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_score</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">prop_char</span> <span class="o">=</span> <span class="n">test_score</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">propagation</span> <span class="o">=</span> <span class="n">prop_char</span> <span class="o">==</span> <span class="s2">&quot;P&quot;</span>
+
+            <span class="n">num_taps</span> <span class="o">=</span> <span class="n">test_score</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_taps</span> <span class="o">=</span> <span class="n">num_taps</span></div>
+
+
+<div class="viewcode-block" id="ExtColumnTest.set_comment">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ExtColumnTest.set_comment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the comment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comment: The comment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ComprTest">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ComprTest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ComprTest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ComprTest class for representing results of a Compression Test stability test.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        depth_top: Depth from the surface to the top of the layer with unit</span>
+<span class="sd">        fracture_character: Fracture character</span>
+<span class="sd">        test_score: Test score</span>
+<span class="sd">        comment: Comment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">depth_top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">fracture_character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">test_score</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ComprTest.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ComprTest.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the compression test.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> depth_top: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> fracture_character: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fracture_character</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> test_score: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">test_score</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> comment: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ComprTest.set_depth_top">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ComprTest.set_depth_top">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_depth_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth_top</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the depth from the surface to the top of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            depth_top: The depth with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span> <span class="o">=</span> <span class="n">depth_top</span></div>
+
+
+<div class="viewcode-block" id="ComprTest.set_fracture_character">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ComprTest.set_fracture_character">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_fracture_character</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fracture_character</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the fracture character.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fracture_character: The fracture character</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fracture_character</span> <span class="o">=</span> <span class="n">fracture_character</span></div>
+
+
+<div class="viewcode-block" id="ComprTest.set_test_score">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ComprTest.set_test_score">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_test_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_score</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the test score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            test_score: The test score</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_score</span> <span class="o">=</span> <span class="n">test_score</span></div>
+
+
+<div class="viewcode-block" id="ComprTest.set_comment">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.ComprTest.set_comment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the comment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comment: The comment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RBlockTest">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RBlockTest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RBlockTest class for representing results of a Rutschblock Test.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        depth_top: Depth from the surface to the top of the layer with unit</span>
+<span class="sd">        fracture_character: Fracture character</span>
+<span class="sd">        release_type: Release type</span>
+<span class="sd">        test_score: Test score</span>
+<span class="sd">        comment: Comment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">depth_top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">fracture_character</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">release_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">test_score</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="RBlockTest.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the rutschblock test.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> depth_top: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> fracture_character: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fracture_character</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> release_type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">release_type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> test_score: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">test_score</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> comment: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RBlockTest.set_depth_top">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest.set_depth_top">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_depth_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth_top</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the depth from the surface to the top of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            depth_top: The depth with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span> <span class="o">=</span> <span class="n">depth_top</span></div>
+
+
+<div class="viewcode-block" id="RBlockTest.set_fracture_character">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest.set_fracture_character">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_fracture_character</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fracture_character</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the fracture character.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fracture_character: The fracture character</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fracture_character</span> <span class="o">=</span> <span class="n">fracture_character</span></div>
+
+
+<div class="viewcode-block" id="RBlockTest.set_release_type">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest.set_release_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_release_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">release_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the release type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            release_type: The release type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">release_type</span> <span class="o">=</span> <span class="n">release_type</span></div>
+
+
+<div class="viewcode-block" id="RBlockTest.set_test_score">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest.set_test_score">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_test_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_score</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the test score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            test_score: The test score</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_score</span> <span class="o">=</span> <span class="n">test_score</span></div>
+
+
+<div class="viewcode-block" id="RBlockTest.set_comment">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.RBlockTest.set_comment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the comment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comment: The comment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PropSawTest">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PropSawTest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    PropSawTest class for representing results of a Propagation Saw Test.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        failure: Whether the test failed</span>
+<span class="sd">        depth_top: Depth from the surface to the top of the layer with unit</span>
+<span class="sd">        fracture_prop: Fracture propagation</span>
+<span class="sd">        cut_length: Cut length with unit</span>
+<span class="sd">        column_length: Column length with unit</span>
+<span class="sd">        comment: Comment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">failure</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">depth_top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">fracture_prop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">cut_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">column_length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="PropSawTest.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the propagation saw test.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> failure: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">failure</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> depth_top: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> fracture_prop: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fracture_prop</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> cut_length: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cut_length</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> column_length: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">column_length</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> comment: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PropSawTest.set_failure">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.set_failure">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set whether the test failed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            failure: Whether the test failed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failure</span> <span class="o">=</span> <span class="n">failure</span></div>
+
+
+<div class="viewcode-block" id="PropSawTest.set_depth_top">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.set_depth_top">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_depth_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth_top</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the depth from the surface to the top of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            depth_top: The depth with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span> <span class="o">=</span> <span class="n">depth_top</span></div>
+
+
+<div class="viewcode-block" id="PropSawTest.set_comment">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.set_comment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the comment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comment: The comment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span></div>
+
+
+<div class="viewcode-block" id="PropSawTest.set_fracture_prop">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.set_fracture_prop">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_fracture_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fracture_prop</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the fracture propagation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fracture_prop: The fracture propagation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fracture_prop</span> <span class="o">=</span> <span class="n">fracture_prop</span></div>
+
+
+<div class="viewcode-block" id="PropSawTest.set_cut_length">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.set_cut_length">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_cut_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cut_length</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the cut length.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cut_length: The cut length with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cut_length</span> <span class="o">=</span> <span class="n">cut_length</span></div>
+
+
+<div class="viewcode-block" id="PropSawTest.set_column_length">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.PropSawTest.set_column_length">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_column_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_length</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the column length.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            column_length: The column length with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_length</span> <span class="o">=</span> <span class="n">column_length</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="StabilityTests">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StabilityTests</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    StabilityTests class for representing stability tests from a SnowPilot</span>
+<span class="sd">    caaml.xml file.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        ECT: List of extended column tests</span>
+<span class="sd">        CT: List of compression tests</span>
+<span class="sd">        RBlock: List of rutschblock tests</span>
+<span class="sd">        PST: List of propagation saw tests</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ECT</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ExtColumnTest</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">CT</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ComprTest</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">RBlock</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RBlockTest</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">PST</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">PropSawTest</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StabilityTests.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the stability tests.&quot;&quot;&quot;</span>
+        <span class="n">stb_tests_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ect_test</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ECT</span><span class="p">):</span>
+            <span class="n">stb_tests_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    ExtColumnTest </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ect_test</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ct_test</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CT</span><span class="p">):</span>
+            <span class="n">stb_tests_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    CompressionTest </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ct_test</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">rblock_test</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RBlock</span><span class="p">):</span>
+            <span class="n">stb_tests_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    RutschblockTest </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">rblock_test</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pst_test</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PST</span><span class="p">):</span>
+            <span class="n">stb_tests_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    PropSawTest </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">pst_test</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">stb_tests_str</span></div>
+
+
+<div class="viewcode-block" id="StabilityTests.add_ect">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests.add_ect">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_ect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ect</span><span class="p">:</span> <span class="n">ExtColumnTest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an extended column test.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ect: The extended column test to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ECT</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ect</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StabilityTests.add_ct">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests.add_ct">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ct</span><span class="p">:</span> <span class="n">ComprTest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a compression test.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ct: The compression test to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StabilityTests.add_rblock">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests.add_rblock">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_rblock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rblock</span><span class="p">:</span> <span class="n">RBlockTest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a rutschblock test.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rblock: The rutschblock test to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RBlock</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rblock</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StabilityTests.add_pst">
+<a class="viewcode-back" href="../../api/snowpylot.stability_tests.html#snowpylot.stability_tests.StabilityTests.add_pst">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_pst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pst</span><span class="p">:</span> <span class="n">PropSawTest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a propagation saw test.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pst: The propagation saw test to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PST</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pst</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

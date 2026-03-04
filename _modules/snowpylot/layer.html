@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.layer &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">snowpylot.layer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for snowpylot.layer</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+
+<div class="viewcode-block" id="Grain">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Grain">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Grain</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Grain class for representing a grain form in a snow layer.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        grain_form: The grain form code</span>
+<span class="sd">        grain_size_avg: Average grain size with unit</span>
+<span class="sd">        grain_size_max: Maximum grain size with unit</span>
+<span class="sd">        basic_grain_class_code: Basic grain class code</span>
+<span class="sd">        basic_grain_class_name: Basic grain class name</span>
+<span class="sd">        sub_grain_class_code: Sub grain class code</span>
+<span class="sd">        sub_grain_class_name: Sub grain class name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">grain_form</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">grain_size_avg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">grain_size_max</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">basic_grain_class_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">basic_grain_class_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sub_grain_class_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sub_grain_class_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Grain.__str__">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Grain.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the grain.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> grain_form: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grain_form</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> grain_size_avg: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grain_size_avg</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> grain_size_max: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grain_size_max</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> basic_grain_class_code: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_code</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> basic_grain_class_name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> sub_grain_class_code: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_grain_class_code</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2"> sub_grain_class_name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_grain_class_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grain.set_grain_form">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Grain.set_grain_form">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_grain_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grain_form</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the grain form and compute derived properties.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            grain_form: The grain form code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain_form</span> <span class="o">=</span> <span class="n">grain_form</span>
+
+        <span class="c1"># Basic grain class dictionary</span>
+        <span class="n">basic_grain_class_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;PP&quot;</span><span class="p">:</span> <span class="s2">&quot;Precipitation particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DF&quot;</span><span class="p">:</span> <span class="s2">&quot;Decomposing and fragmented precipitation particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RG&quot;</span><span class="p">:</span> <span class="s2">&quot;Rounded grains&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FC&quot;</span><span class="p">:</span> <span class="s2">&quot;Faceted crystals&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DH&quot;</span><span class="p">:</span> <span class="s2">&quot;Depth hoar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SH&quot;</span><span class="p">:</span> <span class="s2">&quot;Surface hoar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MF&quot;</span><span class="p">:</span> <span class="s2">&quot;Melt forms&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;IF&quot;</span><span class="p">:</span> <span class="s2">&quot;Ice formations&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MM&quot;</span><span class="p">:</span> <span class="s2">&quot;Machine made Snow&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Sub grain class dictionary</span>
+        <span class="n">sub_grain_class_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;PPgp&quot;</span><span class="p">:</span> <span class="s2">&quot;Graupel&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPco&quot;</span><span class="p">:</span> <span class="s2">&quot;Columns&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPhl&quot;</span><span class="p">:</span> <span class="s2">&quot;Hail&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPpl&quot;</span><span class="p">:</span> <span class="s2">&quot;Plates&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPnd&quot;</span><span class="p">:</span> <span class="s2">&quot;Needles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPsd&quot;</span><span class="p">:</span> <span class="s2">&quot;Stellars, Dendrites&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPir&quot;</span><span class="p">:</span> <span class="s2">&quot;Irregular crystals&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPip&quot;</span><span class="p">:</span> <span class="s2">&quot;Ice pellets&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PPrm&quot;</span><span class="p">:</span> <span class="s2">&quot;Rime&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DFdc&quot;</span><span class="p">:</span> <span class="s2">&quot;Partly decomposed precipitation particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DFbk&quot;</span><span class="p">:</span> <span class="s2">&quot;Wind-broken precipitation particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RGsr&quot;</span><span class="p">:</span> <span class="s2">&quot;Small rounded particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RGlr&quot;</span><span class="p">:</span> <span class="s2">&quot;Large rounded particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RGwp&quot;</span><span class="p">:</span> <span class="s2">&quot;Wind packed&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RGxf&quot;</span><span class="p">:</span> <span class="s2">&quot;Faceted rounded particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FCso&quot;</span><span class="p">:</span> <span class="s2">&quot;Solid faceted particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FCsf&quot;</span><span class="p">:</span> <span class="s2">&quot;Near surface faceted particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FCxr&quot;</span><span class="p">:</span> <span class="s2">&quot;Rounding faceted particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DHcp&quot;</span><span class="p">:</span> <span class="s2">&quot;Hollow cups&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DHpr&quot;</span><span class="p">:</span> <span class="s2">&quot;Hollow prisms&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DHch&quot;</span><span class="p">:</span> <span class="s2">&quot;Chains of depth hoar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DHla&quot;</span><span class="p">:</span> <span class="s2">&quot;Large striated crystals&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;DHxr&quot;</span><span class="p">:</span> <span class="s2">&quot;Rounding depth hoar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SHsu&quot;</span><span class="p">:</span> <span class="s2">&quot;Surface hoar crystals&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SHcv&quot;</span><span class="p">:</span> <span class="s2">&quot;Cavity or crevasse hoar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SHxr&quot;</span><span class="p">:</span> <span class="s2">&quot;Rounding surface hoar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MFcl&quot;</span><span class="p">:</span> <span class="s2">&quot;Clustered rounded grains&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MFpc&quot;</span><span class="p">:</span> <span class="s2">&quot;Rounded polycrystals&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MFsl&quot;</span><span class="p">:</span> <span class="s2">&quot;Slush&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MFcr&quot;</span><span class="p">:</span> <span class="s2">&quot;Melt-freeze crust&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;IFil&quot;</span><span class="p">:</span> <span class="s2">&quot;Ice layer&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;IFic&quot;</span><span class="p">:</span> <span class="s2">&quot;Ice column&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;IFbi&quot;</span><span class="p">:</span> <span class="s2">&quot;Basal ice&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;IFrc&quot;</span><span class="p">:</span> <span class="s2">&quot;Rain crust&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;IFsc&quot;</span><span class="p">:</span> <span class="s2">&quot;Sun crust&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MMrp&quot;</span><span class="p">:</span> <span class="s2">&quot;Round polycrystalline particles&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MMci&quot;</span><span class="p">:</span> <span class="s2">&quot;Crushed ice particles&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grain_form</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_code</span> <span class="o">=</span> <span class="n">grain_form</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_grain_class_code</span> <span class="o">=</span> <span class="n">grain_form</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_name</span> <span class="o">=</span> <span class="n">basic_grain_class_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_code</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_grain_class_name</span> <span class="o">=</span> <span class="n">sub_grain_class_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sub_grain_class_code</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_code</span> <span class="o">=</span> <span class="n">grain_form</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_name</span> <span class="o">=</span> <span class="n">basic_grain_class_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">basic_grain_class_code</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Grain.set_grain_size_avg">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Grain.set_grain_size_avg">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_grain_size_avg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grain_size_avg</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the average grain size.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            grain_size_avg: The average grain size with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain_size_avg</span> <span class="o">=</span> <span class="n">grain_size_avg</span></div>
+
+
+<div class="viewcode-block" id="Grain.set_grain_size_max">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Grain.set_grain_size_max">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_grain_size_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grain_size_max</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the maximum grain size.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            grain_size_max: The maximum grain size with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grain_size_max</span> <span class="o">=</span> <span class="n">grain_size_max</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Layer">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Layer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Layer class for representing a snow layer in a snow profile.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        depth_top: Depth from the surface to the top of the layer</span>
+<span class="sd">        thickness: Thickness of the layer</span>
+<span class="sd">        hardness: Hardness of the layer</span>
+<span class="sd">        hardness_top: Hardness at the top of the layer</span>
+<span class="sd">        hardness_bottom: Hardness at the bottom of the layer</span>
+<span class="sd">        grain_form_primary: Primary grain form</span>
+<span class="sd">        grain_form_secondary: Secondary grain form</span>
+<span class="sd">        wetness: Wetness of the layer</span>
+<span class="sd">        layer_of_concern: Whether the layer is of concern</span>
+<span class="sd">        comments: Comments about the layer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">depth_top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">thickness</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">hardness</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">hardness_top</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">hardness_bottom</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">grain_form_primary</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Grain</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">grain_form_secondary</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Grain</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">wetness</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">layer_of_concern</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Computed properties</span>
+    <span class="n">wetness_desc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Layer.__str__">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the layer.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Layer:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> depth_top: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> thickness: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">thickness</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> hardness: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hardness</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> hardness_top: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hardness_top</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> hardness_bottom: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hardness_bottom</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> grain_form_primary: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grain_form_primary</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> grain_form_secondary: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">grain_form_secondary</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> wetness: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wetness</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> layer_of_concern: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_of_concern</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> wetness_desc: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wetness_desc</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> comments: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_depth_top">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_depth_top">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_depth_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth_top</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the depth from the surface to the top of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            depth_top: The depth with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth_top</span> <span class="o">=</span> <span class="n">depth_top</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_thickness">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_thickness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_thickness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thickness</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the thickness of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            thickness: The thickness with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span> <span class="o">=</span> <span class="n">thickness</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_hardness">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_hardness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_hardness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hardness</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the hardness of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hardness: The hardness</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hardness</span> <span class="o">=</span> <span class="n">hardness</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_hardness_top">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_hardness_top">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_hardness_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hardness_top</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the hardness at the top of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hardness_top: The hardness at the top</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hardness_top</span> <span class="o">=</span> <span class="n">hardness_top</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_hardness_bottom">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_hardness_bottom">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_hardness_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hardness_bottom</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the hardness at the bottom of the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hardness_bottom: The hardness at the bottom</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hardness_bottom</span> <span class="o">=</span> <span class="n">hardness_bottom</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_wetness">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_wetness">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_wetness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wetness</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the wetness of the layer and compute the description.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wetness: The wetness</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wetness</span> <span class="o">=</span> <span class="n">wetness</span>
+
+        <span class="n">wetness_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="s2">&quot;Dry&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;D-M&quot;</span><span class="p">:</span> <span class="s2">&quot;Dry to moist&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="s2">&quot;Moist&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;M-W&quot;</span><span class="p">:</span> <span class="s2">&quot;Moist to wet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;W&quot;</span><span class="p">:</span> <span class="s2">&quot;Wet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;W-VW&quot;</span><span class="p">:</span> <span class="s2">&quot;Wet to very wet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;VW&quot;</span><span class="p">:</span> <span class="s2">&quot;Very wet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;VW-S&quot;</span><span class="p">:</span> <span class="s2">&quot;Very wet to slush&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="s2">&quot;Slush&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wetness_desc</span> <span class="o">=</span> <span class="n">wetness_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">wetness</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_layer_of_concern">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_layer_of_concern">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_layer_of_concern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_of_concern</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set whether the layer is of concern.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            layer_of_concern: Whether the layer is of concern</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_of_concern</span> <span class="o">=</span> <span class="n">layer_of_concern</span></div>
+
+
+<div class="viewcode-block" id="Layer.set_comments">
+<a class="viewcode-back" href="../../modules/layer.html#snowpylot.layer.Layer.set_comments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comments</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set comments about the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comments: The comments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="n">comments</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

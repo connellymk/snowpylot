@@ -1,0 +1,633 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.core_info &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">snowpylot.core_info</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for snowpylot.core_info</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+
+<div class="viewcode-block" id="WeatherConditions">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherConditions</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    WeatherConditions class for representing the weather conditions of a snow profile.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        sky_cond: Sky condition code</span>
+<span class="sd">        precip_ti: Precipitation type and intensity code</span>
+<span class="sd">        air_temp_pres: Air temperature with unit</span>
+<span class="sd">        wind_speed: Wind speed code</span>
+<span class="sd">        wind_dir: Wind direction</span>
+<span class="sd">        sky_cond_desc: Description of sky condition</span>
+<span class="sd">        precip_ti_desc: Description of precipitation type and intensity</span>
+<span class="sd">        wind_speed_desc: Description of wind speed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Parsed properties</span>
+    <span class="n">sky_cond</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">precip_ti</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">air_temp_pres</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">wind_speed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">wind_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Computed properties</span>
+    <span class="n">sky_cond_desc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">precip_ti_desc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">wind_speed_desc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="WeatherConditions.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the weather conditions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> sky_cond: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sky_cond</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> sky_cond_desc: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sky_cond_desc</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> precip_ti: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">precip_ti</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> precip_ti_desc: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">precip_ti_desc</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> air_temp_pres: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">air_temp_pres</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> wind_speed: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wind_speed</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> wind_speed_desc: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wind_speed_desc</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> wind_dir: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">wind_dir</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherConditions.set_sky_cond">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions.set_sky_cond">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_sky_cond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sky_cond</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the sky condition and compute the description.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sky_cond: The sky condition code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky_cond</span> <span class="o">=</span> <span class="n">sky_cond</span>
+
+        <span class="n">sky_cond_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;CLR&quot;</span><span class="p">:</span> <span class="s2">&quot;Clear&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FEW&quot;</span><span class="p">:</span> <span class="s2">&quot;Few&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SCT&quot;</span><span class="p">:</span> <span class="s2">&quot;Scattered&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;BKN&quot;</span><span class="p">:</span> <span class="s2">&quot;Broken&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;OVC&quot;</span><span class="p">:</span> <span class="s2">&quot;Overcast&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="s2">&quot;Obscured&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sky_cond_desc</span> <span class="o">=</span> <span class="n">sky_cond_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sky_cond</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherConditions.set_precip_ti">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions.set_precip_ti">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_precip_ti</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">precip_ti</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the precipitation type and intensity and compute the description.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            precip_ti: The precipitation type and intensity code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precip_ti</span> <span class="o">=</span> <span class="n">precip_ti</span>
+
+        <span class="n">precip_ti_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;NIL&quot;</span><span class="p">:</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S-1&quot;</span><span class="p">:</span> <span class="s2">&quot;Snow &lt; 0.5 cm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S1&quot;</span><span class="p">:</span> <span class="s2">&quot;Snow - 1 cm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S2&quot;</span><span class="p">:</span> <span class="s2">&quot;Snow - 2 cm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S5&quot;</span><span class="p">:</span> <span class="s2">&quot;Snow - 5 cm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S10&quot;</span><span class="p">:</span> <span class="s2">&quot;Snow - 10 cm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;G&quot;</span><span class="p">:</span> <span class="s2">&quot;Graupel or hail&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RS&quot;</span><span class="p">:</span> <span class="s2">&quot;Mixed rain and snow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RV&quot;</span><span class="p">:</span> <span class="s2">&quot;Very light rain - mist&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RL&quot;</span><span class="p">:</span> <span class="s2">&quot;Light Rain &lt; 2.5mm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RM&quot;</span><span class="p">:</span> <span class="s2">&quot;Moderate rain &lt; 7.5mm/hr&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RH&quot;</span><span class="p">:</span> <span class="s2">&quot;Heavy rain &gt; 7.5mm/hr&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">precip_ti_desc</span> <span class="o">=</span> <span class="n">precip_ti_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">precip_ti</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherConditions.set_air_temp_pres">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions.set_air_temp_pres">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_air_temp_pres</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">air_temp_pres</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the air temperature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            air_temp_pres: The air temperature with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">air_temp_pres</span> <span class="o">=</span> <span class="n">air_temp_pres</span></div>
+
+
+<div class="viewcode-block" id="WeatherConditions.set_wind_speed">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions.set_wind_speed">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_wind_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wind_speed</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the wind speed and compute the description.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wind_speed: The wind speed code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wind_speed</span> <span class="o">=</span> <span class="n">wind_speed</span>
+
+        <span class="n">wind_speed_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;Calm&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="s2">&quot;Light breeze&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;M&quot;</span><span class="p">:</span> <span class="s2">&quot;Moderate&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="s2">&quot;Strong&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="s2">&quot;gale force winds&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wind_speed_desc</span> <span class="o">=</span> <span class="n">wind_speed_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">wind_speed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherConditions.set_wind_dir">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.WeatherConditions.set_wind_dir">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_wind_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wind_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the wind direction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wind_dir: The wind direction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wind_dir</span> <span class="o">=</span> <span class="n">wind_dir</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Location">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Location</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Location class for representing a location from a Snowpilot XML file.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        latitude: Latitude</span>
+<span class="sd">        longitude: Longitude</span>
+<span class="sd">        elevation: Elevation with unit</span>
+<span class="sd">        aspect: Aspect</span>
+<span class="sd">        slope_angle: Slope angle with unit</span>
+<span class="sd">        country: Country</span>
+<span class="sd">        region: Region</span>
+<span class="sd">        pit_near_avalanche: Whether the pit is near an avalanche</span>
+<span class="sd">        pit_near_avalanche_location: Location of the pit relative to the avalanche</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">latitude</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">longitude</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">elevation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">aspect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">slope_angle</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pit_near_avalanche</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pit_near_avalanche_location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Location.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the location.&quot;&quot;&quot;</span>
+        <span class="n">location_str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> latitude: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> longitude: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> elevation: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">elevation</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> aspect: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">aspect</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> slope_angle: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">slope_angle</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> country: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> region: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2"> pit_near_avalanche: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pit_near_avalanche</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pit_near_avalanche_location</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">location_str</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;pit_near_avalanche_location: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pit_near_avalanche_location</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">location_str</span></div>
+
+
+<div class="viewcode-block" id="Location.set_latitude">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_latitude">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_latitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the latitude.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            latitude: The latitude</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">latitude</span></div>
+
+
+<div class="viewcode-block" id="Location.set_longitude">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_longitude">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_longitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the longitude.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            longitude: The longitude</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">longitude</span></div>
+
+
+<div class="viewcode-block" id="Location.set_elevation">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_elevation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_elevation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elevation</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the elevation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            elevation: The elevation with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elevation</span> <span class="o">=</span> <span class="n">elevation</span></div>
+
+
+<div class="viewcode-block" id="Location.set_aspect">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_aspect">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_aspect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aspect</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the aspect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            aspect: The aspect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect</span> <span class="o">=</span> <span class="n">aspect</span></div>
+
+
+<div class="viewcode-block" id="Location.set_slope_angle">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_slope_angle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_slope_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slope_angle</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the slope angle.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            slope_angle: The slope angle with unit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope_angle</span> <span class="o">=</span> <span class="n">slope_angle</span></div>
+
+
+<div class="viewcode-block" id="Location.set_country">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_country">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_country</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">country</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the country.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            country: The country</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">country</span> <span class="o">=</span> <span class="n">country</span></div>
+
+
+<div class="viewcode-block" id="Location.set_region">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_region">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the region.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            region: The region</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">region</span></div>
+
+
+<div class="viewcode-block" id="Location.set_pit_near_avalanche">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_pit_near_avalanche">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_pit_near_avalanche</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pit_near_avalanche</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set whether the pit is near an avalanche.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pit_near_avalanche: Whether the pit is near an avalanche</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pit_near_avalanche</span> <span class="o">=</span> <span class="n">pit_near_avalanche</span></div>
+
+
+<div class="viewcode-block" id="Location.set_pit_near_avalanche_location">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.Location.set_pit_near_avalanche_location">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_pit_near_avalanche_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pit_near_avalanche_location</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the location of the pit relative to the avalanche.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pit_near_avalanche_location: The location of the pit relative to the</span>
+<span class="sd">                avalanche</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pit_near_avalanche_location</span> <span class="o">=</span> <span class="n">pit_near_avalanche_location</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="User">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    User class for representing a Snow Pilot user.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        operation_id: Operation ID</span>
+<span class="sd">        operation_name: Operation name</span>
+<span class="sd">        professional: Whether the user is a professional</span>
+<span class="sd">        user_id: User ID</span>
+<span class="sd">        username: Username</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">operation_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">operation_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">professional</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="User.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the user.&quot;&quot;&quot;</span>
+        <span class="n">user_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;operation_id: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">operation_id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operation_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">user_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;operation_name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">operation_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="n">user_str</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;professional: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">professional</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;user_id: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;username: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">user_str</span></div>
+
+
+<div class="viewcode-block" id="User.set_operation_id">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User.set_operation_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_operation_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the operation ID.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operation_id: The operation ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operation_id</span> <span class="o">=</span> <span class="n">operation_id</span></div>
+
+
+<div class="viewcode-block" id="User.set_operation_name">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User.set_operation_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_operation_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the operation name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operation_name: The operation name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operation_name</span> <span class="o">=</span> <span class="n">operation_name</span></div>
+
+
+<div class="viewcode-block" id="User.set_professional">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User.set_professional">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_professional</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">professional</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set whether the user is a professional.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            professional: Whether the user is a professional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">professional</span> <span class="o">=</span> <span class="n">professional</span></div>
+
+
+<div class="viewcode-block" id="User.set_user_id">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User.set_user_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_user_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the user ID.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: The user ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span></div>
+
+
+<div class="viewcode-block" id="User.set_username">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.User.set_username">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the username.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            username: The username</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="CoreInfo">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CoreInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CoreInfo class for representing a &quot;core Info&quot; from a Snowpilot XML file.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        pit_id: Pit ID</span>
+<span class="sd">        pit_name: Pit name</span>
+<span class="sd">        date: Date</span>
+<span class="sd">        comment: Comment</span>
+<span class="sd">        caaml_version: CAAML version</span>
+<span class="sd">        user: User information</span>
+<span class="sd">        location: Location information</span>
+<span class="sd">        weather_conditions: Weather conditions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">pit_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pit_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">comment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">caaml_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">location</span><span class="p">:</span> <span class="n">Location</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Location</span><span class="p">)</span>
+    <span class="n">weather_conditions</span><span class="p">:</span> <span class="n">WeatherConditions</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">WeatherConditions</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CoreInfo.__str__">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo.__str__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a string representation of the core info.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;pit_id: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pit_id</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;pit_name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pit_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;date: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;comment: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;caaml_version: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">caaml_version</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;user: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;location: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;weather_conditions: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">weather_conditions</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CoreInfo.set_pit_id">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo.set_pit_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_pit_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pit_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the pit ID.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pit_id: The pit ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pit_id</span> <span class="o">=</span> <span class="n">pit_id</span></div>
+
+
+<div class="viewcode-block" id="CoreInfo.set_pit_name">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo.set_pit_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_pit_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pit_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the pit name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pit_name: The pit name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pit_name</span> <span class="o">=</span> <span class="n">pit_name</span></div>
+
+
+<div class="viewcode-block" id="CoreInfo.set_date">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo.set_date">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the date.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            date: The date</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span></div>
+
+
+<div class="viewcode-block" id="CoreInfo.set_comment">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo.set_comment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the comment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            comment: The comment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span></div>
+
+
+<div class="viewcode-block" id="CoreInfo.set_caaml_version">
+<a class="viewcode-back" href="../../api/snowpylot.core_info.html#snowpylot.core_info.CoreInfo.set_caaml_version">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_caaml_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">caaml_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the CAAML version.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            caaml_version: The CAAML version</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caaml_version</span> <span class="o">=</span> <span class="n">caaml_version</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

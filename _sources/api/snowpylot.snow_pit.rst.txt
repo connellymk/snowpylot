@@ -1,0 +1,7 @@
+snowpylot.snow\_pit module
+==========================
+
+.. automodule:: snowpylot.snow_pit
+   :members:
+   :show-inheritance:
+   :undoc-members:

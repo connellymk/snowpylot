@@ -1,0 +1,7 @@
+snowpylot.layer module
+======================
+
+.. automodule:: snowpylot.layer
+   :members:
+   :show-inheritance:
+   :undoc-members:

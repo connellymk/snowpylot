@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snowpylot.snow_profile module &mdash; Snowpylot 1.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cb7bf70b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Snowpylot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">User Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/parser.html">CAAML Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whumpfdata.html">Whumpf Data Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/whumpfdata.html#core-info">Core Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/coreinfo.html">Core Info Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/layer.html">Layer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/snowprofile.html">Snow Profile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/stabilitytests.html">Stability Tests Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.caaml_parser.html">snowpylot.caaml_parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/snowpylot.layer.html">snowpylot.layer</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Snowpylot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">snowpylot.snow_profile module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/snowpylot.snow_profile.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-snowpylot.snow_profile">
+<span id="snowpylot-snow-profile-module"></span><h1>snowpylot.snow_profile module<a class="headerlink" href="#module-snowpylot.snow_profile" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.snow_profile.</span></span><span class="sig-name descname"><span class="pre">DensityObs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#DensityObs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.DensityObs" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>DensityObs class for representing a density observation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.depth_top">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.depth_top" title="Link to this definition"></a></dt>
+<dd><p>Depth from the surface to the top of the layer with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.thickness">
+<span class="sig-name descname"><span class="pre">thickness</span></span><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.thickness" title="Link to this definition"></a></dt>
+<dd><p>Thickness of the layer with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.density">
+<span class="sig-name descname"><span class="pre">density</span></span><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.density" title="Link to this definition"></a></dt>
+<dd><p>Density with unit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#DensityObs.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the density observation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">density</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">depth_top</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.set_density">
+<span class="sig-name descname"><span class="pre">set_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">density</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#DensityObs.set_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.set_density" title="Link to this definition"></a></dt>
+<dd><p>Set the density.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>density</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The density with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.set_depth_top">
+<span class="sig-name descname"><span class="pre">set_depth_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_top</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#DensityObs.set_depth_top"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.set_depth_top" title="Link to this definition"></a></dt>
+<dd><p>Set the depth from the surface to the top of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth_top</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.DensityObs.set_thickness">
+<span class="sig-name descname"><span class="pre">set_thickness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#DensityObs.set_thickness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.DensityObs.set_thickness" title="Link to this definition"></a></dt>
+<dd><p>Set the thickness of the layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>thickness</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The thickness with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">thickness</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.snow_profile.</span></span><span class="sig-name descname"><span class="pre">SnowProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_cond</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_of_concern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>SnowProfile class for representing a snow profile.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.measurement_direction">
+<span class="sig-name descname"><span class="pre">measurement_direction</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.measurement_direction" title="Link to this definition"></a></dt>
+<dd><p>Measurement direction</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.profile_depth">
+<span class="sig-name descname"><span class="pre">profile_depth</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.profile_depth" title="Link to this definition"></a></dt>
+<dd><p>Profile depth with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.hs">
+<span class="sig-name descname"><span class="pre">hs</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.hs" title="Link to this definition"></a></dt>
+<dd><p>Snow height with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.surf_cond">
+<span class="sig-name descname"><span class="pre">surf_cond</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.surf_cond" title="Link to this definition"></a></dt>
+<dd><p>Surface condition</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.layers" title="Link to this definition"></a></dt>
+<dd><p>List of layers</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.temp_profile">
+<span class="sig-name descname"><span class="pre">temp_profile</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.temp_profile" title="Link to this definition"></a></dt>
+<dd><p>List of temperature observations</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.density_profile">
+<span class="sig-name descname"><span class="pre">density_profile</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.density_profile" title="Link to this definition"></a></dt>
+<dd><p>List of density observations</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.layer_of_concern">
+<span class="sig-name descname"><span class="pre">layer_of_concern</span></span><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.layer_of_concern" title="Link to this definition"></a></dt>
+<dd><p>Layer of concern</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the snow profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.add_density_obs">
+<span class="sig-name descname"><span class="pre">add_density_obs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">density_obs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.add_density_obs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.add_density_obs" title="Link to this definition"></a></dt>
+<dd><p>Add a density observation to the snow profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>density_obs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.snow_profile.DensityObs" title="snowpylot.snow_profile.DensityObs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DensityObs</span></code></a></span>) – The density observation to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.add_layer">
+<span class="sig-name descname"><span class="pre">add_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.add_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.add_layer" title="Link to this definition"></a></dt>
+<dd><p>Add a layer to the snow profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layer</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="../modules/layer.html#snowpylot.layer.Layer" title="snowpylot.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layer</span></code></a></span>) – The layer to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.add_temp_obs">
+<span class="sig-name descname"><span class="pre">add_temp_obs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temp_obs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.add_temp_obs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.add_temp_obs" title="Link to this definition"></a></dt>
+<dd><p>Add a temperature observation to the snow profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>temp_obs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.snow_profile.TempObs" title="snowpylot.snow_profile.TempObs"><code class="xref py py-class docutils literal notranslate"><span class="pre">TempObs</span></code></a></span>) – The temperature observation to add</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">density_profile</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#snowpylot.snow_profile.DensityObs" title="snowpylot.snow_profile.DensityObs"><span class="pre">DensityObs</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">hs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">layer_of_concern</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../modules/layer.html#snowpylot.layer.Layer" title="snowpylot.layer.Layer"><span class="pre">Layer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">layers</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../modules/layer.html#snowpylot.layer.Layer" title="snowpylot.layer.Layer"><span class="pre">Layer</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">measurement_direction</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">profile_depth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.set_hs">
+<span class="sig-name descname"><span class="pre">set_hs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.set_hs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.set_hs" title="Link to this definition"></a></dt>
+<dd><p>Set the snow height.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The snow height with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.set_measurement_direction">
+<span class="sig-name descname"><span class="pre">set_measurement_direction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_direction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.set_measurement_direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.set_measurement_direction" title="Link to this definition"></a></dt>
+<dd><p>Set the measurement direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>measurement_direction</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The measurement direction</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.set_profile_depth">
+<span class="sig-name descname"><span class="pre">set_profile_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.set_profile_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.set_profile_depth" title="Link to this definition"></a></dt>
+<dd><p>Set the profile depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>profile_depth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The profile depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SnowProfile.set_surf_cond">
+<span class="sig-name descname"><span class="pre">set_surf_cond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surf_cond</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SnowProfile.set_surf_cond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SnowProfile.set_surf_cond" title="Link to this definition"></a></dt>
+<dd><p>Set the surface condition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>surf_cond</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#snowpylot.snow_profile.SurfaceCondition" title="snowpylot.snow_profile.SurfaceCondition"><code class="xref py py-class docutils literal notranslate"><span class="pre">SurfaceCondition</span></code></a></span>) – The surface condition</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">surf_cond</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#snowpylot.snow_profile.SurfaceCondition" title="snowpylot.snow_profile.SurfaceCondition"><span class="pre">SurfaceCondition</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">temp_profile</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#snowpylot.snow_profile.TempObs" title="snowpylot.snow_profile.TempObs"><span class="pre">TempObs</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.snow_profile.</span></span><span class="sig-name descname"><span class="pre">SurfaceCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wind_loading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penetration_foot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penetration_ski</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SurfaceCondition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>SurfaceCondition class for representing the surface condition of a snow profile.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.wind_loading">
+<span class="sig-name descname"><span class="pre">wind_loading</span></span><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.wind_loading" title="Link to this definition"></a></dt>
+<dd><p>Wind loading</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.penetration_foot">
+<span class="sig-name descname"><span class="pre">penetration_foot</span></span><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.penetration_foot" title="Link to this definition"></a></dt>
+<dd><p>Penetration of foot with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.penetration_ski">
+<span class="sig-name descname"><span class="pre">penetration_ski</span></span><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.penetration_ski" title="Link to this definition"></a></dt>
+<dd><p>Penetration of ski with unit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SurfaceCondition.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the surface condition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">penetration_foot</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">penetration_ski</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.set_penetration_foot">
+<span class="sig-name descname"><span class="pre">set_penetration_foot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">penetration_foot</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SurfaceCondition.set_penetration_foot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.set_penetration_foot" title="Link to this definition"></a></dt>
+<dd><p>Set the penetration of foot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>penetration_foot</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The penetration of foot with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.set_penetration_ski">
+<span class="sig-name descname"><span class="pre">set_penetration_ski</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">penetration_ski</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SurfaceCondition.set_penetration_ski"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.set_penetration_ski" title="Link to this definition"></a></dt>
+<dd><p>Set the penetration of ski.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>penetration_ski</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The penetration of ski with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.SurfaceCondition.set_wind_loading">
+<span class="sig-name descname"><span class="pre">set_wind_loading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wind_loading</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#SurfaceCondition.set_wind_loading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.SurfaceCondition.set_wind_loading" title="Link to this definition"></a></dt>
+<dd><p>Set the wind loading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wind_loading</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – The wind loading</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">wind_loading</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.TempObs">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">snowpylot.snow_profile.</span></span><span class="sig-name descname"><span class="pre">TempObs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snow_temp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#TempObs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.TempObs" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>TempObs class for representing a temperature observation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.TempObs.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#snowpylot.snow_profile.TempObs.depth" title="Link to this definition"></a></dt>
+<dd><p>Depth with unit</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.TempObs.snow_temp">
+<span class="sig-name descname"><span class="pre">snow_temp</span></span><a class="headerlink" href="#snowpylot.snow_profile.TempObs.snow_temp" title="Link to this definition"></a></dt>
+<dd><p>Snow temperature with unit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.TempObs.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#TempObs.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.TempObs.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the temperature observation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">depth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.TempObs.set_depth">
+<span class="sig-name descname"><span class="pre">set_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#TempObs.set_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.TempObs.set_depth" title="Link to this definition"></a></dt>
+<dd><p>Set the depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>depth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The depth with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snowpylot.snow_profile.TempObs.set_snow_temp">
+<span class="sig-name descname"><span class="pre">set_snow_temp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snow_temp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/snowpylot/snow_profile.html#TempObs.set_snow_temp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snowpylot.snow_profile.TempObs.set_snow_temp" title="Link to this definition"></a></dt>
+<dd><p>Set the snow temperature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>snow_temp</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – The snow temperature with unit</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">snow_temp</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.14)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Mary Kate Connelly.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

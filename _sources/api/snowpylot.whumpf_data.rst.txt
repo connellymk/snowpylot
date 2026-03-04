@@ -1,0 +1,7 @@
+snowpylot.whumpf\_data module
+=============================
+
+.. automodule:: snowpylot.whumpf_data
+   :members:
+   :show-inheritance:
+   :undoc-members:

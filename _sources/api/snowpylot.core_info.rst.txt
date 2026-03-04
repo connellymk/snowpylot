@@ -1,0 +1,7 @@
+snowpylot.core\_info module
+===========================
+
+.. automodule:: snowpylot.core_info
+   :members:
+   :show-inheritance:
+   :undoc-members:

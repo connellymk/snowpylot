@@ -1,0 +1,24 @@
+snowpylot package
+=================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   snowpylot.caaml_parser
+   snowpylot.core_info
+   snowpylot.layer
+   snowpylot.snow_pit
+   snowpylot.snow_profile
+   snowpylot.stability_tests
+   snowpylot.whumpf_data
+
+Module contents
+---------------
+
+.. automodule:: snowpylot
+   :members:
+   :show-inheritance:
+   :undoc-members:
