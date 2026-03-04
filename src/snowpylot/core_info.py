@@ -142,6 +142,7 @@ class Location:
         region: Region
         pit_near_avalanche: Whether the pit is near an avalanche
         pit_near_avalanche_location: Location of the pit relative to the avalanche
+        avalanche_fracture_depth: Depth of avalanche fracture with unit
     """
 
     latitude: Optional[float] = None
@@ -153,6 +154,7 @@ class Location:
     region: Optional[str] = None
     pit_near_avalanche: Optional[bool] = None
     pit_near_avalanche_location: Optional[str] = None
+    avalanche_fracture_depth: Optional[Tuple[float, str]] = None
 
     def __str__(self) -> str:
         """Return a string representation of the location."""
@@ -165,6 +167,7 @@ class Location:
             f"\n\t country: {self.country}"
             f"\n\t region: {self.region}"
             f"\n\t pit_near_avalanche: {self.pit_near_avalanche}"
+            f"\n\t avalanche_fracture_depth: {self.avalanche_fracture_depth}"
         )
 
         if self.pit_near_avalanche_location is not None:
@@ -255,6 +258,17 @@ class Location:
                 avalanche
         """
         self.pit_near_avalanche_location = pit_near_avalanche_location
+
+    def set_avalanche_fracture_depth(
+        self, avalanche_fracture_depth: Tuple[float, str]
+    ) -> None:
+        """
+        Set the depth of an avalanche fracture.
+
+        Args:
+            avalanche_fracture_depth: Depth of avalanche fracture with unit
+        """
+        self.avalanche_fracture_depth = avalanche_fracture_depth
 
 
 @dataclass
