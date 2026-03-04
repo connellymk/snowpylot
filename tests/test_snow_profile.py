@@ -4,10 +4,36 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
+from unittest.mock import patch, Mock
 
-from snowpylot.caaml_parser import caaml_parser
+from snowpylot.caaml_parser import caaml_parser, caaml_url_parser
 
+def test_get_data_from_caaml_url_parser():
+    html_content = f'<html><body><a href="/snowpit/99999/download/caaml">Download CAAML</a></body></html>'
+    caaml_content = """<?xml version="1.0"?>
+        <caaml:CAAML xmlns:caaml="http://caaml.org/Schemas/V5.0/Profiles/AvalancheBulletin">
+        <caaml:AvalancheBulletin>
+            <caaml:issueTime>2025-02-28T06:00:00Z</caaml:issueTime>
+            <caaml:region>Rocky Mountains</caaml:region>
+        </caaml:AvalancheBulletin>
+        </caaml:CAAML>
+        """
 
+    def mock_requests_get(url, timeout=10):
+        mock_resp = Mock()
+        if url.endswith("/caaml"):
+            mock_resp.content = caaml_content.encode()
+            mock_resp.text = caaml_content
+        else:
+            mock_resp.text = html_content
+        return mock_resp
+
+    with patch('snowpylot.caaml_parser.requests.get', side_effect=mock_requests_get):
+        with patch('snowpylot.caaml_parser._parse_caaml', return_value='dummy_result') as mock_parse:
+            result = caaml_url_parser('https://fakeapi.com')
+            mock_parse.assert_called_once()
+    assert result == 'dummy_result'
+    
 @pytest.fixture
 def test_pit():
     """Fixture to load the test snowpit file"""
