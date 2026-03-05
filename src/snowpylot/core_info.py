@@ -142,7 +142,8 @@ class Location:
         region: Region
         pit_near_avalanche: Whether the pit is near an avalanche
         pit_near_avalanche_location: Location of the pit relative to the avalanche
-        avalanche_fracture_depth: Depth of avalanche fracture with unit
+        avalanche_fracture_depth: Depth of avalanche fracture measured from the snow
+            surface with unit (SLF)
     """
 
     latitude: Optional[float] = None

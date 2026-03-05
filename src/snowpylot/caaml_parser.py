@@ -8,30 +8,6 @@ from .stability_tests import ComprTest, ExtColumnTest, PropSawTest, RBlockTest
 from .whumpf_data import WhumpfData
 
 
-def _extract_avalanche_fracture_depth(meta_data):
-    """
-    Extract avalanche fracture depth from SLF customData profile text.
-
-    Expected text pattern example:
-    "1: Avalanche fracture @95cm"
-    """
-    fracture_pattern = re.compile(
-        r"avalanche fracture\s*@\s*(\d+(?:\.\d+)?)\s*(cm|mm|m)\b", re.IGNORECASE
-    )
-
-    for prop in meta_data.iter():
-        if not prop.tag.endswith("text") or prop.text is None:
-            continue
-        match = fracture_pattern.search(prop.text)
-        if match is None:
-            continue
-        depth = round(float(match.group(1)), 2)
-        uom = match.group(2)
-        return [depth, uom]
-
-    return None
-
-
 def caaml_parser(file_path):
     """
     The function receives a path to a SnowPilot caaml.xml file, parses the file,
@@ -90,18 +66,6 @@ def caaml_parser(file_path):
         for prop in meta_data.iter(caaml_tag + "comment"):
             comment = prop.text
             pit.core_info.set_comment(comment)
-
-        fracture_depth = _extract_avalanche_fracture_depth(meta_data)
-        if fracture_depth is not None:
-            pit.core_info.location.set_avalanche_fracture_depth(fracture_depth)
-
-            # If fracture data exists in metadata, infer avalanche proximity fields
-            # that are missing in some SLF profiles.
-            pit.core_info.location.set_pit_near_avalanche(True)
-            if pit.core_info.location.pit_near_avalanche_location is None:
-                pit.core_info.location.set_pit_near_avalanche_location("crown")
-    else:
-        pit.core_info.set_comment(None)
 
     # caaml_version
     pit.core_info.set_caaml_version(caaml_tag)
@@ -190,6 +154,21 @@ def caaml_parser(file_path):
             pit.core_info.location.set_pit_near_avalanche_location(location)
         except AttributeError:
             location = None
+
+    # avalanche fracture depth (SLF customData)
+    fracture_pattern = re.compile(
+        r"avalanche fracture\s*@\s*(\d+(?:\.\d+)?)\s*(cm|mm|m)\b", re.IGNORECASE
+    )
+    for prop in meta_data.iter():
+        if not prop.tag.endswith("text") or prop.text is None:
+            continue
+        match = fracture_pattern.search(prop.text)
+        if match is None:
+            continue
+        depth = round(float(match.group(1)), 2)
+        uom = match.group(2)
+        pit.core_info.location.set_avalanche_fracture_depth([depth, uom])
+        pit.core_info.location.set_pit_near_avalanche(True)
 
     ## Weather Conditions:
     # (sky_cond, precip_ti, air_temp_pres, wind_speed, wind_dir)
