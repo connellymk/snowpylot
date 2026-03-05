@@ -1,5 +1,9 @@
 import re
 import xml.etree.ElementTree as ET
+import requests
+
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 from .layer import Grain, Layer
 from .snow_pit import SnowPit
@@ -7,11 +11,36 @@ from .snow_profile import DensityObs, SurfaceCondition, TempObs
 from .stability_tests import ComprTest, ExtColumnTest, PropSawTest, RBlockTest
 from .whumpf_data import WhumpfData
 
+def caaml_url_parser(file_path):
+    """
+    The function receives a URL to a SnowPilot observation and retrieves the caaml.xml file,
+    """
+    soup = BeautifulSoup(requests.get(file_path, timeout=10).text, "html.parser")
+    
+    caaml_href = next((a["href"] for a in soup.find_all("a", href=True) if "caaml" in a.text.lower()), None)
+
+    if caaml_href is None:
+        raise ValueError("No caaml.xml file found in the provided URL.")
+    
+    caaml_url = urljoin(file_path, caaml_href)
+    caaml = requests.get(caaml_url, timeout=10).content
+
+    # retrieve the caaml.xml file data
+    root = ET.fromstring(caaml)
+
+    return _parse_caaml(root)
 
 def caaml_parser(file_path):
     """
     The function receives a path to a SnowPilot caaml.xml file, parses the file,
     and returns a populated SnowPit object
+    """
+    root = ET.parse(file_path).getroot()
+    return _parse_caaml(root)
+
+def _parse_caaml(root):
+    """
+    This function receives the root of a parsed caaml.xml file, parses the file, and returns a populated SnowPit object
     """
 
     pit = SnowPit()  # create a new SnowPit object
@@ -22,8 +51,6 @@ def caaml_parser(file_path):
     )
     gml_tag = "{http://www.opengis.net/gml}"
     snowpilot_tag = "{http://www.snowpilot.org/Schemas/caaml}"
-
-    root = ET.parse(file_path).getroot()
 
     ### Core Info:
     # (pit_id, pit_name, date, user, location, weather, core comments, caaml_version)

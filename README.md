@@ -34,6 +34,9 @@ from snowpylot import caaml_parser
 # Parse a CAAML file
 snowpit = caaml_parser("path/to/snowpit.caaml.xml")
 
+# Another way is through a specific SnowPilot observation's URL
+snowpit = caaml_url_parser("https://snowpilot.org/node/xxxx")
+
 # Access basic information
 print(f"Pit ID: {snowpit.core_info.pit_id}")
 print(f"Date: {snowpit.core_info.date}")
