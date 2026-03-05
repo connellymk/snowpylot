@@ -167,7 +167,7 @@ def caaml_parser(file_path):
             continue
         depth = round(float(match.group(1)), 2)
         uom = match.group(2)
-        pit.core_info.location.set_avalanche_fracture_depth([depth, uom])
+        pit.core_info.location.set_avalanche_initiation_height([depth, uom])
         pit.core_info.location.set_pit_near_avalanche(True)
 
     ## Weather Conditions:

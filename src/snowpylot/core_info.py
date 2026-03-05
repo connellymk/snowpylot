@@ -142,8 +142,8 @@ class Location:
         region: Region
         pit_near_avalanche: Whether the pit is near an avalanche
         pit_near_avalanche_location: Location of the pit relative to the avalanche
-        avalanche_fracture_depth: Depth of avalanche fracture measured from the snow
-            surface with unit (SLF)
+        avalanche_initiation_height: Height at which an avalanche initiation occurred
+            measured from the ground with unit (SLF)
     """
 
     latitude: Optional[float] = None
@@ -155,7 +155,7 @@ class Location:
     region: Optional[str] = None
     pit_near_avalanche: Optional[bool] = None
     pit_near_avalanche_location: Optional[str] = None
-    avalanche_fracture_depth: Optional[Tuple[float, str]] = None
+    avalanche_initiation_height: Optional[Tuple[float, str]] = None
 
     def __str__(self) -> str:
         """Return a string representation of the location."""
@@ -168,7 +168,7 @@ class Location:
             f"\n\t country: {self.country}"
             f"\n\t region: {self.region}"
             f"\n\t pit_near_avalanche: {self.pit_near_avalanche}"
-            f"\n\t avalanche_fracture_depth: {self.avalanche_fracture_depth}"
+            f"\n\t avalanche_initiation_height: {self.avalanche_initiation_height}"
         )
 
         if self.pit_near_avalanche_location is not None:
@@ -260,16 +260,17 @@ class Location:
         """
         self.pit_near_avalanche_location = pit_near_avalanche_location
 
-    def set_avalanche_fracture_depth(
-        self, avalanche_fracture_depth: Tuple[float, str]
+    def set_avalanche_initiation_height(
+        self, avalanche_initiation_height: Tuple[float, str]
     ) -> None:
         """
-        Set the depth of an avalanche fracture.
+        Set the height at which an avalanche initiation occurred.
 
         Args:
-            avalanche_fracture_depth: Depth of avalanche fracture with unit
+            avalanche_initiation_height: Height at which an avalanche initiation occurred
+                with unit (SLF)
         """
-        self.avalanche_fracture_depth = avalanche_fracture_depth
+        self.avalanche_initiation_height = avalanche_initiation_height
 
 
 @dataclass
