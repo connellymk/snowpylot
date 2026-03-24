@@ -149,8 +149,9 @@ class SnowProfile:
 
     Attributes:
         measurement_direction: Measurement direction
-        profile_depth: Profile depth with unit
-        hs: Snow height with unit
+        profile_depth: Depth of snow profile measured from the snow surface to the
+            bottom of the snow pit with unit
+        hs: Overall height of snowpack measured from snow surface to ground with unit
         surf_cond: Surface condition
         layers: List of layers
         temp_profile: List of temperature observations

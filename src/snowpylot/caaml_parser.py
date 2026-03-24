@@ -1,3 +1,4 @@
+import re
 import xml.etree.ElementTree as ET
 import requests
 
@@ -10,17 +11,21 @@ from .snow_profile import DensityObs, SurfaceCondition, TempObs
 from .stability_tests import ComprTest, ExtColumnTest, PropSawTest, RBlockTest
 from .whumpf_data import WhumpfData
 
+
 def caaml_url_parser(file_path):
     """
     The function receives a URL to a SnowPilot observation and retrieves the caaml.xml file,
     """
     soup = BeautifulSoup(requests.get(file_path, timeout=10).text, "html.parser")
-    
-    caaml_href = next((a["href"] for a in soup.find_all("a", href=True) if "caaml" in a.text.lower()), None)
+
+    caaml_href = next(
+        (a["href"] for a in soup.find_all("a", href=True) if "caaml" in a.text.lower()),
+        None,
+    )
 
     if caaml_href is None:
         raise ValueError("No caaml.xml file found in the provided URL.")
-    
+
     caaml_url = urljoin(file_path, caaml_href)
     caaml = requests.get(caaml_url, timeout=10).content
 
@@ -29,6 +34,7 @@ def caaml_url_parser(file_path):
 
     return _parse_caaml(root)
 
+
 def caaml_parser(file_path):
     """
     The function receives a path to a SnowPilot caaml.xml file, parses the file,
@@ -36,6 +42,7 @@ def caaml_parser(file_path):
     """
     root = ET.parse(file_path).getroot()
     return _parse_caaml(root)
+
 
 def _parse_caaml(root):
     """
@@ -56,9 +63,25 @@ def _parse_caaml(root):
     loc_ref = next(root.iter(caaml_tag + "locRef"), None)
 
     # pit_id
-    pit_id_str = loc_ref.attrib[gml_tag + "id"]
-    pit_id = pit_id_str.split("-")[-1]
-    pit.core_info.set_pit_id(pit_id)
+    loc_ref_attrib = loc_ref.attrib if loc_ref is not None else {}
+    pit_id_str = (
+        loc_ref_attrib.get(gml_tag + "id")
+        or root.attrib.get(gml_tag + "id")
+        or loc_ref_attrib.get("id")
+        or root.attrib.get("id")
+    )
+
+    if pit_id_str is None:
+        raise ValueError(f"Could not find pit id in CAAML file: {file_path}")
+
+    # SnowPilot exports usually encode IDs as "location-nid-12345" or "SnowPilot-12345".
+    # Keep non-SnowPilot IDs (e.g. UUIDs) unchanged.
+    if pit_id_str.startswith("location-nid-"):
+        pit_id_str = pit_id_str.split("location-nid-", 1)[1]
+    elif pit_id_str.startswith("SnowPilot-"):
+        pit_id_str = pit_id_str.split("SnowPilot-", 1)[1]
+
+    pit.core_info.set_pit_id(pit_id_str)
 
     # snow_pit_name
     for prop in loc_ref.iter(caaml_tag + "name"):
@@ -72,9 +95,10 @@ def _parse_caaml(root):
     # Comment
     meta_data = next(root.iter(caaml_tag + "metaData"), None)
 
-    for prop in meta_data.iter(caaml_tag + "comment"):
-        comment = prop.text
-        pit.core_info.set_comment(comment)
+    if meta_data is not None:
+        for prop in meta_data.iter(caaml_tag + "comment"):
+            comment = prop.text
+            pit.core_info.set_comment(comment)
 
     # caaml_version
     pit.core_info.set_caaml_version(caaml_tag)
@@ -164,32 +188,49 @@ def _parse_caaml(root):
         except AttributeError:
             location = None
 
+    # avalanche fracture depth (SLF customData)
+    fracture_pattern = re.compile(
+        r"avalanche fracture\s*@\s*(\d+(?:\.\d+)?)\s*(cm|mm|m)\b", re.IGNORECASE
+    )
+    if meta_data is not None:
+        for prop in meta_data.iter():
+            if not prop.tag.endswith("text") or prop.text is None:
+                continue
+            match = fracture_pattern.search(prop.text)
+            if match is None:
+                continue
+            depth = round(float(match.group(1)), 2)
+            uom = match.group(2)
+            pit.core_info.location.set_avalanche_initiation_height([depth, uom])
+            pit.core_info.location.set_pit_near_avalanche(True)
+
     ## Weather Conditions:
     # (sky_cond, precip_ti, air_temp_pres, wind_speed, wind_dir)
     weather_cond = next(root.iter(caaml_tag + "weatherCond"), None)
 
-    # sky_cond
-    for prop in weather_cond.iter(caaml_tag + "skyCond"):
-        pit.core_info.weather_conditions.set_sky_cond(prop.text)
+    if weather_cond is not None:
+        # sky_cond
+        for prop in weather_cond.iter(caaml_tag + "skyCond"):
+            pit.core_info.weather_conditions.set_sky_cond(prop.text)
 
-    # precip_ti
-    for prop in weather_cond.iter(caaml_tag + "precipTI"):
-        pit.core_info.weather_conditions.set_precip_ti(prop.text)
+        # precip_ti
+        for prop in weather_cond.iter(caaml_tag + "precipTI"):
+            pit.core_info.weather_conditions.set_precip_ti(prop.text)
 
-    # air_temp_pres
-    for prop in weather_cond.iter(caaml_tag + "airTempPres"):
-        pit.core_info.weather_conditions.set_air_temp_pres(
-            [round(float(prop.text), 2), prop.get("uom")]
-        )
+        # air_temp_pres
+        for prop in weather_cond.iter(caaml_tag + "airTempPres"):
+            pit.core_info.weather_conditions.set_air_temp_pres(
+                [round(float(prop.text), 2), prop.get("uom")]
+            )
 
-    # wind_speed
-    for prop in weather_cond.iter(caaml_tag + "windSpd"):
-        pit.core_info.weather_conditions.set_wind_speed(prop.text)
+        # wind_speed
+        for prop in weather_cond.iter(caaml_tag + "windSpd"):
+            pit.core_info.weather_conditions.set_wind_speed(prop.text)
 
-    # wind_dir
-    for prop in weather_cond.iter(caaml_tag + "windDir"):
-        for sub_prop in prop.iter(caaml_tag + "position"):
-            pit.core_info.weather_conditions.set_wind_dir(sub_prop.text)
+        # wind_dir
+        for prop in weather_cond.iter(caaml_tag + "windDir"):
+            for sub_prop in prop.iter(caaml_tag + "position"):
+                pit.core_info.weather_conditions.set_wind_dir(sub_prop.text)
 
     ### Snow Profile:
     # (layers, temp_profile, density_profile, surf_cond)
