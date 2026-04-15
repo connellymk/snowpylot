@@ -2,7 +2,7 @@
 SnowPylot - A Python library for working with CAAML snow profile data
 """
 
-__version__ = "1.1.3"
+__version__ = "1.1.5"
 
 from .caaml_parser import caaml_parser, caaml_url_parser
 from .snow_pit import SnowPit
